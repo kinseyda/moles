@@ -1,0 +1,11 @@
+:root {
+  --global-bg-color: #fff;
+  --alternate-bg-color: #eee;
+  --text-color: #000;
+}
+
+[theme="dark"] {
+  --global-bg-color: #000;
+  --alternate-bg-color: #333;
+  --text-color: #fff;
+}

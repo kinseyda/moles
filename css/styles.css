@@ -1,0 +1,15 @@
+@import "themes.css";
+
+* {
+  font-family: "Roboto Mono", monospace;
+  background-color: var(--global-bg-color);
+  color: var(--text-color);
+}
+
+.resource-row td {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+tr.resource-row:nth-child(odd) td {
+  background-color: var(--alternate-bg-color);
+}
