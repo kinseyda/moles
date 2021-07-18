@@ -5,13 +5,16 @@ var app = new Vue({
     lastUpdate: performance.now(),
   },
   methods: {
-    toggleTheme: function () {
+    toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
       if (htmlTag.hasAttribute("theme")) {
         htmlTag.removeAttribute("theme");
         return;
       }
       htmlTag.setAttribute("theme", "dark");
+    },
+    formatNumber(num) {
+      return formatNumber(num, "");
     },
     gameLoop() {
       gameLoop(this);

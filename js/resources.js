@@ -10,7 +10,7 @@ let resource = class {
 
 let startingResources = [
   new resource(0, "Area", 10, 10, 0),
-  new resource(1, "Dirt", 0, 10, 0.5),
+  new resource(1, "Dirt", 0, 10, 1),
   new resource(2, "Iron", 0, 0, 0),
   new resource(3, "Gold", 0, 0, 0),
 ];
