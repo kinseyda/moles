@@ -6,10 +6,15 @@
   color: var(--text-color);
 }
 
-.resource-row td {
+.list-row td {
   padding-left: 5px;
   padding-right: 5px;
 }
-tr.resource-row:nth-child(odd) td {
+tr.list-row:nth-child(odd) td {
   background-color: var(--alternate-bg-color);
+}
+
+tr.upgrade-row {
+  user-select: none;
+  cursor: pointer;
 }

@@ -1,16 +1,16 @@
-let resource = class {
-  constructor(id, name, amount, cap, rate) {
-    this.id = id;
-    this.name = name;
-    this.amount = amount;
-    this.cap = cap;
-    this.rate = rate;
+let Resource = class {
+  constructor(object) {
+    this.id = object.id;
+    this.name = object.name;
+    this.amount = object.amount;
+    this.cap = object.cap;
+    this.rate = object.rate;
   }
 };
 
 let startingResources = [
-  new resource(0, "Area", 10, 10, 0),
-  new resource(1, "Dirt", 0, 10, 1),
-  new resource(2, "Iron", 0, 0, 0),
-  new resource(3, "Gold", 0, 0, 0),
+  { id: 0, name: "Area", amount: 10, cap: 10, rate: 0 },
+  { id: 1, name: "Dirt", amount: 0, cap: 10000, rate: 1 },
+  { id: 2, name: "Iron", amount: 0, cap: 10, rate: 0 },
+  { id: 3, name: "Gold", amount: 0, cap: 10, rate: 0 },
 ];

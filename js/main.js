@@ -1,10 +1,12 @@
 var app = new Vue({
   el: "#app",
   data: {
-    gameData: {
-      resourceList: startingResources,
+    descriptionBoxData: defaultDescription,
+    gameData: new Game({
       lastUpdate: Date.now(),
-    },
+      resourceList: startingResources,
+      upgradeList: startingUpgrades,
+    }),
   },
   methods: {
     toggleTheme() {
@@ -27,8 +29,11 @@ var app = new Vue({
     loadGame() {
       let save = JSON.parse(localStorage.getItem("molesSave"));
       if (this.saveGame) {
-        this.gameData = save;
+        this.gameData = new Game(save);
       }
+    },
+    resetDescription() {
+      this.descriptionBoxData = defaultDescription;
     },
   },
   mounted() {
