@@ -1,6 +1,12 @@
 let defaultDescription =
   "Hover over something to see a description of it here.";
 
+class SerializableClass {
+  constructor() {
+    this._class = this.constructor.name;
+  }
+}
+
 function formatNumber(num, style) {
   if (!(style === "normal" || style === "illion" || style === "exp")) {
     if (num < 1000) {

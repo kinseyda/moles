@@ -1,51 +1,50 @@
-let Upgrade = class {
-  constructor(object) {
-    this.id = object.id;
-    this.name = object.name;
-    this.description = object.description;
-    this.bought = object.bought;
-    this.cost = object.cost;
+class Upgrade extends SerializableClass {
+  constructor(id, bought, cost) {
+    super();
+    this.id = id;
+    this.bought = bought;
+    this.cost = cost;
   }
   buy() {
     if (!this.canBuy) {
       return;
     }
     for (const res in this.cost) {
-      app.gameData.resourceByName(res).amount -= this.cost[res];
+      app.gameData.resourceById(res).amount -= this.cost[res];
     }
     this.bought = true;
   }
+
   get canBuy() {
     if (this.bought) {
       return false;
     }
     for (const res in this.cost) {
-      if (this.cost[res] > app.gameData.resourceByName(res).amount) {
+      if (this.cost[res] > app.gameData.resourceById(res).amount) {
         return false;
       }
     }
     return true;
   }
+}
+
+let upgradeDict = {
+  0: {
+    name: "Ball of dirt",
+    description: "Compress all the dirt you have into a ball",
+  },
+  1: {
+    name: "Filler",
+    description: "Filler desc",
+  },
 };
 
 let startingUpgrades = [
-  {
-    id: 0,
-    name: "Ball of dirt",
-    description: "Compress all the dirt you have into a ball",
-    cost: {
-      Dirt: 10,
-      Area: 2,
-    },
-    bought: false,
-  },
-  {
-    id: 1,
-    name: "Filler",
-    description: "Filler desc",
-    cost: {
-      Dirt: 99999999,
-    },
-    bought: false,
-  },
+  new Upgrade(0, false, {
+    0: 2,
+    1: 10,
+  }),
+  new Upgrade(1, false, {
+    1: 99999,
+  }),
 ];

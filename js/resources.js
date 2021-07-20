@@ -1,16 +1,23 @@
-let Resource = class {
-  constructor(object) {
-    this.id = object.id;
-    this.name = object.name;
-    this.amount = object.amount;
-    this.cap = object.cap;
-    this.rate = object.rate;
+class Resource extends SerializableClass {
+  constructor(id, amount, cap, rate) {
+    super();
+    this.id = id;
+    this.amount = amount;
+    this.cap = cap;
+    this.rate = rate;
   }
+}
+
+let resourceDict = {
+  0: { name: "Area" },
+  1: { name: "Dirt" },
+  2: { name: "Iron" },
+  3: { name: "Gold" },
 };
 
 let startingResources = [
-  { id: 0, name: "Area", amount: 10, cap: 10, rate: 0 },
-  { id: 1, name: "Dirt", amount: 0, cap: 10000, rate: 1 },
-  { id: 2, name: "Iron", amount: 0, cap: 10, rate: 0 },
-  { id: 3, name: "Gold", amount: 0, cap: 10, rate: 0 },
+  new Resource(0, 10, 10, 0),
+  new Resource(1, 0, 10000, 1),
+  new Resource(2, 0, 0, 0),
+  new Resource(3, 0, 0, 0),
 ];
