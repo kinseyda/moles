@@ -18,3 +18,18 @@ tr.upgrade-row {
   user-select: none;
   cursor: pointer;
 }
+
+#upgrade-list {
+  position: fixed;
+  right: 0px;
+  top: 60px;
+}
+#resource-list {
+  position: fixed;
+  left: 0px;
+  top: 60px;
+}
+#description-box {
+  position: fixed;
+  bottom: 0px;
+}
