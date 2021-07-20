@@ -21,7 +21,7 @@ Vue.component("upgrade-item", {
       return upgradeDict[id];
     },
     upgradeHover(upgrade) {
-      app.descriptionBoxData = upgrade.description;
+      app.descriptionBoxData = this.getUpgradeData(upgrade.id).description;
     },
     resetDescription() {
       return app.resetDescription();
