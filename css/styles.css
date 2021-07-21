@@ -35,6 +35,10 @@ tr.upgrade-row {
   bottom: 0px;
 }
 
+.upgrade-available {
+  font-weight: bold;
+}
+
 .upgrade-desc {
   width: 50%;
 }

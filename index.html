@@ -37,6 +37,7 @@
         <table>
           <upgrade-item
             v-for="item in gameData.upgradeList"
+            :class="{'upgrade-available': item.canBuy}"
             v-bind:upgrade="item"
             v-bind:key="item.id"
             v-if="!item.bought"
