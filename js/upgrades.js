@@ -10,7 +10,7 @@ class Upgrade extends SerializableClass {
       return;
     }
     for (const res in this.cost) {
-      app.gameData.resourceById(res).amount -= this.cost[res];
+      game.resourceById(res).amount -= this.cost[res];
     }
     switch (upgradeDict[this.id].effect.func) {
       case "addMultiplier":
@@ -24,7 +24,7 @@ class Upgrade extends SerializableClass {
       return false;
     }
     for (const res in this.cost) {
-      if (this.cost[res] > app.gameData.resourceById(res).amount) {
+      if (this.cost[res] > game.resourceById(res).amount) {
         return false;
       }
     }
@@ -33,7 +33,7 @@ class Upgrade extends SerializableClass {
 }
 function addMultiplier(dict) {
   for (let res in dict) {
-    app.gameData.resourceById(res).multiplier += dict[res];
+    game.resourceById(res).multiplier += dict[res];
   }
 }
 

@@ -3,7 +3,7 @@ var app = new Vue({
   data: {
     descriptionBoxData: defaultDescription,
     upgradeInformationData: undefined,
-    gameData: new Game(Date.now(), startingResources, startingUpgrades),
+    gameData: game,
   },
   methods: {
     toggleTheme() {
@@ -57,7 +57,8 @@ var app = new Vue({
       let sto = localStorage.getItem("molesSave");
       let save = JSON.parse(sto);
       if (this.saveGame) {
-        this.gameData = recurConstruct(save);
+        game = recurConstruct(save);
+        this.gameData = game;
       }
     },
     resetDescription() {
@@ -71,17 +72,14 @@ var app = new Vue({
 
 function gameLoop(app) {
   let updateTime = Date.now();
-  let diff = (updateTime - app.gameData.lastUpdate) / 1000;
+  let diff = (updateTime - game.lastUpdate) / 1000;
 
-  for (let i = 0; i < app.gameData.resourceList.length; i++) {
-    app.gameData.resourceList[i].amount +=
-      app.gameData.resourceList[i].trueRate * diff;
-    if (
-      app.gameData.resourceList[i].amount > app.gameData.resourceList[i].cap
-    ) {
-      app.gameData.resourceList[i].amount = app.gameData.resourceList[i].cap;
+  for (let i = 0; i < game.resourceList.length; i++) {
+    game.resourceList[i].amount += game.resourceList[i].trueRate * diff;
+    if (game.resourceList[i].amount > game.resourceList[i].cap) {
+      game.resourceList[i].amount = game.resourceList[i].cap;
     }
   }
 
-  app.gameData.lastUpdate = updateTime;
+  game.lastUpdate = updateTime;
 }

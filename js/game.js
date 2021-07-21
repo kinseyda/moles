@@ -15,3 +15,5 @@ let Game = class extends SerializableClass {
     return;
   }
 };
+
+let game = new Game(Date.now(), startingResources, startingUpgrades);
