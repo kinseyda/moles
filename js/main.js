@@ -2,6 +2,7 @@ var app = new Vue({
   el: "#app",
   data: {
     descriptionBoxData: defaultDescription,
+    upgradeInformationData: undefined,
     gameData: new Game(Date.now(), startingResources, startingUpgrades),
   },
   methods: {

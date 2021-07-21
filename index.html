@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Moles</title>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <div id="app">
+      <button @click="toggleTheme">Theme</button>
+      <button @click="saveGame">Save</button>
+      <button @click="loadGame">Load</button>
 
-    <div id=app>
-        <button @click="toggleTheme">Theme</button>
-        <button @click="saveGame">Save</button>
-        <button @click="loadGame">Load</button>
+      <div id="resource-list">
+        <p>Resources:</p>
+        <table>
+          <resource-item
+            v-for="item in gameData.resourceList"
+            v-bind:resource="item"
+            v-bind:key="item.id"
+          ></resource-item>
+        </table>
+      </div>
 
-        <div id="resource-list">
-            <p>Resources:</p>
-            <table>
-                <resource-item v-for="item in gameData.resourceList" v-bind:resource="item" v-bind:key="item.id"></resource-item>
-            </table>
-        </div>
-
-        <div id="upgrade-list">
-            <p>Upgrades:</p>
-            <table>
-                <upgrade-item v-for="item in gameData.upgradeList" v-bind:upgrade="item" v-bind:key="item.id" v-if="!item.bought"></upgrade-item>
-            </table>
-        </div>
-
+      <div id="upgrade-list">
+        <p>Upgrades:</p>
+        <table>
+          <upgrade-item
+            v-for="item in gameData.upgradeList"
+            v-bind:upgrade="item"
+            v-bind:key="item.id"
+            v-if="!item.bought"
+          ></upgrade-item>
+        </table>
+      </div>
+      <div id="description-container">
         <div id="description-box" v-html="descriptionBoxData"></div>
-        
+        <upgrade-information
+          id="upgrade-information"
+          v-bind:upgrade="upgradeInformationData"
+          v-if="upgradeInformationData"
+        ></upgrade-information>
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="js/utils.js"></script>
@@ -44,5 +59,5 @@
     <script src="js/upgrades.js"></script>
     <script src="js/components.js"></script>
     <script src="js/main.js"></script>
-</body>
+  </body>
 </html>

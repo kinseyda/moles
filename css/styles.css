@@ -29,7 +29,18 @@ tr.upgrade-row {
   left: 0px;
   top: 60px;
 }
-#description-box {
+#description-container {
   position: fixed;
+  width: 100%;
   bottom: 0px;
+}
+
+.upgrade-desc {
+  width: 50%;
+}
+#cost-container {
+  float: left;
+}
+#effect-container {
+  float: right;
 }
