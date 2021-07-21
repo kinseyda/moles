@@ -74,7 +74,7 @@ function gameLoop(app) {
 
   for (let i = 0; i < app.gameData.resourceList.length; i++) {
     app.gameData.resourceList[i].amount +=
-      app.gameData.resourceList[i].rate * diff;
+      app.gameData.resourceList[i].trueRate * diff;
     if (
       app.gameData.resourceList[i].amount > app.gameData.resourceList[i].cap
     ) {

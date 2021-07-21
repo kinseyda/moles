@@ -8,7 +8,7 @@ Vue.component("resource-item", {
       return resourceDict[id];
     },
   },
-  template: `<tr class="list-row"><td>{{ getResourceData(resource.id).name }}:</td> <td>{{ formatNumber(resource.amount) }}</td> <td>/</td> <td>{{ formatNumber(resource.cap) }}</td> <td>{{ formatNumber(resource.rate) }} m/s</td> </tr>`,
+  template: `<tr class="list-row"><td>{{ getResourceData(resource.id).name }}:</td> <td>{{ formatNumber(resource.amount) }}</td> <td>/</td> <td>{{ formatNumber(resource.cap) }}</td> <td>{{ formatNumber(resource.trueRate) }} m/s</td> </tr>`,
 });
 
 Vue.component("upgrade-item", {

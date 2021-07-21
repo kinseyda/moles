@@ -12,6 +12,10 @@ class Upgrade extends SerializableClass {
     for (const res in this.cost) {
       app.gameData.resourceById(res).amount -= this.cost[res];
     }
+    switch (upgradeDict[this.id].effect.func) {
+      case "addMultiplier":
+        addMultiplier(upgradeDict[this.id].effect.params[0]);
+    }
     this.bought = true;
   }
 
@@ -27,15 +31,25 @@ class Upgrade extends SerializableClass {
     return true;
   }
 }
+function addMultiplier(dict) {
+  for (let res in dict) {
+    app.gameData.resourceById(res).multiplier += dict[res];
+  }
+}
 
 let upgradeDict = {
   0: {
     name: "Ball of dirt",
     description: "Compress all the dirt you have into a ball",
+    effect: {
+      func: "addMultiplier",
+      params: [{ 1: 1 }],
+    },
   },
   1: {
     name: "Filler",
     description: "Filler desc",
+    effect: {},
   },
 };
 
