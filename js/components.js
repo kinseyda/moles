@@ -4,11 +4,8 @@ Vue.component("resource-item", {
     formatNumber(num) {
       return formatNumber(num);
     },
-    getResourceData(id) {
-      return resourceDict[id];
-    },
   },
-  template: `<tr class="list-row"><td>{{ getResourceData(resource.id).name }}:</td> <td>{{ formatNumber(resource.amount) }}</td> <td>/</td> <td>{{ formatNumber(resource.cap) }}</td> <td>{{ formatNumber(resource.trueRate) }} m/s</td> </tr>`,
+  template: `<tr class="list-row"><td>{{ resource.dataObject.name }}:</td> <td>{{ formatNumber(resource.amount) }}</td> <td>/</td> <td>{{ formatNumber(resource.cap) }}</td> <td>{{ formatNumber(resource.trueRate) }} m/s</td> </tr>`,
 });
 
 Vue.component("upgrade-item", {
@@ -17,12 +14,9 @@ Vue.component("upgrade-item", {
     formatNumber(num) {
       return formatNumber(num);
     },
-    getUpgradeData(id) {
-      return upgradeDict[id];
-    },
     upgradeHover(upgrade) {
       app.upgradeInformationData = upgrade;
-      app.descriptionBoxData = this.getUpgradeData(upgrade.id).description;
+      app.descriptionBoxData = upgrade.dataObject.description;
     },
     resetDescription() {
       app.upgradeInformationData = undefined;
@@ -32,15 +26,12 @@ Vue.component("upgrade-item", {
       upgrade.buy();
     },
   },
-  template: `<tr class="list-row clickable" @mouseover="upgradeHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ getUpgradeData(upgrade.id).name }}</td></tr>`,
+  template: `<tr class="list-row clickable" @mouseover="upgradeHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ upgrade.dataObject.name }}</td></tr>`,
 });
 
 Vue.component("structure-item", {
   props: ["structure"],
   methods: {
-    getStructureData(id) {
-      return structureDict[id];
-    },
     formatNumber(num) {
       return formatNumber(num);
     },
@@ -48,7 +39,7 @@ Vue.component("structure-item", {
       structure.buy();
     },
   },
-  template: `<tr class="list-row clickable" @click="buyStructure(structure)"><td>{{ getStructureData(structure.id).name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
+  template: `<tr class="list-row clickable" @click="buyStructure(structure)"><td>{{ structure.dataObject.name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
 });
 
 Vue.component("upgrade-information", {
@@ -57,17 +48,14 @@ Vue.component("upgrade-information", {
     formatNumber(num) {
       return formatNumber(num);
     },
-    getResourceData(id) {
-      return resourceDict[id];
+    getUpgradeType(upgrade) {
+      return upgrade.dataObject.effect.func;
     },
-    getUpgradeData(id) {
-      return upgradeDict[id];
+    getResource(id) {
+      return game.resourceById(id);
     },
-    getUpgradeType(id) {
-      return this.getUpgradeData(id).effect.func;
-    },
-    getEffectDescription(id) {
-      switch (this.getUpgradeType(id)) {
+    getEffectDescription(upgrade) {
+      switch (this.getUpgradeType(upgrade)) {
         case "addMultiplier":
           return "Multiplies resource gains:";
         default:
@@ -75,10 +63,10 @@ Vue.component("upgrade-information", {
       }
     },
   },
-  template: `<div><div class="upgrade-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(getUpgradeData(upgrade.id).cost)">
-    <p>{{ getResourceData(id).name }}: {{ getUpgradeData(upgrade.id).cost[id] }}</p></li></ul></div><div class="upgrade-desc" id="effect-container">
-    <h4>Effect</h4><effect-details v-bind:effect="getUpgradeData(upgrade.id).effect"
-    v-bind:detailedDesc="getEffectDescription(upgrade.id)" v-bind:upgradeType="getUpgradeType(upgrade.id)"></effect-details></div></div>`,
+  template: `<div><div class="upgrade-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(upgrade.dataObject.cost)">
+    <p>{{ getResource(id).dataObject.name }}: {{ upgrade.dataObject.cost[id] }}</p></li></ul></div><div class="upgrade-desc" id="effect-container">
+    <h4>Effect</h4><effect-details v-bind:effect="upgrade.dataObject.effect"
+    v-bind:detailedDesc="getEffectDescription(upgrade)" v-bind:upgradeType="getUpgradeType(upgrade)"></effect-details></div></div>`,
 });
 
 Vue.component("effect-details", {
@@ -94,10 +82,10 @@ Vue.component("multiply-effect", {
     formatNumber(num) {
       return formatNumber(num);
     },
-    getResourceData(id) {
-      return resourceDict[id];
+    getResource(id) {
+      return game.resourceById(id);
     },
   },
   template: `<div><ul><li v-for="id in Object.keys(effect.params[0])">
-    <p>{{ getResourceData(id).name }}: +{{ effect.params[0][id]*100 }}%</p></li></ul></div>`,
+    <p>{{ getResource(id).dataObject.name }}: +{{ effect.params[0][id]*100 }}%</p></li></ul></div>`,
 });

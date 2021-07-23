@@ -6,23 +6,27 @@ class Upgrade extends SerializableClass {
     this.discount = discount;
   }
 
+  get dataObject() {
+    return upgradeDict[this.id];
+  }
+
   trueCost(resId) {
     let dis = this.discount[resId];
     if (dis === undefined) {
       dis = 1;
     }
-    return dis * upgradeDict[this.id].cost[resId];
+    return dis * this.dataObject.cost[resId];
   }
   buy() {
     if (!this.canBuy) {
       return;
     }
-    for (const res in upgradeDict[this.id].cost) {
+    for (const res in this.dataObject.cost) {
       game.resourceById(res).amount -= this.trueCost(res);
     }
-    switch (upgradeDict[this.id].effect.func) {
+    switch (this.dataObject.effect.func) {
       case "addMultiplier":
-        addMultiplier(upgradeDict[this.id].effect.params[0]);
+        addMultiplier(this.dataObject.effect.params[0]);
     }
     this.bought = true;
   }
@@ -31,7 +35,7 @@ class Upgrade extends SerializableClass {
     if (this.bought) {
       return false;
     }
-    for (const res in upgradeDict[this.id].cost) {
+    for (const res in this.dataObject.cost) {
       if (this.trueCost(res) > game.resourceById(res).amount) {
         return false;
       }

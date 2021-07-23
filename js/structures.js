@@ -5,19 +5,24 @@ class Structure extends SerializableClass {
     this.amount = amount;
     this.discount = discount;
   }
+
+  get dataObject() {
+    return structureDict[this.id];
+  }
+
   trueCost(resId) {
     let dis = this.discount[resId];
     if (!dis) {
       dis = 1;
     }
-    return dis * structureDict[this.id].cost[resId];
+    return dis * this.dataObject.cost[resId];
   }
 
   buy() {
     if (!this.canBuy) {
       return;
     }
-    for (const res in structureDict[this.id].cost) {
+    for (const res in this.dataObject.cost) {
       game.resourceById(res).amount -= this.trueCost(res);
     }
     this.amount += 1;
@@ -25,7 +30,7 @@ class Structure extends SerializableClass {
   }
 
   get canBuy() {
-    for (const res in structureDict[this.id].cost) {
+    for (const res in this.dataObject.cost) {
       if (this.trueCost(res) > game.resourceById(res).amount) {
         return false;
       }

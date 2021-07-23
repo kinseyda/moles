@@ -7,6 +7,9 @@ class Resource extends SerializableClass {
     this.rate = rate;
     this.multiplier = multiplier;
   }
+  get dataObject() {
+    return resourceDict[this.id];
+  }
   get trueRate() {
     return this.rate * this.multiplier;
   }
