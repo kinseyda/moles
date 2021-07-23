@@ -11,6 +11,10 @@ class Resource extends SerializableClass {
     return resourceDict[this.id];
   }
   get trueRate() {
+    if (game.dig.digging) {
+      let digTR = game.dig.trueRate(this.id) || 0;
+      return (this.rate + digTR) * this.multiplier;
+    }
     return this.rate * this.multiplier;
   }
 }
@@ -31,7 +35,7 @@ let resourceDict = {
 
 let startingResources = [
   new Resource(0, 10, 10, 0, 1),
-  new Resource(1, 0, 10000, 1, 1),
+  new Resource(1, 0, 10000, 0, 1),
   new Resource(2, 0, 0, 0, 1),
   new Resource(3, 0, 0, 0, 1),
   new Resource(4, 0, 0, 0, 1),

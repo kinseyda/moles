@@ -33,7 +33,15 @@
           </table>
         </div>
         <div id="central-column">
-          <div id="buttons-container"></div>
+          <div id="buttons-container">
+            <button
+              id="dig-button"
+              @mousedown="gameData.dig.digging = true"
+              @mouseup="gameData.dig.digging = false"
+            >
+              <h1>Dig</h1>
+            </button>
+          </div>
           <div id="description-container">
             <div id="description-box" v-html="descriptionBoxData"></div>
             <purchase-information
@@ -75,6 +83,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/dig.js"></script>
     <script src="js/resources.js"></script>
     <script src="js/upgrades.js"></script>
     <script src="js/structures.js"></script>

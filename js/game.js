@@ -2,6 +2,7 @@ let Game = class extends SerializableClass {
   constructor(lastUpdate, resourceList, upgradeList, structureList) {
     super();
     this.lastUpdate = lastUpdate;
+    this.dig = startingDig;
     this.resourceList = resourceList;
     this.upgradeList = upgradeList;
     this.structureList = structureList;

@@ -13,6 +13,10 @@
 button {
   border: 1px solid var(--text-color);
 }
+button:active,
+button:active h1 {
+  background-color: var(--alternate-bg-color);
+}
 
 #main {
   position: absolute;
@@ -65,6 +69,11 @@ table {
 
 #buttons-container {
   flex: 1 0 0;
+}
+#dig-button {
+  height: 15em;
+  width: calc(100% - 40px);
+  margin: 20px;
 }
 
 #upgrade-structure-column {
