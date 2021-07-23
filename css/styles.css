@@ -28,15 +28,14 @@ button:active h1 {
   width: 100%;
 }
 
-tr.list-row:nth-child(odd) {
-  background-color: var(--alternate-bg-color);
-}
+tr.list-row:nth-child(odd),
 tr.list-row:nth-child(odd) td {
   background-color: var(--alternate-bg-color);
 }
 
 table {
   min-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
 }
 
@@ -89,10 +88,7 @@ table {
   height: calc(100% - 1em);
   overflow-y: scroll;
 }
-#upgrade-list table {
-  table-layout: fixed;
-  border-collapse: collapse;
-}
+
 .clickable {
   user-select: none;
   cursor: pointer;
@@ -104,7 +100,7 @@ table {
   padding-top: 10px;
 }
 
-.upgrade-available {
+.purchase-available {
   font-weight: bold;
 }
 

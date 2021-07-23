@@ -47,7 +47,8 @@ Vue.component("structure-item", {
       structure.buy();
     },
   },
-  template: `<tr class="list-row clickable" @mouseover="purchaseHover(structure)" @mouseleave="resetDescription" @click="buyStructure(structure)"><td>{{ structure.dataObject.name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
+  template: `<tr class="list-row clickable" @mouseover="purchaseHover(structure)" @mouseleave="resetDescription" @click="buyStructure(structure)"><td 
+                :class="{'purchase-available': structure.canBuy}">{{ structure.dataObject.name }}</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
 });
 
 Vue.component("purchase-information", {

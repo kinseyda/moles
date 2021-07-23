@@ -4,11 +4,11 @@ let Dig = class extends SerializableClass {
     this.digRates = { 1: 1 };
     this.digging = false;
   }
-  trueRate(resId) {
+  findRate(resId) {
     if (this.digRates[resId] === undefined) {
       return undefined;
     }
-    return this.digRates[resId] * game.resourceById(resId).multiplier;
+    return this.digRates[resId];
   }
 };
 

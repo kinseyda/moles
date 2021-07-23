@@ -12,7 +12,7 @@ class Resource extends SerializableClass {
   }
   get trueRate() {
     if (game.dig.digging) {
-      let digTR = game.dig.trueRate(this.id) || 0;
+      let digTR = game.dig.findRate(this.id) || 0;
       return (this.rate + digTR) * this.multiplier;
     }
     return this.rate * this.multiplier;
