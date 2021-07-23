@@ -36,11 +36,11 @@
           <div id="buttons-container"></div>
           <div id="description-container">
             <div id="description-box" v-html="descriptionBoxData"></div>
-            <upgrade-information
-              id="upgrade-information"
-              v-bind:upgrade="upgradeInformationData"
-              v-if="upgradeInformationData"
-            ></upgrade-information>
+            <purchase-information
+              id="purchase-information"
+              v-bind:purchase="purchaseInformationData"
+              v-if="purchaseInformationData"
+            ></purchase-information>
           </div>
         </div>
         <div id="upgrade-structure-column">

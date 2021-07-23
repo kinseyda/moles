@@ -99,12 +99,12 @@ table {
   font-weight: bold;
 }
 
-.upgrade-desc {
+.purchase-desc {
   width: 50%;
 }
 #cost-container {
   float: left;
 }
-#effect-container {
+#effect-produce-container {
   float: right;
 }

@@ -14,19 +14,19 @@ Vue.component("upgrade-item", {
     formatNumber(num) {
       return formatNumber(num);
     },
-    upgradeHover(upgrade) {
-      app.upgradeInformationData = upgrade;
+    purchaseHover(upgrade) {
+      app.purchaseInformationData = upgrade;
       app.descriptionBoxData = upgrade.dataObject.description;
     },
     resetDescription() {
-      app.upgradeInformationData = undefined;
+      app.purchaseInformationData = undefined;
       app.resetDescription();
     },
     buyUpgrade(upgrade) {
       upgrade.buy();
     },
   },
-  template: `<tr class="list-row clickable" @mouseover="upgradeHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ upgrade.dataObject.name }}</td></tr>`,
+  template: `<tr class="list-row clickable" @mouseover="purchaseHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ upgrade.dataObject.name }}</td></tr>`,
 });
 
 Vue.component("structure-item", {
@@ -35,15 +35,23 @@ Vue.component("structure-item", {
     formatNumber(num) {
       return formatNumber(num);
     },
+    purchaseHover(structure) {
+      app.purchaseInformationData = structure;
+      app.descriptionBoxData = structure.dataObject.description;
+    },
+    resetDescription() {
+      app.purchaseInformationData = undefined;
+      app.resetDescription();
+    },
     buyStructure(structure) {
       structure.buy();
     },
   },
-  template: `<tr class="list-row clickable" @click="buyStructure(structure)"><td>{{ structure.dataObject.name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
+  template: `<tr class="list-row clickable" @mouseover="purchaseHover(structure)" @mouseleave="resetDescription" @click="buyStructure(structure)"><td>{{ structure.dataObject.name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
 });
 
-Vue.component("upgrade-information", {
-  props: ["upgrade"],
+Vue.component("purchase-information", {
+  props: ["purchase"],
   methods: {
     formatNumber(num) {
       return formatNumber(num);
@@ -63,16 +71,28 @@ Vue.component("upgrade-information", {
       }
     },
   },
-  template: `<div><div class="upgrade-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(upgrade.dataObject.cost)">
-    <p>{{ getResource(id).dataObject.name }}: {{ upgrade.dataObject.cost[id] }}</p></li></ul></div><div class="upgrade-desc" id="effect-container">
-    <h4>Effect</h4><effect-details v-bind:effect="upgrade.dataObject.effect"
-    v-bind:detailedDesc="getEffectDescription(upgrade)" v-bind:upgradeType="getUpgradeType(upgrade)"></effect-details></div></div>`,
+  template: `<div><div class="purchase-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(purchase.dataObject.cost)">
+    <p>{{ getResource(id).dataObject.name }}: {{ purchase.dataObject.cost[id] }}</p></li></ul></div><div class="purchase-desc" id="effect-produce-container">
+    <produce-details v-if="purchase._class === 'Structure'" v-bind:structure="purchase"></produce-details>
+    <effect-details v-if="purchase._class === 'Upgrade'" v-bind:effect="purchase.dataObject.effect"
+    v-bind:detailedDesc="getEffectDescription(purchase)" v-bind:upgradeType="getUpgradeType(purchase)"></effect-details></div></div>`,
+});
+
+Vue.component("produce-details", {
+  props: ["structure"],
+  methods: {
+    getResource(id) {
+      return game.resourceById(id);
+    },
+  },
+  template: `<div><h4>Production:</h4><ul><li v-for="id in Object.keys(structure.dataObject.production)">
+    <p>{{ getResource(id).dataObject.name }}: {{ structure.dataObject.production[id] }} m/s</p></li></ul></div>`,
 });
 
 Vue.component("effect-details", {
   props: ["upgradeType", "effect", "detailedDesc"],
   methods: {},
-  template: `<div><p>{{ detailedDesc }}</p><multiply-effect v-if="upgradeType=='addMultiplier'" 
+  template: `<div><h4>Effect</h4><p>{{ detailedDesc }}</p><multiply-effect v-if="upgradeType=='addMultiplier'" 
   v-bind:effect="effect"></multiply-effect></div>`,
 });
 

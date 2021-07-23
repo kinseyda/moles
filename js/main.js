@@ -2,7 +2,7 @@ var app = new Vue({
   el: "#app",
   data: {
     descriptionBoxData: defaultDescription,
-    upgradeInformationData: undefined,
+    purchaseInformationData: undefined,
     gameData: game,
   },
   methods: {
