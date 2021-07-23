@@ -36,13 +36,13 @@ function formatIllion(num) {
   let billions = num / 1000000000;
   let trillions = num / 1000000000000;
   if (1 <= trillions && trillions < 1000) {
-    return trillions.toFixed(3) + "T";
+    return trillions.toFixed(3).substring(0, 5) + "T";
   } else if (1 <= billions && billions < 1000) {
-    return billions.toFixed(3) + "B";
+    return billions.toFixed(3).substring(0, 5) + "B";
   } else if (1 <= millions && millions < 1000) {
-    return millions.toFixed(3) + "M";
+    return millions.toFixed(3).substring(0, 5) + "M";
   }
-  return (num / 1000).toFixed(3) + "K";
+  return (num / 1000).toFixed(3).substring(0, 5) + "K";
 }
 function formatExp(num) {
   return num.toExponential(2);

@@ -4,35 +4,97 @@
   font-family: "Roboto Mono", monospace;
   background-color: var(--global-bg-color);
   color: var(--text-color);
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+  /* border: 1px solid black; */
 }
 
-.list-row td {
-  padding-left: 5px;
-  padding-right: 5px;
+button {
+  border: 1px solid var(--text-color);
+}
+
+#main {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  top: 25px;
+  min-height: calc(100% - 25px);
+  width: 100%;
+}
+
+tr.list-row:nth-child(odd) {
+  background-color: var(--alternate-bg-color);
 }
 tr.list-row:nth-child(odd) td {
   background-color: var(--alternate-bg-color);
 }
 
-tr.upgrade-row {
+table {
+  min-width: 100%;
+}
+
+#resource-list {
+  flex: 0 0 30ch;
+  min-height: 100%;
+}
+#resource-list table {
+  border-collapse: collapse;
+}
+#resource-list td {
+  width: 6ch;
+  padding-left: 0.5ch;
+}
+#resource-list td:nth-child(1) {
+  /* Name */
+  width: 8ch;
+}
+#resource-list td:nth-child(3) {
+  /* Slash */
+  width: 1ch;
+}
+#resource-list td:nth-child(5) {
+  /* Rate */
+  width: 9ch;
+}
+
+#central-column {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#buttons-container {
+  flex: 1 0 0;
+}
+
+#upgrade-structure-column {
+  flex: 0 0 30ch;
+  display: flex;
+  flex-direction: column;
+}
+
+#upgrade-list {
+  height: 20%;
+}
+#upgrade-list #upgrades {
+  height: calc(100% - 1em);
+  overflow-y: scroll;
+}
+#upgrade-list table {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.clickable {
   user-select: none;
   cursor: pointer;
 }
 
-#upgrade-list {
-  position: fixed;
-  right: 0px;
-  top: 60px;
-}
-#resource-list {
-  position: fixed;
-  left: 0px;
-  top: 60px;
-}
-#description-container {
-  position: fixed;
-  width: 100%;
-  bottom: 0px;
+#structure-list {
+  flex: 1 1 80%;
+  overflow: auto;
+  padding-top: 10px;
 }
 
 .upgrade-available {

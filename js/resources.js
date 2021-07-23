@@ -17,6 +17,13 @@ let resourceDict = {
   1: { name: "Dirt" },
   2: { name: "Iron" },
   3: { name: "Gold" },
+  4: { name: "Filler" },
+  5: { name: "Filler" },
+  6: { name: "Filler" },
+  7: { name: "Filler" },
+  8: { name: "Filler" },
+  9: { name: "Filler" },
+  10: { name: "Filler" },
 };
 
 let startingResources = [
@@ -24,4 +31,11 @@ let startingResources = [
   new Resource(1, 0, 10000, 1, 1),
   new Resource(2, 0, 0, 0, 1),
   new Resource(3, 0, 0, 0, 1),
+  new Resource(4, 0, 0, 0, 1),
+  new Resource(5, 0, 0, 0, 1),
+  new Resource(6, 0, 0, 0, 1),
+  new Resource(7, 0, 0, 0, 1),
+  new Resource(8, 0, 0, 0, 1),
+  new Resource(9, 0, 0, 0, 1),
+  new Resource(10, 0, 0, 0, 1),
 ];

@@ -1,9 +1,10 @@
 let Game = class extends SerializableClass {
-  constructor(lastUpdate, resourceList, upgradeList) {
+  constructor(lastUpdate, resourceList, upgradeList, structureList) {
     super();
     this.lastUpdate = lastUpdate;
     this.resourceList = resourceList;
     this.upgradeList = upgradeList;
+    this.structureList = structureList;
   }
 
   resourceById(id) {
@@ -14,6 +15,26 @@ let Game = class extends SerializableClass {
     }
     return;
   }
+  resetRates() {
+    for (let i = 0; i < this.resourceList.length; i++) {
+      this.resourceList[i].rate = 0;
+    }
+  }
+  calculateRates() {
+    this.resetRates();
+    for (let i = 0; i < this.structureList.length; i++) {
+      let prodDict = structureDict[this.structureList[i].id].production;
+      for (let prodId in prodDict) {
+        this.resourceById(prodId).rate +=
+          prodDict[prodId] * this.structureList[i].amount;
+      }
+    }
+  }
 };
 
-let game = new Game(Date.now(), startingResources, startingUpgrades);
+let game = new Game(
+  Date.now(),
+  startingResources,
+  startingUpgrades,
+  startingStructures
+);

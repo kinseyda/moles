@@ -32,7 +32,23 @@ Vue.component("upgrade-item", {
       upgrade.buy();
     },
   },
-  template: `<tr class="list-row upgrade-row" @mouseover="upgradeHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ getUpgradeData(upgrade.id).name }}</td></tr>`,
+  template: `<tr class="list-row clickable" @mouseover="upgradeHover(upgrade)" @mouseleave="resetDescription" @click="buyUpgrade(upgrade)"><td>{{ getUpgradeData(upgrade.id).name }}</td></tr>`,
+});
+
+Vue.component("structure-item", {
+  props: ["structure"],
+  methods: {
+    getStructureData(id) {
+      return structureDict[id];
+    },
+    formatNumber(num) {
+      return formatNumber(num);
+    },
+    buyStructure(structure) {
+      structure.buy();
+    },
+  },
+  template: `<tr class="list-row clickable" @click="buyStructure(structure)"><td>{{ getStructureData(structure.id).name }}:</td><td>{{ formatNumber(structure.amount) }}</td> </tr>`,
 });
 
 Vue.component("upgrade-information", {
@@ -59,8 +75,8 @@ Vue.component("upgrade-information", {
       }
     },
   },
-  template: `<div><div class="upgrade-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(upgrade.cost)">
-    <p>{{ getResourceData(id).name }}: {{ upgrade.cost[id] }}</p></li></ul></div><div class="upgrade-desc" id="effect-container">
+  template: `<div><div class="upgrade-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(getUpgradeData(upgrade.id).cost)">
+    <p>{{ getResourceData(id).name }}: {{ getUpgradeData(upgrade.id).cost[id] }}</p></li></ul></div><div class="upgrade-desc" id="effect-container">
     <h4>Effect</h4><effect-details v-bind:effect="getUpgradeData(upgrade.id).effect"
     v-bind:detailedDesc="getEffectDescription(upgrade.id)" v-bind:upgradeType="getUpgradeType(upgrade.id)"></effect-details></div></div>`,
 });

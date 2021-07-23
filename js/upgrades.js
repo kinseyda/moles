@@ -1,16 +1,25 @@
 class Upgrade extends SerializableClass {
-  constructor(id, bought, cost) {
+  constructor(id, bought, discount) {
     super();
     this.id = id;
     this.bought = bought;
-    this.cost = cost;
+    this.discount = discount;
+  }
+
+  trueCost(resId) {
+    let dis = this.discount[resId];
+    if (dis === undefined) {
+      dis = 1;
+    }
+    return dis * upgradeDict[this.id].cost[resId];
   }
   buy() {
     if (!this.canBuy) {
       return;
     }
-    for (const res in this.cost) {
-      game.resourceById(res).amount -= this.cost[res];
+    for (const res in upgradeDict[this.id].cost) {
+      console.log(`${resourceDict[res]} = ${this.trueCost(res)}`);
+      game.resourceById(res).amount -= this.trueCost(res);
     }
     switch (upgradeDict[this.id].effect.func) {
       case "addMultiplier":
@@ -23,8 +32,8 @@ class Upgrade extends SerializableClass {
     if (this.bought) {
       return false;
     }
-    for (const res in this.cost) {
-      if (this.cost[res] > game.resourceById(res).amount) {
+    for (const res in upgradeDict[this.id].cost) {
+      if (this.trueCost(res) > game.resourceById(res).amount) {
         return false;
       }
     }
@@ -39,26 +48,108 @@ function addMultiplier(dict) {
 
 let upgradeDict = {
   0: {
-    name: "Ball of dirt",
-    description: "Compress all the dirt you have into a ball",
+    name: "Shovel",
+    description: "Shovel desc",
     effect: {
       func: "addMultiplier",
       params: [{ 1: 1 }],
+    },
+    cost: {
+      1: 10,
     },
   },
   1: {
     name: "Filler",
     description: "Filler desc",
     effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  2: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  3: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  4: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  5: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  6: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  7: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  8: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  9: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
+  },
+  10: {
+    name: "Filler",
+    description: "Filler desc",
+    effect: {},
+    cost: {
+      1: 9999,
+    },
   },
 };
 
 let startingUpgrades = [
-  new Upgrade(0, false, {
-    0: 2,
-    1: 10,
-  }),
-  new Upgrade(1, false, {
-    1: 99999,
-  }),
+  new Upgrade(0, false, {}),
+  new Upgrade(1, false, {}),
+  new Upgrade(2, false, {}),
+  new Upgrade(3, false, {}),
+  new Upgrade(4, false, {}),
+  new Upgrade(5, false, {}),
+  new Upgrade(6, false, {}),
+  new Upgrade(7, false, {}),
+  new Upgrade(8, false, {}),
+  new Upgrade(9, false, {}),
+  new Upgrade(10, false, {}),
 ];
