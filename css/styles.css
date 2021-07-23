@@ -33,17 +33,15 @@ tr.list-row:nth-child(odd) td {
 
 table {
   min-width: 100%;
+  border-collapse: collapse;
 }
 
 #resource-list {
-  flex: 0 0 30ch;
+  flex: 0 0 35ch;
   min-height: 100%;
 }
-#resource-list table {
-  border-collapse: collapse;
-}
 #resource-list td {
-  width: 6ch;
+  width: 7ch;
   padding-left: 0.5ch;
 }
 #resource-list td:nth-child(1) {
@@ -56,7 +54,7 @@ table {
 }
 #resource-list td:nth-child(5) {
   /* Rate */
-  width: 9ch;
+  width: 11ch;
 }
 
 #central-column {

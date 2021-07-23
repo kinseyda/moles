@@ -18,7 +18,6 @@ class Upgrade extends SerializableClass {
       return;
     }
     for (const res in upgradeDict[this.id].cost) {
-      console.log(`${resourceDict[res]} = ${this.trueCost(res)}`);
       game.resourceById(res).amount -= this.trueCost(res);
     }
     switch (upgradeDict[this.id].effect.func) {
