@@ -37,6 +37,7 @@ var app = new Vue({
           obj["_class"] == "Game" ||
           obj["_class"] == "Resource" ||
           obj["_class"] == "Upgrade" ||
+          obj["_class"] == "Structure" ||
           obj["_class"] == "SerializableClass"
         ) {
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
@@ -47,11 +48,16 @@ var app = new Vue({
               return Object.assign(new Resource(), obj);
             case "Upgrade":
               return Object.assign(new Upgrade(), obj);
+            case "Structure":
+              return Object.assign(new Structure(), obj);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
               return Object.assign(new SerializableClass(), obj);
           }
+        } else if (obj["_class"] !== undefined) {
+          console.error("Loading error! Invalid class");
         }
+
         return obj;
       };
       let sto = localStorage.getItem("molesSave");
