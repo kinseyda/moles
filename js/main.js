@@ -38,6 +38,7 @@ var app = new Vue({
           obj["_class"] == "Resource" ||
           obj["_class"] == "Upgrade" ||
           obj["_class"] == "Structure" ||
+          obj["_class"] == "Dig" ||
           obj["_class"] == "SerializableClass"
         ) {
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
@@ -50,6 +51,8 @@ var app = new Vue({
               return Object.assign(new Upgrade(), obj);
             case "Structure":
               return Object.assign(new Structure(), obj);
+            case "Dig":
+              return Object.assign(new Dig(), obj);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
               return Object.assign(new SerializableClass(), obj);

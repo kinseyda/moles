@@ -1,4 +1,4 @@
-let Dig = class extends SerializableClass {
+class Dig extends SerializableClass {
   constructor() {
     super();
     this.digRates = { 1: 1 };
@@ -10,6 +10,6 @@ let Dig = class extends SerializableClass {
     }
     return this.digRates[resId];
   }
-};
+}
 
 let startingDig = new Dig();

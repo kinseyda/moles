@@ -1,4 +1,4 @@
-let Game = class extends SerializableClass {
+class Game extends SerializableClass {
   constructor(lastUpdate, resourceList, upgradeList, structureList) {
     super();
     this.lastUpdate = lastUpdate;
@@ -31,7 +31,7 @@ let Game = class extends SerializableClass {
       }
     }
   }
-};
+}
 
 let game = new Game(
   Date.now(),
