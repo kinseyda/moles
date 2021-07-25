@@ -15,7 +15,11 @@ class Structure extends SerializableClass {
     if (!dis) {
       dis = 1;
     }
-    return dis * this.dataObject.cost[resId];
+    let inc = this.dataObject.increase[resId];
+    if (!inc) {
+      inc = 1;
+    }
+    return dis * this.dataObject.cost[resId] * inc ** this.amount;
   }
 
   buy() {
@@ -43,14 +47,16 @@ let structureDict = {
   0: {
     name: "Ball of dirt",
     description: "Compress all the dirt you have into a ball",
-    production: { 1: 1 },
+    production: { 1: 0.1 },
     cost: { 1: 10 },
+    increase: { 1: 1.1 },
   },
   1: {
     name: "Tunnel bore",
     description: "idk",
     production: { 1: 10 },
     cost: { 1: 100 },
+    increase: { 1: 1.2 },
   },
 };
 
