@@ -7,6 +7,26 @@ class SerializableClass {
   }
 }
 
+function formatTime(num) {
+  if (num === Infinity) {
+    return "∞s";
+  }
+  if (num === -Infinity) {
+    return "0s";
+  }
+  let str = `${Math.floor(num % 60)}s`;
+  if (num > 60) {
+    str = `${Math.floor(num / 60) % 60}m ` + str;
+  }
+  if (num > 60 * 60) {
+    str = `${Math.floor(num / (60 * 60)) % 24}h ` + str;
+  }
+  if (num > 60 * 60 * 24) {
+    str = `${Math.floor(num / (60 * 60 * 24))}d ` + str;
+  }
+  return str;
+}
+
 function formatNumber(num, style) {
   if (!(style === "normal" || style === "illion" || style === "exp")) {
     if (num < 1000) {

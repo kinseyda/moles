@@ -10,6 +10,11 @@ class Upgrade extends SerializableClass {
     return upgradeDict[this.id];
   }
 
+  timeUntil(resId) {
+    let res = game.resourceById(resId);
+    return (this.trueCost(resId) - res.amount) / res.trueRate;
+  }
+
   trueCost(resId) {
     let dis = this.discount[resId];
     if (dis === undefined) {

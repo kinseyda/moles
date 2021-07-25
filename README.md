@@ -4,10 +4,10 @@ A game of mole miners
 
 ## To do (before initial release)
 
+- Move shared functions of structures and upgrades to a new Purchase class
 - Item visibility
 - Debug mode
 - Hover descriptions
-- Time-until-purchase-available next to cost
 - Text log (for story)
 - Prestige system / Empire tab
 - Better theming
