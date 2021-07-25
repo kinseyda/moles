@@ -29,7 +29,10 @@ function formatNumber(num, style) {
 }
 
 function formatNormal(num) {
-  return Math.floor(num);
+  if (num === parseInt(num, 10) || num > 1000) {
+    return num.toFixed(0);
+  }
+  return num.toFixed(1);
 }
 function formatIllion(num) {
   let millions = num / 1000000;

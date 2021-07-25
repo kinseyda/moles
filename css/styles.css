@@ -104,6 +104,9 @@ table {
   font-weight: bold;
 }
 
+#description-container {
+  margin-bottom: 1em;
+}
 .purchase-desc {
   width: 50%;
 }

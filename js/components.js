@@ -73,7 +73,7 @@ Vue.component("purchase-information", {
     },
   },
   template: `<div><div class="purchase-desc" id="cost-container"><h4>Cost</h4><ul><li v-for="id in Object.keys(purchase.dataObject.cost)">
-    <p>{{ getResource(id).dataObject.name }}: {{ purchase.dataObject.cost[id] }}</p></li></ul></div><div class="purchase-desc" id="effect-produce-container">
+    <p>{{ getResource(id).dataObject.name }}: {{ formatNumber(purchase.trueCost(id)) }}</p></li></ul></div><div class="purchase-desc" id="effect-produce-container">
     <produce-details v-if="purchase._class === 'Structure'" v-bind:structure="purchase"></produce-details>
     <effect-details v-if="purchase._class === 'Upgrade'" v-bind:effect="purchase.dataObject.effect"
     v-bind:detailedDesc="getEffectDescription(purchase)" v-bind:upgradeType="getUpgradeType(purchase)"></effect-details></div></div>`,
@@ -82,12 +82,15 @@ Vue.component("purchase-information", {
 Vue.component("produce-details", {
   props: ["structure"],
   methods: {
+    formatNumber(num) {
+      return formatNumber(num);
+    },
     getResource(id) {
       return game.resourceById(id);
     },
   },
   template: `<div><h4>Production:</h4><ul><li v-for="id in Object.keys(structure.dataObject.production)">
-    <p>{{ getResource(id).dataObject.name }}: {{ structure.dataObject.production[id] }} m/s</p></li></ul></div>`,
+    <p>{{ getResource(id).dataObject.name }}: {{ formatNumber(structure.dataObject.production[id]) }} m/s</p></li></ul></div>`,
 });
 
 Vue.component("effect-details", {
@@ -108,5 +111,5 @@ Vue.component("multiply-effect", {
     },
   },
   template: `<div><ul><li v-for="id in Object.keys(effect.params[0])">
-    <p>{{ getResource(id).dataObject.name }}: +{{ effect.params[0][id]*100 }}%</p></li></ul></div>`,
+    <p>{{ getResource(id).dataObject.name }}: +{{ formatNumber(effect.params[0][id]*100) }}%</p></li></ul></div>`,
 });
