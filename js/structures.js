@@ -12,7 +12,7 @@ class Structure extends SerializableClass {
 
   timeUntil(resId) {
     let res = game.resourceById(resId);
-    return (this.trueCost(resId) - res.amount) / res.trueRate;
+    return Math.max((this.trueCost(resId) - res.amount) / res.trueRate, 0);
   }
 
   trueCost(resId) {
