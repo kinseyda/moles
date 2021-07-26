@@ -1,4 +1,4 @@
-class Structure extends SerializableClass {
+class Structure extends Purchaseable {
   constructor(id, amount, discount) {
     super();
     this.id = id;
@@ -8,11 +8,6 @@ class Structure extends SerializableClass {
 
   get dataObject() {
     return structureDict[this.id];
-  }
-
-  timeUntil(resId) {
-    let res = game.resourceById(resId);
-    return Math.max((this.trueCost(resId) - res.amount) / res.trueRate, 0);
   }
 
   trueCost(resId) {

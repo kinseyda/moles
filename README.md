@@ -4,7 +4,7 @@ A game of mole miners
 
 ## To do (before initial release)
 
-- Move shared functions of structures and upgrades to a new Purchase class
+- Move to Vue 3 and TypeScript
 - Item visibility
 - Debug mode
 - Hover descriptions

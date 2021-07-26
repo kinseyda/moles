@@ -1,4 +1,4 @@
-class Upgrade extends SerializableClass {
+class Upgrade extends Purchaseable {
   constructor(id, bought, discount) {
     super();
     this.id = id;
@@ -8,11 +8,6 @@ class Upgrade extends SerializableClass {
 
   get dataObject() {
     return upgradeDict[this.id];
-  }
-
-  timeUntil(resId) {
-    let res = game.resourceById(resId);
-    return Math.max((this.trueCost(resId) - res.amount) / res.trueRate, 0);
   }
 
   trueCost(resId) {

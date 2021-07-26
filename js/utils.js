@@ -6,6 +6,18 @@ class SerializableClass {
     this._class = this.constructor.name;
   }
 }
+class Purchaseable extends SerializableClass {
+  constructor() {
+    super();
+  }
+  timeUntil(resId) {
+    let res = game.resourceById(resId);
+    return Math.max((this.trueCost(resId) - res.amount) / res.trueRate, 0);
+  }
+  trueCost(resId) {}
+  buy() {}
+  get canBuy() {}
+}
 
 function formatTime(num) {
   if (num === Infinity) {
