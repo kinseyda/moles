@@ -4,7 +4,6 @@ A game of mole miners
 
 ## To do (before initial release)
 
-- Use Vuex to handle game refs in components
 - Move to Vue 3 and TypeScript
 - Item visibility
 - Debug mode
