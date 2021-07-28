@@ -7,12 +7,11 @@
         <div id="resource-list">
           <p>Resources:</p>
           <table>
-            <tr
-              is="resource-item"
+            <resource-item
               v-for="item in gameData.resourceList"
               v-bind:resource="item"
               v-bind:key="item.id"
-            ></tr>
+            ></resource-item>
           </table>
         </div>
         <div id="central-column">
@@ -39,25 +38,23 @@
             <p>Upgrades:</p>
             <div id="upgrades">
               <table>
-                <tr
-                  is="upgrade-item"
+                <upgrade-item
                   v-for="item in gameData.upgradeList"
                   :class="{'purchase-available': item.canBuy}"
                   v-bind:upgrade="item"
                   v-bind:key="item.id"
-                ></tr>
+                ></upgrade-item>
               </table>
             </div>
           </div>
           <div id="structure-list">
             <p>Structures:</p>
             <table>
-              <tr
-                is="structure-item"
+              <structure-item
                 v-for="item in gameData.structureList"
                 v-bind:structure="item"
                 v-bind:key="item.id"
-              ></tr>
+              ></structure-item>
             </table>
           </div>
         </div>
