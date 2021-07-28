@@ -1,4 +1,8 @@
-class Structure extends Purchaseable {
+import Purchaseable from "./purchaseable";
+import data from "../data.json";
+import { game } from "./game";
+
+export default class Structure extends Purchaseable {
   constructor(id, amount, discount) {
     super();
     this.id = id;
@@ -7,7 +11,7 @@ class Structure extends Purchaseable {
   }
 
   get dataObject() {
-    return structureDict[this.id];
+    return data.structureDict[this.id];
   }
 
   trueCost(resId) {
@@ -42,22 +46,3 @@ class Structure extends Purchaseable {
     return true;
   }
 }
-
-let structureDict = {
-  0: {
-    name: "Ball of dirt",
-    description: "Compress all the dirt you have into a ball",
-    production: { 1: 0.1 },
-    cost: { 1: 10 },
-    increase: { 1: 1.1 },
-  },
-  1: {
-    name: "Tunnel bore",
-    description: "idk",
-    production: { 1: 10 },
-    cost: { 1: 100 },
-    increase: { 1: 1.2 },
-  },
-};
-
-let startingStructures = [new Structure(0, 0, {}), new Structure(1, 0, {})];

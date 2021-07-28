@@ -1,25 +1,4 @@
-let defaultDescription =
-  "Hover over something to see a description of it here.";
-
-class SerializableClass {
-  constructor() {
-    this._class = this.constructor.name;
-  }
-}
-class Purchaseable extends SerializableClass {
-  constructor() {
-    super();
-  }
-  timeUntil(resId) {
-    let res = game.resourceById(resId);
-    return Math.max((this.trueCost(resId) - res.amount) / res.trueRate, 0);
-  }
-  trueCost(resId) {}
-  buy() {}
-  get canBuy() {}
-}
-
-function formatTime(num) {
+export function formatTime(num) {
   if (num === Infinity) {
     return "∞s";
   }
@@ -39,7 +18,7 @@ function formatTime(num) {
   return str;
 }
 
-function formatNumber(num, style) {
+export function formatNumber(num, style) {
   if (!(style === "normal" || style === "illion" || style === "exp")) {
     if (num < 1000) {
       style = "normal";

@@ -1,4 +1,6 @@
-class Dig extends SerializableClass {
+import SerializableClass from "./serializableClass";
+
+export default class Dig extends SerializableClass {
   constructor() {
     super();
     this.digRates = { 1: 1 };
@@ -11,5 +13,3 @@ class Dig extends SerializableClass {
     return this.digRates[resId];
   }
 }
-
-let startingDig = new Dig();
