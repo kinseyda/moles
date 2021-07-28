@@ -1,9 +1,8 @@
-import Vue from "vue";
+import { createApp } from "vue";
 import Vuex from "vuex";
 import App from "./App.vue";
 import { game } from "./js/classes/game";
 
-Vue.use(Vuex);
 let defaultDescription =
   "Hover over something to see a description of it here.";
 
@@ -28,8 +27,6 @@ const store = new Vuex.Store({
     },
   },
 });
-
-new Vue({
-  render: (h) => h(App),
-  store,
-}).$mount("#app");
+createApp(App)
+  .use(store)
+  .mount("#app");
