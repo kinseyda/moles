@@ -4,7 +4,7 @@ A game of mole miners
 
 ## To do (before initial release)
 
-- Move to Vue 3 and TypeScript
+- Fix resource reactivity (use vuex properly)
 - Item visibility
 - Debug mode
 - Hover descriptions

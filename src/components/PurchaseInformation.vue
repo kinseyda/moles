@@ -6,12 +6,15 @@
     v-bind:detailedDesc="getEffectDescription(purchase)" v-bind:upgradeType="getUpgradeType(purchase)"></effect-details></div></div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import ProduceDetails from './ProduceDetails.vue'
 import EffectDetails from './EffectDetails.vue'
 import {formatNumber, formatTime} from '../js/utils'
 import { mapState } from 'vuex'
-export default {
+import Upgrade from '@/js/classes/upgrades'
+
+export default defineComponent({
   name: 'PurchaseInformation',
   props: ["purchase"],
   components: {
@@ -20,19 +23,19 @@ export default {
   },
   computed: mapState(['gameData']),
   methods: {
-    formatNumber(num) {
-      return formatNumber(num);
+    formatNumber(num: number) {
+      return formatNumber(num, undefined);
     },
-    formatTime(num) {
+    formatTime(num: number) {
       return formatTime(num);
     },
-    getUpgradeType(upgrade) {
+    getUpgradeType(upgrade: Upgrade) {
       return upgrade.dataObject.effect.func;
     },
-    getResource(id) {
+    getResource(id: number) {
       return this.gameData.resourceById(id);
     },
-    getEffectDescription(upgrade) {
+    getEffectDescription(upgrade: Upgrade) {
       switch (this.getUpgradeType(upgrade)) {
         case "addMultiplier":
           return "Multiplies resource gains:";
@@ -41,5 +44,5 @@ export default {
       }
     },
   },
-}
+});
 </script>

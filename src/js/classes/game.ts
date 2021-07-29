@@ -5,22 +5,28 @@ import Resource from "./resources";
 import Dig from "./dig";
 
 export class Game extends SerializableClass {
+  lastUpdate: number;
+  dig: Dig;
+  resourceList: Resource[];
+  upgradeList: Upgrade[];
+  structureList: Structure[];
+
   constructor(
-    lastUpdate,
-    startingDig,
-    resourceList,
-    upgradeList,
-    structureList
+    lastUpdate: number,
+    dig: Dig,
+    resourceList: Resource[],
+    upgradeList: Upgrade[],
+    structureList: Structure[]
   ) {
     super();
     this.lastUpdate = lastUpdate;
-    this.dig = startingDig;
+    this.dig = dig;
     this.resourceList = resourceList;
     this.upgradeList = upgradeList;
     this.structureList = structureList;
   }
 
-  resourceById(id) {
+  resourceById(id: number): Resource | undefined {
     for (let i = 0; i < this.resourceList.length; i++) {
       if (this.resourceList[i].id == id) {
         return this.resourceList[i];
@@ -36,15 +42,19 @@ export class Game extends SerializableClass {
   calculateRates() {
     this.resetRates();
     for (let i = 0; i < this.structureList.length; i++) {
-      let prodDict = this.structureList[i].dataObject.production;
-      for (let prodId in prodDict) {
-        this.resourceById(prodId).rate +=
+      const prodDict = this.structureList[i].dataObject.production;
+      for (const prodIdStr in prodDict) {
+        const prodId: number = Number(prodIdStr);
+        const res = this.resourceById(prodId);
+        if (res) {
+          res.rate +=
           prodDict[prodId] * this.structureList[i].amount;
+        }
       }
     }
   }
 }
-let startingResources = [
+const startingResources = [
   new Resource(0, 10, 10, 0, 1),
   new Resource(1, 0, 10000, 0, 1),
   new Resource(2, 0, 0, 0, 1),
@@ -58,7 +68,7 @@ let startingResources = [
   new Resource(10, 0, 0, 0, 1),
 ];
 
-let startingUpgrades = [
+const startingUpgrades = [
   new Upgrade(0, false, {}),
   new Upgrade(1, false, {}),
   new Upgrade(2, false, {}),
@@ -72,15 +82,15 @@ let startingUpgrades = [
   new Upgrade(10, false, {}),
 ];
 
-let startingStructures = [new Structure(0, 0, {}), new Structure(1, 0, {})];
+const startingStructures = [new Structure(0, 0, {}), new Structure(1, 0, {})];
 
-export var game = new Game(
+export let game: Game = new Game(
   Date.now(),
-  new Dig(),
+  new Dig({1: 1}),
   startingResources,
   startingUpgrades,
   startingStructures
 );
-export function setGame(ng) {
+export function setGame(ng: Game) {
   game = ng;
 }

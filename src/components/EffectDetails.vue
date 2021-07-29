@@ -3,9 +3,10 @@
   v-bind:effect="effect"></multiply-effect></div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import MultiplyEffect from "./MultiplyEffect.vue"
-export default {
+export default defineComponent({
   name: 'EffectDetails',
   components: {
     MultiplyEffect
@@ -14,5 +15,5 @@ export default {
     upgradeType: String, effect: Object, detailedDesc: String
   },
   methods: {},
-}
+});
 </script>

@@ -1,4 +1,4 @@
-export function formatTime(num) {
+export function formatTime(num: number) {
   if (num === Infinity) {
     return "∞s";
   }
@@ -18,7 +18,7 @@ export function formatTime(num) {
   return str;
 }
 
-export function formatNumber(num, style) {
+export function formatNumber(num: number, style: string | undefined) {
   if (!(style === "normal" || style === "illion" || style === "exp")) {
     if (num < 1000) {
       style = "normal";
@@ -39,16 +39,16 @@ export function formatNumber(num, style) {
   }
 }
 
-function formatNormal(num) {
-  if (num === parseInt(num, 10) || num > 1000) {
+function formatNormal(num: number) {
+  if (Number.isInteger(num) || num > 1000) {
     return num.toFixed(0);
   }
   return num.toFixed(1);
 }
-function formatIllion(num) {
-  let millions = num / 1000000;
-  let billions = num / 1000000000;
-  let trillions = num / 1000000000000;
+function formatIllion(num: number) {
+  const millions = num / 1000000;
+  const billions = num / 1000000000;
+  const trillions = num / 1000000000000;
   if (1 <= trillions && trillions < 1000) {
     return trillions.toFixed(3).substring(0, 5) + "T";
   } else if (1 <= billions && billions < 1000) {
@@ -58,6 +58,6 @@ function formatIllion(num) {
   }
   return (num / 1000).toFixed(3).substring(0, 5) + "K";
 }
-function formatExp(num) {
+function formatExp(num: number) {
   return num.toExponential(2);
 }

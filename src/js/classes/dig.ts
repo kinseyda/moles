@@ -1,12 +1,15 @@
 import SerializableClass from "./serializableClass";
 
 export default class Dig extends SerializableClass {
-  constructor() {
+  digRates: { [index: number]: number };
+  digging: Boolean;
+
+  constructor(digrates: { [index: number]: number }) {
     super();
-    this.digRates = { 1: 1 };
+    this.digRates = digrates;
     this.digging = false;
   }
-  findRate(resId) {
+  findRate(resId: number) {
     if (this.digRates[resId] === undefined) {
       return undefined;
     }

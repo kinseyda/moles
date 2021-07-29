@@ -1,9 +1,15 @@
 import SerializableClass from "./serializableClass";
-import data from "../data.json";
+import { resourceDict } from "../data";
 import { game } from "./game";
 
 export default class Resource extends SerializableClass {
-  constructor(id, amount, cap, rate, multiplier) {
+  id: number;
+  amount: number;
+  cap: number;
+  rate: number;
+  multiplier: number;
+
+  constructor(id: number, amount: number, cap: number, rate: number, multiplier: number) {
     super();
     this.id = id;
     this.amount = amount;
@@ -12,11 +18,11 @@ export default class Resource extends SerializableClass {
     this.multiplier = multiplier;
   }
   get dataObject() {
-    return data.resourceDict[this.id];
+    return resourceDict[this.id];
   }
   get trueRate() {
     if (game.dig.digging) {
-      let digTR = game.dig.findRate(this.id) || 0;
+      const digTR = game.dig.findRate(this.id) || 0;
       return (this.rate + digTR) * this.multiplier;
     }
     return this.rate * this.multiplier;

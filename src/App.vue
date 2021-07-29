@@ -62,7 +62,8 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
 import { mapState } from 'vuex'
 import ResourceItem from './components/ResourceItem.vue'
 import UpgradeItem from './components/UpgradeItem.vue'
@@ -79,18 +80,16 @@ import {formatNumber} from './js/utils'
 function gameLoop() {
   let updateTime = Date.now();
   let diff = (updateTime - game.lastUpdate) / 1000;
-
   for (let i = 0; i < game.resourceList.length; i++) {
     game.resourceList[i].amount += game.resourceList[i].trueRate * diff;
     if (game.resourceList[i].amount > game.resourceList[i].cap) {
       game.resourceList[i].amount = game.resourceList[i].cap;
     }
   }
-
   game.lastUpdate = updateTime;
 }
 
-export default {
+@Options({
   name: 'App',
   components: {
     ResourceItem,
@@ -108,17 +107,17 @@ export default {
       }
       htmlTag.setAttribute("theme", "dark");
     },
-    formatNumber(num) {
+    formatNumber(num: number) {
       return formatNumber(num, "");
     },
     gameLoop() {
-      gameLoop(this);
+      gameLoop();
     },
     saveGame() {
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
     },
     loadGame() {
-      const recurConstruct = (obj) => {
+      const recurConstruct = (obj: any) => {
         if (obj.length > 0 || Object.keys(obj).length > 0) {
           // If list or object, recurse through each thing contained to assign all the referenced items into the class they need
           for (let i in obj) {
@@ -138,15 +137,15 @@ export default {
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
           switch (obj["_class"]) {
             case "Game":
-              return Object.assign(new Game(), obj);
+              return new Game(obj.lastUpdate, obj.dig, obj.resourceList, obj.upgradeList, obj.structureList);
             case "Resource":
-              return Object.assign(new Resource(), obj);
+              return new Resource(obj.id, obj.amount, obj.cap, obj.rate, obj.multiplier);
             case "Upgrade":
-              return Object.assign(new Upgrade(), obj);
+              return new Upgrade(obj.id, obj.bought, obj.discount);
             case "Structure":
-              return Object.assign(new Structure(), obj);
+              return new Structure(obj.id, obj.amount, obj.discount);
             case "Dig":
-              return Object.assign(new Dig(), obj);
+              return new Dig(obj.digRates);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
               return Object.assign(new SerializableClass(), obj);
@@ -154,21 +153,23 @@ export default {
         } else if (obj["_class"] !== undefined) {
           console.error("Loading error! Invalid class");
         }
-
         return obj;
       };
       let sto = localStorage.getItem("molesSave");
-      let save = JSON.parse(sto);
-      if (this.saveGame) {
-        setGame(recurConstruct(save));
-        this.$store.commit('setGameData', game);
+      if (sto) {
+        let save = JSON.parse(sto);
+        if (this.saveGame) {
+          setGame(recurConstruct(save));
+          this.$store.commit('setGameData', game);
+        }
       }
     },
   },
   mounted() {
     setInterval(this.gameLoop, 50)
   }
-}
+})
+export default class App extends Vue {}
 </script>
 
 <style>

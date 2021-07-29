@@ -3,20 +3,21 @@
     <p>{{ getResource(id).dataObject.name }}: {{ formatNumber(structure.dataObject.production[id]) }} m/s</p></li></ul></div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import {formatNumber} from "../js/utils"
 import {mapState} from "vuex"
-export default {
+export default defineComponent({
   name: 'ProduceDetails',
   props: ["structure"],
   computed: mapState(['gameData']),
   methods: {
-    formatNumber(num) {
-      return formatNumber(num);
+    formatNumber(num: number) {
+      return formatNumber(num, undefined);
     },
-    getResource(id) {
+    getResource(id: number) {
       return this.gameData.resourceById(id);
     },
   },
-}
+});
 </script>

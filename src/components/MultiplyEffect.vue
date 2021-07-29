@@ -4,22 +4,23 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import {mapState} from  'vuex'
 import {formatNumber} from "../js/utils"
-export default {
+export default defineComponent({
   name: 'MultiplyEffect',
   props: {
     effect: Object, detailedDesc: String
   },
   computed: mapState(['gameData']),
   methods: {
-    formatNumber(num) {
-      return formatNumber(num);
+    formatNumber(num: number) {
+      return formatNumber(num, undefined);
     },
-    getResource(id) {
+    getResource(id: number) {
       return this.gameData.resourceById(id);
     },
   },
-}
+});
 </script>

@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import App from "./App.vue";
 import { game } from "./js/classes/game";
 
-let defaultDescription =
+const defaultDescription =
   "Hover over something to see a description of it here.";
 
 const store = new Vuex.Store({
