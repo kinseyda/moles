@@ -1,20 +1,19 @@
 import Purchaseable from "./purchaseable";
-import { structureDict, StructureData } from "../data";
+import { structureDataDict, StructureData } from "../data";
 import { game } from "./game";
 
 export default class Structure extends Purchaseable {
-  id: number;
   amount: number;
-  discount: {[id: number]: number};
+  discount: { [id: number]: number };
+
   constructor(id: number, amount: number, discount: {[id: number]: number}) {
-    super();
-    this.id = id;
+    super(id);
     this.amount = amount;
     this.discount = discount;
   }
-
+  
   get dataObject(): StructureData {
-    return structureDict[this.id];
+    return structureDataDict[this.id];
   }
 
   trueCost(resId: number): number {
@@ -35,20 +34,20 @@ export default class Structure extends Purchaseable {
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
-      const res = game.resourceById(resId);
+      const res = game.resourceDict[resId];
       if (res) {
         res.amount -= this.trueCost(resId);
       }
-      
     }
     this.amount += 1;
-    game.calculateRates();
+    game.calculateBaseRates();
+    game.calculateTrueRates();
   }
 
   get canBuy() {
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
-      const res = game.resourceById(resId);
+      const res = game.resourceDict[resId];
       if (res) {
         if (this.trueCost(resId) > res.amount) {
           return false;

@@ -1,21 +1,23 @@
-export interface UpgradeData {
+export interface IdentifiableData {
     name: string;
     description: string;
+}
+
+export interface PurchaseableData extends IdentifiableData{
+    cost: { [id: number]: number };
+}
+export interface UpgradeData extends PurchaseableData{
     effect: { func: string, params: any[] }
-    cost:  {[id: number]: number}
 }
-export interface ResourceData {
-    name: string;
-}
-export interface StructureData {
-    name: string;
-    description: string;
+export interface StructureData extends PurchaseableData{
     production:  {[id: number]: number}
-    cost:  {[id: number]: number}
     increase:  {[id: number]: number}
 }
-export let upgradeDict: { [id: number]: UpgradeData } = {};
-upgradeDict = {
+export interface ResourceData extends IdentifiableData{
+    
+}
+export let upgradeDataDict: { [id: number]: UpgradeData } = {};
+upgradeDataDict = {
     0: {
         name: "Shovel",
         description: "Shovel desc",
@@ -130,22 +132,22 @@ upgradeDict = {
     }
 }
 
-export let resourceDict: {[id: number]: ResourceData} = {};
-resourceDict = {
-    0: { name: "Area" },
-    1: { name: "Dirt" },
-    2: { name: "Iron" },
-    3: { name: "Gold" },
-    4: { name: "Filler" },
-    5: { name: "Filler" },
-    6: { name: "Filler" },
-    7: { name: "Filler" },
-    8: { name: "Filler" },
-    9: { name: "Filler" },
-    10: { name: "Filler" },
+export let resourceDataDict: {[id: number]: ResourceData} = {};
+resourceDataDict = {
+    0: { name: "Area", description: "" },
+    1: { name: "Dirt", description: "" },
+    2: { name: "Iron", description: "" },
+    3: { name: "Gold", description: "" },
+    4: { name: "Filler", description: "" },
+    5: { name: "Filler", description: "" },
+    6: { name: "Filler", description: "" },
+    7: { name: "Filler", description: "" },
+    8: { name: "Filler", description: "" },
+    9: { name: "Filler", description: "" },
+    10: { name: "Filler", description: "" },
 }
-export let structureDict: {[id: number]: StructureData} = {};
-structureDict = {
+export let structureDataDict: {[id: number]: StructureData} = {};
+structureDataDict = {
   0: {
     name: "Ball of dirt",
     description: "Compress all the dirt you have into a ball",

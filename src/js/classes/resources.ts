@@ -1,30 +1,34 @@
 import SerializableClass from "./serializableClass";
-import { resourceDict } from "../data";
+import { resourceDataDict } from "../data";
 import { game } from "./game";
+import Identifiable from "./identifiable";
 
-export default class Resource extends SerializableClass {
-  id: number;
+export default class Resource extends Identifiable {
   amount: number;
   cap: number;
-  rate: number;
+  baseRate: number;
   multiplier: number;
+  trueRate: number
 
-  constructor(id: number, amount: number, cap: number, rate: number, multiplier: number) {
-    super();
-    this.id = id;
+  constructor(id: number, amount: number, cap: number, baseRate: number, multiplier: number, trueRate: number) {
+    super(id);
     this.amount = amount;
     this.cap = cap;
-    this.rate = rate;
+    this.baseRate = baseRate;
     this.multiplier = multiplier;
+    this.trueRate = trueRate;
   }
   get dataObject() {
-    return resourceDict[this.id];
+    return resourceDataDict[this.id];
   }
-  get trueRate() {
+  deltaAmount(delta: number) {
+    this.amount += delta;
+  }
+  updateTrueRate() {
+    let digTR = 0;
     if (game.dig.digging) {
-      const digTR = game.dig.findRate(this.id) || 0;
-      return (this.rate + digTR) * this.multiplier;
+      digTR = game.dig.findRate(this.id) || 0;
     }
-    return this.rate * this.multiplier;
+    this.trueRate = (this.baseRate + digTR) * this.multiplier;
   }
 }

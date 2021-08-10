@@ -1,20 +1,18 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDict } from "../data";
+import { upgradeDataDict } from "../data";
 import { game } from "./game";
 
 export default class Upgrade extends Purchaseable {
-  id: number;
   bought: boolean;
   discount: {[id: number]: number};
   constructor(id: number, bought: boolean, discount: {[id: number]: number}) {
-    super();
-    this.id = id;
+    super(id);
     this.bought = bought;
     this.discount = discount;
   }
 
   get dataObject() {
-    return upgradeDict[this.id];
+    return upgradeDataDict[this.id];
   }
 
   trueCost(resId: number) {
@@ -30,9 +28,9 @@ export default class Upgrade extends Purchaseable {
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
-      const res = game.resourceById(resId);
-      if (res) {
-        res.amount -= this.trueCost(resId);
+      if (game.resourceDict[resId]) {
+        game.resourceDict[resId].deltaAmount(this.trueCost(resId)*-1)
+        console.log(`subtracted ${this.trueCost(resId)} from ${game.resourceDict[resId].dataObject.name}`)
       }
     }
     switch (this.dataObject.effect.func) {
@@ -53,7 +51,7 @@ export default class Upgrade extends Purchaseable {
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
-      const res = game.resourceById(resId);
+      const res = game.resourceDict[resId];
       if (res) {
         if (this.trueCost(resId) > res.amount) {
           return false;
@@ -66,9 +64,10 @@ export default class Upgrade extends Purchaseable {
 function addMultiplier(multDict: {[resId: number]: number}) {
   for (const resIdStr in multDict) {
     const resId: number = Number(resIdStr);
-    const res = game.resourceById(resId);
+    const res = game.resourceDict[resId];
     if (res) {
       res.multiplier += multDict[resId];
+      res.updateTrueRate();
     }
     
   }
