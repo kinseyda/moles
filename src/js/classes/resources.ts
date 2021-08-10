@@ -27,9 +27,6 @@ export default class Resource extends Identifiable {
   get dataObject() {
     return resourceDataDict[this.id];
   }
-  deltaAmount(delta: number) {
-    this.amount += delta;
-  }
   updateTrueRate() {
     let digTR = 0;
     if (game.dig.digging) {
