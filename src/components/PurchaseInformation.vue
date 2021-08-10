@@ -13,15 +13,20 @@ import EffectDetails from './EffectDetails.vue'
 import {formatNumber, formatTime} from '../js/utils'
 import { mapState } from 'vuex'
 import Upgrade from '@/js/classes/upgrades'
+import { game } from '@/js/classes/game'
 
 export default defineComponent({
   name: 'PurchaseInformation',
   props: ["purchase"],
+  data() {
+    return {
+      gameData: game,
+    }
+  },
   components: {
     ProduceDetails,
     EffectDetails,
   },
-  computed: mapState(['gameData']),
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);

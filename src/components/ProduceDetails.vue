@@ -4,19 +4,18 @@
 </template>
 
 <script lang="ts">
+import { game } from '@/js/classes/game';
 import { defineComponent } from 'vue'
 import {formatNumber} from "../js/utils"
-import {mapState} from "vuex"
 export default defineComponent({
   name: 'ProduceDetails',
   props: ["structure"],
-  computed: mapState(['gameData']),
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },
     getResource(id: number) {
-      return this.gameData.resourceById(id);
+      return game.resourceDict[id]
     },
   },
 });

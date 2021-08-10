@@ -5,21 +5,20 @@
 
 
 <script lang="ts">
+import { game } from '@/js/classes/game';
 import { defineComponent } from 'vue'
-import {mapState} from  'vuex'
 import {formatNumber} from "../js/utils"
 export default defineComponent({
   name: 'MultiplyEffect',
   props: {
     effect: Object, detailedDesc: String
   },
-  computed: mapState(['gameData']),
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },
     getResource(id: number) {
-      return this.gameData.resourceById(id);
+      return game.resourceDict[id]
     },
   },
 });
