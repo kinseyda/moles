@@ -36,7 +36,6 @@
         </div>
         <div id="upgrade-structure-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict">
-
           </upgrade-list>
           <div id="structure-list">
             <p>Structures:</p>
@@ -129,7 +128,7 @@ import {formatNumber} from './js/utils'
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
           switch (obj["_class"]) {
             case "Game":
-              return new Game(obj.lastUpdate, obj.dig, obj.resourceList, obj.upgradeList, obj.structureList);
+              return new Game(obj.lastUpdate, obj.dig, obj.resourceDict, obj.upgradeDict, obj.structureDict);
             case "Resource":
               return new Resource(obj.id, obj.amount, obj.cap, obj.baseRate, obj.multiplier, obj.trueRate);
             case "Upgrade":

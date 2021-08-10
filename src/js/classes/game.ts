@@ -90,5 +90,5 @@ export let game: Game = reactive(new Game(
   startingStructures
 ));
 export function setGame(ng: Game) {
-  game = ng;
+  game = reactive(ng);
 }
