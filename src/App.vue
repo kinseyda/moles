@@ -8,7 +8,7 @@
           <p>Resources:</p>
           <table>
             <resource-item
-              v-for="item in gameData.resourceList"
+              v-for="item in gameData.resourceDict"
               v-bind:resource="item"
               v-bind:key="item.id"
             ></resource-item>
@@ -18,11 +18,12 @@
           <div id="buttons-container">
             <button
               id="dig-button"
-              @mousedown="gameData.dig.digging = true"
-              @mouseup="gameData.dig.digging = false"
+              @mousedown="setDigging(true)"
+              @mouseup="setDigging(false)"
             >
               <h1>Dig</h1>
             </button>
+            <button @click="gameLoop">Tick</button>
           </div>
           <div id="description-container">
             <div id="description-box" v-html="descriptionBoxData"></div>
@@ -34,24 +35,14 @@
           </div>
         </div>
         <div id="upgrade-structure-column">
-          <div id="upgrade-list">
-            <p>Upgrades:</p>
-            <div id="upgrades">
-              <table>
-                <upgrade-item
-                  v-for="item in gameData.upgradeList"
-                  :class="{'purchase-available': item.canBuy}"
-                  v-bind:upgrade="item"
-                  v-bind:key="item.id"
-                ></upgrade-item>
-              </table>
-            </div>
-          </div>
+          <upgrade-list :upgradeDict="gameData.upgradeDict">
+
+          </upgrade-list>
           <div id="structure-list">
             <p>Structures:</p>
             <table>
               <structure-item
-                v-for="item in gameData.structureList"
+                v-for="item in gameData.structureDict"
                 v-bind:structure="item"
                 v-bind:key="item.id"
               ></structure-item>
@@ -66,7 +57,7 @@
 import { Options, Vue } from 'vue-class-component';
 import { mapState } from 'vuex'
 import ResourceItem from './components/ResourceItem.vue'
-import UpgradeItem from './components/UpgradeItem.vue'
+import UpgradeList from './components/UpgradeList.vue'
 import StructureItem from './components/StructureItem.vue'
 import PurchaseInformation from './components/PurchaseInformation.vue'
 import SerializableClass from './js/classes/serializableClass'
@@ -77,27 +68,20 @@ import Structure from './js/classes/structures'
 import Dig from './js/classes/dig'
 import {formatNumber} from './js/utils'
 
-function gameLoop() {
-  let updateTime = Date.now();
-  let diff = (updateTime - game.lastUpdate) / 1000;
-  for (let i = 0; i < game.resourceList.length; i++) {
-    game.resourceList[i].amount += game.resourceList[i].trueRate * diff;
-    if (game.resourceList[i].amount > game.resourceList[i].cap) {
-      game.resourceList[i].amount = game.resourceList[i].cap;
-    }
-  }
-  game.lastUpdate = updateTime;
-}
-
 @Options({
   name: 'App',
   components: {
     ResourceItem,
-    UpgradeItem,
+    UpgradeList,
     StructureItem,
-    PurchaseInformation
+    PurchaseInformation,
   },
-  computed: mapState(['gameData', 'purchaseInformationData', 'descriptionBoxData']),
+  computed: mapState(['purchaseInformationData', 'descriptionBoxData']),
+  data() {
+    return {
+      gameData: game,
+    }
+  },
   methods: {
     toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
@@ -111,7 +95,15 @@ function gameLoop() {
       return formatNumber(num, "");
     },
     gameLoop() {
-      gameLoop();
+      let updateTime = Date.now();
+      let diff = (updateTime - this.gameData.lastUpdate) / 1000;
+      for (const resId in this.gameData.resourceDict) {
+        this.gameData.resourceDict[resId].amount += this.gameData.resourceDict[resId].trueRate * diff;
+        if (this.gameData.resourceDict[resId].amount > this.gameData.resourceDict[resId].cap) {
+          this.gameData.resourceDict[resId].amount = this.gameData.resourceDict[resId].cap;
+        }
+      }
+      this.gameData.lastUpdate = updateTime;
     },
     saveGame() {
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
@@ -139,7 +131,7 @@ function gameLoop() {
             case "Game":
               return new Game(obj.lastUpdate, obj.dig, obj.resourceList, obj.upgradeList, obj.structureList);
             case "Resource":
-              return new Resource(obj.id, obj.amount, obj.cap, obj.rate, obj.multiplier);
+              return new Resource(obj.id, obj.amount, obj.cap, obj.baseRate, obj.multiplier, obj.trueRate);
             case "Upgrade":
               return new Upgrade(obj.id, obj.bought, obj.discount);
             case "Structure":
@@ -160,13 +152,17 @@ function gameLoop() {
         let save = JSON.parse(sto);
         if (this.saveGame) {
           setGame(recurConstruct(save));
-          this.$store.commit('setGameData', game);
+          this.gameData = game;
         }
       }
     },
+    setDigging(isDigging: boolean) {
+      this.gameData.dig.digging = isDigging;
+      this.gameData.calculateTrueRates();
+    },
   },
   mounted() {
-    setInterval(this.gameLoop, 50)
+    setInterval(this.gameLoop, 50);
   }
 })
 export default class App extends Vue {}
