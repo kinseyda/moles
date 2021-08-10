@@ -1,8 +1,6 @@
-import { game, Game } from "./js/classes/game";
 import Purchaseable from "./js/classes/purchaseable";
 import Vuex, { createStore, Store } from "vuex";
 import { InjectionKey } from "vue";
-import Upgrade from "./js/classes/upgrades";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";
@@ -10,12 +8,14 @@ const defaultDescription =
 export interface State {
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
+  debugMode: boolean;
 }
 export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state: {
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
+    debugMode: false,
   },
   getters: {},
   mutations: {
@@ -28,6 +28,9 @@ export const store = createStore<State>({
         state.purchaseInformationData = purchase;
         state.descriptionBoxData = purchase.dataObject.description;
       }
+    },
+    toggleDebug(state: State) {
+      state.debugMode = !state.debugMode;
     },
   },
 });

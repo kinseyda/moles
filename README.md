@@ -4,8 +4,8 @@ A game of mole miners
 
 ## To do (before initial release)
 
+- Storage structures
 - Item visibility
-- Debug mode
 - Hover descriptions
 - Text log (for story)
 - Prestige system / Empire tab

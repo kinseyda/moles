@@ -1,8 +1,12 @@
 <template>
-  <div id="app">
-    <button @click="toggleTheme">Theme</button>
-    <button @click="saveGame">Save</button>
-    <button @click="loadGame">Load</button>
+  <div id="app" :class="{ 'debug-mode': debugMode }">
+    <div id="top-bar">
+      <button @click="toggleTheme">Theme</button>
+      <button @click="saveGame">Save</button>
+      <button @click="loadGame">Load</button>
+      <button @click="debugToggle">Debug</button>
+      <h3 v-if="debugMode">DEBUG MODE</h3>
+    </div>
     <div id="main">
       <div id="resource-list">
         <p>Resources:</p>
@@ -23,7 +27,10 @@
           >
             <h1>Dig</h1>
           </button>
-          <button @click="gameLoop">Tick</button>
+          <div id="debug-buttons" v-if="debugMode">
+            <button @click="gameLoop">Tick</button>
+            <button @click="debugFillAll">Fill all resources</button>
+          </div>
         </div>
         <div id="description-container">
           <div id="description-box" v-html="descriptionBoxData"></div>
@@ -53,7 +60,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import ResourceItem from "./components/ResourceItem.vue";
 import UpgradeList from "./components/UpgradeList.vue";
 import StructureItem from "./components/StructureItem.vue";
@@ -74,13 +81,16 @@ import { formatNumber } from "./js/utils";
     StructureItem,
     PurchaseInformation,
   },
-  computed: mapState(["purchaseInformationData", "descriptionBoxData"]),
+  computed: {
+    ...mapState(["debugMode", "purchaseInformationData", "descriptionBoxData"]),
+  },
   data() {
     return {
       gameData: game,
     };
   },
   methods: {
+    ...mapMutations(["toggleDebug"]),
     toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
       if (htmlTag.hasAttribute("theme")) {
@@ -175,6 +185,15 @@ import { formatNumber } from "./js/utils";
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
       this.gameData.calculateTrueRates();
+    },
+    debugToggle() {
+      this.toggleDebug();
+    },
+    debugFillAll() {
+      for (let resId in this.gameData.resourceDict) {
+        this.gameData.resourceDict[resId].amount =
+          this.gameData.resourceDict[resId].cap;
+      }
     },
   },
   mounted() {
