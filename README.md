@@ -4,7 +4,6 @@ A game of mole miners
 
 ## To do (before initial release)
 
-- Fix resource reactivity (use vuex properly)
 - Item visibility
 - Debug mode
 - Hover descriptions
