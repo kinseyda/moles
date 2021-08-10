@@ -1,85 +1,84 @@
 <template>
   <div id="app">
-      <button @click="toggleTheme">Theme</button>
-      <button @click="saveGame">Save</button>
-      <button @click="loadGame">Load</button>
-      <div id="main">
-        <div id="resource-list">
-          <p>Resources:</p>
+    <button @click="toggleTheme">Theme</button>
+    <button @click="saveGame">Save</button>
+    <button @click="loadGame">Load</button>
+    <div id="main">
+      <div id="resource-list">
+        <p>Resources:</p>
+        <table>
+          <resource-item
+            v-for="item in gameData.resourceDict"
+            v-bind:resource="item"
+            v-bind:key="item.id"
+          ></resource-item>
+        </table>
+      </div>
+      <div id="central-column">
+        <div id="buttons-container">
+          <button
+            id="dig-button"
+            @mousedown="setDigging(true)"
+            @mouseup="setDigging(false)"
+          >
+            <h1>Dig</h1>
+          </button>
+          <button @click="gameLoop">Tick</button>
+        </div>
+        <div id="description-container">
+          <div id="description-box" v-html="descriptionBoxData"></div>
+          <purchase-information
+            id="purchase-information"
+            v-bind:purchase="purchaseInformationData"
+            v-if="purchaseInformationData"
+          ></purchase-information>
+        </div>
+      </div>
+      <div id="upgrade-structure-column">
+        <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
+        <div id="structure-list">
+          <p>Structures:</p>
           <table>
-            <resource-item
-              v-for="item in gameData.resourceDict"
-              v-bind:resource="item"
+            <structure-item
+              v-for="item in gameData.structureDict"
+              v-bind:structure="item"
               v-bind:key="item.id"
-            ></resource-item>
+            ></structure-item>
           </table>
-        </div>
-        <div id="central-column">
-          <div id="buttons-container">
-            <button
-              id="dig-button"
-              @mousedown="setDigging(true)"
-              @mouseup="setDigging(false)"
-            >
-              <h1>Dig</h1>
-            </button>
-            <button @click="gameLoop">Tick</button>
-          </div>
-          <div id="description-container">
-            <div id="description-box" v-html="descriptionBoxData"></div>
-            <purchase-information
-              id="purchase-information"
-              v-bind:purchase="purchaseInformationData"
-              v-if="purchaseInformationData"
-            ></purchase-information>
-          </div>
-        </div>
-        <div id="upgrade-structure-column">
-          <upgrade-list :upgradeDict="gameData.upgradeDict">
-          </upgrade-list>
-          <div id="structure-list">
-            <p>Structures:</p>
-            <table>
-              <structure-item
-                v-for="item in gameData.structureDict"
-                v-bind:structure="item"
-                v-bind:key="item.id"
-              ></structure-item>
-            </table>
-          </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { mapState } from 'vuex'
-import ResourceItem from './components/ResourceItem.vue'
-import UpgradeList from './components/UpgradeList.vue'
-import StructureItem from './components/StructureItem.vue'
-import PurchaseInformation from './components/PurchaseInformation.vue'
-import SerializableClass from './js/classes/serializableClass'
-import { game, Game, setGame } from './js/classes/game'
-import Resource from './js/classes/resources'
-import Upgrade from './js/classes/upgrades'
-import Structure from './js/classes/structures'
-import Dig from './js/classes/dig'
-import {formatNumber} from './js/utils'
+import { Options, Vue } from "vue-class-component";
+import { mapState } from "vuex";
+import ResourceItem from "./components/ResourceItem.vue";
+import UpgradeList from "./components/UpgradeList.vue";
+import StructureItem from "./components/StructureItem.vue";
+import PurchaseInformation from "./components/PurchaseInformation.vue";
+import SerializableClass from "./js/classes/serializableClass";
+import { game, Game, setGame } from "./js/classes/game";
+import Resource from "./js/classes/resources";
+import Upgrade from "./js/classes/upgrades";
+import Structure from "./js/classes/structures";
+import Dig from "./js/classes/dig";
+import { formatNumber } from "./js/utils";
 
 @Options({
-  name: 'App',
+  name: "App",
   components: {
     ResourceItem,
     UpgradeList,
     StructureItem,
     PurchaseInformation,
   },
-  computed: mapState(['purchaseInformationData', 'descriptionBoxData']),
+  computed: mapState(["purchaseInformationData", "descriptionBoxData"]),
   data() {
     return {
       gameData: game,
-    }
+    };
   },
   methods: {
     toggleTheme() {
@@ -97,9 +96,14 @@ import {formatNumber} from './js/utils'
       let updateTime = Date.now();
       let diff = (updateTime - this.gameData.lastUpdate) / 1000;
       for (const resId in this.gameData.resourceDict) {
-        this.gameData.resourceDict[resId].amount += this.gameData.resourceDict[resId].trueRate * diff;
-        if (this.gameData.resourceDict[resId].amount > this.gameData.resourceDict[resId].cap) {
-          this.gameData.resourceDict[resId].amount = this.gameData.resourceDict[resId].cap;
+        this.gameData.resourceDict[resId].amount +=
+          this.gameData.resourceDict[resId].trueRate * diff;
+        if (
+          this.gameData.resourceDict[resId].amount >
+          this.gameData.resourceDict[resId].cap
+        ) {
+          this.gameData.resourceDict[resId].amount =
+            this.gameData.resourceDict[resId].cap;
         }
       }
       this.gameData.lastUpdate = updateTime;
@@ -128,9 +132,22 @@ import {formatNumber} from './js/utils'
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
           switch (obj["_class"]) {
             case "Game":
-              return new Game(obj.lastUpdate, obj.dig, obj.resourceDict, obj.upgradeDict, obj.structureDict);
+              return new Game(
+                obj.lastUpdate,
+                obj.dig,
+                obj.resourceDict,
+                obj.upgradeDict,
+                obj.structureDict
+              );
             case "Resource":
-              return new Resource(obj.id, obj.amount, obj.cap, obj.baseRate, obj.multiplier, obj.trueRate);
+              return new Resource(
+                obj.id,
+                obj.amount,
+                obj.cap,
+                obj.baseRate,
+                obj.multiplier,
+                obj.trueRate
+              );
             case "Upgrade":
               return new Upgrade(obj.id, obj.bought, obj.discount);
             case "Structure":
@@ -162,7 +179,7 @@ import {formatNumber} from './js/utils'
   },
   mounted() {
     setInterval(this.gameLoop, 50);
-  }
+  },
 })
 export default class App extends Vue {}
 </script>

@@ -1,4 +1,3 @@
-import { game } from "./game";
 import SerializableClass from "./serializableClass";
 
 export default class Dig extends SerializableClass {

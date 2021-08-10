@@ -1,4 +1,3 @@
-import SerializableClass from "./serializableClass";
 import { resourceDataDict } from "../data";
 import { game } from "./game";
 import Identifiable from "./identifiable";
@@ -8,9 +7,16 @@ export default class Resource extends Identifiable {
   cap: number;
   baseRate: number;
   multiplier: number;
-  trueRate: number
+  trueRate: number;
 
-  constructor(id: number, amount: number, cap: number, baseRate: number, multiplier: number, trueRate: number) {
+  constructor(
+    id: number,
+    amount: number,
+    cap: number,
+    baseRate: number,
+    multiplier: number,
+    trueRate: number
+  ) {
     super(id);
     this.amount = amount;
     this.cap = cap;

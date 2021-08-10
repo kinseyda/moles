@@ -6,12 +6,12 @@ export default class Structure extends Purchaseable {
   amount: number;
   discount: { [id: number]: number };
 
-  constructor(id: number, amount: number, discount: {[id: number]: number}) {
+  constructor(id: number, amount: number, discount: { [id: number]: number }) {
     super(id);
     this.amount = amount;
     this.discount = discount;
   }
-  
+
   get dataObject(): StructureData {
     return structureDataDict[this.id];
   }

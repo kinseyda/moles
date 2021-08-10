@@ -3,21 +3,21 @@ import Upgrade from "./upgrades";
 import Structure from "./structures";
 import Resource from "./resources";
 import Dig from "./dig";
-import { reactive } from "vue"
+import { reactive } from "vue";
 
 export class Game extends SerializableClass {
   lastUpdate: number;
   dig: Dig;
-  resourceDict: {[id: number]: Resource};
-  upgradeDict: {[id: number]: Upgrade};
-  structureDict: {[id: number]: Structure};
+  resourceDict: { [id: number]: Resource };
+  upgradeDict: { [id: number]: Upgrade };
+  structureDict: { [id: number]: Structure };
 
   constructor(
     lastUpdate: number,
     dig: Dig,
-    resourceDict: {[id: number]: Resource},
-    upgradeDict: {[id: number]: Upgrade},
-    structureDict: {[id: number]: Structure}
+    resourceDict: { [id: number]: Resource },
+    upgradeDict: { [id: number]: Upgrade },
+    structureDict: { [id: number]: Structure }
   ) {
     super();
     this.lastUpdate = lastUpdate;
@@ -40,8 +40,7 @@ export class Game extends SerializableClass {
         const prodId: number = Number(prodIdStr);
         const res = this.resourceDict[prodId];
         if (res) {
-          res.baseRate +=
-          prodDict[prodId] * this.structureDict[strucId].amount;
+          res.baseRate += prodDict[prodId] * this.structureDict[strucId].amount;
         }
       }
     }
@@ -80,15 +79,20 @@ const startingUpgrades = {
   10: new Upgrade(10, false, {}),
 };
 
-const startingStructures = { 0: new Structure(0, 0, {}), 1: new Structure(1, 0, {}) };
+const startingStructures = {
+  0: new Structure(0, 0, {}),
+  1: new Structure(1, 0, {}),
+};
 
-export let game: Game = reactive(new Game(
-  Date.now(),
-  new Dig({1: 10}),
-  startingResources,
-  startingUpgrades,
-  startingStructures
-));
+export let game: Game = reactive(
+  new Game(
+    Date.now(),
+    new Dig({ 1: 10 }),
+    startingResources,
+    startingUpgrades,
+    startingStructures
+  )
+);
 export function setGame(ng: Game) {
   game = reactive(ng);
 }

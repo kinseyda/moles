@@ -11,23 +11,23 @@ export interface State {
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
 }
-export const key: InjectionKey<Store<State>> = Symbol()
+export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state: {
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
     hoverDesc(state: State, purchase: Purchaseable) {
-        if (!purchase) {
-            state.purchaseInformationData = undefined;
-            state.descriptionBoxData = "Hover over something to see a description of it here.";
-        } else {
-            state.purchaseInformationData = purchase;
-            state.descriptionBoxData = purchase.dataObject.description;
-        }
+      if (!purchase) {
+        state.purchaseInformationData = undefined;
+        state.descriptionBoxData =
+          "Hover over something to see a description of it here.";
+      } else {
+        state.purchaseInformationData = purchase;
+        state.descriptionBoxData = purchase.dataObject.description;
+      }
     },
   },
 });
