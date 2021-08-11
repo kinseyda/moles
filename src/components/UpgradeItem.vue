@@ -1,8 +1,8 @@
 <template>
   <tr
     class="list-row clickable"
-    @mouseover="purchaseHover(upgrade)"
-    @mouseleave="resetDescription"
+    @mouseover="hoverDescIdentifiable(upgrade)"
+    @mouseleave="resetDesc()"
     :class="{ 'purchase-available': upgrade.canBuy }"
     @click="buyUpgrade(upgrade)"
   >
@@ -20,15 +20,9 @@ export default defineComponent({
   name: "UpgradeItem",
   props: ["upgrade"],
   methods: {
-    ...mapMutations(["hoverDesc"]),
+    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
-    },
-    purchaseHover(upgrade: Upgrade) {
-      this.hoverDesc(upgrade);
-    },
-    resetDescription() {
-      this.hoverDesc(undefined);
     },
     buyUpgrade(upgrade: Upgrade) {
       upgrade.buy();

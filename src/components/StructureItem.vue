@@ -1,8 +1,8 @@
 <template>
   <tr
     class="list-row clickable"
-    @mouseover="purchaseHover(structure)"
-    @mouseleave="resetDescription"
+    @mouseover="hoverDescIdentifiable(structure)"
+    @mouseleave="resetDesc()"
     @click="buyStructure(structure)"
   >
     <td :class="{ 'purchase-available': structure.canBuy }">
@@ -22,15 +22,9 @@ export default defineComponent({
   name: "StructureItem",
   props: ["structure"],
   methods: {
-    ...mapMutations(["hoverDesc"]),
+    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
-    },
-    purchaseHover(structure: Structure) {
-      this.hoverDesc(structure);
-    },
-    resetDescription() {
-      this.hoverDesc(undefined);
     },
     buyStructure(structure: Structure) {
       structure.buy();

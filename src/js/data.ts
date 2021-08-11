@@ -142,7 +142,10 @@ upgradeDataDict = {
 export let resourceDataDict: { [id: number]: ResourceData } = {};
 resourceDataDict = {
   0: { name: "Area", description: "" },
-  1: { name: "Dirt", description: "" },
+  1: {
+    name: "Dirt",
+    description: "The basic building block of all mole civilization",
+  },
   2: { name: "Iron", description: "" },
   3: { name: "Gold", description: "" },
   4: { name: "Filler", description: "" },

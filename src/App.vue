@@ -1,10 +1,34 @@
 <template>
   <div id="app" :class="{ 'debug-mode': debugMode }">
     <div id="top-bar">
-      <button @click="toggleTheme">Theme</button>
-      <button @click="saveGame">Save</button>
-      <button @click="loadGame">Load</button>
-      <button @click="debugToggle">Debug</button>
+      <button
+        @click="toggleTheme"
+        @mouseover="hoverDescString(uiDescriptions['theme'])"
+        @mouseleave="resetDesc()"
+      >
+        Theme
+      </button>
+      <button
+        @click="saveGame"
+        @mouseover="hoverDescString(uiDescriptions['save'])"
+        @mouseleave="resetDesc()"
+      >
+        Save
+      </button>
+      <button
+        @click="loadGame"
+        @mouseover="hoverDescString(uiDescriptions['load'])"
+        @mouseleave="resetDesc()"
+      >
+        Load
+      </button>
+      <button
+        @click="debugToggle"
+        @mouseover="hoverDescString(uiDescriptions['debug'])"
+        @mouseleave="resetDesc()"
+      >
+        Debug
+      </button>
       <h3 v-if="debugMode">DEBUG MODE</h3>
     </div>
     <div id="main">
@@ -22,6 +46,8 @@
         <div id="buttons-container">
           <button
             id="dig-button"
+            @mouseover="hoverDescDig()"
+            @mouseleave="resetDesc()"
             @mousedown="setDigging(true)"
             @mouseup="setDigging(false)"
           >
@@ -35,10 +61,10 @@
         <div id="description-container">
           <div id="description-box" v-html="descriptionBoxData"></div>
           <purchase-information
-            id="purchase-information"
             v-bind:purchase="purchaseInformationData"
             v-if="purchaseInformationData"
           ></purchase-information>
+          <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
         </div>
       </div>
       <div id="upgrade-structure-column">
@@ -65,6 +91,7 @@ import ResourceItem from "./components/ResourceItem.vue";
 import UpgradeList from "./components/UpgradeList.vue";
 import StructureItem from "./components/StructureItem.vue";
 import PurchaseInformation from "./components/PurchaseInformation.vue";
+import DigInformation from "./components/DigInformation.vue";
 import SerializableClass from "./js/classes/serializableClass";
 import { game, Game, setGame } from "./js/classes/game";
 import Resource from "./js/classes/resources";
@@ -72,6 +99,7 @@ import Upgrade from "./js/classes/upgrades";
 import Structure from "./js/classes/structures";
 import Dig from "./js/classes/dig";
 import { formatNumber } from "./js/utils";
+import { uiDescriptions } from "./js/uiDescriptions";
 
 @Options({
   name: "App",
@@ -80,17 +108,29 @@ import { formatNumber } from "./js/utils";
     UpgradeList,
     StructureItem,
     PurchaseInformation,
+    DigInformation,
   },
   computed: {
-    ...mapState(["debugMode", "purchaseInformationData", "descriptionBoxData"]),
+    ...mapState([
+      "debugMode",
+      "purchaseInformationData",
+      "descriptionBoxData",
+      "digData",
+    ]),
   },
   data() {
     return {
       gameData: game,
+      uiDescriptions: uiDescriptions,
     };
   },
   methods: {
-    ...mapMutations(["toggleDebug"]),
+    ...mapMutations([
+      "toggleDebug",
+      "hoverDescDig",
+      "hoverDescString",
+      "resetDesc",
+    ]),
     toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
       if (htmlTag.hasAttribute("theme")) {
