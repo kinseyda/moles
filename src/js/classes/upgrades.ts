@@ -6,7 +6,7 @@ export default class Upgrade extends Purchaseable {
   bought: boolean;
   discount: { [id: number]: number };
   constructor(id: number, bought: boolean, discount: { [id: number]: number }) {
-    super(id);
+    super(id, "Upgrade");
     this.bought = bought;
     this.discount = discount;
   }

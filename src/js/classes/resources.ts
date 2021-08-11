@@ -17,7 +17,7 @@ export default class Resource extends Identifiable {
     multiplier: number,
     trueRate: number
   ) {
-    super(id);
+    super(id, "Resource");
     this.amount = amount;
     this.cap = cap;
     this.baseRate = baseRate;

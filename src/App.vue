@@ -206,7 +206,10 @@ import { uiDescriptions } from "./js/uiDescriptions";
               return new Dig(obj.digRates);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
-              return Object.assign(new SerializableClass(), obj);
+              return Object.assign(
+                new SerializableClass("SerializableClass"),
+                obj
+              );
           }
         } else if (obj["_class"] !== undefined) {
           console.error("Loading error! Invalid class");

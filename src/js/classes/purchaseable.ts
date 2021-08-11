@@ -1,8 +1,8 @@
 import Identifiable from "./identifiable";
 
 export default abstract class Purchaseable extends Identifiable {
-  constructor(id: number) {
-    super(id);
+  constructor(id: number, typeName: string) {
+    super(id, typeName);
   }
 
   abstract trueCost(resId: number): number;

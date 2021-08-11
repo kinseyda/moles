@@ -7,7 +7,7 @@ export default class Structure extends Purchaseable {
   discount: { [id: number]: number };
 
   constructor(id: number, amount: number, discount: { [id: number]: number }) {
-    super(id);
+    super(id, "Structure");
     this.amount = amount;
     this.discount = discount;
   }

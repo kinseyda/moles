@@ -6,7 +6,7 @@ export default class Dig extends SerializableClass {
   digging: Boolean;
 
   constructor(digrates: { [index: number]: number }) {
-    super();
+    super("Dig");
     this.digRates = digrates;
     this.digging = false;
   }

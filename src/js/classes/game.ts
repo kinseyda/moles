@@ -19,7 +19,7 @@ export class Game extends SerializableClass {
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure }
   ) {
-    super();
+    super("Game");
     this.lastUpdate = lastUpdate;
     this.dig = dig;
     this.resourceDict = resourceDict;
