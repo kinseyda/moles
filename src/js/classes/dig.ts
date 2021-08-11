@@ -1,3 +1,4 @@
+import { game } from "./game";
 import SerializableClass from "./serializableClass";
 
 export default class Dig extends SerializableClass {
@@ -9,10 +10,10 @@ export default class Dig extends SerializableClass {
     this.digRates = digrates;
     this.digging = false;
   }
-  findRate(resId: number) {
+  findTrueDigRate(resId: number) {
     if (this.digRates[resId] === undefined) {
       return undefined;
     }
-    return this.digRates[resId];
+    return this.digRates[resId] * game.resourceDict[resId].multiplier;
   }
 }

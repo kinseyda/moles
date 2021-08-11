@@ -30,8 +30,8 @@ export default class Resource extends Identifiable {
   updateTrueRate() {
     let digTR = 0;
     if (game.dig.digging) {
-      digTR = game.dig.findRate(this.id) || 0;
+      digTR = game.dig.findTrueDigRate(this.id) || 0;
     }
-    this.trueRate = (this.baseRate + digTR) * this.multiplier;
+    this.trueRate = this.baseRate * this.multiplier + digTR;
   }
 }
