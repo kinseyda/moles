@@ -98,7 +98,8 @@ table {
   overflow-y: scroll;
 }
 
-.clickable {
+.clickable,
+button {
   user-select: none;
   cursor: pointer;
 }
