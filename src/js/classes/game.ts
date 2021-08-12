@@ -26,6 +26,18 @@ export class Game extends SerializableClass {
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
   }
+  tick() {
+    const updateTime = Date.now();
+    const diff = (updateTime - this.lastUpdate) / 1000;
+    for (const resId in this.resourceDict) {
+      this.resourceDict[resId].amount +=
+        this.resourceDict[resId].trueRate * diff;
+      if (this.resourceDict[resId].amount > this.resourceDict[resId].cap) {
+        this.resourceDict[resId].amount = this.resourceDict[resId].cap;
+      }
+    }
+    this.lastUpdate = updateTime;
+  }
 
   resetBaseRates() {
     for (const resId in this.resourceDict) {

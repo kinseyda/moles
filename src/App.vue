@@ -129,20 +129,7 @@ import { uiDescriptions } from "./js/uiDescriptions";
       return formatNumber(num, "");
     },
     gameLoop() {
-      let updateTime = Date.now();
-      let diff = (updateTime - this.gameData.lastUpdate) / 1000;
-      for (const resId in this.gameData.resourceDict) {
-        this.gameData.resourceDict[resId].amount +=
-          this.gameData.resourceDict[resId].trueRate * diff;
-        if (
-          this.gameData.resourceDict[resId].amount >
-          this.gameData.resourceDict[resId].cap
-        ) {
-          this.gameData.resourceDict[resId].amount =
-            this.gameData.resourceDict[resId].cap;
-        }
-      }
-      this.gameData.lastUpdate = updateTime;
+      this.gameData.tick();
     },
     saveGame() {
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
