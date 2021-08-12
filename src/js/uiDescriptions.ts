@@ -5,5 +5,5 @@ uiDescriptions = {
   load: "Load the game from a cookie",
   debug:
     "Turn on/off debug mode. <br> <h4>Saving after using debug mode is not recommended</h4>",
-  dig: "Dig",
+  dig: "You feel an urge to dig",
 };
