@@ -133,11 +133,13 @@ import { uiDescriptions } from "./js/uiDescriptions";
     ]),
     toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
-      if (htmlTag.hasAttribute("theme")) {
-        htmlTag.removeAttribute("theme");
-        return;
+      if (htmlTag.getAttribute("theme") == "light") {
+        htmlTag.setAttribute("theme", "dark");
+        localStorage.setItem("molesTheme", "dark");
+      } else if (htmlTag.getAttribute("theme") == "dark") {
+        htmlTag.setAttribute("theme", "light");
+        localStorage.setItem("molesTheme", "light");
       }
-      htmlTag.setAttribute("theme", "dark");
     },
     formatNumber(num: number) {
       return formatNumber(num, "");
@@ -241,6 +243,14 @@ import { uiDescriptions } from "./js/uiDescriptions";
   },
   mounted() {
     setInterval(this.gameLoop, 50);
+
+    const htmlTag = document.getElementsByTagName("html")[0];
+    const loadTheme = localStorage.getItem("molesTheme");
+    if (loadTheme == "light" || loadTheme == "dark") {
+      htmlTag.setAttribute("theme", loadTheme);
+    } else {
+      htmlTag.setAttribute("theme", "light");
+    }
   },
 })
 export default class App extends Vue {}
