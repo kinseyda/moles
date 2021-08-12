@@ -14,7 +14,7 @@ cd dist
 
 git init -b "main"
 git add -A
-git commit -m 'deploy'
+git commit -m "Deploying - `date +'%Y-%m-%d %H:%M:%S'`"
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
