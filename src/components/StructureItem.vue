@@ -16,7 +16,7 @@
 import Structure from "@/js/classes/structures";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import { formatNumber } from "../js/utils";
+import { formatNumber } from "@/js/utils";
 
 export default defineComponent({
   name: "StructureItem",

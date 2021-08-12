@@ -28,3 +28,21 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+td {
+  width: 7ch;
+  padding-left: 0.5ch;
+}
+td:nth-child(1) {
+  /* Name */
+  width: 8ch;
+}
+td:nth-child(3) {
+  /* Slash */
+  width: 1ch;
+}
+td:nth-child(5) {
+  /* Rate */
+  width: 11ch;
+}
+</style>

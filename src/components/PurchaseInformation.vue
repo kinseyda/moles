@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="purchase-desc" id="cost-container">
+    <div class="desc-side" id="cost-container">
       <h4>Cost</h4>
       <ul>
         <CostBullet
@@ -12,7 +12,7 @@
         </CostBullet>
       </ul>
     </div>
-    <div class="purchase-desc" id="effect-produce-container">
+    <div class="desc-side" id="effect-produce-container">
       <produce-details
         v-if="purchase._class === 'Structure'"
         v-bind:structure="purchase"
@@ -32,7 +32,7 @@ import { defineComponent } from "vue";
 import ProduceDetails from "./ProduceDetails.vue";
 import EffectDetails from "./EffectDetails.vue";
 import CostBullet from "./CostBullet.vue";
-import { formatNumber, formatTime } from "../js/utils";
+import { formatNumber, formatTime } from "@/js/utils";
 import Upgrade from "@/js/classes/upgrades";
 import { game } from "@/js/classes/game";
 
@@ -73,3 +73,14 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.desc-side {
+  width: 50%;
+}
+#cost-container {
+  float: left;
+}
+#effect-produce-container {
+  float: right;
+}
+</style>

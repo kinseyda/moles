@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'debug-mode': debugMode }">
+  <div id="app">
     <div id="top-bar">
       <button
         @click="toggleTheme"
@@ -32,16 +32,7 @@
       <h3 v-if="debugMode">DEBUG MODE</h3>
     </div>
     <div id="main">
-      <div id="resource-list">
-        <p>Resources:</p>
-        <table>
-          <resource-item
-            v-for="item in gameData.resourceDict"
-            v-bind:resource="item"
-            v-bind:key="item.id"
-          ></resource-item>
-        </table>
-      </div>
+      <resource-list :resourceDict="gameData.resourceDict"></resource-list>
       <div id="central-column">
         <div id="buttons-container">
           <button
@@ -67,18 +58,11 @@
           <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
         </div>
       </div>
-      <div id="upgrade-structure-column">
+      <div id="purchaseable-column">
         <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-        <div id="structure-list">
-          <p>Structures:</p>
-          <table>
-            <structure-item
-              v-for="item in gameData.structureDict"
-              v-bind:structure="item"
-              v-bind:key="item.id"
-            ></structure-item>
-          </table>
-        </div>
+        <structure-list
+          :structureDict="gameData.structureDict"
+        ></structure-list>
       </div>
     </div>
   </div>
@@ -87,9 +71,9 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
-import ResourceItem from "./components/ResourceItem.vue";
+import ResourceList from "./components/ResourceList.vue";
 import UpgradeList from "./components/UpgradeList.vue";
-import StructureItem from "./components/StructureItem.vue";
+import StructureList from "./components/StructureList.vue";
 import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
 import SerializableClass from "./js/classes/serializableClass";
@@ -104,9 +88,9 @@ import { uiDescriptions } from "./js/uiDescriptions";
 @Options({
   name: "App",
   components: {
-    ResourceItem,
+    ResourceList,
     UpgradeList,
-    StructureItem,
+    StructureList,
     PurchaseInformation,
     DigInformation,
   },
@@ -256,5 +240,44 @@ import { uiDescriptions } from "./js/uiDescriptions";
 export default class App extends Vue {}
 </script>
 
-<style>
+<style scoped>
+#main {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  top: 25px;
+  min-height: calc(100% - 25px);
+  width: 100%;
+}
+#top-bar {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+  top: 0;
+  min-height: 25px;
+  width: 100%;
+}
+#central-column {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+}
+#dig-button {
+  height: 15em;
+  width: calc(100% - 40px);
+  margin: 20px;
+}
+#buttons-container {
+  flex: 1 0 0;
+}
+#description-container {
+  margin-bottom: 1em;
+}
+#purchaseable-column {
+  flex: 0 0 30ch;
+  display: flex;
+  flex-direction: column;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="upgrade-list">
+  <div id="outer">
     <p>Upgrades:</p>
     <div id="upgrades">
       <table>
@@ -36,3 +36,12 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+#outer {
+  height: 20%;
+}
+#upgrades {
+  height: calc(100% - 1em);
+  overflow-y: auto;
+}
+</style>

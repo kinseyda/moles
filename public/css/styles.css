@@ -7,7 +7,8 @@
   padding: 0px;
   margin: 0px;
   border: 0px;
-  /* border: 1px solid black; */
+  /* border: 1px solid black;
+  margin: -1px; */
 }
 
 button {
@@ -16,25 +17,6 @@ button {
 button:active,
 button:active h1 {
   background-color: var(--alternate-bg-color);
-}
-
-#main {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
-  top: 25px;
-  min-height: calc(100% - 25px);
-  width: 100%;
-}
-#top-bar {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  flex: 1 0 0;
-  top: 0;
-  min-height: 25px;
-  width: 100%;
 }
 
 tr.list-row:nth-child(odd),
@@ -48,81 +30,12 @@ table {
   border-collapse: collapse;
 }
 
-#resource-list {
-  flex: 0 0 35ch;
-  min-height: 100%;
-}
-#resource-list td {
-  width: 7ch;
-  padding-left: 0.5ch;
-}
-#resource-list td:nth-child(1) {
-  /* Name */
-  width: 8ch;
-}
-#resource-list td:nth-child(3) {
-  /* Slash */
-  width: 1ch;
-}
-#resource-list td:nth-child(5) {
-  /* Rate */
-  width: 11ch;
-}
-
-#central-column {
-  flex: 1 0 0;
-  display: flex;
-  flex-direction: column;
-}
-
-#buttons-container {
-  flex: 1 0 0;
-}
-#dig-button {
-  height: 15em;
-  width: calc(100% - 40px);
-  margin: 20px;
-}
-
-#upgrade-structure-column {
-  flex: 0 0 30ch;
-  display: flex;
-  flex-direction: column;
-}
-
-#upgrade-list {
-  height: 20%;
-}
-#upgrade-list #upgrades {
-  height: calc(100% - 1em);
-  overflow-y: scroll;
-}
-
 .clickable,
 button {
   user-select: none;
   cursor: pointer;
 }
 
-#structure-list {
-  flex: 1 1 80%;
-  overflow: auto;
-  padding-top: 10px;
-}
-
 .purchase-available {
   font-weight: bold;
-}
-
-#description-container {
-  margin-bottom: 1em;
-}
-.purchase-desc {
-  width: 50%;
-}
-#cost-container {
-  float: left;
-}
-#effect-produce-container {
-  float: right;
 }
