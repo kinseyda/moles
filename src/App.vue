@@ -29,6 +29,13 @@
       >
         Debug
       </button>
+      <button
+        @click="toggleTooltips"
+        @mouseover="hoverDescString(uiDescriptions['descriptionPosition'])"
+        @mouseleave="resetDesc()"
+      >
+        Descriptions: {{ tooltips ? "Tooltips" : "Fixed" }}
+      </button>
       <h3 v-if="debugMode">DEBUG MODE</h3>
     </div>
     <div id="main">
@@ -49,7 +56,13 @@
             <button @click="debugFillAll">Fill all resources</button>
           </div>
         </div>
-        <div id="description-container">
+        <div
+          id="description-container"
+          :class="{
+            'floating-tooltip': tooltips,
+            'is-empty': descriptionBoxIsEmpty,
+          }"
+        >
           <div id="description-box" v-html="descriptionBoxData"></div>
           <purchase-information
             v-bind:purchase="purchaseInformationData"
@@ -99,6 +112,7 @@ import { uiDescriptions } from "./js/uiDescriptions";
       "debugMode",
       "purchaseInformationData",
       "descriptionBoxData",
+      "descriptionBoxIsEmpty",
       "digData",
     ]),
   },
@@ -106,6 +120,7 @@ import { uiDescriptions } from "./js/uiDescriptions";
     return {
       gameData: game,
       uiDescriptions: uiDescriptions,
+      tooltips: false,
     };
   },
   methods: {
@@ -211,16 +226,56 @@ import { uiDescriptions } from "./js/uiDescriptions";
           this.gameData.resourceDict[resId].cap;
       }
     },
+    toggleTooltips() {
+      this.tooltips = !this.tooltips;
+      this.setTooltips(this.tooltips);
+    },
+    setTooltips(tooltips: boolean) {
+      let tooltipPos = function (e: MouseEvent) {
+        const descContainer = document.getElementById("description-container");
+        if (descContainer === null) {
+          return;
+        }
+        const x = e.clientX,
+          y = e.clientY;
+        if (x + 20 + 384 > window.innerWidth) {
+          descContainer.style.left = "";
+          descContainer.style.right = window.innerWidth - x + 20 + "px";
+        } else {
+          descContainer.style.right = "";
+          descContainer.style.left = x + 20 + "px";
+        }
+        descContainer.style.top = y + 20 + "px";
+      };
+      if (tooltips) {
+        localStorage.setItem("molesDescPos", "tooltip");
+        window.addEventListener("mousemove", tooltipPos);
+      } else {
+        localStorage.setItem("molesDescPos", "fixed");
+        window.removeEventListener("mousemove", tooltipPos);
+      }
+    },
   },
   mounted() {
     setInterval(this.gameLoop, 50);
 
+    // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
     if (loadTheme == "light" || loadTheme == "dark") {
       htmlTag.setAttribute("theme", loadTheme);
     } else {
       htmlTag.setAttribute("theme", "light");
+    }
+
+    // Load description position selection
+    const loadDescPos = localStorage.getItem("molesDescPos");
+    if (loadDescPos == "tooltip") {
+      this.tooltips = true;
+      this.setTooltips(true);
+    } else {
+      this.tooltips = false;
+      this.setTooltips(false);
     }
   },
 })
@@ -261,6 +316,16 @@ export default class App extends Vue {}
 }
 #description-container {
   margin-bottom: 1em;
+}
+#description-container.floating-tooltip {
+  border: 1px solid var(--text-color);
+  width: 384px;
+  display: block;
+  position: fixed;
+  overflow: hidden;
+}
+#description-container.floating-tooltip.is-empty {
+  display: none;
 }
 #purchaseable-column {
   flex: 0 0 30ch;

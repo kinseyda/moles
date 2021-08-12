@@ -9,6 +9,7 @@ const defaultDescription =
   "Hover over something to see a description of it here.";
 
 export interface State {
+  descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
   digData: boolean;
@@ -17,6 +18,7 @@ export interface State {
 export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state: {
+    descriptionBoxIsEmpty: true,
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
     digData: false,
@@ -25,22 +27,25 @@ export const store = createStore<State>({
   getters: {},
   mutations: {
     resetDesc(state: State) {
+      state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;
-      state.descriptionBoxData =
-        "Hover over something to see a description of it here.";
+      state.descriptionBoxData = defaultDescription;
       state.digData = false;
     },
     hoverDescIdentifiable(state: State, describe: Identifiable) {
+      state.descriptionBoxIsEmpty = false;
       if (describe instanceof Purchaseable) {
         state.purchaseInformationData = describe;
       }
       state.descriptionBoxData = describe.dataObject.description;
     },
     hoverDescDig(state: State) {
+      state.descriptionBoxIsEmpty = false;
       state.digData = true;
       state.descriptionBoxData = uiDescriptions["dig"];
     },
     hoverDescString(state: State, str: string) {
+      state.descriptionBoxIsEmpty = false;
       state.descriptionBoxData = str;
     },
     toggleDebug(state: State) {

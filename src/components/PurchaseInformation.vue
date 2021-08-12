@@ -83,4 +83,7 @@ export default defineComponent({
 #effect-produce-container {
   float: right;
 }
+ul {
+  padding-left: 1.2em;
+}
 </style>
