@@ -6,7 +6,8 @@
         @mouseover="hoverDescString(uiDescriptions['theme'])"
         @mouseleave="resetDesc()"
       >
-        Theme
+        Theme: {{ theme == "light" ? "Light" : ""
+        }}{{ theme == "dark" ? "Dark" : "" }}
       </button>
       <button
         @click="saveGame"
@@ -121,6 +122,7 @@ import { uiDescriptions } from "./js/uiDescriptions";
       gameData: game,
       uiDescriptions: uiDescriptions,
       tooltips: false,
+      theme: "light",
     };
   },
   methods: {
@@ -132,12 +134,14 @@ import { uiDescriptions } from "./js/uiDescriptions";
     ]),
     toggleTheme() {
       const htmlTag = document.getElementsByTagName("html")[0];
-      if (htmlTag.getAttribute("theme") == "light") {
+      if (this.theme == "light") {
         htmlTag.setAttribute("theme", "dark");
         localStorage.setItem("molesTheme", "dark");
-      } else if (htmlTag.getAttribute("theme") == "dark") {
+        this.theme = "dark";
+      } else if (this.theme == "dark") {
         htmlTag.setAttribute("theme", "light");
         localStorage.setItem("molesTheme", "light");
+        this.theme = "light";
       }
     },
     formatNumber(num: number) {
@@ -264,6 +268,7 @@ import { uiDescriptions } from "./js/uiDescriptions";
     const loadTheme = localStorage.getItem("molesTheme");
     if (loadTheme == "light" || loadTheme == "dark") {
       htmlTag.setAttribute("theme", loadTheme);
+      this.theme = loadTheme;
     } else {
       htmlTag.setAttribute("theme", "light");
     }
