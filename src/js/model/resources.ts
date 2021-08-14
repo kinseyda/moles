@@ -1,4 +1,4 @@
-import { resourceDataDict } from "../data";
+import { resourceDataDict } from "@/js/staticData/resourceData";
 import { game } from "./game";
 import Identifiable from "./identifiable";
 

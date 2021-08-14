@@ -1,4 +1,4 @@
-import { IdentifiableData } from "../data";
+import { IdentifiableData } from "../staticData/dataInterfaces";
 import SerializableClass from "./serializableClass";
 
 export default abstract class Identifiable extends SerializableClass {

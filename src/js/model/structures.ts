@@ -1,5 +1,6 @@
 import Purchaseable from "./purchaseable";
-import { structureDataDict, StructureData } from "../data";
+import { structureDataDict } from "../staticData/structureData";
+import { StructureData } from "../staticData/dataInterfaces";
 import { game } from "./game";
 
 export default class Structure extends Purchaseable {

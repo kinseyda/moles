@@ -90,14 +90,14 @@ import UpgradeList from "./components/UpgradeList.vue";
 import StructureList from "./components/StructureList.vue";
 import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
-import SerializableClass from "./js/classes/serializableClass";
-import { game, Game, setGame } from "./js/classes/game";
-import Resource from "./js/classes/resources";
-import Upgrade from "./js/classes/upgrades";
-import Structure from "./js/classes/structures";
-import Dig from "./js/classes/dig";
+import SerializableClass from "./js/model/serializableClass";
+import { game, Game, setGame } from "./js/model/game";
+import Resource from "./js/model/resources";
+import Upgrade from "./js/model/upgrades";
+import Structure from "./js/model/structures";
+import Dig from "./js/model/dig";
 import { formatNumber } from "./js/utils";
-import { uiDescriptions } from "./js/uiDescriptions";
+import { uiDescriptions } from "./js/staticData/uiDescriptions";
 
 @Options({
   name: "App",

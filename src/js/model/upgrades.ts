@@ -1,5 +1,5 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDataDict } from "../data";
+import { upgradeDataDict } from "../staticData/upgradeData";
 import { game } from "./game";
 
 export default class Upgrade extends Purchaseable {

@@ -11,13 +11,15 @@ export class Game extends SerializableClass {
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
+  eventsDict: { [id: number]: number }; // EventId: Amount of times event has happened
 
   constructor(
     lastUpdate: number,
     dig: Dig,
     resourceDict: { [id: number]: Resource },
     upgradeDict: { [id: number]: Upgrade },
-    structureDict: { [id: number]: Structure }
+    structureDict: { [id: number]: Structure },
+    eventsDict: { [id: number]: number }
   ) {
     super("Game");
     this.lastUpdate = lastUpdate;
@@ -25,6 +27,7 @@ export class Game extends SerializableClass {
     this.resourceDict = resourceDict;
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
+    this.eventsDict = eventsDict;
   }
   tick() {
     const updateTime = Date.now();
@@ -102,7 +105,8 @@ export let game: Game = reactive(
     new Dig({ 1: 10 }),
     startingResources,
     startingUpgrades,
-    startingStructures
+    startingStructures,
+    {}
   )
 );
 export function setGame(ng: Game) {

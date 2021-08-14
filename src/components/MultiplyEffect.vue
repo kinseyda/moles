@@ -14,7 +14,7 @@
 
 
 <script lang="ts">
-import { game } from "@/js/classes/game";
+import { game } from "@/js/model/game";
 import { defineComponent } from "vue";
 import { formatNumber } from "../js/utils";
 export default defineComponent({

@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import Upgrade from "@/js/classes/upgrades";
+import Upgrade from "@/js/model/upgrades";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { formatNumber } from "../js/utils";

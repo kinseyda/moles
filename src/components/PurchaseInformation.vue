@@ -33,8 +33,8 @@ import ProduceDetails from "./ProduceDetails.vue";
 import EffectDetails from "./EffectDetails.vue";
 import CostBullet from "./CostBullet.vue";
 import { formatNumber, formatTime } from "@/js/utils";
-import Upgrade from "@/js/classes/upgrades";
-import { game } from "@/js/classes/game";
+import Upgrade from "@/js/model/upgrades";
+import { game } from "@/js/model/game";
 
 export default defineComponent({
   name: "PurchaseInformation",

@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import Dig from "@/js/classes/dig";
-import { game } from "@/js/classes/game";
+import Dig from "@/js/model/dig";
+import { game } from "@/js/model/game";
 import { formatNumber } from "@/js/utils";
 import { defineComponent } from "vue";
 export default defineComponent({
