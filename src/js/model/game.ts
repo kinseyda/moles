@@ -4,6 +4,10 @@ import Structure from "./structures";
 import Resource from "./resources";
 import Dig from "./dig";
 import { reactive } from "vue";
+import {
+  eventDataDict,
+  resAmountEventIdsByResId,
+} from "../staticData/eventData";
 
 export class Game extends SerializableClass {
   lastUpdate: number;
@@ -11,7 +15,7 @@ export class Game extends SerializableClass {
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
-  eventsDict: { [id: number]: number }; // EventId: Amount of times event has happened
+  eventsDict: { [id: number]: number }; // EventId: Time achieved / last achieved
 
   constructor(
     lastUpdate: number,
@@ -33,15 +37,54 @@ export class Game extends SerializableClass {
     const updateTime = Date.now();
     const diff = (updateTime - this.lastUpdate) / 1000;
     for (const resId in this.resourceDict) {
-      this.resourceDict[resId].amount +=
-        this.resourceDict[resId].trueRate * diff;
+      this.resourceDict[resId].incrementAmount(
+        this.resourceDict[resId].trueRate * diff
+      );
       if (this.resourceDict[resId].amount > this.resourceDict[resId].cap) {
-        this.resourceDict[resId].amount = this.resourceDict[resId].cap;
+        this.resourceDict[resId].setAmount(this.resourceDict[resId].cap);
       }
     }
     this.lastUpdate = updateTime;
   }
-
+  handleEvent(eventType: string, params: { [x: string]: any }) {
+    switch (eventType) {
+      case "resourceAmount":
+        if (params["resId"]) {
+          const evIds = resAmountEventIdsByResId[params["resId"]];
+          for (const id in evIds) {
+            if (
+              this.checkEventResourceAmount(
+                eventDataDict[id].eventRequirements["resourceAmount"]
+              )
+            ) {
+              if (
+                !this.eventsDict[id] ||
+                (this.eventsDict[id] && eventDataDict[id].repeatable)
+              ) {
+                // Hasnt been achieved, or has been and is repeatable
+                this.eventsDict[id] = Date.now();
+              }
+            }
+          }
+        }
+        break;
+      default:
+        throw new Error(`Unknown event type '${eventType}'`);
+    }
+  }
+  checkEventResourceAmount(resReqs: { [resId: number]: number }) {
+    for (const resId in resReqs) {
+      if (this.resourceDict[resId].amount < resReqs[resId]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  resetResourceAmounts() {
+    for (const resId in this.resourceDict) {
+      this.resourceDict[resId].reset();
+    }
+  }
   resetBaseRates() {
     for (const resId in this.resourceDict) {
       this.resourceDict[resId].baseRate = 0;
@@ -69,7 +112,7 @@ export class Game extends SerializableClass {
 const startingResources = {
   0: new Resource(0, 10, 10, 0, 1, 0),
   1: new Resource(1, 0, 10000, 0, 1, 0),
-  2: new Resource(2, 0, 0, 0, 1, 0),
+  2: new Resource(2, 0, 10, 0, 1, 0),
   3: new Resource(3, 0, 0, 0, 1, 0),
   4: new Resource(4, 0, 0, 0, 1, 0),
   5: new Resource(5, 0, 0, 0, 1, 0),
@@ -102,7 +145,7 @@ const startingStructures = {
 export let game: Game = reactive(
   new Game(
     Date.now(),
-    new Dig({ 1: 10 }),
+    new Dig({ 1: 2, 2: 1 }),
     startingResources,
     startingUpgrades,
     startingStructures,

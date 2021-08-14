@@ -18,7 +18,7 @@ export default class Resource extends Identifiable {
     trueRate: number
   ) {
     super(id, "Resource");
-    this.amount = amount;
+    this.amount = -1;
     this.cap = cap;
     this.baseRate = baseRate;
     this.multiplier = multiplier;
@@ -26,6 +26,21 @@ export default class Resource extends Identifiable {
   }
   get dataObject() {
     return resourceDataDict[this.id];
+  }
+  reset() {
+    this.setAmount(0);
+  }
+  setAmount(newAmount: number) {
+    if (this.amount != newAmount) {
+      this.amount = newAmount;
+      game.handleEvent("resourceAmount", { resId: this.id });
+    }
+  }
+  incrementAmount(incrementBy: number) {
+    if (incrementBy != 0) {
+      this.amount += incrementBy;
+      game.handleEvent("resourceAmount", { resId: this.id });
+    }
   }
   updateTrueRate() {
     let digTR = 0;

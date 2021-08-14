@@ -29,7 +29,7 @@ export default class Upgrade extends Purchaseable {
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
       if (game.resourceDict[resId]) {
-        game.resourceDict[resId].amount -= this.trueCost(resId);
+        game.resourceDict[resId].incrementAmount(-1 * this.trueCost(resId));
       }
     }
     switch (this.dataObject.effect.func) {

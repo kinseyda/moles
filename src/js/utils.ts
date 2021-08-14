@@ -1,19 +1,39 @@
-export function formatTime(num: number) {
-  if (num === Infinity) {
+export function formatTime(numSeconds: number) {
+  if (numSeconds === Infinity) {
     return "∞s";
   }
-  if (num === -Infinity) {
+  if (numSeconds === -Infinity) {
     return "0s";
   }
-  let str = `${Math.floor(num % 60)}s`;
-  if (num > 60) {
-    str = `${Math.floor(num / 60) % 60}m ` + str;
+  let str = `${Math.floor(numSeconds % 60)}s`;
+  if (numSeconds > 60) {
+    str = `${Math.floor(numSeconds / 60) % 60}m ` + str;
   }
-  if (num > 60 * 60) {
-    str = `${Math.floor(num / (60 * 60)) % 24}h ` + str;
+  if (numSeconds > 60 * 60) {
+    str = `${Math.floor(numSeconds / (60 * 60)) % 24}h ` + str;
   }
-  if (num > 60 * 60 * 24) {
-    str = `${Math.floor(num / (60 * 60 * 24))}d ` + str;
+  if (numSeconds > 60 * 60 * 24) {
+    str = `${Math.floor(numSeconds / (60 * 60 * 24))}d ` + str;
+  }
+  return str;
+}
+
+export function formatTimeConcise(numSeconds: number) {
+  if (numSeconds === Infinity) {
+    return "∞s";
+  }
+  if (numSeconds === -Infinity) {
+    return "0s";
+  }
+  let str = `${Math.floor(numSeconds % 60)}s`;
+  if (numSeconds > 60) {
+    str = `${Math.floor(numSeconds / 60) % 60}m `;
+  }
+  if (numSeconds > 60 * 60) {
+    str = `${Math.floor(numSeconds / (60 * 60)) % 24}h `;
+  }
+  if (numSeconds > 60 * 60 * 24) {
+    str = `${Math.floor(numSeconds / (60 * 60 * 24))}d `;
   }
   return str;
 }

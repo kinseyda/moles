@@ -56,6 +56,7 @@
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
           </div>
+          <event-log :eventsDict="gameData.eventsDict"></event-log>
         </div>
         <div
           id="description-container"
@@ -88,6 +89,7 @@ import { mapMutations, mapState } from "vuex";
 import ResourceList from "./components/ResourceList.vue";
 import UpgradeList from "./components/UpgradeList.vue";
 import StructureList from "./components/StructureList.vue";
+import EventLog from "./components/EventLog.vue";
 import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
 import SerializableClass from "./js/model/serializableClass";
@@ -107,6 +109,7 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
     StructureList,
     PurchaseInformation,
     DigInformation,
+    EventLog,
   },
   computed: {
     ...mapState([
@@ -179,7 +182,8 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
                 obj.dig,
                 obj.resourceDict,
                 obj.upgradeDict,
-                obj.structureDict
+                obj.structureDict,
+                obj.eventsDict
               );
             case "Resource":
               return new Resource(
@@ -204,7 +208,7 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
               );
           }
         } else if (obj["_class"] !== undefined) {
-          console.error("Loading error! Invalid class");
+          throw new Error(`Loading error! Invalid class '${obj["_class"]}'`);
         }
         return obj;
       };
@@ -226,8 +230,9 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
     },
     debugFillAll() {
       for (let resId in this.gameData.resourceDict) {
-        this.gameData.resourceDict[resId].amount =
-          this.gameData.resourceDict[resId].cap;
+        this.gameData.resourceDict[resId].setAmount(
+          this.gameData.resourceDict[resId].cap
+        );
       }
     },
     toggleTooltips() {
@@ -282,6 +287,8 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
       this.tooltips = false;
       this.setTooltips(false);
     }
+
+    this.gameData.resetResourceAmounts();
   },
 })
 export default class App extends Vue {}

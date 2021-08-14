@@ -37,7 +37,7 @@ export default class Structure extends Purchaseable {
       const resId: number = Number(resIdStr);
       const res = game.resourceDict[resId];
       if (res) {
-        res.amount -= this.trueCost(resId);
+        res.incrementAmount(-1 * this.trueCost(resId));
       }
     }
     this.amount += 1;
