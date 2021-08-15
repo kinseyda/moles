@@ -3,7 +3,7 @@ export function formatTime(numSeconds: number) {
     return "∞s";
   }
   if (numSeconds === -Infinity) {
-    return "0s";
+    return "0";
   }
   let str = `${Math.floor(numSeconds % 60)}s`;
   if (numSeconds > 60) {
@@ -23,17 +23,23 @@ export function formatTimeConcise(numSeconds: number) {
     return "∞s";
   }
   if (numSeconds === -Infinity) {
-    return "0s";
+    return "00s";
   }
-  let str = `${Math.floor(numSeconds % 60)}s`;
+  let str = `${String(Math.floor(numSeconds % 60)).padStart(2, "0")}s`;
   if (numSeconds > 60) {
-    str = `${Math.floor(numSeconds / 60) % 60}m `;
+    str = `${String(Math.floor(numSeconds / 60) % 60).padStart(2, "0")}m `;
   }
   if (numSeconds > 60 * 60) {
-    str = `${Math.floor(numSeconds / (60 * 60)) % 24}h `;
+    str = `${String(Math.floor(numSeconds / (60 * 60)) % 24).padStart(
+      2,
+      "0"
+    )}h `;
   }
   if (numSeconds > 60 * 60 * 24) {
-    str = `${Math.floor(numSeconds / (60 * 60 * 24))}d `;
+    str = `${String(Math.floor(numSeconds / (60 * 60 * 24))).padStart(
+      2,
+      "0"
+    )}d `;
   }
   return str;
 }

@@ -25,7 +25,11 @@ export default defineComponent({
       return formatTime(num);
     },
     timeUntil(): number {
-      if (this.cost && this.resource?.amount && this.resource.trueRate) {
+      if (
+        this.cost !== undefined &&
+        this.resource?.amount !== undefined &&
+        this.resource?.trueRate !== undefined
+      ) {
         return Math.max(
           (this.cost - this.resource.amount) / this.resource.trueRate,
           0
