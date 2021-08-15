@@ -2,7 +2,12 @@
   <div>
     <p>Log:</p>
     <ol>
-      <li v-for="ev in eventList" :key="ev.id">
+      <li
+        v-for="ev in eventList"
+        :key="ev.id"
+        @mouseover="hoverDescIdentifiable(ev)"
+        @mouseleave="resetDesc()"
+      >
         [{{ formatTime(timeSince(ev.timeSeconds)) }} ago]
         {{ ev.dataObject.eventText }}
       </li>
@@ -15,6 +20,7 @@ import { eventDataDict } from "@/js/staticData/eventData";
 import { defineComponent } from "vue";
 import { formatTimeConcise } from "@/js/utils";
 import { game } from "@/js/model/game";
+import { mapMutations } from "vuex";
 
 class TextLogEvent extends Identifiable {
   timeSeconds: number;
@@ -48,6 +54,7 @@ export default defineComponent({
     },
   },
   methods: {
+    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
     timeSince(timeAchieved: number): number {
       return this.currentTime - timeAchieved;
     },
@@ -68,5 +75,9 @@ export default defineComponent({
 ol {
   border: 1px solid var(--text-color);
   list-style: none;
+}
+li {
+  padding-left: 10ch;
+  text-indent: -10ch;
 }
 </style>
