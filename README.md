@@ -2,6 +2,8 @@
 
 A game of mole miners
 
+<img src="./public/mole-icon.svg" width="200px">
+
 ## To do (before initial release)
 
 - Storage structures
