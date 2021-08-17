@@ -14,14 +14,6 @@
     "vue-class-component": "^8.0.0-0",
     "vuex": "^4.0.0-alpha.1"
   },
-  "vue": {
-    "pages": {
-      "index": {
-        "entry": "src/main.ts",
-        "template": "public/index.html"
-      }
-    }
-  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
