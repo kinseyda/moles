@@ -50,13 +50,16 @@ export default defineComponent({
       for (const evId in this.eventsDict) {
         lst.push(new TextLogEvent(currentEvId++, Number(evId)));
       }
+      lst.sort(function (a, b) {
+        return b.timeSeconds - a.timeSeconds;
+      });
       return lst;
     },
   },
   methods: {
     ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
     timeSince(timeAchieved: number): number {
-      return this.currentTime - timeAchieved;
+      return Math.max(this.currentTime - timeAchieved, 0);
     },
     formatTime(time: number) {
       return formatTimeConcise(time);

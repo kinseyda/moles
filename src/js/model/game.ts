@@ -6,6 +6,7 @@ import Dig from "./dig";
 import { reactive } from "vue";
 import {
   eventDataDict,
+  eventIdsByRequirementType,
   resAmountEventIdsByResId,
 } from "../staticData/eventData";
 
@@ -32,6 +33,7 @@ export class Game extends SerializableClass {
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
     this.eventsDict = eventsDict;
+    this.handleEvent("gameStart");
   }
   tick() {
     const updateTime = Date.now();
@@ -46,31 +48,89 @@ export class Game extends SerializableClass {
     }
     this.lastUpdate = updateTime;
   }
-  handleEvent(eventType: string, params: { [x: string]: any }) {
-    switch (eventType) {
+  handleEvent(triggerEventType: string, params?: { [x: string]: any }) {
+    const idsAchieved: number[] = [];
+    switch (triggerEventType) {
+      case "gameStart":
+        for (const evId of eventIdsByRequirementType[triggerEventType]) {
+          if (this.checkEventId(Number(evId), triggerEventType)) {
+            idsAchieved.push(Number(evId));
+          }
+        }
+        break;
+      case "prevEvent":
+        if (params !== undefined && params["evId"] !== undefined) {
+          for (const id of eventIdsByRequirementType[triggerEventType]) {
+            if (this.checkEventId(Number(id), triggerEventType)) {
+              idsAchieved.push(Number(id));
+            }
+          }
+        }
+        break;
       case "resourceAmount":
-        if (params["resId"]) {
+        if (params !== undefined && params["resId"] !== undefined) {
+          // Get all event ids that may be triggered (in part or full) by a change to this resource
           const evIds = resAmountEventIdsByResId[params["resId"]];
-          for (const id in evIds) {
-            if (
-              this.checkEventResourceAmount(
-                eventDataDict[id].eventRequirements["resourceAmount"]
-              )
-            ) {
-              if (
-                !this.eventsDict[id] ||
-                (this.eventsDict[id] && eventDataDict[id].repeatable)
-              ) {
-                // Hasnt been achieved, or has been and is repeatable
-                this.eventsDict[id] = Date.now();
-              }
+          for (const id of evIds) {
+            if (this.checkEventId(Number(id), triggerEventType)) {
+              idsAchieved.push(Number(id));
             }
           }
         }
         break;
       default:
-        throw new Error(`Unknown event type '${eventType}'`);
+        throw new Error(`Unknown event type '${triggerEventType}'`);
     }
+    for (const id of idsAchieved) {
+      this.eventsDict[id] = Date.now();
+    }
+  }
+  checkEventId(evId: number, triggerEventType: string): boolean {
+    if (
+      this.eventsDict[evId] !== undefined &&
+      !eventDataDict[evId].repeatable
+    ) {
+      // Has been achieved and isn't repeatable
+      return false;
+    }
+    for (const eventRequirement of eventDataDict[evId].eventRequirements) {
+      switch (eventRequirement.requirementType) {
+        case "gameStart":
+          if (triggerEventType !== "gameStart") {
+            // So that gameStart requirements only fire if gameStart is the event that triggers them.
+            return false;
+          }
+          break;
+        case "resourceAmount":
+          if (
+            !this.checkEventResourceAmount(eventRequirement.requirementDetails)
+          ) {
+            return false;
+          }
+          break;
+        case "prevEvent":
+          if (
+            !this.checkEventPrevEvent(
+              eventRequirement.requirementDetails as number[]
+            )
+          ) {
+            return false;
+          }
+          break;
+        default:
+          throw new Error(`Unknown event type '${eventRequirement}'`);
+      }
+    }
+
+    return true;
+  }
+  checkEventPrevEvent(eventList: number[]) {
+    for (const prevEventId in eventList) {
+      if (this.eventsDict[prevEventId] === undefined) {
+        return false;
+      }
+    }
+    return true;
   }
   checkEventResourceAmount(resReqs: { [resId: number]: number }) {
     for (const resId in resReqs) {

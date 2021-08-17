@@ -215,10 +215,8 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
       let sto = localStorage.getItem("molesSave");
       if (sto) {
         let save = JSON.parse(sto);
-        if (this.saveGame) {
-          setGame(recurConstruct(save));
-          this.gameData = game;
-        }
+        setGame(recurConstruct(save));
+        this.gameData = game;
       }
     },
     setDigging(isDigging: boolean) {
@@ -287,8 +285,6 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
       this.tooltips = false;
       this.setTooltips(false);
     }
-
-    this.gameData.resetResourceAmounts();
   },
 })
 export default class App extends Vue {}

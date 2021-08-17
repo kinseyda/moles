@@ -13,8 +13,12 @@ export interface StructureData extends PurchaseableData {
   increase: { [id: number]: number };
 }
 export interface ResourceData extends IdentifiableData {}
+export interface EventRequirement {
+  requirementType: string;
+  requirementDetails: { [id: number]: number } | number[];
+}
 export interface EventData extends IdentifiableData {
-  eventRequirements: { [type: string]: { [id: number]: number } }; // Eg `"resource": {1: 10}` will trigger when you get 10 dirt
+  eventRequirements: EventRequirement[];
   eventText: string;
   repeatable: boolean;
 }
