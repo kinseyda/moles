@@ -10,6 +10,9 @@
   /* border: 1px solid black;
   margin: -1px; */
 }
+html {
+  font-size: large;
+}
 
 button {
   border: 1px solid var(--text-color);

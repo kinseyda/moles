@@ -37,7 +37,7 @@
       >
         Descriptions: {{ tooltips ? "Tooltips" : "Fixed" }}
       </button>
-      <h3 v-if="debugMode">DEBUG MODE</h3>
+      <h4 v-if="debugMode">DEBUG MODE</h4>
     </div>
     <div id="main">
       <resource-list :resourceDict="gameData.resourceDict"></resource-list>
@@ -278,12 +278,12 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
 
     // Load description position selection
     const loadDescPos = localStorage.getItem("molesDescPos");
-    if (loadDescPos == "tooltip") {
-      this.tooltips = true;
-      this.setTooltips(true);
-    } else {
+    if (loadDescPos == "fixed") {
       this.tooltips = false;
       this.setTooltips(false);
+    } else {
+      this.tooltips = true;
+      this.setTooltips(true);
     }
   },
 })
@@ -318,6 +318,7 @@ export default class App extends Vue {}
   height: 15em;
   width: calc(100% - 40px);
   margin: 20px;
+  font-size: xx-large;
 }
 #buttons-container {
   flex: 1 0 0;
