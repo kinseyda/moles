@@ -15,18 +15,18 @@
   </div>
 </template>
 <script lang="ts">
-import Identifiable from "@/js/model/identifiable";
 import { eventDataDict } from "@/js/staticData/eventData";
 import { defineComponent } from "vue";
 import { formatTimeConcise } from "@/js/utils";
 import { game } from "@/js/model/game";
 import { mapMutations } from "vuex";
 
-class TextLogEvent extends Identifiable {
+class TextLogEvent {
+  id: number;
   timeSeconds: number;
   eventId: number;
   constructor(id: number, eventId: number) {
-    super(id, "TextLogEvent");
+    this.id = id;
     this.timeSeconds = game.eventsDict[eventId] / 1000;
     this.eventId = eventId;
   }

@@ -94,7 +94,9 @@ import StructureList from "./components/StructureList.vue";
 import EventLog from "./components/EventLog.vue";
 import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
-import SerializableClass from "./js/model/serializableClass";
+import SerializableClass, {
+  SerializableClasses,
+} from "./js/model/serializableClass";
 import { game, Game, setGame } from "./js/model/game";
 import Resource from "./js/model/resources";
 import Upgrade from "./js/model/upgrades";
@@ -168,16 +170,9 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
             }
           }
         }
-        if (
-          obj["_class"] == "Game" ||
-          obj["_class"] == "Resource" ||
-          obj["_class"] == "Upgrade" ||
-          obj["_class"] == "Structure" ||
-          obj["_class"] == "Dig" ||
-          obj["_class"] == "SerializableClass"
-        ) {
+        if (SerializableClasses[obj["_class"]] !== undefined) {
           // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
-          switch (obj["_class"]) {
+          switch (SerializableClasses[Number(obj["_class"])]) {
             case "Game":
               return new Game(
                 obj.lastUpdate,
@@ -204,8 +199,11 @@ import { uiDescriptions } from "./js/staticData/uiDescriptions";
               return new Dig(obj.digRates);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
+              console.error(
+                "Warning: SerializableClass loaded, this may be an error"
+              );
               return Object.assign(
-                new SerializableClass("SerializableClass"),
+                new SerializableClass(SerializableClasses.SerializableClass),
                 obj
               );
           }

@@ -2,6 +2,7 @@ import { resourceDataDict } from "@/js/staticData/resourceData";
 import { RequirementType } from "../staticData/dataInterfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
+import { SerializableClasses } from "./serializableClass";
 
 export default class Resource extends Identifiable {
   amount: number;
@@ -18,7 +19,7 @@ export default class Resource extends Identifiable {
     multiplier: number,
     trueRate: number
   ) {
-    super(id, "Resource");
+    super(id, SerializableClasses.Resource);
     this.amount = amount;
     this.cap = cap;
     this.baseRate = baseRate;

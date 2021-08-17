@@ -1,12 +1,12 @@
 import { game } from "./game";
-import SerializableClass from "./serializableClass";
+import SerializableClass, { SerializableClasses } from "./serializableClass";
 
 export default class Dig extends SerializableClass {
   digRates: { [index: number]: number };
   digging: Boolean;
 
   constructor(digrates: { [index: number]: number }) {
-    super("Dig");
+    super(SerializableClasses.Dig);
     this.digRates = digrates;
     this.digging = false;
   }

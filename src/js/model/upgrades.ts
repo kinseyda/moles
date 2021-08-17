@@ -1,12 +1,13 @@
 import Purchaseable from "./purchaseable";
 import { upgradeDataDict } from "../staticData/upgradeData";
 import { game } from "./game";
+import { SerializableClasses } from "./serializableClass";
 
 export default class Upgrade extends Purchaseable {
   bought: boolean;
   discount: { [id: number]: number };
   constructor(id: number, bought: boolean, discount: { [id: number]: number }) {
-    super(id, "Upgrade");
+    super(id, SerializableClasses.Upgrade);
     this.bought = bought;
     this.discount = discount;
   }

@@ -1,7 +1,8 @@
 import Identifiable from "./identifiable";
+import { SerializableClasses } from "./serializableClass";
 
 export default abstract class Purchaseable extends Identifiable {
-  constructor(id: number, typeName: string) {
+  constructor(id: number, typeName: SerializableClasses) {
     super(id, typeName);
   }
 

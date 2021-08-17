@@ -2,13 +2,14 @@ import Purchaseable from "./purchaseable";
 import { structureDataDict } from "../staticData/structureData";
 import { StructureData } from "../staticData/dataInterfaces";
 import { game } from "./game";
+import { SerializableClasses } from "./serializableClass";
 
 export default class Structure extends Purchaseable {
   amount: number;
   discount: { [id: number]: number };
 
   constructor(id: number, amount: number, discount: { [id: number]: number }) {
-    super(id, "Structure");
+    super(id, SerializableClasses.Structure);
     this.amount = amount;
     this.discount = discount;
   }

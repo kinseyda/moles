@@ -1,4 +1,4 @@
-import SerializableClass from "./serializableClass";
+import SerializableClass, { SerializableClasses } from "./serializableClass";
 import Upgrade from "./upgrades";
 import Structure from "./structures";
 import Resource from "./resources";
@@ -23,7 +23,7 @@ export class Game extends SerializableClass {
     structureDict: { [id: number]: Structure },
     eventsDict: { [id: number]: number }
   ) {
-    super("Game");
+    super(SerializableClasses.Game);
     this.lastUpdate = lastUpdate;
     this.dig = dig;
     this.resourceDict = resourceDict;
