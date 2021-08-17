@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p>Log:</p>
+  <div id="outer">
+    <p id="label">Log:</p>
     <ol>
       <li
         v-for="ev in eventList"
@@ -78,9 +78,19 @@ export default defineComponent({
 ol {
   border: 1px solid var(--text-color);
   list-style: none;
+  overflow-y: scroll;
+  flex: 1 0 0;
 }
 li {
   padding-left: 10ch;
   text-indent: -10ch;
+}
+#label {
+  flex: 0 0 1em;
+}
+#outer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 </style>

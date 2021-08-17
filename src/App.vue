@@ -56,6 +56,8 @@
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
           </div>
+        </div>
+        <div id="event-log-container">
           <event-log :eventsDict="gameData.eventsDict"></event-log>
         </div>
         <div
@@ -309,10 +311,15 @@ export default class App extends Vue {}
   min-height: 25px;
   width: 100%;
 }
+#top-bar button {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 #central-column {
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1em;
 }
 #dig-button {
   height: 15em;
@@ -321,10 +328,10 @@ export default class App extends Vue {}
   font-size: xx-large;
 }
 #buttons-container {
-  flex: 1 0 0;
+  flex: 0 0 16em;
 }
-#description-container {
-  margin-bottom: 1em;
+#event-log-container {
+  flex: 1 0 0;
 }
 #description-container.floating-tooltip {
   border: 1px solid var(--text-color);
