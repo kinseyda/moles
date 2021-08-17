@@ -1,4 +1,4 @@
-import { EventData } from "./dataInterfaces";
+import { EventData, RequirementType } from "./dataInterfaces";
 
 // Requirements on an event should be ordered from least likely to be met to most
 
@@ -9,7 +9,10 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText:
       "You open your mole eyes and look around you. Though you can't see much you can feel dirt under your feet. You feel an urge to start digging into it.",
     eventRequirements: [
-      { requirementType: "gameStart", requirementDetails: {} },
+      {
+        requirementType: RequirementType.gameStart,
+        requirementDetails: {},
+      },
     ],
     repeatable: false,
   },
@@ -20,8 +23,11 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText:
       "You feel a faint sense of deja vu as you look around. You see some resources piled up around you. You feel you should gather even more.",
     eventRequirements: [
-      { requirementType: "gameStart", requirementDetails: {} },
-      { requirementType: "prevEvent", requirementDetails: [0] },
+      {
+        requirementType: RequirementType.gameStart,
+        requirementDetails: {},
+      },
+      { requirementType: RequirementType.prevEvent, requirementDetails: [0] },
     ],
     repeatable: true,
   },
@@ -32,7 +38,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       "You feel proud of amassing such a mighty pile of dirt. You estimate it is about 5 moles high.",
     eventRequirements: [
       {
-        requirementType: "resourceAmount",
+        requirementType: RequirementType.resourceAmount,
         requirementDetails: { 1: 5 },
       },
     ],
@@ -44,7 +50,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText: "You got 10 dirt and 10 iron",
     eventRequirements: [
       {
-        requirementType: "resourceAmount",
+        requirementType: RequirementType.resourceAmount,
         requirementDetails: { 1: 10, 2: 10 },
       },
     ],
@@ -56,7 +62,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText: "Filler eventText",
     eventRequirements: [
       {
-        requirementType: "none",
+        requirementType: RequirementType.none,
         requirementDetails: {},
       },
     ],
@@ -84,7 +90,7 @@ const resAmountdict: {
 } = {};
 for (const evId in eventDataDict) {
   for (const req of eventDataDict[evId].eventRequirements) {
-    if (req.requirementType === "resourceAmount") {
+    if (req.requirementType === RequirementType.resourceAmount) {
       for (const resId in req.requirementDetails) {
         if (!resAmountdict[resId]) {
           resAmountdict[resId] = [];

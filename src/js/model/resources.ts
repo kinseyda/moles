@@ -1,4 +1,5 @@
 import { resourceDataDict } from "@/js/staticData/resourceData";
+import { RequirementType } from "../staticData/dataInterfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
 
@@ -33,13 +34,13 @@ export default class Resource extends Identifiable {
   setAmount(newAmount: number) {
     if (this.amount != newAmount) {
       this.amount = newAmount;
-      game.handleEvent("resourceAmount", { resId: this.id });
+      game.handleEvent(RequirementType.resourceAmount, { resId: this.id });
     }
   }
   incrementAmount(incrementBy: number) {
     if (incrementBy != 0) {
       this.amount += incrementBy;
-      game.handleEvent("resourceAmount", { resId: this.id });
+      game.handleEvent(RequirementType.resourceAmount, { resId: this.id });
     }
   }
   updateTrueRate() {

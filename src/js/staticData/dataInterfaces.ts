@@ -13,8 +13,15 @@ export interface StructureData extends PurchaseableData {
   increase: { [id: number]: number };
 }
 export interface ResourceData extends IdentifiableData {}
+
+export enum RequirementType {
+  gameStart,
+  resourceAmount,
+  prevEvent,
+  none,
+}
 export interface EventRequirement {
-  requirementType: string;
+  requirementType: RequirementType;
   requirementDetails: { [id: number]: number } | number[];
 }
 export interface EventData extends IdentifiableData {

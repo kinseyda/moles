@@ -5,6 +5,7 @@ import Resource from "./resources";
 import Dig from "./dig";
 import { reactive } from "vue";
 import { handleEvent } from "./eventHandling";
+import { RequirementType } from "../staticData/dataInterfaces";
 
 export class Game extends SerializableClass {
   lastUpdate: number;
@@ -29,7 +30,7 @@ export class Game extends SerializableClass {
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
     this.eventsDict = eventsDict;
-    this.handleEvent("gameStart");
+    this.handleEvent(RequirementType.gameStart);
   }
   tick() {
     const updateTime = Date.now();
@@ -44,7 +45,10 @@ export class Game extends SerializableClass {
     }
     this.lastUpdate = updateTime;
   }
-  handleEvent(triggerEventType: string, params?: { [x: string]: any }) {
+  handleEvent(
+    triggerEventType: RequirementType,
+    params?: { [x: string]: any }
+  ) {
     handleEvent(triggerEventType, this, params);
   }
   resetResourceAmounts() {

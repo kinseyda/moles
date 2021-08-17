@@ -1,3 +1,4 @@
+import { RequirementType } from "../staticData/dataInterfaces";
 import {
   eventDataDict,
   eventIdsByRequirementType,
@@ -6,20 +7,20 @@ import {
 import { Game } from "./game";
 
 export function handleEvent(
-  triggerEventType: string,
+  triggerEventType: RequirementType,
   game: Game,
   params?: { [x: string]: any }
 ) {
   const idsAchieved: number[] = [];
   switch (triggerEventType) {
-    case "gameStart":
+    case RequirementType.gameStart:
       for (const evId of eventIdsByRequirementType[triggerEventType]) {
         if (checkEventId(Number(evId), triggerEventType, game)) {
           idsAchieved.push(Number(evId));
         }
       }
       break;
-    case "prevEvent":
+    case RequirementType.prevEvent:
       if (params !== undefined && params["evId"] !== undefined) {
         for (const id of eventIdsByRequirementType[triggerEventType]) {
           if (checkEventId(Number(id), triggerEventType, game)) {
@@ -28,7 +29,7 @@ export function handleEvent(
         }
       }
       break;
-    case "resourceAmount":
+    case RequirementType.resourceAmount:
       if (params !== undefined && params["resId"] !== undefined) {
         // Get all event ids that may be triggered (in part or full) by a change to this resource
         const evIds = resAmountEventIdsByResId[params["resId"]];
@@ -48,7 +49,7 @@ export function handleEvent(
 }
 function checkEventId(
   evId: number,
-  triggerEventType: string,
+  triggerEventType: RequirementType,
   game: Game
 ): boolean {
   if (game.eventsDict[evId] !== undefined && !eventDataDict[evId].repeatable) {
@@ -57,20 +58,20 @@ function checkEventId(
   }
   for (const eventRequirement of eventDataDict[evId].eventRequirements) {
     switch (eventRequirement.requirementType) {
-      case "gameStart":
-        if (triggerEventType !== "gameStart") {
+      case RequirementType.gameStart:
+        if (triggerEventType !== RequirementType.gameStart) {
           // So that gameStart requirements only fire if gameStart is the event that triggers them.
           return false;
         }
         break;
-      case "resourceAmount":
+      case RequirementType.resourceAmount:
         if (
           !checkEventResourceAmount(eventRequirement.requirementDetails, game)
         ) {
           return false;
         }
         break;
-      case "prevEvent":
+      case RequirementType.prevEvent:
         if (
           !checkEventPrevEvent(
             eventRequirement.requirementDetails as number[],
