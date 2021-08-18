@@ -15,10 +15,10 @@
   </div>
 </template>
 <script lang="ts">
-import { eventDataDict } from "@/js/staticData/eventData";
+import { eventDataDict } from "@/model/staticData/eventData";
 import { defineComponent } from "vue";
-import { formatTimeConcise } from "@/js/utils";
-import { game } from "@/js/model/game";
+import { formatTimeConcise } from "@/components/format";
+import { game } from "@/model/game";
 import { mapMutations } from "vuex";
 
 class TextLogEvent {

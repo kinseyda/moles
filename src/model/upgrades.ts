@@ -1,18 +1,28 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDataDict } from "../staticData/upgradeData";
+import { upgradeDataDict } from "./staticData/upgradeData";
 import { game } from "./game";
 import { SerializableClasses } from "./serializableClass";
+import { UpgradeData } from "./staticData/dataInterfaces";
 
 export default class Upgrade extends Purchaseable {
   bought: boolean;
   discount: { [id: number]: number };
+
+  /**
+   * @param id - A unique id corresponding to the relevant item in {@link upgradeDataDict}.
+   * @param bought - Whether or not this upgrade has been purchased already.
+   * @param discount - A dictionary of {@link Resource} ids to a decimal multiplier for their cost.
+   */
   constructor(id: number, bought: boolean, discount: { [id: number]: number }) {
     super(id, SerializableClasses.Upgrade);
     this.bought = bought;
     this.discount = discount;
   }
-
-  get dataObject() {
+  /**
+   * Dictionary of static data for this upgrade.
+   * @see {@link UpgradeData}
+   */
+  get dataObject(): UpgradeData {
     return upgradeDataDict[this.id];
   }
 

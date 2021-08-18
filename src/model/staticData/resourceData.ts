@@ -1,7 +1,6 @@
 import { ResourceData } from "./dataInterfaces";
 
-export let resourceDataDict: { [id: number]: ResourceData } = {};
-resourceDataDict = {
+export const resourceDataDict: { [id: number]: ResourceData } = {
   0: { name: "Area", description: "The size of your mole hole / abode" },
   1: {
     name: "Dirt",

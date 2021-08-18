@@ -1,6 +1,5 @@
 import { UpgradeData } from "./dataInterfaces";
-export let upgradeDataDict: { [id: number]: UpgradeData } = {};
-upgradeDataDict = {
+export const upgradeDataDict: { [id: number]: UpgradeData } = {
   0: {
     name: "Makeshift shovel",
     description: "Fashion some twigs and pebbles lying around into a shovel",

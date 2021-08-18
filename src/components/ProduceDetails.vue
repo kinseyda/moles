@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { game } from "@/js/model/game";
+import { game } from "@/model/game";
 import { defineComponent } from "vue";
-import { formatNumber } from "../js/utils";
+import { formatNumber } from "./format";
 export default defineComponent({
   name: "ProduceDetails",
   props: ["structure"],

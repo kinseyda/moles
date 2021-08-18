@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts">
-import Resource from "@/js/model/resources";
-import { formatNumber, formatTime } from "@/js/utils";
+import Resource from "@/model/resources";
+import { formatNumber, formatTime } from "@/components/format";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "CostBullet",

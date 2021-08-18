@@ -96,14 +96,14 @@ import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
 import SerializableClass, {
   SerializableClasses,
-} from "./js/model/serializableClass";
-import { game, Game, setGame } from "./js/model/game";
-import Resource from "./js/model/resources";
-import Upgrade from "./js/model/upgrades";
-import Structure from "./js/model/structures";
-import Dig from "./js/model/dig";
-import { formatNumber } from "./js/utils";
-import { uiDescriptions } from "./js/staticData/uiDescriptions";
+} from "./model/serializableClass";
+import { game, Game, setGame } from "./model/game";
+import Resource from "./model/resources";
+import Upgrade from "./model/upgrades";
+import Structure from "./model/structures";
+import Dig from "./model/dig";
+import { formatNumber } from "./components/format";
+import { uiDescriptions } from "./uiDescriptions";
 
 @Options({
   name: "App",

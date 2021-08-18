@@ -1,8 +1,8 @@
-import Purchaseable from "./js/model/purchaseable";
+import Purchaseable from "./model/purchaseable";
 import { createStore, Store } from "vuex";
 import { InjectionKey } from "vue";
-import Identifiable from "./js/model/identifiable";
-import { uiDescriptions } from "./js/staticData/uiDescriptions";
+import Identifiable from "./model/identifiable";
+import { uiDescriptions } from "./uiDescriptions";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";

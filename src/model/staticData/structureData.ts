@@ -1,7 +1,6 @@
 import { StructureData } from "./dataInterfaces";
 
-export let structureDataDict: { [id: number]: StructureData } = {};
-structureDataDict = {
+export const structureDataDict: { [id: number]: StructureData } = {
   0: {
     name: "Ball of dirt",
     description:

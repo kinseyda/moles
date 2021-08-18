@@ -14,11 +14,11 @@
     </div>
     <div class="desc-side" id="effect-produce-container">
       <produce-details
-        v-if="purchase._class === 'Structure'"
+        v-if="purchase._class === structureEnum"
         v-bind:structure="purchase"
       ></produce-details>
       <effect-details
-        v-if="purchase._class === 'Upgrade'"
+        v-if="purchase._class === upgradeEnum"
         v-bind:effect="purchase.dataObject.effect"
         v-bind:detailedDesc="getEffectDescription(purchase)"
         v-bind:upgradeType="getUpgradeType(purchase)"
@@ -32,9 +32,10 @@ import { defineComponent } from "vue";
 import ProduceDetails from "./ProduceDetails.vue";
 import EffectDetails from "./EffectDetails.vue";
 import CostBullet from "./CostBullet.vue";
-import { formatNumber, formatTime } from "@/js/utils";
-import Upgrade from "@/js/model/upgrades";
-import { game } from "@/js/model/game";
+import { formatNumber, formatTime } from "@/components/format";
+import Upgrade from "@/model/upgrades";
+import { game } from "@/model/game";
+import { SerializableClasses } from "@/model/serializableClass";
 
 export default defineComponent({
   name: "PurchaseInformation",
@@ -42,6 +43,8 @@ export default defineComponent({
   data() {
     return {
       gameData: game,
+      upgradeEnum: SerializableClasses.Upgrade,
+      structureEnum: SerializableClasses.Structure,
     };
   },
   components: {

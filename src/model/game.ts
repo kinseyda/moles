@@ -5,8 +5,12 @@ import Resource from "./resources";
 import Dig from "./dig";
 import { reactive } from "vue";
 import { handleEvent } from "./eventHandling";
-import { RequirementType } from "../staticData/dataInterfaces";
+import { RequirementType } from "./staticData/dataInterfaces";
 
+/**
+ * Handles all internal game logic.
+ * @extends SerializableClass {@link SerializableClass}
+ */
 export class Game extends SerializableClass {
   lastUpdate: number;
   dig: Dig;
@@ -15,6 +19,14 @@ export class Game extends SerializableClass {
   structureDict: { [id: number]: Structure };
   eventsDict: { [id: number]: number }; // EventId: Time achieved / last achieved
 
+  /**
+   * @param lastUpdate - Time of the most recent tick (in ms since epoch). Use Date.now().
+   * @param dig - {@link Dig} that stores the game's current dig stats.
+   * @param resourceDict - A dictionary of ids to their corresponding {@link Resource}.
+   * @param upgradeDict - A dictionary of ids to their corresponding {@link Upgrade}.
+   * @param structureDict - A dictionary of ids to their corresponding {@link Structure}.
+   * @param eventsDict - A dictionary of valid ids (that correspond to an event in {@link eventDataDict}) to a the time they were achieved (ms since epoch).
+   */
   constructor(
     lastUpdate: number,
     dig: Dig,
@@ -32,6 +44,10 @@ export class Game extends SerializableClass {
     this.eventsDict = eventsDict;
     this.handleEvent(RequirementType.gameStart);
   }
+
+  /**
+   * Updates all {@link Resource}s in {@link Game.resourceDict resourceDict} based on their {@link Resource.trueRate trueRate} property and how long it has been since {@link Game.lastUpdate lastUpdate}
+   */
   tick() {
     const updateTime = Date.now();
     const diff = (updateTime - this.lastUpdate) / 1000;
@@ -45,22 +61,36 @@ export class Game extends SerializableClass {
     }
     this.lastUpdate = updateTime;
   }
+  /**
+   * @see {@link handleEvent}
+   * @param triggerEventType - The type of event calling this function, from {@link RequirementType}. Eg when a resource amount changes this is {@link RequirementType.resourceAmount resourceAmount}.
+   * @param params - Optional parameters used for some event types. Eg resourceAmount uses the "resId" property, prevEvent uses the "evId" property.
+   */
   handleEvent(
     triggerEventType: RequirementType,
     params?: { [x: string]: any }
   ) {
     handleEvent(triggerEventType, this, params);
   }
+  /**
+   * Sets all {@link Resource}s {@link Resource.amount amount}s to 0
+   */
   resetResourceAmounts() {
     for (const resId in this.resourceDict) {
       this.resourceDict[resId].reset();
     }
   }
+  /**
+   * Sets all {@link Resource}s {@link Resource.baseRate baseRate}s to 0.
+   */
   resetBaseRates() {
     for (const resId in this.resourceDict) {
       this.resourceDict[resId].baseRate = 0;
     }
   }
+  /**
+   * Calculates and sets all {@link Resource}s {@link Resource.baseRate baseRate}s to their new currect numbers based on the current {@link Structure}s.
+   */
   calculateBaseRates() {
     this.resetBaseRates();
     for (const strucId in this.structureDict) {
@@ -74,6 +104,10 @@ export class Game extends SerializableClass {
       }
     }
   }
+  /**
+   * Calculates and sets all {@link Resource}s trueRates.
+   * @see {@link Resource.updateTrueRate} for more information.
+   */
   calculateTrueRates() {
     for (const resId in this.resourceDict) {
       this.resourceDict[resId].updateTrueRate();
@@ -113,6 +147,10 @@ const startingStructures = {
   1: new Structure(1, 0, {}),
 };
 
+/**
+ * The static game being played
+ * Use {@link setGame} to change
+ */
 export let game: Game = reactive(
   new Game(
     Date.now(),

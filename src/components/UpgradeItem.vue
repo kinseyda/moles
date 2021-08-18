@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-import Upgrade from "@/js/model/upgrades";
+import Upgrade from "@/model/upgrades";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import { formatNumber } from "../js/utils";
+import { formatNumber } from "./format";
 
 export default defineComponent({
   name: "UpgradeItem",

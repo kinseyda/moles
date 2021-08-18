@@ -1,11 +1,17 @@
-import { RequirementType } from "../staticData/dataInterfaces";
+import { RequirementType } from "./staticData/dataInterfaces";
 import {
   eventDataDict,
   eventIdsByRequirementType,
   resAmountEventIdsByResId,
-} from "../staticData/eventData";
+} from "./staticData/eventData";
 import { Game } from "./game";
 
+/**
+ * Checks whether a triggering event has successfully completed all the requirements for any applicable {@link EventData} in {@link eventDataDict}.
+ * @param triggerEventType - The type of event calling this function, from {@link RequirementType}. Eg when a resource amount changes this is RequirementType.resourceAmount.
+ * @param game - The {@link Game} to handle events for.
+ * @param params - Optional parameters used for some event types. Eg resourceAmount uses the "resId" property, prevEvent uses the "evId" property.
+ */
 export function handleEvent(
   triggerEventType: RequirementType,
   game: Game,

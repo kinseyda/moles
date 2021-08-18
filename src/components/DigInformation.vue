@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import Dig from "@/js/model/dig";
-import { game } from "@/js/model/game";
-import { formatNumber } from "@/js/utils";
+import Dig from "@/model/dig";
+import { game } from "@/model/game";
+import { formatNumber } from "@/components/format";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "DigInformation",

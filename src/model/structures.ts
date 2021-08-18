@@ -1,19 +1,30 @@
 import Purchaseable from "./purchaseable";
-import { structureDataDict } from "../staticData/structureData";
-import { StructureData } from "../staticData/dataInterfaces";
+import { structureDataDict } from "./staticData/structureData";
+import { StructureData } from "./staticData/dataInterfaces";
 import { game } from "./game";
 import { SerializableClasses } from "./serializableClass";
 
+/**
+ * Stores and updates non-static data relating to a kind of structure.
+ */
 export default class Structure extends Purchaseable {
   amount: number;
   discount: { [id: number]: number };
 
+  /**
+   * @param id - A unique id corresponding to the relevant item in {@link structureDataDict}.
+   * @param amount - The amount of this structure that has been successfully bought.
+   * @param discount - A dictionary of {@link Resource} ids to a decimal multiplier for their cost.
+   */
   constructor(id: number, amount: number, discount: { [id: number]: number }) {
     super(id, SerializableClasses.Structure);
     this.amount = amount;
     this.discount = discount;
   }
-
+  /**
+   * Dictionary of static data for this structure.
+   * @see {@link StructureData}
+   */
   get dataObject(): StructureData {
     return structureDataDict[this.id];
   }

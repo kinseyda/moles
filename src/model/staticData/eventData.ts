@@ -1,7 +1,9 @@
 import { EventData, RequirementType } from "./dataInterfaces";
 
-// Requirements on an event should be ordered from least likely to be met to most
-
+/**
+ * Stores data for all events, in the form of a dictionary from an id (number) to an {@link EventData} object.
+ * Requirements on an event should be ordered from least likely to be met to most
+ */
 export const eventDataDict: { [id: number]: EventData } = {
   0: {
     name: "Start",
@@ -81,6 +83,11 @@ for (const evId in eventDataDict) {
     reqTypeDict[req.requirementType].push(Number(evId));
   }
 }
+
+/**
+ * A dictionary of strings (from the {@link RequirementType} enum) to event ids (numbers).
+ * Useful for finding events that require aspecific kind of trigger (such as finding all resourceAmount related events)
+ */
 export const eventIdsByRequirementType: {
   [reqType: string]: number[];
 } = reqTypeDict;
@@ -100,6 +107,9 @@ for (const evId in eventDataDict) {
     }
   }
 }
+/**
+ * A dictionary of {@link Resource} ids to event ids that correspond to an event which contains a resourceAmount requirement involving the given Resource.
+ */
 export const resAmountEventIdsByResId: {
   [resId: number]: number[];
 } = resAmountdict;
