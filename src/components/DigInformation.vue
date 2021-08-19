@@ -30,3 +30,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+ul {
+  columns: 2;
+}
+</style>
