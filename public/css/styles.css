@@ -23,8 +23,8 @@ button:active h1 {
   background-color: var(--alternate-bg-color);
 }
 
-tr.list-row:nth-child(odd),
-tr.list-row:nth-child(odd) td {
+tr.list-row:nth-child(even),
+tr.list-row:nth-child(even) td {
   background-color: var(--alternate-bg-color);
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <p>Resources:</p>
+    <h4>Resources:</h4>
     <table>
       <resource-item
         v-for="item in resourceDict"

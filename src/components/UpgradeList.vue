@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <p>Upgrades:</p>
+    <h4>Upgrades:</h4>
     <div id="upgrades">
       <table>
         <upgrade-item

@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <p>Structures:</p>
+    <h4>Structures:</h4>
     <table>
       <structure-item
         v-for="item in structureDict"
