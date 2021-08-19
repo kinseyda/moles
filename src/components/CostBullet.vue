@@ -30,6 +30,12 @@ export default defineComponent({
         this.resource?.amount !== undefined &&
         this.resource?.trueRate !== undefined
       ) {
+        if (this.resource.trueRate === 0) {
+          if (this.cost - this.resource.amount > 0) {
+            return Infinity;
+          }
+          return 0;
+        }
         return Math.max(
           (this.cost - this.resource.amount) / this.resource.trueRate,
           0
