@@ -187,6 +187,7 @@ import { uiDescriptions } from "./uiDescriptions";
                 obj.id,
                 obj.amount,
                 obj.cap,
+                obj.capMultiplier,
                 obj.baseRate,
                 obj.multiplier,
                 obj.trueRate

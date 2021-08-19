@@ -39,9 +39,11 @@ export function handleEvent(
       if (params !== undefined && params["resId"] !== undefined) {
         // Get all event ids that may be triggered (in part or full) by a change to this resource
         const evIds = resAmountEventIdsByResId[params["resId"]];
-        for (const id of evIds) {
-          if (checkEventId(Number(id), triggerEventType, game)) {
-            idsAchieved.push(Number(id));
+        if (evIds !== undefined) {
+          for (const id of evIds) {
+            if (checkEventId(Number(id), triggerEventType, game)) {
+              idsAchieved.push(Number(id));
+            }
           }
         }
       }

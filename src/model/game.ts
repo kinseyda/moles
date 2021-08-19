@@ -113,19 +113,32 @@ export class Game extends SerializableClass {
       this.resourceDict[resId].updateTrueRate();
     }
   }
+
+  updateCaps() {
+    for (const resId in this.resourceDict) {
+      if (Number(resId) == 0) {
+        continue;
+      }
+      this.resourceDict[resId].setCap(
+        this.resourceDict[0].amount,
+        this.resourceDict[0].cap,
+        Object.keys(this.resourceDict).length - 1
+      );
+    }
+  }
 }
 const startingResources = {
-  0: new Resource(0, 10, 10, 0, 1, 0),
-  1: new Resource(1, 0, 10000, 0, 1, 0),
-  2: new Resource(2, 0, 10, 0, 1, 0),
-  3: new Resource(3, 0, 0, 0, 1, 0),
-  4: new Resource(4, 0, 0, 0, 1, 0),
-  5: new Resource(5, 0, 0, 0, 1, 0),
-  6: new Resource(6, 0, 0, 0, 1, 0),
-  7: new Resource(7, 0, 0, 0, 1, 0),
-  8: new Resource(8, 0, 0, 0, 1, 0),
-  9: new Resource(9, 0, 0, 0, 1, 0),
-  10: new Resource(10, 0, 0, 0, 1, 0),
+  0: new Resource(0, 0, 100, 1, 0, 1, 0),
+  1: new Resource(1, 0, 0, 1, 0, 1, 0),
+  2: new Resource(2, 0, 0, 1, 0, 1, 0),
+  3: new Resource(3, 0, 0, 1, 0, 1, 0),
+  4: new Resource(4, 0, 0, 1, 0, 1, 0),
+  5: new Resource(5, 0, 0, 1, 0, 1, 0),
+  6: new Resource(6, 0, 0, 1, 0, 1, 0),
+  7: new Resource(7, 0, 0, 1, 0, 1, 0),
+  8: new Resource(8, 0, 0, 1, 0, 1, 0),
+  9: new Resource(9, 0, 0, 1, 0, 1, 0),
+  10: new Resource(10, 0, 0, 1, 0, 1, 0),
 };
 
 const startingUpgrades = {
@@ -154,7 +167,7 @@ const startingStructures = {
 export let game: Game = reactive(
   new Game(
     Date.now(),
-    new Dig({ 1: 2, 2: 1 }),
+    new Dig({ 0: 10, 1: 1, 2: 1 }),
     startingResources,
     startingUpgrades,
     startingStructures,
