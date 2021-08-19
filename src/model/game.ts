@@ -119,11 +119,7 @@ export class Game extends SerializableClass {
       if (Number(resId) == 0) {
         continue;
       }
-      this.resourceDict[resId].setCap(
-        this.resourceDict[0].amount,
-        this.resourceDict[0].cap,
-        Object.keys(this.resourceDict).length - 1
-      );
+      this.resourceDict[resId].setCap(this.resourceDict[0].amount);
     }
   }
 }

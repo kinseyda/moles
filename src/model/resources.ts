@@ -41,16 +41,17 @@ export default class Resource extends Identifiable {
     this.multiplier = multiplier;
     this.trueRate = trueRate;
   }
-  setCap(areaAmount: number, areaCap: number, resourcesCount: number) {
+
+  setCapMultiplier(newVal: number, areaAmount: number) {
+    this.capMultiplier = newVal;
+    this.setCap(areaAmount);
+  }
+
+  setCap(areaAmount: number) {
     if (this.id == 0) {
       return;
     }
-    console.log(`Resource: ${this.id}`);
-    console.log(areaAmount);
-    console.log(this.capMultiplier);
-    console.log(areaCap);
-    console.log(resourcesCount);
-    this.cap = (areaAmount * this.capMultiplier) / resourcesCount;
+    this.cap = areaAmount * this.capMultiplier;
   }
 
   /**

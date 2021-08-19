@@ -1,14 +1,23 @@
 <template>
-  <tr
-    class="list-row"
-    @mouseover="hoverDescIdentifiable(resource)"
-    @mouseleave="resetDesc()"
-  >
-    <td>{{ resource.dataObject.name }}:</td>
+  <tr class="list-row">
+    <td @mouseover="hoverDescIdentifiable(resource)" @mouseleave="resetDesc()">
+      {{ resource.dataObject.name }}:
+    </td>
     <td>{{ formatNumber(resource.amount) }}</td>
     <td>/</td>
     <td>{{ formatNumber(resource.cap) }}</td>
     <td>{{ formatNumber(resource.trueRate) }} m/s</td>
+    <td v-if="resource.id !== 0">
+      <input
+        @mouseover="hoverDescString(capDesc)"
+        @mouseleave="resetDesc()"
+        type="range"
+        min="0"
+        max="10"
+        value="1"
+        @input="$emit('update:sliderVal', $event.target.value)"
+      />
+    </td>
   </tr>
 </template>
 
@@ -16,19 +25,30 @@
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { formatNumber } from "./format";
+import { uiDescriptions } from "../uiDescriptions";
 
 export default defineComponent({
   name: "ResourceItem",
   props: ["resource"],
+  emits: ["update:sliderVal"],
+  data() {
+    return {
+      capDesc: uiDescriptions["capSliders"],
+      sliderVal: "1",
+    };
+  },
   methods: {
-    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
+    ...mapMutations(["hoverDescIdentifiable", "hoverDescString", "resetDesc"]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
+    },
+    getCap() {
+      return this.resource.cap;
     },
   },
 });
 </script>
-<style>
+<style scoped>
 td {
   width: 7ch;
   padding-left: 0.5ch;
