@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <h4 id="label">Log:</h4>
+    <h2 id="label">Log:</h2>
     <ol>
       <li
         v-for="ev in eventList"

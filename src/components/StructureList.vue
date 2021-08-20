@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <h4>Structures:</h4>
+    <h2>Structures:</h2>
     <table>
       <structure-item
         v-for="item in structureDict"
@@ -24,7 +24,7 @@ export default defineComponent({
 
 <style scoped>
 #outer {
-  flex: 1 1 80%;
+  flex: 1 1 75%;
   overflow: auto;
   padding-top: 10px;
 }

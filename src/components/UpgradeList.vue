@@ -1,6 +1,6 @@
 <template>
   <div id="outer">
-    <h4>Upgrades:</h4>
+    <h2>Upgrades:</h2>
     <div id="upgrades">
       <table>
         <upgrade-item
@@ -38,7 +38,7 @@ export default defineComponent({
 </script>
 <style scoped>
 #outer {
-  height: 20%;
+  height: 25%;
 }
 #upgrades {
   height: calc(100% - 1em);

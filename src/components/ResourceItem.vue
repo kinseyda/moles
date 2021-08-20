@@ -11,6 +11,7 @@
       <input
         @mouseover="hoverDescString(capDesc)"
         @mouseleave="resetDesc()"
+        class="slider"
         type="range"
         min="0"
         max="10"
@@ -49,20 +50,49 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+input[type="range"] {
+  height: 1em;
+  -webkit-appearance: none;
+  width: 100%;
+  cursor: pointer;
+  background: inherit;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 0.5em;
+  background: var(--global-bg-color);
+  border-radius: 0.25em;
+  border: 1px solid var(--text-color);
+}
+input[type="range"]::-webkit-slider-thumb {
+  border: 1px solid var(--text-color);
+  height: 1.25em;
+  width: 1.25em;
+  border-radius: 0.625em;
+  background: var(--global-bg-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -0.45em;
+}
+
 td {
-  width: 7ch;
+  min-width: 6ch;
   padding-left: 0.5ch;
 }
 td:nth-child(1) {
   /* Name */
-  width: 8ch;
+  min-width: 7ch;
 }
 td:nth-child(3) {
   /* Slash */
-  width: 1ch;
+  min-width: 1ch;
 }
 td:nth-child(5) {
   /* Rate */
-  width: 11ch;
+  min-width: 9ch;
+}
+td:nth-child(6) {
+  /* Slider */
+  min-width: 3ch;
 }
 </style>

@@ -42,11 +42,20 @@ export default class Resource extends Identifiable {
     this.trueRate = trueRate;
   }
 
+  /**
+   * Changes the "priority" storage for this resource has.
+   * @param newVal - The new value for the multiplier.
+   * @param areaAmount - The amount of area the player currently has
+   */
   setCapMultiplier(newVal: number, areaAmount: number) {
     this.capMultiplier = newVal;
     this.setCap(areaAmount);
   }
 
+  /**
+   * Changes the resource's maximum. (Currently does nothing if the resource is area)
+   * @param areaAmount - The amount of area the player currently has
+   */
   setCap(areaAmount: number) {
     if (this.id == 0) {
       return;
