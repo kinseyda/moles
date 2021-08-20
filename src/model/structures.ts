@@ -6,6 +6,7 @@ import { SerializableClasses } from "./serializableClass";
 
 /**
  * Stores and updates non-static data relating to a kind of structure.
+ * Structures passively generate resources, and cost both resources and area.
  */
 export default class Structure extends Purchaseable {
   amount: number;
@@ -27,6 +28,13 @@ export default class Structure extends Purchaseable {
    */
   get dataObject(): StructureData {
     return structureDataDict[this.id];
+  }
+
+  /**
+   * Finds the amount of area it will cost to build this structure.
+   */
+  trueCostArea() {
+    return this.dataObject.areaCost;
   }
 
   trueCost(resId: number): number {
@@ -52,6 +60,7 @@ export default class Structure extends Purchaseable {
         res.incrementAmount(-1 * this.trueCost(resId));
       }
     }
+    game.area.incrementAmount(-1 * this.trueCostArea());
     this.amount += 1;
     game.calculateBaseRates();
     game.calculateTrueRates();
@@ -66,6 +75,9 @@ export default class Structure extends Purchaseable {
           return false;
         }
       }
+    }
+    if (this.trueCostArea() > game.area.amount) {
+      return false;
     }
     return true;
   }

@@ -5,16 +5,18 @@ export const structureDataDict: { [id: number]: StructureData } = {
     name: "Ball of dirt",
     description:
       "Compress all the dirt you have into a ball and roll that around to pick up more dirt",
-    production: { 1: 0.1 },
-    cost: { 0: 10, 1: 10 },
-    increase: { 1: 1.1 },
+    production: { 0: 0.1 },
+    cost: { 0: 10 },
+    areaCost: 10,
+    increase: { 0: 1.1 },
   },
   1: {
     name: "Tunnel bore",
     description:
       "Construct a mole-megastructure capable of digging tunnels for you",
-    production: { 1: 10 },
-    cost: { 0: 100, 1: 100 },
-    increase: { 1: 1.2 },
+    production: { 0: 10 },
+    areaCost: 10,
+    cost: { 0: 100 },
+    increase: { 0: 1.2 },
   },
 };

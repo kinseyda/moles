@@ -7,7 +7,7 @@
     <td>/</td>
     <td>{{ formatNumber(resource.cap) }}</td>
     <td>{{ formatNumber(resource.trueRate) }} m/s</td>
-    <td v-if="resource.id !== 0">
+    <td>
       <input
         @mouseover="hoverDescString(capDesc)"
         @mouseleave="resetDesc()"

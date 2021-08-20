@@ -40,7 +40,13 @@
       <h4 v-if="debugMode">DEBUG MODE</h4>
     </div>
     <div id="main">
-      <resource-list :resourceDict="gameData.resourceDict"></resource-list>
+      <div id="left-column">
+        <area-display :area="gameData.area"></area-display>
+        <resource-list
+          :resourceDict="gameData.resourceDict"
+          :area="gameData.area"
+        ></resource-list>
+      </div>
       <div id="central-column">
         <div id="buttons-container">
           <button
@@ -88,6 +94,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
+import AreaDisplay from "./components/AreaDisplay.vue";
 import ResourceList from "./components/ResourceList.vue";
 import UpgradeList from "./components/UpgradeList.vue";
 import StructureList from "./components/StructureList.vue";
@@ -108,6 +115,7 @@ import { uiDescriptions } from "./uiDescriptions";
 @Options({
   name: "App",
   components: {
+    AreaDisplay,
     ResourceList,
     UpgradeList,
     StructureList,
@@ -177,6 +185,7 @@ import { uiDescriptions } from "./uiDescriptions";
               return new Game(
                 obj.lastUpdate,
                 obj.dig,
+                obj.area,
                 obj.resourceDict,
                 obj.upgradeDict,
                 obj.structureDict,
@@ -313,6 +322,10 @@ export default class App extends Vue {}
 #top-bar button {
   padding-left: 5px;
   padding-right: 5px;
+}
+#left-column {
+  flex: 0 0 42ch;
+  min-height: 100%;
 }
 #central-column {
   flex: 1 0 0;

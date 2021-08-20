@@ -9,6 +9,7 @@ export interface UpgradeData extends PurchaseableData {
   effect: { func: string; params: any[] };
 }
 export interface StructureData extends PurchaseableData {
+  areaCost: number;
   production: { [id: number]: number };
   increase: { [id: number]: number };
 }

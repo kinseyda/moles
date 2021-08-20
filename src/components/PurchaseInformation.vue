@@ -3,6 +3,11 @@
     <div class="desc-side" id="cost-container">
       <h4>Cost</h4>
       <ul>
+        <li>
+          <h4 v-if="purchase._class === structureEnum">
+            Area: {{ purchase.dataObject.areaCost }}
+          </h4>
+        </li>
         <CostBullet
           v-for="id in Object.keys(purchase.dataObject.cost)"
           :key="id"

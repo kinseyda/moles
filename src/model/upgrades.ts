@@ -4,6 +4,11 @@ import { game } from "./game";
 import { SerializableClasses } from "./serializableClass";
 import { UpgradeData } from "./staticData/dataInterfaces";
 
+/**
+ * Stores and updates non-static data relating to a kind of upgrade.
+ * Upgrades are single-time purchases that increase performance in some way, such as multiplying resource gains.
+ * Upgrades cost resources and no area.
+ */
 export default class Upgrade extends Purchaseable {
   bought: boolean;
   discount: { [id: number]: number };

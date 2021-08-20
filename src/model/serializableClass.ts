@@ -6,6 +6,7 @@ export enum SerializableClasses {
   Game,
   Dig,
   Resource,
+  Area,
   Structure,
   Upgrade,
 }

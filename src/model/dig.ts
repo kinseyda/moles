@@ -3,6 +3,7 @@ import SerializableClass, { SerializableClasses } from "./serializableClass";
 
 /**
  * Handles data and operations pertaining to manual digging.
+ * Digging increases the {@link Resource}s in digRates, but always increases {@link Area} when digging is true. By how much is defined by Area
  */
 export default class Dig extends SerializableClass {
   digRates: { [index: number]: number };

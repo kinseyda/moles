@@ -5,10 +5,10 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     description: "Fashion some twigs and pebbles lying around into a shovel",
     effect: {
       func: "addMultiplier",
-      params: [{ 1: 1 }],
+      params: [{ 0: 1 }],
     },
     cost: {
-      1: 10,
+      0: 10,
     },
   },
   1: {
@@ -19,7 +19,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   2: {
@@ -30,7 +30,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   3: {
@@ -41,7 +41,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   4: {
@@ -52,7 +52,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   5: {
@@ -63,7 +63,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   6: {
@@ -74,7 +74,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   7: {
@@ -85,7 +85,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   8: {
@@ -96,7 +96,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   9: {
@@ -107,7 +107,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
   10: {
@@ -118,7 +118,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       params: [],
     },
     cost: {
-      1: 9999,
+      0: 9999,
     },
   },
 };

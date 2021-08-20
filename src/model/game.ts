@@ -6,6 +6,7 @@ import Dig from "./dig";
 import { reactive } from "vue";
 import { handleEvent } from "./eventHandling";
 import { RequirementType } from "./staticData/dataInterfaces";
+import Area from "./area";
 
 /**
  * Handles all internal game logic.
@@ -14,6 +15,7 @@ import { RequirementType } from "./staticData/dataInterfaces";
 export class Game extends SerializableClass {
   lastUpdate: number;
   dig: Dig;
+  area: Area;
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
@@ -22,6 +24,7 @@ export class Game extends SerializableClass {
   /**
    * @param lastUpdate - Time of the most recent tick (in ms since epoch). Use Date.now().
    * @param dig - {@link Dig} that stores the game's current dig stats.
+   * @param area - {@link Area} that stores the game's current area and related stats.
    * @param resourceDict - A dictionary of ids to their corresponding {@link Resource}.
    * @param upgradeDict - A dictionary of ids to their corresponding {@link Upgrade}.
    * @param structureDict - A dictionary of ids to their corresponding {@link Structure}.
@@ -30,6 +33,7 @@ export class Game extends SerializableClass {
   constructor(
     lastUpdate: number,
     dig: Dig,
+    area: Area,
     resourceDict: { [id: number]: Resource },
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure },
@@ -38,6 +42,7 @@ export class Game extends SerializableClass {
     super(SerializableClasses.Game);
     this.lastUpdate = lastUpdate;
     this.dig = dig;
+    this.area = area;
     this.resourceDict = resourceDict;
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
@@ -58,6 +63,10 @@ export class Game extends SerializableClass {
       if (this.resourceDict[resId].amount > this.resourceDict[resId].cap) {
         this.resourceDict[resId].setAmount(this.resourceDict[resId].cap);
       }
+    }
+    this.area.setAmount(this.area.getNextAmount(diff));
+    if (this.area.amount > this.area.cap) {
+      this.area.setAmount(this.area.cap);
     }
     this.lastUpdate = updateTime;
   }
@@ -116,10 +125,7 @@ export class Game extends SerializableClass {
 
   updateCaps() {
     for (const resId in this.resourceDict) {
-      if (Number(resId) == 0) {
-        continue;
-      }
-      this.resourceDict[resId].setCap(this.resourceDict[0].amount);
+      this.resourceDict[resId].setCap(this.area.amount);
     }
   }
 }
@@ -134,7 +140,6 @@ const startingResources = {
   7: new Resource(7, 0, 0, 1, 0, 1, 0),
   8: new Resource(8, 0, 0, 1, 0, 1, 0),
   9: new Resource(9, 0, 0, 1, 0, 1, 0),
-  10: new Resource(10, 0, 0, 1, 0, 1, 0),
 };
 
 const startingUpgrades = {
@@ -164,6 +169,7 @@ export let game: Game = reactive(
   new Game(
     Date.now(),
     new Dig({ 0: 10, 1: 1, 2: 1 }),
+    new Area(0, 100, 1),
     startingResources,
     startingUpgrades,
     startingStructures,

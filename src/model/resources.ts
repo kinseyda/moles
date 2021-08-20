@@ -6,6 +6,7 @@ import { SerializableClasses } from "./serializableClass";
 
 /**
  * Stores and updates non-static data relating to a resource type.
+ * Resources are generated passively by {@link Structure}s and actively by {@link Dig}ging and can be affected by {@link Upgrade}
  */
 export default class Resource extends Identifiable {
   amount: number;
@@ -57,9 +58,6 @@ export default class Resource extends Identifiable {
    * @param areaAmount - The amount of area the player currently has
    */
   setCap(areaAmount: number) {
-    if (this.id == 0) {
-      return;
-    }
     this.cap = areaAmount * this.capMultiplier;
   }
 
@@ -83,9 +81,6 @@ export default class Resource extends Identifiable {
   setAmount(newAmount: number) {
     if (this.amount != newAmount) {
       this.amount = newAmount;
-      if (this.id == 0) {
-        game.updateCaps();
-      }
       game.handleEvent(RequirementType.resourceAmount, {
         resId: this.id,
       });
