@@ -1,10 +1,6 @@
 <template>
   <div id="outer">
-    <table>
-      <h2>
-        {{ formatNumber(area.amount) }} / {{ formatNumber(area.cap) }} area
-      </h2>
-    </table>
+    <h2>{{ formatNumber(area.amount) }} / {{ formatNumber(area.cap) }} area</h2>
   </div>
 </template>
 
@@ -23,4 +19,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+h2 {
+  text-align: center;
+}
 </style>

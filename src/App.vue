@@ -41,13 +41,13 @@
     </div>
     <div id="main">
       <div id="left-column">
-        <area-display :area="gameData.area"></area-display>
         <resource-list
           :resourceDict="gameData.resourceDict"
           :area="gameData.area"
         ></resource-list>
       </div>
       <div id="central-column">
+        <area-display :area="gameData.area"></area-display>
         <div id="buttons-container">
           <button
             id="dig-button"
