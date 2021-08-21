@@ -12,6 +12,7 @@
         @mouseover="hoverDescString(capDesc)"
         @mouseleave="resetDesc()"
         class="slider"
+        :id="'slider' + resource.id"
         type="range"
         min="0"
         max="10"
@@ -93,6 +94,6 @@ td:nth-child(5) {
 }
 td:nth-child(6) {
   /* Slider */
-  min-width: 3ch;
+  min-width: 10ch;
 }
 </style>

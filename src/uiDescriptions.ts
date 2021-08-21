@@ -10,4 +10,6 @@ uiDescriptions = {
   dig: "You feel an urge to dig",
   capSliders:
     "How much of this resource you want to store (relative to the others)",
+  sliderSet1: "Sets all sliders to 1 (equal distribution of space)",
+  sliderSet0: "Sets all sliders to 0 (no resources stored at all)",
 };
