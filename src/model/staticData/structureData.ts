@@ -1,5 +1,10 @@
 import { StructureData } from "./dataInterfaces";
 
+const defaultStartingValues = {
+  amount: 0,
+  discount: {},
+};
+
 export const structureDataDict: { [id: number]: StructureData } = {
   0: {
     name: "Ball of dirt",
@@ -9,6 +14,7 @@ export const structureDataDict: { [id: number]: StructureData } = {
     cost: { 0: 10 },
     areaCost: 10,
     increase: { 0: 1.1 },
+    startingParams: defaultStartingValues,
   },
   1: {
     name: "Tunnel bore",
@@ -18,5 +24,6 @@ export const structureDataDict: { [id: number]: StructureData } = {
     areaCost: 10,
     cost: { 0: 100 },
     increase: { 0: 1.2 },
+    startingParams: defaultStartingValues,
   },
 };

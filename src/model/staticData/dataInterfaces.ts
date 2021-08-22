@@ -7,13 +7,31 @@ export interface PurchaseableData extends IdentifiableData {
 }
 export interface UpgradeData extends PurchaseableData {
   effect: { func: string; params: any[] };
+  startingParams: {
+    bought: boolean;
+    discount: { [resId: number]: number };
+  };
 }
 export interface StructureData extends PurchaseableData {
   areaCost: number;
   production: { [id: number]: number };
   increase: { [id: number]: number };
+  startingParams: {
+    amount: number;
+    discount: { [resId: number]: number };
+  };
 }
-export interface ResourceData extends IdentifiableData {}
+export interface ResourceData extends IdentifiableData {
+  startingParams: {
+    amount: number;
+    cap: number;
+    capMultiplier: number;
+    baseRate: number;
+    multiplier: number;
+    trueRate: number;
+  };
+}
+
 
 export enum RequirementType {
   gameStart,

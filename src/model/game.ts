@@ -7,6 +7,9 @@ import { reactive } from "vue";
 import { handleEvent } from "./eventHandling";
 import { RequirementType } from "./staticData/dataInterfaces";
 import Area from "./area";
+import { resourceDataDict } from "./staticData/resourceData";
+import { upgradeDataDict } from "./staticData/upgradeData";
+import { structureDataDict } from "./staticData/structureData";
 
 /**
  * Handles all internal game logic.
@@ -132,27 +135,95 @@ export class Game extends SerializableClass {
   }
 }
 const startingResources = {
-  0: new Resource(0, 0, 0, 1, 0, 1, 0),
-  1: new Resource(1, 0, 0, 1, 0, 1, 0),
+  0: new Resource(
+    0,
+    resourceDataDict[0].startingParams.amount,
+    resourceDataDict[0].startingParams.cap,
+    resourceDataDict[0].startingParams.capMultiplier,
+    resourceDataDict[0].startingParams.baseRate,
+    resourceDataDict[0].startingParams.multiplier,
+    resourceDataDict[0].startingParams.trueRate
+  ),
+  1: new Resource(
+    1,
+    resourceDataDict[1].startingParams.amount,
+    resourceDataDict[1].startingParams.cap,
+    resourceDataDict[1].startingParams.capMultiplier,
+    resourceDataDict[1].startingParams.baseRate,
+    resourceDataDict[1].startingParams.multiplier,
+    resourceDataDict[1].startingParams.trueRate
+  ),
 };
 
 const startingUpgrades = {
-  0: new Upgrade(0, false, {}),
-  1: new Upgrade(1, false, {}),
-  2: new Upgrade(2, false, {}),
-  3: new Upgrade(3, false, {}),
-  4: new Upgrade(4, false, {}),
-  5: new Upgrade(5, false, {}),
-  6: new Upgrade(6, false, {}),
-  7: new Upgrade(7, false, {}),
-  8: new Upgrade(8, false, {}),
-  9: new Upgrade(9, false, {}),
-  10: new Upgrade(10, false, {}),
+  0: new Upgrade(
+    0,
+    upgradeDataDict[0].startingParams.bought,
+    upgradeDataDict[0].startingParams.discount
+  ),
+  1: new Upgrade(
+    1,
+    upgradeDataDict[1].startingParams.bought,
+    upgradeDataDict[1].startingParams.discount
+  ),
+  2: new Upgrade(
+    2,
+    upgradeDataDict[2].startingParams.bought,
+    upgradeDataDict[2].startingParams.discount
+  ),
+  3: new Upgrade(
+    3,
+    upgradeDataDict[3].startingParams.bought,
+    upgradeDataDict[3].startingParams.discount
+  ),
+  4: new Upgrade(
+    4,
+    upgradeDataDict[4].startingParams.bought,
+    upgradeDataDict[4].startingParams.discount
+  ),
+  5: new Upgrade(
+    5,
+    upgradeDataDict[5].startingParams.bought,
+    upgradeDataDict[5].startingParams.discount
+  ),
+  6: new Upgrade(
+    6,
+    upgradeDataDict[6].startingParams.bought,
+    upgradeDataDict[6].startingParams.discount
+  ),
+  7: new Upgrade(
+    7,
+    upgradeDataDict[7].startingParams.bought,
+    upgradeDataDict[7].startingParams.discount
+  ),
+  8: new Upgrade(
+    8,
+    upgradeDataDict[8].startingParams.bought,
+    upgradeDataDict[8].startingParams.discount
+  ),
+  9: new Upgrade(
+    9,
+    upgradeDataDict[9].startingParams.bought,
+    upgradeDataDict[9].startingParams.discount
+  ),
+  10: new Upgrade(
+    10,
+    upgradeDataDict[10].startingParams.bought,
+    upgradeDataDict[10].startingParams.discount
+  ),
 };
 
 const startingStructures = {
-  0: new Structure(0, 0, {}),
-  1: new Structure(1, 0, {}),
+  0: new Structure(
+    0,
+    structureDataDict[0].startingParams.amount,
+    structureDataDict[0].startingParams.discount
+  ),
+  1: new Structure(
+    1,
+    structureDataDict[1].startingParams.amount,
+    structureDataDict[1].startingParams.discount
+  ),
 };
 
 /**

@@ -1,4 +1,10 @@
 import { UpgradeData } from "./dataInterfaces";
+
+const defaultStartingValues = {
+  bought: false,
+  discount: {},
+};
+
 export const upgradeDataDict: { [id: number]: UpgradeData } = {
   0: {
     name: "Makeshift shovel",
@@ -10,17 +16,21 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 10,
     },
+    startingParams: defaultStartingValues,
   },
   1: {
-    name: "Filler",
-    description: "Filler desc",
+    name: "Pickaxe",
+    description:
+      "Construct a pickaxe out of iron to help you get at those gold veins you've been seeing",
     effect: {
-      func: "none",
-      params: [],
+      func: "unlock",
+      params: [0],
     },
     cost: {
-      0: 9999,
+      0: 10,
+      1: 10,
     },
+    startingParams: defaultStartingValues,
   },
   2: {
     name: "Filler",
@@ -32,6 +42,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   3: {
     name: "Filler",
@@ -43,6 +54,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   4: {
     name: "Filler",
@@ -54,6 +66,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   5: {
     name: "Filler",
@@ -65,6 +78,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   6: {
     name: "Filler",
@@ -76,6 +90,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   7: {
     name: "Filler",
@@ -87,6 +102,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   8: {
     name: "Filler",
@@ -98,6 +114,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   9: {
     name: "Filler",
@@ -109,6 +126,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
   10: {
     name: "Filler",
@@ -120,5 +138,6 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     cost: {
       0: 9999,
     },
+    startingParams: defaultStartingValues,
   },
 };
