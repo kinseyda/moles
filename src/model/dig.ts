@@ -19,12 +19,16 @@ export default class Dig extends SerializableClass {
   }
   /**
    * Finds the true dig rate for a given {@link Resource}, including the Resource's multiplier.
+   * Does not include 0 values for resources that have not yet been unlocked
    * @param resId - The Resource to look for.
    * @returns Either the true dig rate or undefined when manual digging doesnt produce the given resource.
    */
   findTrueDigRate(resId: number): number | undefined {
     if (this.digRates[resId] === undefined) {
       return undefined;
+    }
+    if (game.resourceDict[resId] === undefined) {
+      throw new Error("Trying to dig for resource that hasnt been unlocked.");
     }
     return this.digRates[resId] * game.resourceDict[resId].multiplier;
   }

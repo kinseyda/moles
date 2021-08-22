@@ -25,7 +25,7 @@ export class Game extends SerializableClass {
    * @param lastUpdate - Time of the most recent tick (in ms since epoch). Use Date.now().
    * @param dig - {@link Dig} that stores the game's current dig stats.
    * @param area - {@link Area} that stores the game's current area and related stats.
-   * @param resourceDict - A dictionary of ids to their corresponding {@link Resource}.
+   * @param resourceDict - A dictionary of ids to their corresponding {@link Resource}. Does not necessarily contain every resource contained in the static {@link resourceDataDict}
    * @param upgradeDict - A dictionary of ids to their corresponding {@link Upgrade}.
    * @param structureDict - A dictionary of ids to their corresponding {@link Structure}.
    * @param eventsDict - A dictionary of valid ids (that correspond to an event in {@link eventDataDict}) to a the time they were achieved (ms since epoch).
@@ -132,16 +132,8 @@ export class Game extends SerializableClass {
   }
 }
 const startingResources = {
-  0: new Resource(0, 0, 100, 1, 0, 1, 0),
+  0: new Resource(0, 0, 0, 1, 0, 1, 0),
   1: new Resource(1, 0, 0, 1, 0, 1, 0),
-  2: new Resource(2, 0, 0, 1, 0, 1, 0),
-  3: new Resource(3, 0, 0, 1, 0, 1, 0),
-  4: new Resource(4, 0, 0, 1, 0, 1, 0),
-  5: new Resource(5, 0, 0, 1, 0, 1, 0),
-  6: new Resource(6, 0, 0, 1, 0, 1, 0),
-  7: new Resource(7, 0, 0, 1, 0, 1, 0),
-  8: new Resource(8, 0, 0, 1, 0, 1, 0),
-  9: new Resource(9, 0, 0, 1, 0, 1, 0),
 };
 
 const startingUpgrades = {
@@ -170,7 +162,7 @@ const startingStructures = {
 export let game: Game = reactive(
   new Game(
     Date.now(),
-    new Dig({ 0: 10, 1: 1, 2: 1 }),
+    new Dig({ 0: 10, 1: 1 }),
     new Area(0, 100, 1),
     startingResources,
     startingUpgrades,

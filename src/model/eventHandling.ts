@@ -109,6 +109,10 @@ function checkEventResourceAmount(
   game: Game
 ) {
   for (const resId in resReqs) {
+    if (game.resourceDict[resId] === undefined) {
+      // Resource for requirement not unlocked yet
+      return false;
+    }
     if (game.resourceDict[resId].amount < resReqs[resId]) {
       return false;
     }
