@@ -57,11 +57,13 @@ export class Game extends SerializableClass {
     const updateTime = Date.now();
     const diff = (updateTime - this.lastUpdate) / 1000;
     for (const resId in this.resourceDict) {
-      this.resourceDict[resId].incrementAmount(
-        this.resourceDict[resId].trueRate * diff
-      );
-      if (this.resourceDict[resId].amount > this.resourceDict[resId].cap) {
+      const newAmount =
+        this.resourceDict[resId].amount +
+        this.resourceDict[resId].trueRate * diff;
+      if (newAmount > this.resourceDict[resId].cap) {
         this.resourceDict[resId].setAmount(this.resourceDict[resId].cap);
+      } else {
+        this.resourceDict[resId].setAmount(newAmount);
       }
     }
     this.area.setAmount(this.area.getNextAmount(diff));
