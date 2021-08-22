@@ -111,6 +111,7 @@ import Structure from "./model/structures";
 import Dig from "./model/dig";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./uiDescriptions";
+import Area from "./model/area";
 
 @Options({
   name: "App",
@@ -207,6 +208,8 @@ import { uiDescriptions } from "./uiDescriptions";
               return new Structure(obj.id, obj.amount, obj.discount);
             case "Dig":
               return new Dig(obj.digRates);
+            case "Area":
+              return new Area(obj.amount, obj.cap, obj.multiplier);
             default:
               //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
               console.error(
