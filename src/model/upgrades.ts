@@ -3,6 +3,11 @@ import { upgradeDataDict } from "./staticData/upgradeData";
 import { game } from "./game";
 import { SerializableClasses } from "./serializableClass";
 import { UpgradeData } from "./staticData/dataInterfaces";
+import { unlockDataDict } from "./staticData/unlockData";
+import Resource from "./resources";
+import { resourceDataDict } from "./staticData/resourceData";
+import { structureDataDict } from "./staticData/structureData";
+import Structure from "./structures";
 
 /**
  * Stores and updates non-static data relating to a kind of upgrade.
@@ -52,6 +57,9 @@ export default class Upgrade extends Purchaseable {
       case "addMultiplier":
         addMultiplier(this.dataObject.effect.params[0]);
         break;
+      case "unlock":
+        unlock(this.dataObject.effect.params[0]);
+        break;
       case "none":
         break;
       default:
@@ -74,6 +82,33 @@ export default class Upgrade extends Purchaseable {
       }
     }
     return true;
+  }
+}
+function unlock(unlockId: number) {
+  const unlockData = unlockDataDict[unlockId];
+  for (const resId of unlockData.resources) {
+    const sp = resourceDataDict[resId].startingParams;
+    game.resourceDict[resId] = new Resource(
+      Number(resId),
+      sp.amount,
+      sp.cap,
+      sp.capMultiplier,
+      sp.baseRate,
+      sp.multiplier,
+      sp.trueRate
+    );
+  }
+  for (const upId of unlockData.upgrades) {
+    const sp = upgradeDataDict[upId].startingParams;
+    game.upgradeDict[upId] = new Upgrade(Number(upId), sp.bought, sp.discount);
+  }
+  for (const stId of unlockData.structures) {
+    const sp = structureDataDict[stId].startingParams;
+    game.structureDict[stId] = new Structure(
+      Number(stId),
+      sp.amount,
+      sp.discount
+    );
   }
 }
 function addMultiplier(multDict: { [resId: number]: number }) {

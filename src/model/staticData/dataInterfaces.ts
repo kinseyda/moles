@@ -32,6 +32,11 @@ export interface ResourceData extends IdentifiableData {
   };
 }
 
+export interface UnlockData {
+  resources: number[];
+  upgrades: number[];
+  structures: number[];
+}
 
 export enum RequirementType {
   gameStart,

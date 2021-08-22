@@ -69,10 +69,13 @@ export class Game extends SerializableClass {
         this.resourceDict[resId].setAmount(newAmount);
       }
     }
-    this.area.setAmount(this.area.getNextAmount(diff));
-    if (this.area.amount > this.area.cap) {
-      this.area.setAmount(this.area.cap);
+    if (this.dig.digging) {
+      this.area.setAmount(this.area.getNextAmount(diff));
+      if (this.area.amount > this.area.cap) {
+        this.area.setAmount(this.area.cap);
+      }
     }
+
     this.lastUpdate = updateTime;
   }
   /**
