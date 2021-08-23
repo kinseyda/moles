@@ -11,7 +11,7 @@ import { SerializableClasses } from "./serializableClass";
 export default class Resource extends Identifiable {
   amount: number;
   cap: number;
-  capMultiplier: number;
+  capPriority: number;
   baseRate: number;
   multiplier: number;
   trueRate: number;
@@ -20,7 +20,7 @@ export default class Resource extends Identifiable {
    * @param id - A unique id corresponding to the relevant item in {@link resourceDataDict}.
    * @param amount - The amount of the resource the player has.
    * @param cap - The max amount of the resource that can be stored.
-   * @param capMultiplier - A multiplier to this resources cap (could potentially be increased with sliders controlled by the user), 1 by default.
+   * @param capPriority - The priority (0 - 10) of storage for this resource.
    * @param baseRate - The rate at which the resource is generated at a base level (just derived from {@link Structure}s).
    * @param multiplier - A multiplier for all production of this resource.
    * @param trueRate - The rate at which the resource is generated in total (including multipliers and manual {@link Dig digging}).
@@ -29,7 +29,7 @@ export default class Resource extends Identifiable {
     id: number,
     amount: number,
     cap: number,
-    capMultiplier: number,
+    capPriority: number,
     baseRate: number,
     multiplier: number,
     trueRate: number
@@ -37,28 +37,32 @@ export default class Resource extends Identifiable {
     super(id, SerializableClasses.Resource);
     this.amount = amount;
     this.cap = cap;
-    this.capMultiplier = capMultiplier;
+    this.capPriority = capPriority;
     this.baseRate = baseRate;
     this.multiplier = multiplier;
     this.trueRate = trueRate;
   }
 
   /**
-   * Changes the "priority" storage for this resource has.
-   * @param newVal - The new value for the multiplier.
-   * @param areaAmount - The amount of area the player currently has
+   * Changes the priority that storage for this resource has.
+   * @param newVal - The new value for the priority (integer 0 - 10 inclusive).
+   * @param areaAmount - The amount of area the player currently has.
    */
-  setCapMultiplier(newVal: number, areaAmount: number) {
-    this.capMultiplier = newVal;
-    this.setCap(areaAmount);
+  setCapPriority(newVal: number, areaAmount: number, totalPriorities: number) {
+    this.capPriority = newVal;
+    this.setCap(areaAmount, totalPriorities);
   }
 
   /**
    * Changes the resource's maximum. (Currently does nothing if the resource is area)
    * @param areaAmount - The amount of area the player currently has
    */
-  setCap(areaAmount: number) {
-    this.cap = areaAmount * this.capMultiplier;
+  setCap(areaAmount: number, totalPriorities: number) {
+    let tp = totalPriorities;
+    if (totalPriorities == 0) {
+      tp = 1;
+    }
+    this.cap = areaAmount * (this.capPriority / tp);
   }
 
   /**

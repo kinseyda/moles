@@ -131,9 +131,18 @@ export class Game extends SerializableClass {
     }
   }
 
-  updateCaps() {
+  totalPriorities(): number {
+    let total = 0;
     for (const resId in this.resourceDict) {
-      this.resourceDict[resId].setCap(this.area.amount);
+      total += Number(this.resourceDict[resId].capPriority);
+    }
+    return total;
+  }
+
+  updateCaps() {
+    const total = this.totalPriorities();
+    for (const resId in this.resourceDict) {
+      this.resourceDict[resId].setCap(this.area.amount, total);
     }
   }
 }
@@ -142,7 +151,7 @@ const startingResources = {
     0,
     resourceDataDict[0].startingParams.amount,
     resourceDataDict[0].startingParams.cap,
-    resourceDataDict[0].startingParams.capMultiplier,
+    resourceDataDict[0].startingParams.capPriority,
     resourceDataDict[0].startingParams.baseRate,
     resourceDataDict[0].startingParams.multiplier,
     resourceDataDict[0].startingParams.trueRate
@@ -151,7 +160,7 @@ const startingResources = {
     1,
     resourceDataDict[1].startingParams.amount,
     resourceDataDict[1].startingParams.cap,
-    resourceDataDict[1].startingParams.capMultiplier,
+    resourceDataDict[1].startingParams.capPriority,
     resourceDataDict[1].startingParams.baseRate,
     resourceDataDict[1].startingParams.multiplier,
     resourceDataDict[1].startingParams.trueRate

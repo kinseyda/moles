@@ -171,7 +171,10 @@ import Area from "./model/area";
     },
     loadGame() {
       const recurConstruct = (obj: any) => {
-        if (obj.length > 0 || Object.keys(obj).length > 0) {
+        if (
+          (Array.isArray(obj) && obj.length > 0) ||
+          Object.keys(obj).length > 0
+        ) {
           // If list or object, recurse through each thing contained to assign all the referenced items into the class they need
           for (let i in obj) {
             if (i != "_class") {
@@ -197,7 +200,7 @@ import Area from "./model/area";
                 obj.id,
                 obj.amount,
                 obj.cap,
-                obj.capMultiplier,
+                obj.capPriority,
                 obj.baseRate,
                 obj.multiplier,
                 obj.trueRate

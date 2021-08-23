@@ -25,7 +25,7 @@ export interface ResourceData extends IdentifiableData {
   startingParams: {
     amount: number;
     cap: number;
-    capMultiplier: number;
+    capPriority: number;
     baseRate: number;
     multiplier: number;
     trueRate: number;

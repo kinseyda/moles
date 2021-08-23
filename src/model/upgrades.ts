@@ -92,7 +92,7 @@ function unlock(unlockId: number) {
       Number(resId),
       sp.amount,
       sp.cap,
-      sp.capMultiplier,
+      sp.capPriority,
       sp.baseRate,
       sp.multiplier,
       sp.trueRate

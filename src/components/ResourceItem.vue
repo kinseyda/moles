@@ -16,7 +16,7 @@
         type="range"
         min="0"
         max="10"
-        value="1"
+        :value="resource.capPriority"
         @input="$emit('update:sliderVal', $event.target.value)"
       />
     </td>
@@ -36,7 +36,7 @@ export default defineComponent({
   data() {
     return {
       capDesc: uiDescriptions["capSliders"],
-      sliderVal: "1",
+      sliderVal: "0",
     };
   },
   methods: {
@@ -47,6 +47,9 @@ export default defineComponent({
     getCap() {
       return this.resource.cap;
     },
+  },
+  mounted() {
+    this.$emit("update:sliderVal", 0);
   },
 });
 </script>

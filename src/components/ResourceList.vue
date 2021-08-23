@@ -79,9 +79,13 @@ export default defineComponent({
           if (total == 0) {
             total = 1;
           }
-          this.resourceDict[resId].setCapMultiplier(
-            this.sliderVals[resId] / total,
-            this.area.amount
+          if (this.area === undefined) {
+            throw new Error("ResourceList's area prop is undefined");
+          }
+          this.resourceDict[resId].setCapPriority(
+            Number(this.sliderVals[resId]),
+            this.area.amount,
+            total
           );
         }
       },

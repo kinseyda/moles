@@ -3,7 +3,7 @@ import { ResourceData } from "./dataInterfaces";
 const defaultStartingValues = {
   amount: 0,
   cap: 0,
-  capMultiplier: 1,
+  capPriority: 0,
   baseRate: 0,
   multiplier: 1,
   trueRate: 0,
