@@ -36,7 +36,7 @@ export default defineComponent({
   data() {
     return {
       capDesc: uiDescriptions["capSliders"],
-      sliderVal: "0",
+      sliderVal: this.resource.capPriority,
     };
   },
   methods: {
@@ -47,9 +47,6 @@ export default defineComponent({
     getCap() {
       return this.resource.cap;
     },
-  },
-  mounted() {
-    this.$emit("update:sliderVal", 0);
   },
 });
 </script>

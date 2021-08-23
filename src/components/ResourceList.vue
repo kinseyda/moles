@@ -9,6 +9,7 @@
         v-model:sliderVal="sliderVals[item.id]"
       ></resource-item>
     </table>
+
     <button
       class="slider-set"
       id="set-1"
@@ -49,6 +50,14 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
+    getSlider(resId: number) {
+      // When a resource is added (through unlocks) it doesnt have a key in sliderVals until the slider is moved.
+      // This ensures we never get NaNs (and also string errors)
+      if (this.sliderVals[resId] === undefined) {
+        return this.resourceDict[resId].capPriority;
+      }
+      return Number(this.sliderVals[resId]);
+    },
     setSliders(num: number) {
       for (const resIdStr in this.resourceDict) {
         // Change value behind the scenes
@@ -72,18 +81,15 @@ export default defineComponent({
         let total = 0;
         for (const resIdStr in this.resourceDict) {
           const resId = Number(resIdStr);
-          total += Number(this.sliderVals[resId]);
+          total += this.getSlider(resId);
         }
         for (const resIdStr in this.resourceDict) {
           const resId = Number(resIdStr);
-          if (total == 0) {
-            total = 1;
-          }
           if (this.area === undefined) {
             throw new Error("ResourceList's area prop is undefined");
           }
           this.resourceDict[resId].setCapPriority(
-            Number(this.sliderVals[resId]),
+            this.getSlider(resId),
             this.area.amount,
             total
           );
@@ -94,7 +100,7 @@ export default defineComponent({
   mounted() {
     for (const resIdStr in this.resourceDict) {
       const resId = Number(resIdStr);
-      this.sliderVals[resId] = 1;
+      this.sliderVals[resId] = this.resourceDict[resId].capPriority;
     }
   },
 });

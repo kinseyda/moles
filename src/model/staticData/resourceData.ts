@@ -13,12 +13,26 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
   0: {
     name: "Dirt",
     description: "The basic building block of all mole civilization",
-    startingParams: defaultStartingValues,
+    startingParams: {
+      amount: 0,
+      cap: 0,
+      capPriority: 1,
+      baseRate: 0,
+      multiplier: 1,
+      trueRate: 0,
+    },
   },
   1: {
     name: "Iron",
     description: "A particularly shiny kind of rock",
-    startingParams: defaultStartingValues,
+    startingParams: {
+      amount: 0,
+      cap: 0,
+      capPriority: 1,
+      baseRate: 0,
+      multiplier: 1,
+      trueRate: 0,
+    },
   },
   2: {
     name: "Gold",
