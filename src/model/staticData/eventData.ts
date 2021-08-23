@@ -41,7 +41,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { 1: 5 },
+        requirementDetails: { 0: 5 },
       },
     ],
     repeatable: false,
@@ -53,7 +53,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { 1: 10, 2: 10 },
+        requirementDetails: { 0: 10, 1: 10 },
       },
     ],
     repeatable: false,
