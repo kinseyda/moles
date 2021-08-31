@@ -1,8 +1,8 @@
 import Purchaseable from "./purchaseable";
-import { structureDataDict } from "./staticData/structureData";
-import { StructureData } from "./staticData/dataInterfaces";
+import { structureDataDict } from "./staticData/structure-data";
+import { StructureData } from "./staticData/data-interfaces";
 import { game } from "./game";
-import { SerializableClasses } from "./serializableClass";
+import { SerializableClasses } from "./serializable-class";
 
 /**
  * Stores and updates non-static data relating to a kind of structure.

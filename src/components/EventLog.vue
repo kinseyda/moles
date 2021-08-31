@@ -15,7 +15,7 @@
   </div>
 </template>
 <script lang="ts">
-import { eventDataDict } from "@/model/staticData/eventData";
+import { eventDataDict } from "@/model/staticData/event-data";
 import { defineComponent } from "vue";
 import { formatTimeConcise } from "@/components/format";
 import { game } from "@/model/game";

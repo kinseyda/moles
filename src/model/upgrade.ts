@@ -1,13 +1,13 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDataDict } from "./staticData/upgradeData";
+import { upgradeDataDict } from "./staticData/upgrade-data";
 import { game } from "./game";
-import { SerializableClasses } from "./serializableClass";
-import { UpgradeData } from "./staticData/dataInterfaces";
-import { unlockDataDict } from "./staticData/unlockData";
-import Resource from "./resources";
-import { resourceDataDict } from "./staticData/resourceData";
-import { structureDataDict } from "./staticData/structureData";
-import Structure from "./structures";
+import { SerializableClasses } from "./serializable-class";
+import { UpgradeData } from "./staticData/data-interfaces";
+import { unlockDataDict } from "./staticData/unlock-data";
+import Resource from "./resource";
+import { resourceDataDict } from "./staticData/resource-data";
+import { structureDataDict } from "./staticData/structure-data";
+import Structure from "./structure";
 
 /**
  * Stores and updates non-static data relating to a kind of upgrade.

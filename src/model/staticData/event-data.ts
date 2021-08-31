@@ -1,4 +1,4 @@
-import { EventData, RequirementType } from "./dataInterfaces";
+import { EventData, RequirementType } from "./data-interfaces";
 
 /**
  * Stores data for all events, in the form of a dictionary from an id (number) to an {@link EventData} object.

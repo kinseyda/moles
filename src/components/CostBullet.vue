@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import Resource from "@/model/resources";
+import Resource from "@/model/resource";
 import { formatNumber, formatTime } from "@/components/format";
 import { defineComponent } from "vue";
 export default defineComponent({

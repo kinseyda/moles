@@ -1,8 +1,8 @@
-import { resourceDataDict } from "@/model/staticData/resourceData";
-import { RequirementType, ResourceData } from "./staticData/dataInterfaces";
+import { resourceDataDict } from "@/model/staticData/resource-data";
+import { RequirementType, ResourceData } from "./staticData/data-interfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
-import { SerializableClasses } from "./serializableClass";
+import { SerializableClasses } from "./serializable-class";
 
 /**
  * Stores and updates non-static data relating to a resource type.

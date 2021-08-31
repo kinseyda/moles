@@ -103,11 +103,11 @@ import PurchaseInformation from "./components/PurchaseInformation.vue";
 import DigInformation from "./components/DigInformation.vue";
 import SerializableClass, {
   SerializableClasses,
-} from "./model/serializableClass";
+} from "./model/serializable-class";
 import { game, Game, setGame } from "./model/game";
-import Resource from "./model/resources";
-import Upgrade from "./model/upgrades";
-import Structure from "./model/structures";
+import Resource from "./model/resource";
+import Upgrade from "./model/upgrade";
+import Structure from "./model/structure";
 import Dig from "./model/dig";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./uiDescriptions";

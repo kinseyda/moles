@@ -1,4 +1,4 @@
-import { StructureData } from "./dataInterfaces";
+import { StructureData } from "./data-interfaces";
 
 const defaultStartingValues = {
   amount: 0,

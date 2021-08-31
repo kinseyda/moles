@@ -1,5 +1,5 @@
-import { IdentifiableData } from "./staticData/dataInterfaces";
-import SerializableClass, { SerializableClasses } from "./serializableClass";
+import { IdentifiableData } from "./staticData/data-interfaces";
+import SerializableClass, { SerializableClasses } from "./serializable-class";
 
 /**
  * Super-type of all classes that have an id (and static information)

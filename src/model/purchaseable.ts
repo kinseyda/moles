@@ -1,5 +1,5 @@
 import Identifiable from "./identifiable";
-import { SerializableClasses } from "./serializableClass";
+import { SerializableClasses } from "./serializable-class";
 
 /**
  * Super-type for {@link Structure}s and {@link Upgrade}s

@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Structure from "@/model/structures";
+import Structure from "@/model/structure";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { formatNumber } from "@/components/format";

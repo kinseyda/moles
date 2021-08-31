@@ -1,5 +1,5 @@
 import { game } from "./game";
-import SerializableClass, { SerializableClasses } from "./serializableClass";
+import SerializableClass, { SerializableClasses } from "./serializable-class";
 
 /**
  * Handles data and operations pertaining to manual digging.

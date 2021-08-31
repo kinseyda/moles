@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import Upgrade from "@/model/upgrades";
+import Upgrade from "@/model/upgrade";
 import { defineComponent } from "vue";
 import UpgradeItem from "./UpgradeItem.vue";
 export default defineComponent({

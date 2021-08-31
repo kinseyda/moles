@@ -1,4 +1,4 @@
-import { UpgradeData } from "./dataInterfaces";
+import { UpgradeData } from "./data-interfaces";
 
 const defaultStartingValues = {
   bought: false,

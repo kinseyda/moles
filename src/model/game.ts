@@ -1,15 +1,15 @@
-import SerializableClass, { SerializableClasses } from "./serializableClass";
-import Upgrade from "./upgrades";
-import Structure from "./structures";
-import Resource from "./resources";
+import SerializableClass, { SerializableClasses } from "./serializable-class";
+import Upgrade from "./upgrade";
+import Structure from "./structure";
+import Resource from "./resource";
 import Dig from "./dig";
 import { reactive } from "vue";
-import { handleEvent } from "./eventHandling";
-import { RequirementType } from "./staticData/dataInterfaces";
+import { handleEvent } from "./event-handling";
+import { RequirementType } from "./staticData/data-interfaces";
 import Area from "./area";
-import { resourceDataDict } from "./staticData/resourceData";
-import { upgradeDataDict } from "./staticData/upgradeData";
-import { structureDataDict } from "./staticData/structureData";
+import { resourceDataDict } from "./staticData/resource-data";
+import { upgradeDataDict } from "./staticData/upgrade-data";
+import { structureDataDict } from "./staticData/structure-data";
 
 /**
  * Handles all internal game logic.

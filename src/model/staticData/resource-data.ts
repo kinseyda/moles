@@ -1,4 +1,4 @@
-import { ResourceData } from "./dataInterfaces";
+import { ResourceData } from "./data-interfaces";
 
 const defaultStartingValues = {
   amount: 0,

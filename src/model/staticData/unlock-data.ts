@@ -1,4 +1,4 @@
-import { UnlockData } from "./dataInterfaces";
+import { UnlockData } from "./data-interfaces";
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
   0: {

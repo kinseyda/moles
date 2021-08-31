@@ -36,9 +36,9 @@ import ProduceDetails from "./ProduceDetails.vue";
 import EffectDetails from "./EffectDetails.vue";
 import CostBullet from "./CostBullet.vue";
 import { formatNumber, formatTime } from "@/components/format";
-import Upgrade from "@/model/upgrades";
+import Upgrade from "@/model/upgrade";
 import { game } from "@/model/game";
-import { SerializableClasses } from "@/model/serializableClass";
+import { SerializableClasses } from "@/model/serializable-class";
 
 export default defineComponent({
   name: "PurchaseInformation",
