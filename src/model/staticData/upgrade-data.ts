@@ -21,7 +21,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   1: {
     name: "Pickaxe",
     description:
-      "Construct a pickaxe out of iron to help you get at those gold veins you've been seeing",
+      "Construct a pickaxe out of twigs to help you get at those iron veins you've been seeing",
     effect: {
       func: "unlock",
       params: [0],

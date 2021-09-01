@@ -58,6 +58,14 @@
           >
             <h1>Dig</h1>
           </button>
+          <button
+            id="expansion-0"
+            @mouseover="hoverDescIdentifiable(gameData.expansionDict[0])"
+            @mouseleave="resetDesc()"
+            @click="gameData.expansionDict[0].buy()"
+          >
+            Buy {{ gameData.expansionDict[0].dataObject.name }}
+          </button>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
@@ -112,6 +120,7 @@ import Dig from "./model/dig";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./uiDescriptions";
 import Area from "./model/area";
+import Expansion from "./model/expansion";
 
 @Options({
   name: "App",
@@ -146,6 +155,7 @@ import Area from "./model/area";
       "toggleDebug",
       "hoverDescDig",
       "hoverDescString",
+      "hoverDescIdentifiable",
       "resetDesc",
     ]),
     toggleTheme() {
@@ -193,6 +203,7 @@ import Area from "./model/area";
                 obj.resourceDict,
                 obj.upgradeDict,
                 obj.structureDict,
+                obj.expansionDict,
                 obj.eventsDict
               );
             case "Resource":
@@ -209,6 +220,8 @@ import Area from "./model/area";
               return new Upgrade(obj.id, obj.bought, obj.discount);
             case "Structure":
               return new Structure(obj.id, obj.amount, obj.discount);
+            case "Expansion":
+              return new Expansion(obj.id, obj.amount, obj.discount);
             case "Dig":
               return new Dig(obj.digRates);
             case "Area":

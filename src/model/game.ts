@@ -10,6 +10,8 @@ import Area from "./area";
 import { resourceDataDict } from "./staticData/resource-data";
 import { upgradeDataDict } from "./staticData/upgrade-data";
 import { structureDataDict } from "./staticData/structure-data";
+import Expansion from "./expansion";
+import { expansionDataDict } from "./staticData/expansion-data";
 
 /**
  * Handles all internal game logic.
@@ -22,6 +24,7 @@ export class Game extends SerializableClass {
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
+  expansionDict: { [id: number]: Expansion };
   eventsDict: { [id: number]: number }; // EventId: Time achieved / last achieved
 
   /**
@@ -31,6 +34,7 @@ export class Game extends SerializableClass {
    * @param resourceDict - A dictionary of ids to their corresponding {@link Resource}. Does not necessarily contain every resource contained in the static {@link resourceDataDict}
    * @param upgradeDict - A dictionary of ids to their corresponding {@link Upgrade}.
    * @param structureDict - A dictionary of ids to their corresponding {@link Structure}.
+   * @param expansionDict - A dictionary of ids to their corresponding {@link Expansion}.
    * @param eventsDict - A dictionary of valid ids (that correspond to an event in {@link eventDataDict}) to a the time they were achieved (ms since epoch).
    */
   constructor(
@@ -40,6 +44,7 @@ export class Game extends SerializableClass {
     resourceDict: { [id: number]: Resource },
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure },
+    expansionDict: { [id: number]: Expansion },
     eventsDict: { [id: number]: number }
   ) {
     super(SerializableClasses.Game);
@@ -49,6 +54,7 @@ export class Game extends SerializableClass {
     this.resourceDict = resourceDict;
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
+    this.expansionDict = expansionDict;
     this.eventsDict = eventsDict;
     this.handleEvent(RequirementType.gameStart);
   }
@@ -165,6 +171,15 @@ const startingResources = {
     resourceDataDict[1].startingParams.multiplier,
     resourceDataDict[1].startingParams.trueRate
   ),
+  2: new Resource(
+    2,
+    resourceDataDict[2].startingParams.amount,
+    resourceDataDict[2].startingParams.cap,
+    resourceDataDict[2].startingParams.capPriority,
+    resourceDataDict[2].startingParams.baseRate,
+    resourceDataDict[2].startingParams.multiplier,
+    resourceDataDict[2].startingParams.trueRate
+  ),
 };
 
 const startingUpgrades = {
@@ -238,6 +253,14 @@ const startingStructures = {
   ),
 };
 
+const startingExpansions = {
+  0: new Expansion(
+    0,
+    expansionDataDict[0].startingParams.amount,
+    expansionDataDict[0].startingParams.discount
+  ),
+};
+
 /**
  * The static game being played
  * Use {@link setGame} to change
@@ -250,6 +273,7 @@ export let game: Game = reactive(
     startingResources,
     startingUpgrades,
     startingStructures,
+    startingExpansions,
     {}
   )
 );

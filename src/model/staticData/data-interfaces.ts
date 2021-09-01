@@ -21,6 +21,13 @@ export interface StructureData extends PurchaseableData {
     discount: { [resId: number]: number };
   };
 }
+export interface ExpansionData extends PurchaseableData {
+  areaEach: number;
+  startingParams: {
+    amount: number;
+    discount: { [resId: number]: number };
+  };
+}
 export interface ResourceData extends IdentifiableData {
   startingParams: {
     amount: number;

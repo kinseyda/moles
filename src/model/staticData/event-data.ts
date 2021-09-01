@@ -29,7 +29,10 @@ export const eventDataDict: { [id: number]: EventData } = {
         requirementType: RequirementType.gameStart,
         requirementDetails: {},
       },
-      { requirementType: RequirementType.prevEvent, requirementDetails: [0] },
+      {
+        requirementType: RequirementType.prevEvent,
+        requirementDetails: [0],
+      },
     ],
     repeatable: true,
   },
@@ -47,9 +50,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     repeatable: false,
   },
   3: {
-    name: "Dirt10Iron10",
-    description: "Acquire 10 dirt and 10 iron",
-    eventText: "You got 10 dirt and 10 iron",
+    name: "Dirt10Wood10",
+    description: "Acquire 10 dirt and 10 wood",
+    eventText: "You got 10 dirt and 10 wood",
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,

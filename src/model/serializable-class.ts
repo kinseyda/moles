@@ -8,6 +8,7 @@ export enum SerializableClasses {
   Resource,
   Area,
   Structure,
+  Expansion,
   Upgrade,
 }
 

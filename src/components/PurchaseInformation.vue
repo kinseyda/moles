@@ -26,6 +26,10 @@
         v-bind:detailedDesc="getEffectDescription(purchase)"
         v-bind:upgradeType="getUpgradeType(purchase)"
       ></effect-details>
+      <expansion-details
+        v-if="purchase._class === expansionEnum"
+        v-bind:expansion="purchase"
+      ></expansion-details>
     </div>
   </div>
 </template>
@@ -39,6 +43,7 @@ import { formatNumber, formatTime } from "@/components/format";
 import Upgrade from "@/model/upgrade";
 import { game } from "@/model/game";
 import { SerializableClasses } from "@/model/serializable-class";
+import ExpansionDetails from "./ExpansionDetails.vue";
 
 export default defineComponent({
   name: "PurchaseInformation",
@@ -48,12 +53,14 @@ export default defineComponent({
       gameData: game,
       upgradeEnum: SerializableClasses.Upgrade,
       structureEnum: SerializableClasses.Structure,
+      expansionEnum: SerializableClasses.Expansion,
     };
   },
   components: {
     ProduceDetails,
     EffectDetails,
     CostBullet,
+    ExpansionDetails,
   },
   methods: {
     formatNumber(num: number) {
