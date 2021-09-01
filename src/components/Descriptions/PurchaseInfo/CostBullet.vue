@@ -1,21 +1,22 @@
 <template>
   <li>
     <p>
-      {{ resource.dataObject.name }}: {{ formatNumber(cost) }},
+      {{ getResourceData().name }}: {{ formatNumber(cost) }},
       {{ formatTime(timeUntil()) }}
     </p>
   </li>
 </template>
 
 <script lang="ts">
-import Resource from "@/model/resource";
 import { formatNumber, formatTime } from "@/components/format";
+import { game } from "@/model/game";
+import { resourceDataDict } from "@/model/staticData/resource-data";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "CostBullet",
   props: {
     cost: Number,
-    resource: Resource,
+    resourceId: Number,
   },
   methods: {
     formatNumber(num: number) {
@@ -24,24 +25,31 @@ export default defineComponent({
     formatTime(num: number) {
       return formatTime(num);
     },
-    timeUntil(): number {
-      if (
-        this.cost !== undefined &&
-        this.resource?.amount !== undefined &&
-        this.resource?.trueRate !== undefined
-      ) {
-        if (this.resource.trueRate === 0) {
-          if (this.cost - this.resource.amount > 0) {
-            return Infinity;
-          }
-          return 0;
-        }
-        return Math.max(
-          (this.cost - this.resource.amount) / this.resource.trueRate,
-          0
-        );
+    getResourceData() {
+      if (this.resourceId === undefined) {
+        throw new Error("Cost bullet's resource id not assigned");
       }
-      return 0;
+      return resourceDataDict[this.resourceId];
+    },
+    timeUntil(): number {
+      if (this.resourceId === undefined) {
+        throw new Error("Cost bullet's resource id not assigned");
+      }
+      if (game.resourceDict[this.resourceId] !== undefined) {
+        const res = game.resourceDict[this.resourceId];
+        if (this.cost !== undefined) {
+          if (res.trueRate === 0) {
+            if (this.cost - res.amount > 0) {
+              return Infinity;
+            }
+            return 0;
+          }
+          return Math.max((this.cost - res.amount) / res.trueRate, 0);
+        }
+        return 0;
+      } else {
+        return Infinity;
+      }
     },
   },
 });

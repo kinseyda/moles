@@ -9,7 +9,7 @@
         <cost-bullet
           v-for="id in Object.keys(purchase.dataObject.cost)"
           :key="id"
-          :resource="getResource(id)"
+          :resourceId="Number(id)"
           :cost="purchase.trueCost(id)"
         >
         </cost-bullet>
