@@ -259,6 +259,11 @@ const startingExpansions = {
     expansionDataDict[0].startingParams.amount,
     expansionDataDict[0].startingParams.discount
   ),
+  1: new Expansion(
+    1,
+    expansionDataDict[1].startingParams.amount,
+    expansionDataDict[1].startingParams.discount
+  ),
 };
 
 /**

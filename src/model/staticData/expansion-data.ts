@@ -11,4 +11,15 @@ export const expansionDataDict: { [id: number]: ExpansionData } = {
       discount: {},
     },
   },
+  1: {
+    name: "Iron beam",
+    description:
+      "Construct some support beams to really let you expand this magnificent cave.",
+    cost: { 3: 1000 },
+    areaEach: 1000,
+    startingParams: {
+      amount: 0,
+      discount: {},
+    },
+  },
 };

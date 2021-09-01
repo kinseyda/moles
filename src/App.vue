@@ -58,14 +58,9 @@
           >
             <h1>Dig</h1>
           </button>
-          <button
-            id="expansion-0"
-            @mouseover="hoverDescIdentifiable(gameData.expansionDict[0])"
-            @mouseleave="resetDesc()"
-            @click="gameData.expansionDict[0].buy()"
-          >
-            Buy {{ gameData.expansionDict[0].dataObject.name }}
-          </button>
+          <expansion-list
+            :expansionDict="gameData.expansionDict"
+          ></expansion-list>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
@@ -106,6 +101,7 @@ import AreaDisplay from "./components/AreaDisplay.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
+import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
 import DigInformation from "./components/Descriptions/DigInformation.vue";
@@ -129,6 +125,7 @@ import Expansion from "./model/expansion";
     ResourceList,
     UpgradeList,
     StructureList,
+    ExpansionList,
     PurchaseInfo,
     DigInformation,
     EventLog,
@@ -155,7 +152,6 @@ import Expansion from "./model/expansion";
       "toggleDebug",
       "hoverDescDig",
       "hoverDescString",
-      "hoverDescIdentifiable",
       "resetDesc",
     ]),
     toggleTheme() {
@@ -353,13 +349,16 @@ export default class App extends Vue {}
   margin-bottom: 1em;
 }
 #dig-button {
-  height: 15em;
-  width: calc(100% - 40px);
-  margin: 20px;
+  width: 100%;
   font-size: xx-large;
+  flex: 1 1 0;
 }
 #buttons-container {
-  flex: 0 0 16em;
+  width: calc(100% - 40px);
+  margin: 20px;
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
 }
 #event-log-container {
   flex: 1 0 0;
