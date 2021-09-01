@@ -1,20 +1,19 @@
 # Moles
 
-A game of mole miners
+A game of mole miners.
 
 <img src="./public/mole-icon.svg" width="200px">
 
 ## To do (before initial release)
 
-- Storage structures
-- Item visibility
-- Hover descriptions
-- Text log (for story)
+- Global multiplier upgrades?
 - Prestige system / Empire tab
+- Settings menu
 - Better theming
 - Documentation
 - Animations / effects? (Dirt particles falling off of button maybe?)
 - Content (maybe an hour or so of active play)
+- Better README
 
 ## Project setup
 
