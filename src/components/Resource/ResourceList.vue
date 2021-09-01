@@ -35,7 +35,7 @@
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import ResourceItem from "./ResourceItem.vue";
-import { uiDescriptions } from "../uiDescriptions";
+import { uiDescriptions } from "@/components/ui-descriptions";
 export default defineComponent({
   name: "ResourceList",
   props: ["resourceDict", "area"],

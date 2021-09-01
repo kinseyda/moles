@@ -82,10 +82,10 @@
           }"
         >
           <div id="description-box" v-html="descriptionBoxData"></div>
-          <purchase-information
+          <purchase-info
             v-bind:purchase="purchaseInformationData"
             v-if="purchaseInformationData"
-          ></purchase-information>
+          ></purchase-info>
           <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
         </div>
       </div>
@@ -103,12 +103,12 @@
 import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
-import ResourceList from "./components/ResourceList.vue";
-import UpgradeList from "./components/UpgradeList.vue";
-import StructureList from "./components/StructureList.vue";
+import ResourceList from "./components/Resource/ResourceList.vue";
+import UpgradeList from "./components/Upgrade/UpgradeList.vue";
+import StructureList from "./components/Structure/StructureList.vue";
 import EventLog from "./components/EventLog.vue";
-import PurchaseInformation from "./components/PurchaseInformation.vue";
-import DigInformation from "./components/DigInformation.vue";
+import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
+import DigInformation from "./components/Descriptions/DigInformation.vue";
 import SerializableClass, {
   SerializableClasses,
 } from "./model/serializable-class";
@@ -118,7 +118,7 @@ import Upgrade from "./model/upgrade";
 import Structure from "./model/structure";
 import Dig from "./model/dig";
 import { formatNumber } from "./components/format";
-import { uiDescriptions } from "./uiDescriptions";
+import { uiDescriptions } from "./components/ui-descriptions";
 import Area from "./model/area";
 import Expansion from "./model/expansion";
 
@@ -129,7 +129,7 @@ import Expansion from "./model/expansion";
     ResourceList,
     UpgradeList,
     StructureList,
-    PurchaseInformation,
+    PurchaseInfo,
     DigInformation,
     EventLog,
   },

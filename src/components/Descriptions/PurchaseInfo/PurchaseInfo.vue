@@ -6,13 +6,13 @@
         <li v-if="purchase._class === structureEnum">
           <h4>Area: {{ purchase.dataObject.areaCost }}</h4>
         </li>
-        <CostBullet
+        <cost-bullet
           v-for="id in Object.keys(purchase.dataObject.cost)"
           :key="id"
           :resource="getResource(id)"
           :cost="purchase.trueCost(id)"
         >
-        </CostBullet>
+        </cost-bullet>
       </ul>
     </div>
     <div class="desc-side" id="effect-produce-container">
@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ProduceDetails from "./ProduceDetails.vue";
-import EffectDetails from "./EffectDetails.vue";
+import EffectDetails from "./Upgrade/EffectDetails.vue";
 import CostBullet from "./CostBullet.vue";
 import { formatNumber, formatTime } from "@/components/format";
 import Upgrade from "@/model/upgrade";
@@ -46,7 +46,7 @@ import { SerializableClasses } from "@/model/serializable-class";
 import ExpansionDetails from "./ExpansionDetails.vue";
 
 export default defineComponent({
-  name: "PurchaseInformation",
+  name: "DescPurchaseInfo",
   props: ["purchase"],
   data() {
     return {

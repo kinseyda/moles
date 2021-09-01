@@ -14,7 +14,7 @@
 import Upgrade from "@/model/upgrade";
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import { formatNumber } from "./format";
+import { formatNumber } from "@/components/format";
 
 export default defineComponent({
   name: "UpgradeItem",

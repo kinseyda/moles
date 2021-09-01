@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { formatNumber } from "./format";
+import { formatNumber } from "@/components/format";
 export default defineComponent({
   name: "AreaDisplay",
   props: ["area"],

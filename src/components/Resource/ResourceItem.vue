@@ -26,8 +26,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import { formatNumber } from "./format";
-import { uiDescriptions } from "../uiDescriptions";
+import { formatNumber } from "@/components/format";
+import { uiDescriptions } from "@/components/ui-descriptions";
 
 export default defineComponent({
   name: "ResourceItem",

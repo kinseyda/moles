@@ -9,7 +9,7 @@
 <script lang="ts">
 import { game } from "@/model/game";
 import { defineComponent } from "vue";
-import { formatNumber } from "./format";
+import { formatNumber } from "@/components/format";
 export default defineComponent({
   name: "ExpansionDetails",
   props: ["expansion"],

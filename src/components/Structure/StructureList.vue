@@ -12,7 +12,7 @@
 </template>
 <script>
 import { defineComponent } from "vue";
-import StructureItem from "./StructureItem.vue";
+import StructureItem from "../Structure/StructureItem.vue";
 export default defineComponent({
   name: "StructureList",
   props: ["structureDict"],

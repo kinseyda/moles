@@ -1,24 +1,28 @@
 <template>
   <div>
-    <h4>Production:</h4>
     <ul>
-      <li v-for="id in Object.keys(structure.dataObject.production)" :key="id">
+      <li v-for="id in Object.keys(effect.params[0])" :key="id">
         <p>
-          {{ getResource(id).dataObject.name }}:
-          {{ formatNumber(structure.dataObject.production[id]) }} m/s
+          {{ getResource(id).dataObject.name }}: +{{
+            formatNumber(effect.params[0][id] * 100)
+          }}%
         </p>
       </li>
     </ul>
   </div>
 </template>
 
+
 <script lang="ts">
 import { game } from "@/model/game";
 import { defineComponent } from "vue";
-import { formatNumber } from "./format";
+import { formatNumber } from "@/components/format";
 export default defineComponent({
-  name: "ProduceDetails",
-  props: ["structure"],
+  name: "MultiplyEffect",
+  props: {
+    effect: Object,
+    detailedDesc: String,
+  },
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);

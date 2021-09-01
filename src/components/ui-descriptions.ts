@@ -1,5 +1,4 @@
-export let uiDescriptions: { [id: string]: string } = {};
-uiDescriptions = {
+export const uiDescriptions: { [id: string]: string } = {
   theme: "Toggle light/dark theme",
   save: "Save the game to a cookie",
   load: "Load the game from a cookie",
