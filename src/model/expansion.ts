@@ -67,6 +67,9 @@ export default class Expansion extends Purchaseable {
         if (this.trueCost(resId) > res.amount) {
           return false;
         }
+      } else {
+        // If resource is not yet unlocked
+        return false;
       }
     }
     return true;

@@ -75,10 +75,13 @@ export default class Upgrade extends Purchaseable {
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
       const res = game.resourceDict[resId];
-      if (res) {
+      if (res !== undefined) {
         if (this.trueCost(resId) > res.amount) {
           return false;
         }
+      } else {
+        // If resource is not yet unlocked
+        return false;
       }
     }
     return true;
