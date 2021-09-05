@@ -32,7 +32,7 @@ import { uiDescriptions } from "@/components/ui-descriptions";
 export default defineComponent({
   name: "ResourceItem",
   props: ["resource"],
-  emits: ["update:sliderVal", "slider-max"],
+  emits: ["update:slider-val", "slider-max"],
   data() {
     return {
       capDesc: uiDescriptions["capSliders"],
