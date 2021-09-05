@@ -17,9 +17,9 @@
         min="0"
         max="10"
         :value="resource.capPriority"
-        @input="$emit('update:sliderVal', $event.target.value)"
+        @input="$emit('update:slider-val', $event.target.value)"
       />
-    </td>
+    </td><td><button class="slider-set" @click="$emit('slider-max', resource.id)" @mouseover="hoverDescString(maxDesc)">X</button></td>
   </tr>
 </template>
 
@@ -32,10 +32,11 @@ import { uiDescriptions } from "@/components/ui-descriptions";
 export default defineComponent({
   name: "ResourceItem",
   props: ["resource"],
-  emits: ["update:sliderVal"],
+  emits: ["update:sliderVal", "slider-max"],
   data() {
     return {
       capDesc: uiDescriptions["capSliders"],
+      maxDesc: uiDescriptions["sliderSetMax"],
       sliderVal: this.resource.capPriority,
     };
   },
@@ -112,5 +113,13 @@ td:nth-child(5) {
 td:nth-child(6) {
   /* Slider */
   min-width: 10ch;
+}
+td:nth-child(7) {
+  /* Max button */
+  min-width: 1ch;
+}
+button.slider-set {
+  float: right;
+  width: 2.5ch;
 }
 </style>
