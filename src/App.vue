@@ -105,18 +105,9 @@ import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
 import DigInformation from "./components/Descriptions/DigInformation.vue";
-import SerializableClass, {
-  SerializableClasses,
-} from "./model/serializable-class";
-import { game, Game, setGame } from "./model/game";
-import Resource from "./model/resource";
-import Upgrade from "./model/upgrade";
-import Structure from "./model/structure";
-import Dig from "./model/dig";
+import { game, loadGame } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
-import Area from "./model/area";
-import Expansion from "./model/expansion";
 
 @Options({
   name: "App",
@@ -176,73 +167,11 @@ import Expansion from "./model/expansion";
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
     },
     loadGame() {
-      const recurConstruct = (obj: any) => {
-        if (
-          (Array.isArray(obj) && obj.length > 0) ||
-          Object.keys(obj).length > 0
-        ) {
-          // If list or object, recurse through each thing contained to assign all the referenced items into the class they need
-          for (let i in obj) {
-            if (i != "_class") {
-              obj[i] = recurConstruct(obj[i]);
-            }
-          }
-        }
-        if (SerializableClasses[obj["_class"]] !== undefined) {
-          // We only need to do anything if the object we're looking at has a "_class" key, otherwise it should just be returned
-          switch (SerializableClasses[Number(obj["_class"])]) {
-            case "Game":
-              return new Game(
-                obj.lastUpdate,
-                obj.dig,
-                obj.area,
-                obj.resourceDict,
-                obj.upgradeDict,
-                obj.structureDict,
-                obj.expansionDict,
-                obj.eventsDict
-              );
-            case "Resource":
-              return new Resource(
-                obj.id,
-                obj.amount,
-                obj.cap,
-                obj.capPriority,
-                obj.baseRate,
-                obj.multiplier,
-                obj.trueRate
-              );
-            case "Upgrade":
-              return new Upgrade(obj.id, obj.bought, obj.discount);
-            case "Structure":
-              return new Structure(obj.id, obj.amount, obj.discount);
-            case "Expansion":
-              return new Expansion(obj.id, obj.amount, obj.discount);
-            case "Dig":
-              return new Dig(obj.digRates);
-            case "Area":
-              return new Area(obj.amount, obj.cap, obj.multiplier);
-            default:
-              //Shouldn't happen, nothing should be a SerializableClass without being one of the classes listed above, and constructed that way
-              console.error(
-                "Warning: SerializableClass loaded, this may be an error"
-              );
-              return Object.assign(
-                new SerializableClass(SerializableClasses.SerializableClass),
-                obj
-              );
-          }
-        } else if (obj["_class"] !== undefined) {
-          throw new Error(`Loading error! Invalid class '${obj["_class"]}'`);
-        }
-        return obj;
-      };
-      let sto = localStorage.getItem("molesSave");
-      if (sto) {
-        let save = JSON.parse(sto);
-        setGame(recurConstruct(save));
-        this.gameData = game;
+      const sto = localStorage.getItem("molesSave");
+      if (sto !== null) {
+        loadGame(sto);
       }
+      this.gameData = game;
     },
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
