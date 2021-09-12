@@ -54,11 +54,11 @@ export default class Upgrade extends Purchaseable {
       }
     }
     switch (this.dataObject.effect.func) {
-      case "addMultiplier":
-        addMultiplier(this.dataObject.effect.params[0]);
+      case "multiplier":
+        Upgrade.applyMultiplier(this.dataObject.effect.params[0]);
         break;
       case "unlock":
-        unlock(this.dataObject.effect.params[0]);
+        Upgrade.applyUnlock(this.dataObject.effect.params[0]);
         break;
       case "none":
         break;
@@ -86,8 +86,7 @@ export default class Upgrade extends Purchaseable {
     }
     return true;
   }
-}
-function unlock(unlockId: number) {
+  static applyUnlock(unlockId: number) {
   const unlockData = unlockDataDict[unlockId];
   for (const resId of unlockData.resources) {
     const sp = resourceDataDict[resId].startingParams;
@@ -114,7 +113,7 @@ function unlock(unlockId: number) {
     );
   }
 }
-function addMultiplier(multDict: { [resId: number]: number }) {
+static applyMultiplier(multDict: { [resId: number]: number }) {
   for (const resIdStr in multDict) {
     const resId: number = Number(resIdStr);
     const res = game.resourceDict[resId];
@@ -124,3 +123,5 @@ function addMultiplier(multDict: { [resId: number]: number }) {
     }
   }
 }
+}
+

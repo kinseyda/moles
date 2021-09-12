@@ -3,7 +3,7 @@
     <h4>Effect</h4>
     <p>{{ detailedDesc }}</p>
     <multiply-effect
-      v-if="upgradeType == 'addMultiplier'"
+      v-if="upgradeType == 'multiplier'"
       v-bind:effect="effect"
     ></multiply-effect>
   </div>

@@ -10,7 +10,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     name: "Makeshift shovel",
     description: "Fashion some twigs and pebbles lying around into a shovel",
     effect: {
-      func: "addMultiplier",
+      func: "multiplier",
       params: [{ 0: 1 }],
     },
     cost: {

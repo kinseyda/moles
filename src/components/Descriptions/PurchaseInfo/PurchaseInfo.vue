@@ -77,7 +77,7 @@ export default defineComponent({
     },
     getEffectDescription(upgrade: Upgrade) {
       switch (this.getUpgradeType(upgrade)) {
-        case "addMultiplier":
+        case "multiplier":
           return "Multiplies resource gains:";
         default:
           return "Does something?";

@@ -105,7 +105,7 @@ import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
 import DigInformation from "./components/Descriptions/DigInformation.vue";
-import { game, loadGame } from "./model/game";
+import { Game, game } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 
@@ -169,7 +169,7 @@ import { uiDescriptions } from "./components/ui-descriptions";
     loadGame() {
       const sto = localStorage.getItem("molesSave");
       if (sto !== null) {
-        loadGame(sto);
+        Game.loadGame(sto);
       }
       this.gameData = game;
     },
