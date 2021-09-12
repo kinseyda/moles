@@ -19,7 +19,17 @@
         :value="resource.capPriority"
         @input="$emit('update:slider-val', $event.target.value)"
       />
-    </td><td><button class="slider-set" @click="$emit('slider-max', resource.id)" @mouseover="hoverDescString(maxDesc)">X</button></td>
+    </td>
+    <td>
+      <button
+        class="slider-set"
+        @click="$emit('slider-max', resource.id)"
+        @mouseover="hoverDescString(maxDesc)"
+        @mouseleave="resetDesc()"
+      >
+        X
+      </button>
+    </td>
   </tr>
 </template>
 
