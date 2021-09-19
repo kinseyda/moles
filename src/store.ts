@@ -7,12 +7,19 @@ import { uiDescriptions } from "@/components/ui-descriptions";
 const defaultDescription =
   "Hover over something to see a description of it here.";
 
+interface Settings {
+  theme: String;
+  tooltips: boolean;
+}
+
 export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
   digData: boolean;
   debugMode: boolean;
+  settingsOpen: boolean;
+  settings: Settings;
 }
 export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
@@ -22,9 +29,23 @@ export const store = createStore<State>({
     purchaseInformationData: undefined,
     digData: false,
     debugMode: false,
+    settingsOpen: false,
+    settings: {
+      theme: "light",
+      tooltips: true,
+    },
   },
   getters: {},
   mutations: {
+    settingsSetTheme(state: State, newTheme: String) {
+      state.settings.theme = newTheme;
+    },
+    settingsSetTooltips(state: State, newTooltips: boolean) {
+      state.settings.tooltips = newTooltips;
+    },
+    toggleSettingsOpen(state: State) {
+      state.settingsOpen = !state.settingsOpen;
+    },
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;

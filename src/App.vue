@@ -2,14 +2,6 @@
   <div id="app">
     <div id="top-bar">
       <button
-        @click="toggleTheme"
-        @mouseover="hoverDescString(uiDescriptions['theme'])"
-        @mouseleave="resetDesc()"
-      >
-        Theme: {{ theme == "light" ? "Light" : ""
-        }}{{ theme == "dark" ? "Dark" : "" }}
-      </button>
-      <button
         @click="saveGame"
         @mouseover="hoverDescString(uiDescriptions['save'])"
         @mouseleave="resetDesc()"
@@ -23,19 +15,14 @@
       >
         Load
       </button>
+
+      <button @click="toggleSettingsOpen()">Settings</button>
       <button
         @click="debugToggle"
         @mouseover="hoverDescString(uiDescriptions['debug'])"
         @mouseleave="resetDesc()"
       >
         Debug
-      </button>
-      <button
-        @click="toggleTooltips"
-        @mouseover="hoverDescString(uiDescriptions['descriptionPosition'])"
-        @mouseleave="resetDesc()"
-      >
-        Descriptions: {{ tooltips ? "Tooltips" : "Fixed" }}
       </button>
       <h4 v-if="debugMode">DEBUG MODE</h4>
     </div>
@@ -72,7 +59,7 @@
         <div
           id="description-container"
           :class="{
-            'floating-tooltip': tooltips,
+            'floating-tooltip': settings.tooltips,
             'is-empty': descriptionBoxIsEmpty,
           }"
         >
@@ -91,6 +78,11 @@
         ></structure-list>
       </div>
     </div>
+
+    <settings-display
+      id="settings-display"
+      v-if="settingsOpen"
+    ></settings-display>
   </div>
 </template>
 
@@ -98,6 +90,7 @@
 import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
+import SettingsDisplay from "./components/SettingsDisplay.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
@@ -108,6 +101,7 @@ import DigInformation from "./components/Descriptions/DigInformation.vue";
 import { Game, game } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
+import { setTooltips } from "./components/SettingsDisplay.vue";
 
 @Options({
   name: "App",
@@ -120,6 +114,7 @@ import { uiDescriptions } from "./components/ui-descriptions";
     PurchaseInfo,
     DigInformation,
     EventLog,
+    SettingsDisplay,
   },
   computed: {
     ...mapState([
@@ -128,14 +123,14 @@ import { uiDescriptions } from "./components/ui-descriptions";
       "descriptionBoxData",
       "descriptionBoxIsEmpty",
       "digData",
+      "settingsOpen",
+      "settings",
     ]),
   },
   data() {
     return {
       gameData: game,
       uiDescriptions: uiDescriptions,
-      tooltips: false,
-      theme: "light",
     };
   },
   methods: {
@@ -144,19 +139,10 @@ import { uiDescriptions } from "./components/ui-descriptions";
       "hoverDescDig",
       "hoverDescString",
       "resetDesc",
+      "toggleSettingsOpen",
+      "settingsSetTheme",
+      "settingsSetTooltips",
     ]),
-    toggleTheme() {
-      const htmlTag = document.getElementsByTagName("html")[0];
-      if (this.theme == "light") {
-        htmlTag.setAttribute("theme", "dark");
-        localStorage.setItem("molesTheme", "dark");
-        this.theme = "dark";
-      } else if (this.theme == "dark") {
-        htmlTag.setAttribute("theme", "light");
-        localStorage.setItem("molesTheme", "light");
-        this.theme = "light";
-      }
-    },
     formatNumber(num: number) {
       return formatNumber(num, "");
     },
@@ -187,35 +173,6 @@ import { uiDescriptions } from "./components/ui-descriptions";
         );
       }
     },
-    toggleTooltips() {
-      this.tooltips = !this.tooltips;
-      this.setTooltips(this.tooltips);
-    },
-    setTooltips(tooltips: boolean) {
-      let tooltipPos = function (e: MouseEvent) {
-        const descContainer = document.getElementById("description-container");
-        if (descContainer === null) {
-          return;
-        }
-        const x = e.clientX,
-          y = e.clientY;
-        if (x + 20 + 384 > window.innerWidth) {
-          descContainer.style.left = "";
-          descContainer.style.right = window.innerWidth - x + 20 + "px";
-        } else {
-          descContainer.style.right = "";
-          descContainer.style.left = x + 20 + "px";
-        }
-        descContainer.style.top = y + 20 + "px";
-      };
-      if (tooltips) {
-        localStorage.setItem("molesDescPos", "tooltip");
-        window.addEventListener("mousemove", tooltipPos);
-      } else {
-        localStorage.setItem("molesDescPos", "fixed");
-        window.removeEventListener("mousemove", tooltipPos);
-      }
-    },
   },
   mounted() {
     setInterval(this.gameLoop, 50);
@@ -225,7 +182,7 @@ import { uiDescriptions } from "./components/ui-descriptions";
     const loadTheme = localStorage.getItem("molesTheme");
     if (loadTheme == "light" || loadTheme == "dark") {
       htmlTag.setAttribute("theme", loadTheme);
-      this.theme = loadTheme;
+      this.settingsSetTheme(loadTheme);
     } else {
       htmlTag.setAttribute("theme", "light");
     }
@@ -233,11 +190,11 @@ import { uiDescriptions } from "./components/ui-descriptions";
     // Load description position selection
     const loadDescPos = localStorage.getItem("molesDescPos");
     if (loadDescPos == "fixed") {
-      this.tooltips = false;
-      this.setTooltips(false);
+      this.settingsSetTooltips(false);
+      setTooltips(false);
     } else {
-      this.tooltips = true;
-      this.setTooltips(true);
+      this.settingsSetTooltips(true);
+      setTooltips(true);
     }
   },
 })
@@ -296,7 +253,8 @@ export default class App extends Vue {}
   border: 1px solid var(--text-color);
   width: 384px;
   display: block;
-  position: fixed;
+  position: absolute;
+  z-index: 1000;
   overflow: hidden;
 }
 #description-container.floating-tooltip.is-empty {
@@ -306,5 +264,14 @@ export default class App extends Vue {}
   flex: 0 0 30ch;
   display: flex;
   flex-direction: column;
+}
+#settings-display {
+  position: absolute;
+  z-index: 1;
+  top: 100px;
+  bottom: 100px;
+  left: 100px;
+  right: 100px;
+  border: 1px solid var(--text-color);
 }
 </style>
