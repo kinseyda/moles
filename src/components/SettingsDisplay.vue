@@ -10,7 +10,7 @@
           @mouseleave="resetDesc()"
         >
           Theme: {{ settings.theme == "light" ? "Light" : ""
-          }}{{ settings.theme == "dark" ? "Dark" : "" }}
+          }}{{ settings.theme == "dark" ? "Dark" : "" }}{{ settings.theme == "true mole" ? "True Mole" : "" }}
         </button>
       </li>
       <li>
@@ -82,7 +82,13 @@ export default defineComponent({
         htmlTag.setAttribute("theme", "dark");
         localStorage.setItem("molesTheme", "dark");
         this.settingsSetTheme("dark");
-      } else if (this.settings.theme == "dark") {
+      }
+      else if (this.settings.theme == "dark") {
+        htmlTag.setAttribute("theme", "true mole");
+        localStorage.setItem("molesTheme", "true mole");
+        this.settingsSetTheme("true mole");
+      } 
+      else if (this.settings.theme == "true mole") {
         htmlTag.setAttribute("theme", "light");
         localStorage.setItem("molesTheme", "light");
         this.settingsSetTheme("light");
@@ -99,6 +105,9 @@ export default defineComponent({
 <style scoped>
 ul {
   list-style-type: none;
+}
+#outer {
+  background-color: var(--global-bg-color);
 }
 #exit-button {
   font-size: x-large;

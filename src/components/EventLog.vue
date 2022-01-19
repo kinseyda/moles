@@ -76,6 +76,7 @@ export default defineComponent({
 </script>
 <style scoped>
 ol {
+    background-color: var(--global-bg-color);
   border: 1px solid var(--text-color);
   list-style: none;
   overflow-y: scroll;

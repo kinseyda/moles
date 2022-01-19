@@ -2,7 +2,6 @@
 
 * {
   font-family: "Roboto Mono", monospace;
-  background-color: var(--global-bg-color);
   color: var(--text-color);
   padding: 0px;
   margin: 0px;
@@ -14,18 +13,28 @@ html {
   font-size: large;
   overflow: hidden;
 }
+#game-space {
+  background-color: var(--far-bg-color);
+  background-image: var(--background-image);
+  background-size: 100% 100%; 
+}
 
 button {
   border: 1px solid var(--text-color);
+  background: var(--global-bg-color);
 }
 button:active,
 button:active h1 {
-  background-color: var(--alternate-bg-color);
+  background-color: var(--tertiary-bg-color);
 }
 
 tr.list-row:nth-child(even),
 tr.list-row:nth-child(even) td {
-  background-color: var(--alternate-bg-color);
+  background-color: var(--tertiary-bg-color);
+}
+tr.list-row:nth-child(odd),
+tr.list-row:nth-child(odd) td {
+  background-color: var(--secondary-bg-color);
 }
 
 table {
@@ -41,5 +50,6 @@ button {
 }
 
 .purchase-available {
-  font-weight: bold;
+  font-weight: bolder;
+  text-shadow: 0px 1px #000
 }

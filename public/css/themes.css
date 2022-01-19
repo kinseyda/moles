@@ -1,11 +1,25 @@
 [theme="light"] {
+  --far-bg-color: #fff;
   --global-bg-color: #fff;
-  --alternate-bg-color: #eee;
+  --secondary-bg-color: #eee;
+  --tertiary-bg-color: #ddd;
   --text-color: #000;
 }
 
 [theme="dark"] {
+  --far-bg-color: #000;
   --global-bg-color: #000;
-  --alternate-bg-color: #444;
+  --secondary-bg-color: #222;
+  --tertiary-bg-color: #333;
   --text-color: #fff;
+}
+
+[theme="true mole"] {
+    /* --far-bg-color: transparent; */
+    --global-bg-color: #fff;
+    --secondary-bg-color: #eee;
+    --tertiary-bg-color: #ddd;
+    --text-color: #000;
+    --background-image: url("background/mole\ background\ :\).png");
+    background-size: 100vw 100vh;
 }

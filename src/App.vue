@@ -26,7 +26,7 @@
       </button>
       <h4 v-if="debugMode">DEBUG MODE</h4>
     </div>
-    <div id="main">
+    <div id="game-space">
       <div id="left-column">
         <resource-list
           :resourceDict="gameData.resourceDict"
@@ -180,7 +180,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (loadTheme == "light" || loadTheme == "dark") {
+    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -202,7 +202,7 @@ export default class App extends Vue {}
 </script>
 
 <style scoped>
-#main {
+#game-space {
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -212,6 +212,7 @@ export default class App extends Vue {}
   width: 100%;
 }
 #top-bar {
+    background-color: var(--global-bg-color);
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -249,6 +250,10 @@ export default class App extends Vue {}
 #event-log-container {
   flex: 1 0 0;
 }
+
+#description-container {
+  background: var(--global-bg-color);
+}
 #description-container.floating-tooltip {
   border: 1px solid var(--text-color);
   width: 384px;
@@ -266,6 +271,7 @@ export default class App extends Vue {}
   flex-direction: column;
 }
 #settings-display {
+  background: var(--global-bg-color);
   position: absolute;
   z-index: 1;
   top: 100px;
