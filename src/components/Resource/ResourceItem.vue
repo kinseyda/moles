@@ -5,7 +5,7 @@
     </td>
     <td>{{ formatNumber(resource.amount) }}</td>
     <td>/</td>
-    <td>{{ formatNumber(resource.cap) }}</td>
+    <td>{{ formatNumber(resource.cap) }} m</td>
     <td>{{ formatNumber(resource.trueRate) }} m/s</td>
     <td>
       <input
@@ -115,6 +115,10 @@ td:nth-child(1) {
 td:nth-child(3) {
   /* Slash */
   min-width: 1ch;
+}
+td:nth-child(4) {
+  /* Denominator */
+  min-width: 8ch;
 }
 td:nth-child(5) {
   /* Rate */
