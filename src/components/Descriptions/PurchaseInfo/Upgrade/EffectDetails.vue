@@ -1,11 +1,12 @@
 <template>
   <div>
-    <h4>Effect</h4>
-    <p>{{ detailedDesc }}</p>
-    <multiply-effect
-      v-if="upgradeType == 'multiplier'"
-      v-bind:effect="effect"
-    ></multiply-effect>
+    <li>
+      <p>{{ detailedDesc }}</p>
+      <multiply-effect
+        v-if="upgradeType == 'multiplier'"
+        v-bind:effect="effect"
+      ></multiply-effect>
+    </li>
   </div>
 </template>
 

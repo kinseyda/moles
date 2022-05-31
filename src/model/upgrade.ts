@@ -43,6 +43,7 @@ export default class Upgrade extends Purchaseable {
     }
     return dis * this.dataObject.cost[resId];
   }
+
   buy() {
     if (!this.canBuy) {
       return;
@@ -53,17 +54,20 @@ export default class Upgrade extends Purchaseable {
         game.resourceDict[resId].incrementAmount(-1 * this.trueCost(resId));
       }
     }
-    switch (this.dataObject.effect.func) {
-      case "multiplier":
-        Upgrade.applyMultiplier(this.dataObject.effect.params[0]);
-        break;
-      case "unlock":
-        Upgrade.applyUnlock(this.dataObject.effect.params[0]);
-        break;
-      case "none":
-        break;
-      default:
-        break;
+
+    for (const effect of this.dataObject.effects) {
+      switch (effect.func) {
+        case "multiplier":
+          Upgrade.applyMultiplier(effect.params[0]);
+          break;
+        case "unlock":
+          Upgrade.applyUnlock(effect.params[0]);
+          break;
+        case "none":
+          break;
+        default:
+          break;
+      }
     }
     this.bought = true;
   }
@@ -87,41 +91,44 @@ export default class Upgrade extends Purchaseable {
     return true;
   }
   static applyUnlock(unlockId: number) {
-  const unlockData = unlockDataDict[unlockId];
-  for (const resId of unlockData.resources) {
-    const sp = resourceDataDict[resId].startingParams;
-    game.resourceDict[resId] = new Resource(
-      Number(resId),
-      sp.amount,
-      sp.cap,
-      sp.capPriority,
-      sp.baseRate,
-      sp.multiplier,
-      sp.trueRate
-    );
+    const unlockData = unlockDataDict[unlockId];
+    for (const resId of unlockData.resources) {
+      const sp = resourceDataDict[resId].startingParams;
+      game.resourceDict[resId] = new Resource(
+        Number(resId),
+        sp.amount,
+        sp.cap,
+        sp.capPriority,
+        sp.baseRate,
+        sp.multiplier,
+        sp.trueRate
+      );
+    }
+    for (const upId of unlockData.upgrades) {
+      const sp = upgradeDataDict[upId].startingParams;
+      game.upgradeDict[upId] = new Upgrade(
+        Number(upId),
+        sp.bought,
+        sp.discount
+      );
+    }
+    for (const stId of unlockData.structures) {
+      const sp = structureDataDict[stId].startingParams;
+      game.structureDict[stId] = new Structure(
+        Number(stId),
+        sp.amount,
+        sp.discount
+      );
+    }
   }
-  for (const upId of unlockData.upgrades) {
-    const sp = upgradeDataDict[upId].startingParams;
-    game.upgradeDict[upId] = new Upgrade(Number(upId), sp.bought, sp.discount);
-  }
-  for (const stId of unlockData.structures) {
-    const sp = structureDataDict[stId].startingParams;
-    game.structureDict[stId] = new Structure(
-      Number(stId),
-      sp.amount,
-      sp.discount
-    );
-  }
-}
-static applyMultiplier(multDict: { [resId: number]: number }) {
-  for (const resIdStr in multDict) {
-    const resId: number = Number(resIdStr);
-    const res = game.resourceDict[resId];
-    if (res) {
-      res.multiplier += multDict[resId];
-      res.updateTrueRate();
+  static applyMultiplier(multDict: { [resId: number]: number }) {
+    for (const resIdStr in multDict) {
+      const resId: number = Number(resIdStr);
+      const res = game.resourceDict[resId];
+      if (res) {
+        res.multiplier += multDict[resId];
+        res.updateTrueRate();
+      }
     }
   }
 }
-}
-

@@ -32,7 +32,7 @@ export class Game extends SerializableClass {
    * @param upgradeDict - A dictionary of ids to their corresponding {@link Upgrade}.
    * @param structureDict - A dictionary of ids to their corresponding {@link Structure}.
    * @param expansionDict - A dictionary of ids to their corresponding {@link Expansion}.
-   * @param eventsDict - A dictionary of valid ids (that correspond to an event in {@link eventDataDict}) to a the time they were achieved (ms since epoch).
+   * @param eventsDict - A dictionary of valid ids (that correspond to an event in {@link eventDataDict}) to the time they were achieved (ms since epoch).
    */
   constructor(
     lastUpdate: number,

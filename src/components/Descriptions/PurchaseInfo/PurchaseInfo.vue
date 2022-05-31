@@ -20,12 +20,10 @@
         v-if="purchase._class === structureEnum"
         v-bind:structure="purchase"
       ></produce-details>
-      <effect-details
+      <effects-container
         v-if="purchase._class === upgradeEnum"
-        v-bind:effect="purchase.dataObject.effect"
-        v-bind:detailedDesc="getEffectDescription(purchase)"
-        v-bind:upgradeType="getUpgradeType(purchase)"
-      ></effect-details>
+        v-bind:effects="purchase.dataObject.effects"
+      ></effects-container>
       <expansion-details
         v-if="purchase._class === expansionEnum"
         v-bind:expansion="purchase"
@@ -37,10 +35,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ProduceDetails from "./ProduceDetails.vue";
-import EffectDetails from "./Upgrade/EffectDetails.vue";
+import EffectsContainer from "./Upgrade/EffectsContainer.vue";
 import CostBullet from "./CostBullet.vue";
 import { formatNumber, formatTime } from "@/components/format";
-import Upgrade from "@/model/upgrade";
 import { game } from "@/model/game";
 import { SerializableClasses } from "@/model/serializable-class";
 import ExpansionDetails from "./ExpansionDetails.vue";
@@ -58,7 +55,7 @@ export default defineComponent({
   },
   components: {
     ProduceDetails,
-    EffectDetails,
+    EffectsContainer,
     CostBullet,
     ExpansionDetails,
   },
@@ -69,19 +66,8 @@ export default defineComponent({
     formatTime(num: number) {
       return formatTime(num);
     },
-    getUpgradeType(upgrade: Upgrade) {
-      return upgrade.dataObject.effect.func;
-    },
     getResource(id: number) {
       return this.gameData.resourceDict[id];
-    },
-    getEffectDescription(upgrade: Upgrade) {
-      switch (this.getUpgradeType(upgrade)) {
-        case "multiplier":
-          return "Multiplies resource gains:";
-        default:
-          return "Does something?";
-      }
     },
   },
 });

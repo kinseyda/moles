@@ -9,10 +9,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   0: {
     name: "Makeshift shovel",
     description: "Fashion some twigs and pebbles lying around into a shovel",
-    effect: {
-      func: "multiplier",
-      params: [{ 0: 1 }],
-    },
+    effects: [
+      {
+        func: "multiplier",
+        params: [{ 0: 1 }],
+      },
+    ],
     cost: {
       0: 10,
     },
@@ -22,10 +24,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     name: "Pickaxe",
     description:
       "Construct a pickaxe out of twigs to help you get at those iron veins you've been seeing",
-    effect: {
-      func: "unlock",
-      params: [0],
-    },
+    effects: [
+      {
+        func: "unlock",
+        params: [0],
+      },
+    ],
     cost: {
       0: 10,
       1: 10,
@@ -33,24 +37,33 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     startingParams: defaultStartingValues,
   },
   2: {
-    name: "Filler",
-    description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    name: "Termite knowledge",
+    description:
+      "Ask the friendly local termites how they find so much wood in the ground",
+    effects: [
+      {
+        func: "multiplier",
+        params: [{ 1: 1 }],
+      },
+      {
+        func: "unlock",
+        params: [1],
+      },
+    ],
     cost: {
-      0: 9999,
+      0: 100,
     },
     startingParams: defaultStartingValues,
   },
   3: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -59,10 +72,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   4: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -71,10 +86,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   5: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -83,10 +100,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   6: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -95,10 +114,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   7: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -107,10 +128,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   8: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -119,10 +142,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   9: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },
@@ -131,10 +156,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   10: {
     name: "Filler",
     description: "Filler desc",
-    effect: {
-      func: "none",
-      params: [],
-    },
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
     cost: {
       0: 9999,
     },

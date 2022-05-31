@@ -6,7 +6,10 @@ export interface PurchaseableData extends IdentifiableData {
   cost: { [id: number]: number };
 }
 export interface UpgradeData extends PurchaseableData {
-  effect: { func: string; params: any[] };
+  effects: {
+    func: string;
+    params: any[];
+  }[];
   startingParams: {
     bought: boolean;
     discount: { [resId: number]: number };

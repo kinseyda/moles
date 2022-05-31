@@ -58,8 +58,8 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
     startingParams: defaultStartingValues,
   },
   5: {
-    name: "Filler",
-    description: "Filler desc",
+    name: "Termites",
+    description: "Your friendly, delicious neighbours",
     startingParams: defaultStartingValues,
   },
   6: {
