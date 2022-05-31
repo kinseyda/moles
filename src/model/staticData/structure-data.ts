@@ -26,4 +26,13 @@ export const structureDataDict: { [id: number]: StructureData } = {
     increase: { 0: 1.2 },
     startingParams: defaultStartingValues,
   },
+  2: {
+    name: "Termite pen",
+    description: "Corral some termites together in a cozy wooden enclosure",
+    production: { 5: 0.1 },
+    areaCost: 10,
+    cost: { 1: 25 },
+    increase: { 0: 1.2 },
+    startingParams: defaultStartingValues,
+  },
 };

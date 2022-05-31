@@ -6,7 +6,6 @@ import Structure from "./structure";
 import { structureDataDict } from "./staticData/structure-data";
 import Expansion from "./expansion";
 import { expansionDataDict } from "./staticData/expansion-data";
-  
 
 export const startingResources = {
   0: new Resource(
@@ -53,46 +52,6 @@ export const startingUpgrades = {
     2,
     upgradeDataDict[2].startingParams.bought,
     upgradeDataDict[2].startingParams.discount
-  ),
-  3: new Upgrade(
-    3,
-    upgradeDataDict[3].startingParams.bought,
-    upgradeDataDict[3].startingParams.discount
-  ),
-  4: new Upgrade(
-    4,
-    upgradeDataDict[4].startingParams.bought,
-    upgradeDataDict[4].startingParams.discount
-  ),
-  5: new Upgrade(
-    5,
-    upgradeDataDict[5].startingParams.bought,
-    upgradeDataDict[5].startingParams.discount
-  ),
-  6: new Upgrade(
-    6,
-    upgradeDataDict[6].startingParams.bought,
-    upgradeDataDict[6].startingParams.discount
-  ),
-  7: new Upgrade(
-    7,
-    upgradeDataDict[7].startingParams.bought,
-    upgradeDataDict[7].startingParams.discount
-  ),
-  8: new Upgrade(
-    8,
-    upgradeDataDict[8].startingParams.bought,
-    upgradeDataDict[8].startingParams.discount
-  ),
-  9: new Upgrade(
-    9,
-    upgradeDataDict[9].startingParams.bought,
-    upgradeDataDict[9].startingParams.discount
-  ),
-  10: new Upgrade(
-    10,
-    upgradeDataDict[10].startingParams.bought,
-    upgradeDataDict[10].startingParams.discount
   ),
 };
 

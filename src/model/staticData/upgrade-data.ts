@@ -56,16 +56,17 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     startingParams: defaultStartingValues,
   },
   3: {
-    name: "Filler",
-    description: "Filler desc",
+    name: "Termite Domestication",
+    description:
+      "Upon studying the termites for a while, you realize how useful it could be to keep them in one place",
     effects: [
       {
-        func: "none",
-        params: [],
+        func: "unlock",
+        params: [2],
       },
     ],
     cost: {
-      0: 9999,
+      0: 120,
     },
     startingParams: defaultStartingValues,
   },

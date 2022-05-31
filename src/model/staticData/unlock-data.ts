@@ -8,9 +8,14 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
     structures: [],
   },
   1: {
-    // Termites
+    // Termite knowledge
+    resources: [],
+    upgrades: [3],
+    structures: [],
+  },
+  2: {
     resources: [5],
     upgrades: [],
-    structures: [],
+    structures: [2],
   },
 };
