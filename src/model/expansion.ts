@@ -1,8 +1,8 @@
 import Purchaseable from "./purchaseable";
-import { ExpansionData } from "./staticData/data-interfaces";
+import { ExpansionData } from "../content/data-interfaces";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
-import { expansionDataDict } from "./staticData/expansion-data";
+import { expansionDataDict } from "../content/expansion-data";
 
 /**
  * Allows for increasing the amount of area the player has access to.

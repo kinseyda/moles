@@ -1,9 +1,9 @@
-import { RequirementType } from "./staticData/data-interfaces";
+import { RequirementType } from "../content/data-interfaces";
 import {
   eventDataDict,
   eventIdsByRequirementType,
   resAmountEventIdsByResId,
-} from "./staticData/event-data";
+} from "../content/event-data";
 import { Game } from "./game";
 
 /**

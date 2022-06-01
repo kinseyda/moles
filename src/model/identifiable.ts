@@ -1,4 +1,4 @@
-import { IdentifiableData } from "./staticData/data-interfaces";
+import { IdentifiableData } from "../content/data-interfaces";
 import SerializableClass, { SerializableClasses } from "./serializable-class";
 
 /**

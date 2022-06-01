@@ -11,5 +11,5 @@ export const uiDescriptions: { [id: string]: string } = {
     "How much of this resource you want to store (relative to the others)",
   sliderSet1: "Sets all sliders to 1 (equal distribution of space)",
   sliderSet0: "Sets all sliders to 0 (no resources stored at all)",
-  sliderSetMax: "Sets this slider to the maximum (10) and all others to 0"
+  sliderSetMax: "Sets this slider to the maximum (10) and all others to 0",
 };

@@ -10,7 +10,7 @@
 <script lang="ts">
 import { formatNumber, formatTime } from "@/components/format";
 import { game } from "@/model/game";
-import { resourceDataDict } from "@/model/staticData/resource-data";
+import { resourceDataDict } from "@/content/resource-data";
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "CostBullet",

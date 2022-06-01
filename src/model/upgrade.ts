@@ -1,12 +1,12 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDataDict } from "./staticData/upgrade-data";
+import { upgradeDataDict } from "../content/upgrade-data";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
-import { UpgradeData } from "./staticData/data-interfaces";
-import { unlockDataDict } from "./staticData/unlock-data";
+import { UpgradeData } from "../content/data-interfaces";
+import { unlockDataDict } from "../content/unlock-data";
 import Resource from "./resource";
-import { resourceDataDict } from "./staticData/resource-data";
-import { structureDataDict } from "./staticData/structure-data";
+import { resourceDataDict } from "../content/resource-data";
+import { structureDataDict } from "../content/structure-data";
 import Structure from "./structure";
 
 /**

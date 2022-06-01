@@ -1,5 +1,5 @@
-import { resourceDataDict } from "@/model/staticData/resource-data";
-import { RequirementType, ResourceData } from "./staticData/data-interfaces";
+import { resourceDataDict } from "@/content/resource-data";
+import { RequirementType, ResourceData } from "../content/data-interfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
 import { SerializableClasses } from "./serializable-class";

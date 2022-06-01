@@ -1,6 +1,6 @@
 import Purchaseable from "./purchaseable";
-import { structureDataDict } from "./staticData/structure-data";
-import { StructureData } from "./staticData/data-interfaces";
+import { structureDataDict } from "../content/structure-data";
+import { StructureData } from "../content/data-interfaces";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
 

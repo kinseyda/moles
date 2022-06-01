@@ -180,7 +180,11 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
+    if (
+      loadTheme == "light" ||
+      loadTheme == "dark" ||
+      loadTheme == "true mole"
+    ) {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -212,7 +216,7 @@ export default class App extends Vue {}
   width: 100%;
 }
 #top-bar {
-    background-color: var(--global-bg-color);
+  background-color: var(--global-bg-color);
   position: absolute;
   display: flex;
   flex-direction: row;

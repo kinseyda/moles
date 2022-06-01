@@ -1,11 +1,11 @@
-import { resourceDataDict } from "./staticData/resource-data";
+import { resourceDataDict } from "../content/resource-data";
 import Resource from "./resource";
 import Upgrade from "./upgrade";
-import { upgradeDataDict } from "./staticData/upgrade-data";
+import { upgradeDataDict } from "../content/upgrade-data";
 import Structure from "./structure";
-import { structureDataDict } from "./staticData/structure-data";
+import { structureDataDict } from "../content/structure-data";
 import Expansion from "./expansion";
-import { expansionDataDict } from "./staticData/expansion-data";
+import { expansionDataDict } from "../content/expansion-data";
 
 export const startingResources = {
   0: new Resource(
