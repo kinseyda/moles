@@ -38,13 +38,13 @@ export default defineComponent({
       if (game.resourceDict[this.resourceId] !== undefined) {
         const res = game.resourceDict[this.resourceId];
         if (this.cost !== undefined) {
-          if (res.trueRate === 0) {
+          if (res.rateLastTick === 0) {
             if (this.cost - res.amount > 0) {
               return Infinity;
             }
             return 0;
           }
-          return Math.max((this.cost - res.amount) / res.trueRate, 0);
+          return Math.max((this.cost - res.amount) / res.rateLastTick, 0);
         }
         return 0;
       } else {

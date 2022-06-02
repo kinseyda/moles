@@ -18,6 +18,7 @@ export interface UpgradeData extends PurchaseableData {
 export interface StructureData extends PurchaseableData {
   areaCost: number;
   production: { [id: number]: number };
+  consumption: { [id: number]: number };
   increase: { [id: number]: number };
   startingParams: {
     amount: number;

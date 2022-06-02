@@ -3,9 +3,19 @@
     <h4>Production:</h4>
     <ul>
       <li v-for="id in Object.keys(structure.dataObject.production)" :key="id">
-        <p>
-          {{ getResource(id).dataObject.name }}:
-          {{ formatNumber(structure.dataObject.production[id]) }} m/s
+        <p class="produce">
+          {{ getResource(id).dataObject.name }}: +{{
+            formatNumber(structure.dataObject.production[id])
+          }}
+          m/s
+        </p>
+      </li>
+      <li v-for="id in Object.keys(structure.dataObject.consumption)" :key="id">
+        <p class="consume">
+          {{ getResource(id).dataObject.name }}: -{{
+            formatNumber(structure.dataObject.consumption[id])
+          }}
+          m/s
         </p>
       </li>
     </ul>
@@ -29,3 +39,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.produce {
+  color: green;
+}
+.consume {
+  color: red;
+}
+</style>

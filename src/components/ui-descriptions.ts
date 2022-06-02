@@ -12,4 +12,10 @@ export const uiDescriptions: { [id: string]: string } = {
   sliderSet1: "Sets all sliders to 1 (equal distribution of space)",
   sliderSet0: "Sets all sliders to 0 (no resources stored at all)",
   sliderSetMax: "Sets this slider to the maximum (10) and all others to 0",
+  resourceNumerator:
+    "The current amount of this resource you have (in mole volumes)",
+  resourceDenominator:
+    "The current amount of this resource you can store (in mole volumes)",
+  resourceRate:
+    "The current amount of this resource you are producing (in mole volumes per second)",
 };

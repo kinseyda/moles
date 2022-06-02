@@ -3,10 +3,16 @@
     <td @mouseover="hoverDescIdentifiable(resource)" @mouseleave="resetDesc()">
       {{ resource.dataObject.name }}:
     </td>
-    <td>{{ formatNumber(resource.amount) }}</td>
+    <td @mouseover="hoverDescString(numDesc)" @mouseleave="resetDesc()">
+      {{ formatNumber(resource.amount) }}
+    </td>
     <td>/</td>
-    <td>{{ formatNumber(resource.cap) }} m</td>
-    <td>{{ formatNumber(resource.trueRate) }} m/s</td>
+    <td @mouseover="hoverDescString(denomDesc)" @mouseleave="resetDesc()">
+      {{ formatNumber(resource.cap) }} m
+    </td>
+    <td @mouseover="hoverDescString(rateDesc)" @mouseleave="resetDesc()">
+      {{ formatNumber(resource.rateLastTick) }} m/s
+    </td>
     <td>
       <input
         @mouseover="hoverDescString(capDesc)"
@@ -45,6 +51,9 @@ export default defineComponent({
   emits: ["update:slider-val", "slider-max"],
   data() {
     return {
+      numDesc: uiDescriptions["resourceNumerator"],
+      denomDesc: uiDescriptions["resourceDenominator"],
+      rateDesc: uiDescriptions["resourceRate"],
       capDesc: uiDescriptions["capSliders"],
       maxDesc: uiDescriptions["sliderSetMax"],
       sliderVal: this.resource.capPriority,

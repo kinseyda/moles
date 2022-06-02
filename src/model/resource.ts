@@ -12,35 +12,29 @@ export default class Resource extends Identifiable {
   amount: number;
   cap: number;
   capPriority: number;
-  baseRate: number;
   multiplier: number;
-  trueRate: number;
+  rateLastTick: number; // Rate in m/s derived from game tick increase
 
   /**
    * @param id - A unique id corresponding to the relevant item in {@link resourceDataDict}.
    * @param amount - The amount of the resource the player has.
    * @param cap - The max amount of the resource that can be stored.
    * @param capPriority - The priority (0 - 10) of storage for this resource.
-   * @param baseRate - The rate at which the resource is generated at a base level (just derived from {@link Structure}s).
    * @param multiplier - A multiplier for all production of this resource.
-   * @param trueRate - The rate at which the resource is generated in total (including multipliers and manual {@link Dig digging}).
    */
   constructor(
     id: number,
     amount: number,
     cap: number,
     capPriority: number,
-    baseRate: number,
-    multiplier: number,
-    trueRate: number
+    multiplier: number
   ) {
     super(id, SerializableClasses.Resource);
     this.amount = amount;
     this.cap = cap;
     this.capPriority = capPriority;
-    this.baseRate = baseRate;
     this.multiplier = multiplier;
-    this.trueRate = trueRate;
+    this.rateLastTick = 0;
   }
 
   /**
@@ -92,19 +86,18 @@ export default class Resource extends Identifiable {
   }
   /**
    * Increments the current amount of this resource and triggers the relevant event[s]
-   * @param newAmount - Number to increment amount by
+   * @param incrementBy - Number to increment amount by
    */
   incrementAmount(incrementBy: number) {
     this.setAmount(this.amount + incrementBy);
   }
+
   /**
-   * Calculates and sets what the current true rate should be (including multipliers and manual digging)
+   *
+   * @param change
+   * @param ticksize
    */
-  updateTrueRate() {
-    let digTR = 0;
-    if (game.dig.digging) {
-      digTR = game.dig.findTrueDigRate(this.id) || 0;
-    }
-    this.trueRate = this.baseRate * this.multiplier + digTR;
+  updateRateFromTick(change: number, ticksize: number) {
+    this.rateLastTick = change / ticksize;
   }
 }

@@ -99,9 +99,7 @@ export default class Upgrade extends Purchaseable {
         sp.amount,
         sp.cap,
         sp.capPriority,
-        sp.baseRate,
-        sp.multiplier,
-        sp.trueRate
+        sp.multiplier
       );
     }
     for (const upId of unlockData.upgrades) {
@@ -127,7 +125,6 @@ export default class Upgrade extends Purchaseable {
       const res = game.resourceDict[resId];
       if (res) {
         res.multiplier += multDict[resId];
-        res.updateTrueRate();
       }
     }
   }

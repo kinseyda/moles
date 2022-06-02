@@ -161,7 +161,6 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     },
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
-      this.gameData.calculateTrueRates();
     },
     debugToggle() {
       this.toggleDebug();

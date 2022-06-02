@@ -6,7 +6,7 @@ import { SerializableClasses } from "./serializable-class";
 
 /**
  * Stores and updates non-static data relating to a kind of structure.
- * Structures passively generate resources, and cost both resources and area.
+ * Structures passively generate resources (when their consumption needs are met), and cost both resources and area.
  */
 export default class Structure extends Purchaseable {
   amount: number;
@@ -62,8 +62,6 @@ export default class Structure extends Purchaseable {
     }
     game.area.incrementAmount(-1 * this.trueCostArea());
     this.amount += 1;
-    game.calculateBaseRates();
-    game.calculateTrueRates();
   }
 
   get canBuy() {

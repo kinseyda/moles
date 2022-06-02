@@ -13,27 +13,21 @@ export const startingResources = {
     resourceDataDict[0].startingParams.amount,
     resourceDataDict[0].startingParams.cap,
     resourceDataDict[0].startingParams.capPriority,
-    resourceDataDict[0].startingParams.baseRate,
-    resourceDataDict[0].startingParams.multiplier,
-    resourceDataDict[0].startingParams.trueRate
+    resourceDataDict[0].startingParams.multiplier
   ),
   1: new Resource(
     1,
     resourceDataDict[1].startingParams.amount,
     resourceDataDict[1].startingParams.cap,
     resourceDataDict[1].startingParams.capPriority,
-    resourceDataDict[1].startingParams.baseRate,
-    resourceDataDict[1].startingParams.multiplier,
-    resourceDataDict[1].startingParams.trueRate
+    resourceDataDict[1].startingParams.multiplier
   ),
   2: new Resource(
     2,
     resourceDataDict[2].startingParams.amount,
     resourceDataDict[2].startingParams.cap,
     resourceDataDict[2].startingParams.capPriority,
-    resourceDataDict[2].startingParams.baseRate,
-    resourceDataDict[2].startingParams.multiplier,
-    resourceDataDict[2].startingParams.trueRate
+    resourceDataDict[2].startingParams.multiplier
   ),
 };
 

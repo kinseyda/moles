@@ -11,6 +11,7 @@ export const structureDataDict: { [id: number]: StructureData } = {
     description:
       "Compress all the dirt you have into a ball and roll that around to pick up more dirt",
     production: { 0: 0.1 },
+    consumption: {},
     cost: { 0: 10 },
     areaCost: 10,
     increase: { 0: 1.1 },
@@ -21,6 +22,7 @@ export const structureDataDict: { [id: number]: StructureData } = {
     description:
       "Construct a mole-megastructure capable of digging tunnels for you",
     production: { 0: 10 },
+    consumption: {},
     areaCost: 10,
     cost: { 0: 100 },
     increase: { 0: 1.2 },
@@ -30,6 +32,7 @@ export const structureDataDict: { [id: number]: StructureData } = {
     name: "Termite pen",
     description: "Corral some termites together in a cozy wooden enclosure",
     production: { 5: 0.1 },
+    consumption: { 1: 0.1 },
     areaCost: 10,
     cost: { 1: 25 },
     increase: { 0: 1.2 },
