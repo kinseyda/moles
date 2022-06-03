@@ -53,3 +53,11 @@ button {
   font-weight: bolder;
   text-shadow: 0px 1px #000
 }
+.good-text {
+	color: var(--good-text-color);
+	background-color: var(--cb-background);
+}
+.bad-text {
+	color: var(--bad-text-color);
+	background-color: var(--cb-background);
+}

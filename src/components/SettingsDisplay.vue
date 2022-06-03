@@ -39,8 +39,8 @@
         </button>
         <ul>
           <li>
-            Example: <span id="good-text-eg">Good thing</span> /
-            <span id="bad-text-eg">Bad thing</span>
+            Example: <span class="good-text">Good thing</span> /
+            <span class="bad-text">Bad thing</span>
           </li>
         </ul>
       </li>
@@ -168,13 +168,5 @@ ul {
   position: absolute;
   top: 0;
   right: 0;
-}
-#good-text-eg {
-  color: var(--good-text-color);
-  background-color: var(--cb-background);
-}
-#bad-text-eg {
-  color: var(--bad-text-color);
-  background-color: var(--cb-background);
 }
 </style>

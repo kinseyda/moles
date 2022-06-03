@@ -3,7 +3,7 @@
     <h4>Production:</h4>
     <ul>
       <li v-for="id in Object.keys(structure.dataObject.production)" :key="id">
-        <p class="produce">
+        <p class="good-text">
           {{ getResource(id).dataObject.name }}: +{{
             formatNumber(structure.dataObject.production[id])
           }}
@@ -11,7 +11,7 @@
         </p>
       </li>
       <li v-for="id in Object.keys(structure.dataObject.consumption)" :key="id">
-        <p class="consume">
+        <p class="bad-text">
           {{ getResource(id).dataObject.name }}: -{{
             formatNumber(structure.dataObject.consumption[id])
           }}
@@ -39,14 +39,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.produce {
-  color: var(--good-text-color);
-  background-color: var(--cb-background);
-}
-.consume {
-  color: var(--bad-text-color);
-  background-color: var(--cb-background);
-}
-</style>
