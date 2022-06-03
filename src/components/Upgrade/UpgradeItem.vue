@@ -26,6 +26,7 @@ export default defineComponent({
     },
     buyUpgrade(upgrade: Upgrade) {
       upgrade.buy();
+      this.resetDesc();
     },
   },
 });

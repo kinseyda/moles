@@ -10,7 +10,8 @@
           @mouseleave="resetDesc()"
         >
           Theme: {{ settings.theme == "light" ? "Light" : ""
-          }}{{ settings.theme == "dark" ? "Dark" : "" }}{{ settings.theme == "true mole" ? "True Mole" : "" }}
+          }}{{ settings.theme == "dark" ? "Dark" : ""
+          }}{{ settings.theme == "true mole" ? "True Mole" : "" }}
         </button>
       </li>
       <li>
@@ -37,16 +38,28 @@ export function setTooltips(tooltips: boolean) {
     if (descContainer === null) {
       return;
     }
+    const xDist = 20,
+      yDist = 5; // Distance from mouse
+    const descWidth = descContainer.offsetWidth; // Will match App.vue css
+    const descHeight = descContainer.clientHeight; // Can change based on content
     const x = e.clientX,
       y = e.clientY;
-    if (x + 20 + 384 > window.innerWidth) {
+    if (x + xDist + descWidth > window.innerWidth) {
       descContainer.style.left = "";
-      descContainer.style.right = window.innerWidth - x + 20 + "px";
+      descContainer.style.right = window.innerWidth - (x - xDist) + "px";
     } else {
       descContainer.style.right = "";
-      descContainer.style.left = x + 20 + "px";
+      descContainer.style.left = x + xDist + "px";
     }
-    descContainer.style.top = y + 20 + "px";
+
+    if (y + yDist + descHeight + 26 > window.innerHeight) {
+      // Height is off by 26 for some reason, I think some kind of font issue
+      descContainer.style.top = "";
+      descContainer.style.bottom = window.innerHeight - (y - yDist) + "px";
+    } else {
+      descContainer.style.bottom = "";
+      descContainer.style.top = y + yDist + "px";
+    }
   };
   if (tooltips) {
     localStorage.setItem("molesDescPos", "tooltip");
@@ -82,13 +95,11 @@ export default defineComponent({
         htmlTag.setAttribute("theme", "dark");
         localStorage.setItem("molesTheme", "dark");
         this.settingsSetTheme("dark");
-      }
-      else if (this.settings.theme == "dark") {
+      } else if (this.settings.theme == "dark") {
         htmlTag.setAttribute("theme", "true mole");
         localStorage.setItem("molesTheme", "true mole");
         this.settingsSetTheme("true mole");
-      } 
-      else if (this.settings.theme == "true mole") {
+      } else if (this.settings.theme == "true mole") {
         htmlTag.setAttribute("theme", "light");
         localStorage.setItem("molesTheme", "light");
         this.settingsSetTheme("light");
