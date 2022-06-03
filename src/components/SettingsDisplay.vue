@@ -6,7 +6,7 @@
       <li>
         <button
           @click="toggleTheme"
-          @mouseover="hoverDescString(uiDescriptions['theme'])"
+          @mouseover="hoverDescString(uiDescriptions['settingsTheme'])"
           @mouseleave="resetDesc()"
         >
           Theme: {{ settings.theme == "light" ? "Light" : ""
@@ -17,11 +17,32 @@
       <li>
         <button
           @click="toggleTooltips"
-          @mouseover="hoverDescString(uiDescriptions['descriptionPosition'])"
+          @mouseover="
+            hoverDescString(uiDescriptions['settingsDescriptionPosition'])
+          "
           @mouseleave="resetDesc()"
         >
           Descriptions: {{ settings.tooltips ? "Tooltips" : "Fixed" }}
         </button>
+      </li>
+      <li>
+        <button
+          @click="toggleCBMode"
+          @mouseover="hoverDescString(uiDescriptions['settingsCBMode'])"
+          @mouseleave="resetDesc()"
+        >
+          Color blind mode:
+          {{ settings.cbMode == "green red" ? "Green / Red" : ""
+          }}{{ settings.cbMode == "blue orange" ? "Blue / Orange" : ""
+          }}{{ settings.cbMode == "mono" ? "Monochrome" : ""
+          }}{{ settings.cbMode == "no color" ? "No color" : "" }}
+        </button>
+        <ul>
+          <li>
+            Example: <span id="good-text-eg">Good thing</span> /
+            <span id="bad-text-eg">Bad thing</span>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
@@ -86,6 +107,7 @@ export default defineComponent({
       "toggleSettingsOpen",
       "settingsSetTheme",
       "settingsSetTooltips",
+      "settingsSetCBMode",
       "hoverDescString",
       "resetDesc",
     ]),
@@ -109,6 +131,26 @@ export default defineComponent({
       this.settingsSetTooltips(!this.settings.tooltips);
       setTooltips(this.settings.tooltips);
     },
+    toggleCBMode() {
+      const htmlTag = document.getElementsByTagName("html")[0];
+      if (this.settings.cbMode == "green red") {
+        htmlTag.setAttribute("cbMode", "blue orange");
+        localStorage.setItem("cbMode", "blue orange");
+        this.settingsSetCBMode("blue orange");
+      } else if (this.settings.cbMode == "blue orange") {
+        htmlTag.setAttribute("cbMode", "mono");
+        localStorage.setItem("cbMode", "mono");
+        this.settingsSetCBMode("mono");
+      } else if (this.settings.cbMode == "mono") {
+        htmlTag.setAttribute("cbMode", "no color");
+        localStorage.setItem("cbMode", "no color");
+        this.settingsSetCBMode("no color");
+      } else if (this.settings.cbMode == "no color") {
+        htmlTag.setAttribute("cbMode", "green red");
+        localStorage.setItem("cbMode", "green red");
+        this.settingsSetCBMode("green red");
+      }
+    },
   },
 });
 </script>
@@ -126,5 +168,13 @@ ul {
   position: absolute;
   top: 0;
   right: 0;
+}
+#good-text-eg {
+  color: var(--good-text-color);
+  background-color: var(--cb-background);
+}
+#bad-text-eg {
+  color: var(--bad-text-color);
+  background-color: var(--cb-background);
 }
 </style>

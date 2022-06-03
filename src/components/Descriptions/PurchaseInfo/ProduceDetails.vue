@@ -42,9 +42,11 @@ export default defineComponent({
 
 <style scoped>
 .produce {
-  color: green;
+  color: var(--good-text-color);
+  background-color: var(--cb-background);
 }
 .consume {
-  color: red;
+  color: var(--bad-text-color);
+  background-color: var(--cb-background);
 }
 </style>

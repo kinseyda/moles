@@ -23,3 +23,17 @@
     --background-image: url("background/mole\ background.png");
     background-size: 100vw 100vh;
 }
+
+[cbMode="green red"] {
+	--good-text-color: green;
+	--bad-text-color: red;
+}
+[cbMode="blue orange"] {
+	--good-text-color: blue;
+	--bad-text-color: orange;
+}
+[cbMode="mono"] {
+	--good-text-color: white;
+	--bad-text-color: black;
+	--cb-background: grey;
+}

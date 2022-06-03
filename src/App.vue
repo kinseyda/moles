@@ -142,6 +142,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       "toggleSettingsOpen",
       "settingsSetTheme",
       "settingsSetTooltips",
+      "settingsSetCBMode",
     ]),
     formatNumber(num: number) {
       return formatNumber(num, "");
@@ -198,6 +199,15 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     } else {
       this.settingsSetTooltips(true);
       setTooltips(true);
+    }
+
+    // Load color blindness mode
+    const loadCBMode = localStorage.getItem("cbMode");
+    if (loadCBMode == "green red" || loadCBMode == "blue orange") {
+      htmlTag.setAttribute("cbMode", loadCBMode);
+      this.settingsSetCBMode(loadCBMode);
+    } else {
+      htmlTag.setAttribute("cbMode", "green red");
     }
   },
 })

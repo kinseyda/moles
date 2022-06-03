@@ -10,6 +10,7 @@ const defaultDescription =
 interface Settings {
   theme: String;
   tooltips: boolean;
+  cbMode: String;
 }
 
 export interface State {
@@ -33,6 +34,7 @@ export const store = createStore<State>({
     settings: {
       theme: "light",
       tooltips: true,
+      cbMode: "green red",
     },
   },
   getters: {},
@@ -42,6 +44,9 @@ export const store = createStore<State>({
     },
     settingsSetTooltips(state: State, newTooltips: boolean) {
       state.settings.tooltips = newTooltips;
+    },
+    settingsSetCBMode(state: State, newCBMode: String) {
+      state.settings.cbMode = newCBMode;
     },
     toggleSettingsOpen(state: State) {
       state.settingsOpen = !state.settingsOpen;
