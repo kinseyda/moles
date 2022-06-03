@@ -49,7 +49,7 @@ export function formatNumber(num: number, style: string | undefined) {
     if (num < 1000) {
       style = "normal";
     } else if (num < 1000000000000000) {
-      // Less than a quadrillion use 1M, 34B notation
+      // Less than a quadrillion use 1M, 34B, 257T etc notation
       style = "illion";
     } else {
       style = "exp";

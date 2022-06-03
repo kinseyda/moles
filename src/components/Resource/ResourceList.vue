@@ -61,33 +61,31 @@ export default defineComponent({
     },
     setSliders(num: number) {
       for (const resIdStr in this.resourceDict) {
-        this.setSlider(Number(resIdStr), num)
+        this.setSlider(Number(resIdStr), num);
       }
     },
     maxOne(sliderIndex: number) {
       for (const resIdStr in this.resourceDict) {
         if (Number(resIdStr) == sliderIndex) {
-
-        this.setSlider(Number(resIdStr), 10)
-        }
-        else {
-          this.setSlider(Number(resIdStr), 0)
+          this.setSlider(Number(resIdStr), 10);
+        } else {
+          this.setSlider(Number(resIdStr), 0);
         }
       }
     },
     setSlider(sliderIndex: number, setTo: number) {
       // Change value behind the scenes
-        this.sliderVals[sliderIndex] = setTo;
-        // Change actual slider position
-        const slider = document.getElementById(
-          `slider${sliderIndex}`
-        ) as HTMLInputElement;
-        if (slider !== null) {
-          slider.value = String(setTo);
-        } else {
-          console.error(`No slider called 'slider${sliderIndex}'`);
-        }
-    }
+      this.sliderVals[sliderIndex] = setTo;
+      // Change actual slider position
+      const slider = document.getElementById(
+        `slider${sliderIndex}`
+      ) as HTMLInputElement;
+      if (slider !== null) {
+        slider.value = String(setTo);
+      } else {
+        console.error(`No slider called 'slider${sliderIndex}'`);
+      }
+    },
   },
   watch: {
     sliderVals: {
@@ -108,6 +106,7 @@ export default defineComponent({
             this.area.amount,
             total
           );
+          this.resourceDict[resId].checkCap();
         }
       },
     },

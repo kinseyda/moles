@@ -100,4 +100,13 @@ export default class Resource extends Identifiable {
   updateRateFromTick(change: number, ticksize: number) {
     this.rateLastTick = change / ticksize;
   }
+
+  /**
+   * Sets current resource amount to the cap if it is greater than the cap
+   */
+  checkCap() {
+    if (this.amount > this.cap) {
+      this.setAmount(this.cap);
+    }
+  }
 }

@@ -106,9 +106,25 @@ export class Game extends SerializableClass {
     for (const structID in this.structureDict) {
       const curStruct = this.structureDict[structID];
       const structAmount = curStruct.amount;
-      let canConsume = true;
-      const structConsume: { [resID: number]: number } = {};
+
+      // Check space is not already filled in all resources
+      let shouldProd = false;
+      for (const resID in curStruct.dataObject.production) {
+        if (this.resourceDict[resID].amount < this.resourceDict[resID].cap) {
+          shouldProd = true;
+          break;
+        }
+      }
+      if (!shouldProd) {
+        continue;
+      }
+
       // Check all consumption requirements are met
+      let canConsume = true;
+      const structConsume: {
+        [resID: number]: number;
+      } = {};
+
       for (const resID in curStruct.dataObject.consumption) {
         const toConsume =
           curStruct.dataObject.consumption[resID] * structAmount * tickSize;
