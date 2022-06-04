@@ -38,6 +38,16 @@ export default class Structure extends Purchaseable {
   }
 
   trueCost(resId: number): number {
+    return this.trueCostAt(resId, this.amount);
+  }
+  /**
+   * Calculates the true cost for the next purchase when you have the current
+   * amount of this structure
+   * @param resId - {@link Resource} to find the cost for
+   * @param amount - Amount of the resource you currently have (or potentially
+   *  have)
+   */
+  trueCostAt(resId: number, amount: number): number {
     let dis = this.discount[resId];
     if (!dis) {
       dis = 1;
@@ -46,7 +56,7 @@ export default class Structure extends Purchaseable {
     if (!inc) {
       inc = 1;
     }
-    return dis * this.dataObject.cost[resId] * inc ** this.amount;
+    return dis * this.dataObject.cost[resId] * inc ** amount;
   }
 
   buy() {
@@ -62,6 +72,25 @@ export default class Structure extends Purchaseable {
     }
     game.area.incrementAmount(-1 * this.trueCostArea());
     this.amount += 1;
+  }
+  /**
+   * Refunds the amount paid for the structure (assuming current discounts,
+   * so can potentially lose money).
+   */
+  sell() {
+    if (this.amount <= 0) {
+      return;
+    }
+    game.area.incrementOrCap(this.trueCostArea());
+    for (const resIdStr in this.dataObject.cost) {
+      const resId: number = Number(resIdStr);
+      const res = game.resourceDict[resId];
+      if (res) {
+        const boughtPrice = this.trueCostAt(resId, this.amount - 1);
+        res.incrementOrCap(boughtPrice);
+      }
+    }
+    this.amount -= 1;
   }
 
   get canBuy() {

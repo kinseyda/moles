@@ -1,19 +1,35 @@
 <template>
   <tr class="list-row">
-    <td @mouseover="hoverDescIdentifiable(resource)" @mouseleave="resetDesc()">
+    <td
+      class="res-name"
+      @mouseover="hoverDescIdentifiable(resource)"
+      @mouseleave="resetDesc()"
+    >
       {{ resource.dataObject.name }}:
     </td>
-    <td @mouseover="hoverDescString(numDesc)" @mouseleave="resetDesc()">
+    <td
+      class="res-amount"
+      @mouseover="hoverDescString(numDesc)"
+      @mouseleave="resetDesc()"
+    >
       {{ formatNumber(resource.amount) }}
     </td>
-    <td>/</td>
-    <td @mouseover="hoverDescString(denomDesc)" @mouseleave="resetDesc()">
+    <td class="res-slash">/</td>
+    <td
+      class="res-cap"
+      @mouseover="hoverDescString(denomDesc)"
+      @mouseleave="resetDesc()"
+    >
       {{ formatNumber(resource.cap) }} m
     </td>
-    <td @mouseover="hoverDescString(rateDesc)" @mouseleave="resetDesc()">
+    <td
+      class="res-rate"
+      @mouseover="hoverDescString(rateDesc)"
+      @mouseleave="resetDesc()"
+    >
       {{ formatNumber(resource.rateLastTick) }} m/s
     </td>
-    <td>
+    <td class="res-slider">
       <input
         @mouseover="hoverDescString(capDesc)"
         @mouseleave="resetDesc()"
@@ -26,7 +42,7 @@
         @input="$emit('update:slider-val', $event.target.value)"
       />
     </td>
-    <td>
+    <td class="res-slider-set">
       <button
         class="slider-set"
         @click="$emit('slider-max', resource.id)"
@@ -117,28 +133,22 @@ td {
   min-width: 6ch;
   padding-left: 0.5ch;
 }
-td:nth-child(1) {
-  /* Name */
+td.res-name {
   min-width: 7ch;
 }
-td:nth-child(3) {
-  /* Slash */
+td.res-slash {
   min-width: 1ch;
 }
-td:nth-child(4) {
-  /* Denominator */
+td.res-cap {
   min-width: 8ch;
 }
-td:nth-child(5) {
-  /* Rate */
+td.res-rate {
   min-width: 9ch;
 }
-td:nth-child(6) {
-  /* Slider */
+td.res-slider {
   min-width: 10ch;
 }
-td:nth-child(7) {
-  /* Max button */
+td.res-slider-set {
   min-width: 1ch;
 }
 button.slider-set {

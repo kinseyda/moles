@@ -3,12 +3,17 @@
     class="list-row clickable"
     @mouseover="hoverDescIdentifiable(structure)"
     @mouseleave="resetDesc()"
-    @click="buyStructure(structure)"
   >
-    <td :class="{ 'purchase-available': structure.canBuy }">
+    <td class="struct-name" :class="{ 'purchase-available': structure.canBuy }">
       {{ structure.dataObject.name }}
     </td>
-    <td>{{ formatNumber(structure.amount) }}</td>
+    <td class="struct-amount">{{ formatNumber(structure.amount) }}</td>
+    <td class="struct-buy">
+      <button class="buy-sell" @click="buyStructure(structure)">+</button>
+    </td>
+    <td class="struct-sell">
+      <button class="buy-sell" @click="sellStructure(structure)">-</button>
+    </td>
   </tr>
 </template>
 
@@ -29,6 +34,22 @@ export default defineComponent({
     buyStructure(structure: Structure) {
       structure.buy();
     },
+    sellStructure(structure: Structure) {
+      structure.sell();
+    },
   },
 });
 </script>
+<style scoped>
+button.buy-sell {
+  float: right;
+  width: 2.5ch;
+  margin-right: 5px;
+}
+td.struct-name {
+  width: 23ch;
+}
+td.struct-amount {
+  width: 3ch;
+}
+</style>

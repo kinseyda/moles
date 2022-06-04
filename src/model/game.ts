@@ -157,12 +157,7 @@ export class Game extends SerializableClass {
     // Make changes
 
     for (const resID in resChanges) {
-      const cur = this.resourceDict[resID];
-      if (cur.amount + resChanges[resID] > cur.cap) {
-        cur.setAmount(cur.cap);
-      } else {
-        this.resourceDict[resID].incrementAmount(resChanges[resID]);
-      }
+      this.resourceDict[resID].incrementOrCap(resChanges[resID]);
     }
 
     for (const resID in this.resourceDict) {

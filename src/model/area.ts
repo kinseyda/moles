@@ -41,6 +41,18 @@ export default class Area extends SerializableClass {
   incrementAmount(incrementBy: number) {
     this.setAmount(this.amount + incrementBy);
   }
+  /**
+   * Increments the current amount of this resource and triggers the relevant
+   * event[s] or sets the amount to the cap
+   * @param newAmount - Number to increment amount by
+   */
+  incrementOrCap(incrementBy: number) {
+    if (this.amount + incrementBy > this.cap) {
+      this.setAmount(this.cap);
+    } else {
+      this.incrementAmount(incrementBy);
+    }
+  }
 
   /**
    * Calculates what the next amount of space should be according to the current equation.

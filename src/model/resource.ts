@@ -73,11 +73,12 @@ export default class Resource extends Identifiable {
     this.setAmount(0);
   }
   /**
-   * Changes the current amount of this resource and triggers the relevant event[s]
+   * Changes the current amount of this resource and triggers the relevant
+   * event[s] if there is space in storage
    * @param newAmount - Number to change amount to
    */
   setAmount(newAmount: number) {
-    if (this.amount != newAmount) {
+    if (this.amount != newAmount && newAmount >= 0 && newAmount <= this.cap) {
       this.amount = newAmount;
       game.handleEvent(RequirementType.resourceAmount, {
         resId: this.id,
@@ -85,11 +86,24 @@ export default class Resource extends Identifiable {
     }
   }
   /**
-   * Increments the current amount of this resource and triggers the relevant event[s]
+   * Increments the current amount of this resource and triggers the relevant
+   * event[s] if there is space in storage
    * @param incrementBy - Number to increment amount by
    */
   incrementAmount(incrementBy: number) {
     this.setAmount(this.amount + incrementBy);
+  }
+  /**
+   * Increments the current amount of this resource and triggers the relevant
+   * event[s] if there is space in storage, or sets the amount to the cap
+   * @param incrementBy - Number to increment amount by
+   */
+  incrementOrCap(incrementBy: number) {
+    if (this.amount + incrementBy > this.cap) {
+      this.setAmount(this.cap);
+    } else {
+      this.incrementAmount(incrementBy);
+    }
   }
 
   /**
