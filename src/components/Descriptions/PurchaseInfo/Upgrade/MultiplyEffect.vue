@@ -3,9 +3,10 @@
     <ul>
       <li v-for="id in Object.keys(effect.params[0])" :key="id">
         <p>
-          {{ getResource(id).dataObject.name }}: +{{
-            formatNumber(effect.params[0][id] * 100)
-          }}%
+          {{ getResource(id).dataObject.name }}:
+          <span class="good-text"
+            >+{{ formatNumber(effect.params[0][id] * 100) }}%</span
+          >
         </p>
       </li>
     </ul>

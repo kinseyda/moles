@@ -27,7 +27,13 @@
       @mouseover="hoverDescString(rateDesc)"
       @mouseleave="resetDesc()"
     >
-      {{ formatNumber(resource.rateLastTick) }} m/s
+      <span
+        :class="{
+          'good-text': resource.rateLastTick > 0,
+          'bad-text': resource.rateLastTick < 0,
+        }"
+        >{{ formatNumber(resource.rateLastTick) }} m/s</span
+      >
     </td>
     <td class="res-slider">
       <input

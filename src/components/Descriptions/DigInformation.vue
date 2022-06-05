@@ -5,7 +5,9 @@
       <li v-for="id in Object.keys(dig.digRates)" :key="id">
         <p>
           {{ getResource(id).dataObject.name }}:
-          {{ formatNumber(dig.findTrueDigRate(id)) }} m/s
+          <span class="good-text"
+            >{{ formatNumber(dig.findTrueDigRate(id)) }} m/s</span
+          >
         </p>
       </li>
     </ul>

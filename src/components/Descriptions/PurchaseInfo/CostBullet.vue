@@ -1,8 +1,16 @@
 <template>
   <li>
     <p>
-      {{ getResourceData().name }}: {{ formatNumber(cost) }},
-      {{ formatTime(timeUntil()) }}
+      {{ getResourceData().name }}:
+      <span class="bad-text">{{ formatNumber(cost) }}</span
+      >,
+      <span
+        :class="{
+          'bad-text': timeUntil() > 0,
+          'good-text': timeUntil() == 0,
+        }"
+        >{{ formatTime(timeUntil()) }}</span
+      >
     </p>
   </li>
 </template>

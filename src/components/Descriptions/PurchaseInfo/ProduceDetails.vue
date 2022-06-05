@@ -3,19 +3,19 @@
     <h4>Production:</h4>
     <ul>
       <li v-for="id in Object.keys(structure.dataObject.production)" :key="id">
-        <p class="good-text">
-          {{ getResource(id).dataObject.name }}: +{{
-            formatNumber(structure.dataObject.production[id])
-          }}
-          m/s
+        <p>
+          {{ getResource(id).dataObject.name }}:
+          <span class="good-text"
+            >+{{ formatNumber(structure.dataObject.production[id]) }} m/s</span
+          >
         </p>
       </li>
       <li v-for="id in Object.keys(structure.dataObject.consumption)" :key="id">
-        <p class="bad-text">
-          {{ getResource(id).dataObject.name }}: -{{
-            formatNumber(structure.dataObject.consumption[id])
-          }}
-          m/s
+        <p>
+          {{ getResource(id).dataObject.name }}:
+          <span class="bad-text"
+            >-{{ formatNumber(structure.dataObject.consumption[id]) }} m/s</span
+          >
         </p>
       </li>
     </ul>

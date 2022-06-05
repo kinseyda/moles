@@ -4,7 +4,10 @@
       <h4>Cost</h4>
       <ul>
         <li v-if="purchase._class === structureEnum">
-          <h4>Area: {{ purchase.dataObject.areaCost }}</h4>
+          <h4>
+            Area:
+            <span class="bad-text">{{ purchase.dataObject.areaCost }}</span>
+          </h4>
         </li>
         <cost-bullet
           v-for="id in Object.keys(purchase.dataObject.cost)"
