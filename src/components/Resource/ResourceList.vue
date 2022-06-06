@@ -1,6 +1,11 @@
 <template>
   <div id="outer">
-    <h2>Resources:</h2>
+    <h2
+      @mouseover="hoverDescString(uiDescriptions['resources'])"
+      @mouseleave="resetDesc()"
+    >
+      Resources:
+    </h2>
     <table>
       <resource-item
         v-for="item in resourceDict"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="desc-side" id="cost-container">
-      <h4>Cost</h4>
+      <h4>Cost:</h4>
       <ul>
         <li v-if="purchase._class === structureEnum">
           <h4>
@@ -80,7 +80,7 @@ export default defineComponent({
 </script>
 <style>
 .desc-side {
-  width: 50%;
+  width: 48%;
 }
 #cost-container {
   float: left;

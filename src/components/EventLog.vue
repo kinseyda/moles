@@ -1,6 +1,12 @@
 <template>
   <div id="outer">
-    <h2 id="label">Log:</h2>
+    <h2
+      id="label"
+      @mouseover="hoverDescString(uiDescriptions['log'])"
+      @mouseleave="resetDesc()"
+    >
+      Log:
+    </h2>
     <ol>
       <li
         v-for="ev in eventList"
@@ -20,6 +26,7 @@ import { defineComponent } from "vue";
 import { formatTimeConcise } from "@/components/format";
 import { game } from "@/model/game";
 import { mapMutations } from "vuex";
+import { uiDescriptions } from "@/components/ui-descriptions";
 
 class TextLogEvent {
   id: number;
@@ -41,6 +48,7 @@ export default defineComponent({
   data() {
     return {
       currentTime: 0,
+      uiDescriptions: uiDescriptions,
     };
   },
   computed: {
@@ -57,7 +65,7 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
+    ...mapMutations(["hoverDescIdentifiable", "hoverDescString", "resetDesc"]),
     timeSince(timeAchieved: number): number {
       return Math.max(this.currentTime - timeAchieved, 0);
     },

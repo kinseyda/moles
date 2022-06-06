@@ -1,6 +1,11 @@
 <template>
   <div id="outer">
-    <h2>Upgrades:</h2>
+    <h2
+      @mouseover="hoverDescString(uiDescriptions['upgrades'])"
+      @mouseleave="resetDesc()"
+    >
+      Upgrades:
+    </h2>
     <div id="upgrades">
       <table>
         <upgrade-item
@@ -16,12 +21,19 @@
 <script lang="ts">
 import Upgrade from "@/model/upgrade";
 import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
+import { uiDescriptions } from "../ui-descriptions";
 import UpgradeItem from "./UpgradeItem.vue";
 export default defineComponent({
   name: "UpgradeList",
   props: ["upgradeDict"],
   components: {
     UpgradeItem,
+  },
+  data() {
+    return {
+      uiDescriptions: uiDescriptions,
+    };
   },
   computed: {
     visibleUpgrades() {
@@ -33,6 +45,9 @@ export default defineComponent({
       }
       return lst;
     },
+  },
+  methods: {
+    ...mapMutations(["hoverDescString", "resetDesc"]),
   },
 });
 </script>

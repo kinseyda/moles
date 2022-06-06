@@ -1,6 +1,11 @@
 <template>
   <div id="outer">
-    <h2>Structures:</h2>
+    <h2
+      @mouseover="hoverDescString(uiDescriptions['structures'])"
+      @mouseleave="resetDesc()"
+    >
+      Structures:
+    </h2>
     <table>
       <structure-item
         v-for="item in structureDict"
@@ -13,11 +18,21 @@
 <script>
 import { defineComponent } from "vue";
 import StructureItem from "../Structure/StructureItem.vue";
+import { uiDescriptions } from "../ui-descriptions";
+import { mapMutations } from "vuex";
 export default defineComponent({
   name: "StructureList",
   props: ["structureDict"],
+  methods: {
+    ...mapMutations(["hoverDescString", "resetDesc"]),
+  },
   components: {
     StructureItem,
+  },
+  data() {
+    return {
+      uiDescriptions: uiDescriptions,
+    };
   },
 });
 </script>

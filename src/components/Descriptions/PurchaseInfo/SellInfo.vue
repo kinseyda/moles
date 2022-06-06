@@ -1,17 +1,24 @@
 <template>
   <b v-if="!structure.canSell()">Unavailable</b>
   <div v-if="structure.canSell()">
-    <ul id="refund-container">
-      <li><b>Area:</b> {{ structure.dataObject.areaCost }}</li>
-      <li v-for="resId in Object.keys(structure.dataObject.cost)" :key="resId">
-        {{ getResourceData(resId).name }}:
-        <span class="good-text"
-          >+{{ formatNumber(structure.sellFor(resId))
-          }}<small class="good-text"> Mo</small></span
+    <div id="refund-container" class="half-side">
+      <h4>Refund:</h4>
+      <ul>
+        <li><b>Area:</b> {{ structure.dataObject.areaCost }}</li>
+        <li
+          v-for="resId in Object.keys(structure.dataObject.cost)"
+          :key="resId"
         >
-      </li>
-    </ul>
-    <div id="effect-container">
+          {{ getResourceData(resId).name }}:
+          <span class="good-text"
+            >+{{ formatNumber(structure.sellFor(resId))
+            }}<small class="good-text"> Mo</small></span
+          >
+        </li>
+      </ul>
+    </div>
+    <div id="effect-container" class="half-side">
+      <h4>Result:</h4>
       <b>{{ structure.dataObject.name }}</b
       >s <span class="bad-text">-1</span>
     </div>
@@ -47,8 +54,8 @@ export default defineComponent({
 });
 </script>
 <style>
-.desc-side {
-  width: 50%;
+.half-side {
+  width: 48%;
 }
 #refund-container {
   float: left;
