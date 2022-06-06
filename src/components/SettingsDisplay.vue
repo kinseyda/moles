@@ -1,6 +1,6 @@
 <template>
   <pop-up-menu>
-    <template #title>Settings Pop Up!!!</template>
+    <template #title>Settings</template>
     <template #content>
       <ul>
         <li>
@@ -164,5 +164,4 @@ export default defineComponent({
 ul {
   list-style-type: none;
 }
-
 </style>

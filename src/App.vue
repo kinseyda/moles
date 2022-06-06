@@ -228,13 +228,16 @@ export default class App extends Vue {}
 }
 #left-column {
   flex: 0 0 44ch;
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
+  margin-bottom: 1em;
 }
 #central-column {
   flex: 1 0 0;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1em;
+  margin: 1em;
 }
 #dig-button {
   width: 100%;
@@ -242,9 +245,10 @@ export default class App extends Vue {}
   flex: 1 1 0;
 }
 #buttons-container {
-  width: calc(100% - 40px);
-  margin: 20px;
-  flex: 0 0 60%;
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  flex: 0 0 50%;
   display: flex;
   flex-direction: column;
 }
@@ -260,9 +264,7 @@ export default class App extends Vue {}
   flex-direction: column;
 }
 #empire-button {
-  flex: 1 1 10%;
-  overflow: auto;
-  margin-left: 5px;
-  margin-bottom: 5px;
+  flex: 1 1 0;
+  margin-left: 1em;
 }
 </style>
