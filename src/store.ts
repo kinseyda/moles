@@ -21,7 +21,7 @@ export interface State {
   structSellData: Structure | undefined;
   digData: boolean;
   debugMode: boolean;
-  settingsOpen: boolean;
+  popUpOpen: string;
   settings: Settings;
 }
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -33,7 +33,7 @@ export const store = createStore<State>({
     structSellData: undefined,
     digData: false,
     debugMode: false,
-    settingsOpen: false,
+    popUpOpen: "",
     settings: {
       theme: "light",
       tooltips: true,
@@ -52,7 +52,21 @@ export const store = createStore<State>({
       state.settings.cbMode = newCBMode;
     },
     toggleSettingsOpen(state: State) {
-      state.settingsOpen = !state.settingsOpen;
+      if (state.popUpOpen == "settings") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "settings";
+      }
+    },
+    toggleEmpireOpen(state: State) {
+      if (state.popUpOpen == "empire") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "empire";
+      }
+    },
+    closePopUp(state: State) {
+      state.popUpOpen = "";
     },
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;

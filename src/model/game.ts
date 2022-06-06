@@ -148,6 +148,7 @@ export class Game extends SerializableClass {
             (resChanges[resID] || 0) +
             curStruct.dataObject.production[resID] *
               this.resourceDict[resID].multiplier *
+              // Multiplier only for prod not consumption
               structAmount *
               tickSize;
         }

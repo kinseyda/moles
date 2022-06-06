@@ -32,6 +32,7 @@
           :resourceDict="gameData.resourceDict"
           :area="gameData.area"
         ></resource-list>
+        <button id="empire-button" @click="toggleEmpireOpen">Empire</button>
       </div>
       <div id="central-column">
         <area-display :area="gameData.area"></area-display>
@@ -66,10 +67,8 @@
       </div>
     </div>
 
-    <settings-display
-      id="settings-display"
-      v-if="settingsOpen"
-    ></settings-display>
+    <settings-display v-if="popUpOpen == 'settings'"></settings-display>
+    <empire-display v-if="popUpOpen == 'empire'"></empire-display>
   </div>
 </template>
 
@@ -78,6 +77,7 @@ import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
+import EmpireDisplay from "./components/EmpireDisplay.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
@@ -100,6 +100,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     DescriptionContainer,
     EventLog,
     SettingsDisplay,
+    EmpireDisplay,
   },
   computed: {
     ...mapState([
@@ -109,7 +110,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       "descriptionBoxData",
       "descriptionBoxIsEmpty",
       "digData",
-      "settingsOpen",
+      "popUpOpen",
       "settings",
     ]),
   },
@@ -125,6 +126,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       "hoverDescDig",
       "hoverDescString",
       "resetDesc",
+      "toggleEmpireOpen",
       "toggleSettingsOpen",
       "settingsSetTheme",
       "settingsSetTooltips",
@@ -249,20 +251,18 @@ export default class App extends Vue {}
 #event-log-container {
   flex: 1 0 0;
 }
-
+#settings-display {
+  position: absolute;
+}
 #purchaseable-column {
   flex: 0 0 30ch;
   display: flex;
   flex-direction: column;
 }
-#settings-display {
-  background: var(--global-bg-color);
-  position: absolute;
-  z-index: 1;
-  top: 100px;
-  bottom: 100px;
-  left: 100px;
-  right: 100px;
-  border: 1px solid var(--text-color);
+#empire-button {
+  flex: 1 1 10%;
+  overflow: auto;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 </style>

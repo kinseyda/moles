@@ -101,5 +101,7 @@ li {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 </style>

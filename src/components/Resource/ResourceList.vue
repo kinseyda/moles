@@ -126,6 +126,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#outer {
+  height: 85%;
+}
 button.slider-set {
   float: right;
   width: 2.5ch;
