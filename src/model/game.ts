@@ -78,7 +78,7 @@ export class Game extends SerializableClass {
    *
    * Works by going over all structures (checking that consumption requirements
    * are met) and creating a dict of changes to make in the next tick (which is
-   * then converted to m/s for the rate)
+   * then converted to Mo/s for the rate)
    */
   tick() {
     const updateTime = Date.now();

@@ -2,7 +2,10 @@
   <div>
     <p>
       Expands area by
-      <b class="good-text">{{ expansion.dataObject.areaEach }}</b>
+      <b class="good-text"
+        >{{ expansion.dataObject.areaEach
+        }}<small class="good-text"> Mo</small></b
+      >
     </p>
   </div>
 </template>

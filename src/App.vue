@@ -246,7 +246,7 @@ export default class App extends Vue {}
   padding-right: 5px;
 }
 #left-column {
-  flex: 0 0 42ch;
+  flex: 0 0 44ch;
   min-height: 100%;
 }
 #central-column {

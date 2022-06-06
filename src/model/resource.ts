@@ -13,7 +13,7 @@ export default class Resource extends Identifiable {
   cap: number;
   capPriority: number;
   multiplier: number;
-  rateLastTick: number; // Rate in m/s derived from game tick increase
+  rateLastTick: number; // Rate in Mo/s derived from game tick increase
 
   /**
    * @param id - A unique id corresponding to the relevant item in {@link resourceDataDict}.

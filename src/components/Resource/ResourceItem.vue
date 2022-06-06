@@ -5,14 +5,14 @@
       @mouseover="hoverDescIdentifiable(resource)"
       @mouseleave="resetDesc()"
     >
-      {{ resource.dataObject.name }}:
+      <b></b>{{ resource.dataObject.name }}:
     </td>
     <td
       class="res-amount"
       @mouseover="hoverDescString(numDesc)"
       @mouseleave="resetDesc()"
     >
-      {{ formatNumber(resource.amount) }}
+      <b>{{ formatNumber(resource.amount) }}</b>
     </td>
     <td class="res-slash">/</td>
     <td
@@ -20,19 +20,28 @@
       @mouseover="hoverDescString(denomDesc)"
       @mouseleave="resetDesc()"
     >
-      {{ formatNumber(resource.cap) }} m
+      <b>{{ formatNumber(resource.cap) }}</b
+      ><small> Mo</small>
     </td>
     <td
       class="res-rate"
       @mouseover="hoverDescString(rateDesc)"
       @mouseleave="resetDesc()"
     >
-      <span
+      <b
         :class="{
           'good-text': resource.rateLastTick > 0,
           'bad-text': resource.rateLastTick < 0,
         }"
-        >{{ formatNumber(resource.rateLastTick) }} m/s</span
+        >{{ formatNumber(resource.rateLastTick) }}</b
+      >
+      <small
+        :class="{
+          'good-text': resource.rateLastTick > 0,
+          'bad-text': resource.rateLastTick < 0,
+        }"
+      >
+        Mo/s</small
       >
     </td>
     <td class="res-slider">
@@ -146,10 +155,10 @@ td.res-slash {
   min-width: 1ch;
 }
 td.res-cap {
-  min-width: 8ch;
+  min-width: 9ch;
 }
 td.res-rate {
-  min-width: 9ch;
+  min-width: 10ch;
 }
 td.res-slider {
   min-width: 10ch;

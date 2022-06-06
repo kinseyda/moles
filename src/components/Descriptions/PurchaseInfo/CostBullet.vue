@@ -2,7 +2,8 @@
   <li>
     <p>
       {{ getResourceData().name }}:
-      <span class="bad-text">{{ formatNumber(cost) }}</span
+      <span class="bad-text"
+        >{{ formatNumber(cost) }} <small class="bad-text"> Mo</small></span
       >,
       <span
         :class="{

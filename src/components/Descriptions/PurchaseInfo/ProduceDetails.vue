@@ -6,7 +6,8 @@
         <p>
           {{ getResource(id).dataObject.name }}:
           <span class="good-text"
-            >+{{ formatNumber(structure.dataObject.production[id]) }} m/s</span
+            >+{{ formatNumber(structure.dataObject.production[id]) }}
+            <small class="good-text"> Mo/s</small></span
           >
         </p>
       </li>
@@ -14,7 +15,8 @@
         <p>
           {{ getResource(id).dataObject.name }}:
           <span class="bad-text"
-            >-{{ formatNumber(structure.dataObject.consumption[id]) }} m/s</span
+            >-{{ formatNumber(structure.dataObject.consumption[id]) }}
+            <small class="bad-text"> Mo/s</small></span
           >
         </p>
       </li>

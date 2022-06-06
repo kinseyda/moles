@@ -6,7 +6,10 @@
         <li v-if="purchase._class === structureEnum">
           <h4>
             Area:
-            <span class="bad-text">{{ purchase.dataObject.areaCost }}</span>
+            <span class="bad-text"
+              >{{ purchase.dataObject.areaCost
+              }}<small class="bad-text"> Mo</small></span
+            >
           </h4>
         </li>
         <cost-bullet

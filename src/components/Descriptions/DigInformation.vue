@@ -6,7 +6,8 @@
         <p>
           {{ getResource(id).dataObject.name }}:
           <span class="good-text"
-            >{{ formatNumber(dig.findTrueDigRate(id)) }} m/s</span
+            >{{ formatNumber(dig.findTrueDigRate(id))
+            }}<small class="good-text"> Mo/s</small></span
           >
         </p>
       </li>

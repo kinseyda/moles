@@ -6,7 +6,8 @@
       <li v-for="resId in Object.keys(structure.dataObject.cost)" :key="resId">
         {{ getResourceData(resId).name }}:
         <span class="good-text"
-          >+{{ formatNumber(structure.sellFor(resId)) }} m</span
+          >+{{ formatNumber(structure.sellFor(resId))
+          }}<small class="good-text"> Mo</small></span
         >
       </li>
     </ul>

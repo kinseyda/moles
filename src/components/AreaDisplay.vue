@@ -1,6 +1,8 @@
 <template>
   <div id="outer">
-    <h2>{{ formatNumber(area.amount) }} / {{ formatNumber(area.cap) }} area</h2>
+    <h2>
+      Area: {{ formatNumber(area.amount) }} / {{ formatNumber(area.cap) }} Mo
+    </h2>
   </div>
 </template>
 
