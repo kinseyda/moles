@@ -56,24 +56,7 @@
         <div id="event-log-container">
           <event-log :eventsDict="gameData.eventsDict"></event-log>
         </div>
-        <div
-          id="description-container"
-          :class="{
-            'floating-tooltip': settings.tooltips,
-            'is-empty': descriptionBoxIsEmpty,
-          }"
-        >
-          <div id="description-box" v-html="descriptionBoxData"></div>
-          <purchase-info
-            v-bind:purchase="purchaseInformationData"
-            v-if="purchaseInformationData"
-          ></purchase-info>
-          <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
-          <sell-info
-            v-bind:structure="structSellData"
-            v-if="structSellData"
-          ></sell-info>
-        </div>
+        <description-container></description-container>
       </div>
       <div id="purchaseable-column">
         <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
@@ -100,9 +83,7 @@ import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
-import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
-import SellInfo from "./components/Descriptions/PurchaseInfo/SellInfo.vue";
-import DigInformation from "./components/Descriptions/DigInformation.vue";
+import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
 import { Game, game } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
@@ -116,9 +97,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     UpgradeList,
     StructureList,
     ExpansionList,
-    PurchaseInfo,
-    SellInfo,
-    DigInformation,
+    DescriptionContainer,
     EventLog,
     SettingsDisplay,
   },
@@ -271,20 +250,6 @@ export default class App extends Vue {}
   flex: 1 0 0;
 }
 
-#description-container {
-  background: var(--global-bg-color);
-}
-#description-container.floating-tooltip {
-  border: 1px solid var(--text-color);
-  width: 384px;
-  display: block;
-  position: absolute;
-  z-index: 1000;
-  overflow: hidden;
-}
-#description-container.floating-tooltip.is-empty {
-  display: none;
-}
 #purchaseable-column {
   flex: 0 0 30ch;
   display: flex;
