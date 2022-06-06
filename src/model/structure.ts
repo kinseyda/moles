@@ -74,11 +74,26 @@ export default class Structure extends Purchaseable {
     this.amount += 1;
   }
   /**
+   * Finds the amount that should be given back upon selling a structure.
+   * @param resId - {@link Resource} to find the refund amount for
+   */
+  sellFor(resId: number): number {
+    return this.trueCostAt(resId, this.amount - 1);
+  }
+
+  /**
+   * Whether or not this structure can currently be sold
+   */
+  canSell(): boolean {
+    return this.amount > 0;
+  }
+
+  /**
    * Refunds the amount paid for the structure (assuming current discounts,
    * so can potentially lose money).
    */
   sell() {
-    if (this.amount <= 0) {
+    if (!this.canSell()) {
       return;
     }
     game.area.incrementOrCap(this.trueCostArea());
@@ -86,7 +101,7 @@ export default class Structure extends Purchaseable {
       const resId: number = Number(resIdStr);
       const res = game.resourceDict[resId];
       if (res) {
-        const boughtPrice = this.trueCostAt(resId, this.amount - 1);
+        const boughtPrice = this.sellFor(resId);
         res.incrementOrCap(boughtPrice);
       }
     }

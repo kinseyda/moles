@@ -1,17 +1,32 @@
 <template>
-  <tr
-    class="list-row clickable"
-    @mouseover="hoverDescIdentifiable(structure)"
-    @mouseleave="resetDesc()"
-  >
-    <td class="struct-name" :class="{ 'purchase-available': structure.canBuy }">
+  <tr class="list-row">
+    <td
+      class="struct-name"
+      @mouseover="hoverDescIdentifiable(structure)"
+      @mouseleave="resetDesc()"
+      :class="{ 'purchase-available': structure.canBuy }"
+    >
       {{ structure.dataObject.name }}
     </td>
-    <td class="struct-amount">{{ formatNumber(structure.amount) }}</td>
-    <td class="struct-buy">
+    <td
+      class="struct-amount"
+      @mouseover="hoverDescIdentifiable(structure)"
+      @mouseleave="resetDesc()"
+    >
+      {{ formatNumber(structure.amount) }}
+    </td>
+    <td
+      class="struct-buy clickable"
+      @mouseover="hoverDescIdentifiable(structure)"
+      @mouseleave="resetDesc()"
+    >
       <button class="buy-sell" @click="buyStructure(structure)">+</button>
     </td>
-    <td class="struct-sell">
+    <td
+      class="struct-sell"
+      @mouseover="hoverDescStructSell(structure)"
+      @mouseleave="resetDesc()"
+    >
       <button class="buy-sell" @click="sellStructure(structure)">-</button>
     </td>
   </tr>
@@ -27,7 +42,11 @@ export default defineComponent({
   name: "StructureItem",
   props: ["structure"],
   methods: {
-    ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
+    ...mapMutations([
+      "hoverDescIdentifiable",
+      "hoverDescStructSell",
+      "resetDesc",
+    ]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },

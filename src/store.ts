@@ -3,20 +3,22 @@ import { createStore, Store } from "vuex";
 import { InjectionKey } from "vue";
 import Identifiable from "./model/identifiable";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import Structure from "./model/structure";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";
 
 interface Settings {
-  theme: String;
+  theme: string;
   tooltips: boolean;
-  cbMode: String;
+  cbMode: string;
 }
 
 export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
+  structSellData: Structure | undefined;
   digData: boolean;
   debugMode: boolean;
   settingsOpen: boolean;
@@ -28,6 +30,7 @@ export const store = createStore<State>({
     descriptionBoxIsEmpty: true,
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
+    structSellData: undefined,
     digData: false,
     debugMode: false,
     settingsOpen: false,
@@ -39,13 +42,13 @@ export const store = createStore<State>({
   },
   getters: {},
   mutations: {
-    settingsSetTheme(state: State, newTheme: String) {
+    settingsSetTheme(state: State, newTheme: string) {
       state.settings.theme = newTheme;
     },
     settingsSetTooltips(state: State, newTooltips: boolean) {
       state.settings.tooltips = newTooltips;
     },
-    settingsSetCBMode(state: State, newCBMode: String) {
+    settingsSetCBMode(state: State, newCBMode: string) {
       state.settings.cbMode = newCBMode;
     },
     toggleSettingsOpen(state: State) {
@@ -54,6 +57,7 @@ export const store = createStore<State>({
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;
+      state.structSellData = undefined;
       state.descriptionBoxData = defaultDescription;
       state.digData = false;
     },
@@ -63,6 +67,11 @@ export const store = createStore<State>({
         state.purchaseInformationData = describe;
       }
       state.descriptionBoxData = describe.dataObject.description;
+    },
+    hoverDescStructSell(state: State, describe: Structure) {
+      state.descriptionBoxIsEmpty = false;
+      state.structSellData = describe;
+      state.descriptionBoxData = describe.dataObject.sellDescription;
     },
     hoverDescDig(state: State) {
       state.descriptionBoxIsEmpty = false;

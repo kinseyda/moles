@@ -69,6 +69,10 @@
             v-if="purchaseInformationData"
           ></purchase-info>
           <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
+          <sell-info
+            v-bind:structure="structSellData"
+            v-if="structSellData"
+          ></sell-info>
         </div>
       </div>
       <div id="purchaseable-column">
@@ -97,6 +101,7 @@ import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import PurchaseInfo from "./components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
+import SellInfo from "./components/Descriptions/PurchaseInfo/SellInfo.vue";
 import DigInformation from "./components/Descriptions/DigInformation.vue";
 import { Game, game } from "./model/game";
 import { formatNumber } from "./components/format";
@@ -112,6 +117,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     StructureList,
     ExpansionList,
     PurchaseInfo,
+    SellInfo,
     DigInformation,
     EventLog,
     SettingsDisplay,
@@ -120,6 +126,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     ...mapState([
       "debugMode",
       "purchaseInformationData",
+      "structSellData",
       "descriptionBoxData",
       "descriptionBoxIsEmpty",
       "digData",
