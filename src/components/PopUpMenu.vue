@@ -2,7 +2,9 @@
   <div id="pop-up-outer">
     <h2><slot name="title"></slot></h2>
     <button id="exit-button" @click="closePopUp()"><b>X</b></button>
-    <slot name="content"></slot>
+    <div id="content-outer">
+      <slot name="content"></slot>
+    </div>
   </div>
 </template>
 
@@ -35,6 +37,11 @@ export default defineComponent({
   left: 100px;
   right: 100px;
   border: 1px solid var(--text-color);
+}
+#content-outer {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 1.5em - 10px);
 }
 #exit-button {
   font-size: x-large;

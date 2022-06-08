@@ -65,6 +65,13 @@ export const store = createStore<State>({
         state.popUpOpen = "empire";
       }
     },
+    togglePrestigeOpen(state: State) {
+      if (state.popUpOpen == "prestige") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "prestige";
+      }
+    },
     closePopUp(state: State) {
       state.popUpOpen = "";
     },

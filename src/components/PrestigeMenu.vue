@@ -1,9 +1,17 @@
 <template>
   <pop-up-menu>
-    <template #title>Empire</template
-    ><template #content
-      ><button @click="$emit('prestige')">Prestige</button></template
-    >
+    <template #title>Prestige</template>
+    <template #content>
+      <button
+        @click="
+          $emit('prestige');
+          togglePrestigeOpen();
+        "
+      >
+        Prestige
+      </button>
+      <button @click="toggleEmpireOpen()">Cancel</button>
+    </template>
   </pop-up-menu>
 </template>
 
@@ -14,7 +22,7 @@ import { mapMutations, mapState } from "vuex";
 import PopUpMenu from "./PopUpMenu.vue";
 
 export default defineComponent({
-  name: "EmpireDisplay",
+  name: "PrestigeMenu",
   props: [],
   data() {
     return {
@@ -29,7 +37,12 @@ export default defineComponent({
     ...mapState(["settings"]),
   },
   methods: {
-    ...mapMutations(["toggleEmpireOpen", "hoverDescString", "resetDesc"]),
+    ...mapMutations([
+      "toggleEmpireOpen",
+      "togglePrestigeOpen",
+      "hoverDescString",
+      "resetDesc",
+    ]),
   },
 });
 </script>

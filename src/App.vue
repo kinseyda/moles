@@ -74,8 +74,15 @@
     <settings-display v-if="popUpOpen == 'settings'"></settings-display>
     <empire-display
       v-if="popUpOpen == 'empire'"
-      v-on:prestige="prestigeGame"
-    ></empire-display>
+      :civilizations="gameData.civilizations"
+      :empireRates="gameData.getEmpireRates()"
+    >
+    </empire-display>
+    <prestige-menu
+      v-if="popUpOpen == 'prestige'"
+      v-on:prestige="prestigeGame()"
+    >
+    </prestige-menu>
   </div>
 </template>
 
@@ -85,7 +92,8 @@ import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
 import PopulationDisplay from "./components/PopulationDisplay.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
-import EmpireDisplay from "./components/EmpireDisplay.vue";
+import EmpireDisplay from "./components/Empire/EmpireDisplay.vue";
+import PrestigeMenu from "./components/PrestigeMenu.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
@@ -110,6 +118,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     EventLog,
     SettingsDisplay,
     EmpireDisplay,
+    PrestigeMenu,
   },
   computed: {
     ...mapState([
