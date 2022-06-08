@@ -14,6 +14,8 @@ import {
   startingUpgrades,
 } from "./start";
 import Expansion from "./expansion";
+import Civilization from "./civilization";
+import { logBaseA } from "./math-utils";
 
 /**
  * Handles all internal game logic.
@@ -23,6 +25,7 @@ export class Game extends SerializableClass {
   lastUpdate: number;
   dig: Dig;
   area: Area;
+  population: number;
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
@@ -36,6 +39,7 @@ export class Game extends SerializableClass {
    * @param dig - {@link Dig} that stores the game's current dig stats.
    * @param area - {@link Area} that stores the game's current area and related
    * stats.
+   * @param population - The amount of moles in this current game.
    * @param resourceDict - A dictionary of ids to their corresponding
    * {@link Resource}. Does not
    *  necessarily contain every resource contained in the static
@@ -53,6 +57,7 @@ export class Game extends SerializableClass {
     lastUpdate: number,
     dig: Dig,
     area: Area,
+    population: number,
     resourceDict: { [id: number]: Resource },
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure },
@@ -63,6 +68,7 @@ export class Game extends SerializableClass {
     this.lastUpdate = lastUpdate;
     this.dig = dig;
     this.area = area;
+    this.population = population;
     this.resourceDict = resourceDict;
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
@@ -168,8 +174,68 @@ export class Game extends SerializableClass {
       );
     }
 
+    this.population = this.getNextPopulation(tickSize);
+
     this.lastUpdate = updateTime;
   }
+
+  /**
+   * Finds the maximum amount of moles that will live in the current
+   * civilization.
+   */
+  getPopulationCap(): number {
+    return this.area.cap / 2;
+  }
+
+  /**
+   * Calculates what the next amount of moles should be.
+   * @param diff - The amount of time since the last game tick.
+   * @returns - What the new total amount of area should be.
+   */
+  getNextPopulation(diff: number): number {
+    /**
+     * Population is logistic, and bear with me, this is the equation
+     * y = \frac{s \cdot M}{s+(M - s)\cdot 2^{k \cdot x}}
+     * with
+     * k = 2\cdot \frac{\log_2\left(\frac{s}{M-s}\right)}{a}
+     * This is designed so that the amount of moles increases fastest in the
+     * middle. Moles dont like being overcrowded.
+     *
+     * s = starting moles (2)
+     * M = cap (half of the total area?)
+     * a = "time until done" (2 times the time until half done in reality)
+     *
+     * The inverse of this function then is:
+     * y=\frac{\log_{2}\left(
+     * \frac{P_{0}M-P_{0}x}{x\left(M-P_{0}\right)}\right)}{k}
+     *
+     * If this is really slow, I think an offset sine wave may be cheaper to
+     * compute and functionally identical, change to that if necessary (eg
+     * something like \frac{M}{2}\left(-1\right)\cos\left(\frac{\pi x}{a}\right)
+     * +\frac{M}{2}).
+     */
+    const popCap = this.area.cap / 2;
+    if (this.population < 2 || this.population == popCap) {
+      return this.population;
+    }
+    if (popCap - this.population < 0.001) {
+      return popCap;
+    }
+
+    const s = 2;
+    const M = popCap;
+    // const a = 600; // 10 minutes
+    const a = 60; // 1 minute
+
+    const k = (2 * Math.log2(s / (M - s))) / a;
+
+    const curY = this.population;
+    const curX = Math.log2((s * M - s * curY) / (curY * (M - s))) / k;
+    const nextX = curX + diff;
+
+    return (s * M) / (s + (M - s) * 2 ** (k * nextX));
+  }
+
   /**
    * @see {@link handleEvent}
    * @param triggerEventType - The type of event calling this function, from
@@ -232,6 +298,7 @@ export class Game extends SerializableClass {
               obj.lastUpdate,
               obj.dig,
               obj.area,
+              obj.population,
               obj.resourceDict,
               obj.upgradeDict,
               obj.structureDict,
@@ -256,6 +323,8 @@ export class Game extends SerializableClass {
             return new Dig(obj.digRates);
           case "Area":
             return new Area(obj.amount, obj.cap, obj.multiplier);
+          case "Civilization":
+            return new Civilization(obj.resRates, obj.name, obj.population);
           default:
             // Shouldn't happen, nothing should be a SerializableClass without
             // being one of the classes listed above, and constructed that way
@@ -288,6 +357,7 @@ export let game: Game = reactive(
     Date.now(),
     new Dig({ 0: 10, 1: 1 }),
     new Area(0, 100, 1),
+    2,
     startingResources,
     startingUpgrades,
     startingStructures,

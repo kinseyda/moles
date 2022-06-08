@@ -36,6 +36,10 @@
       </div>
       <div id="central-column">
         <area-display :area="gameData.area"></area-display>
+        <population-display
+          :population="gameData.population"
+          :popCap="gameData.getPopulationCap()"
+        ></population-display>
         <div id="buttons-container">
           <button
             id="dig-button"
@@ -76,6 +80,7 @@
 import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
+import PopulationDisplay from "./components/PopulationDisplay.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
 import EmpireDisplay from "./components/EmpireDisplay.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
@@ -93,6 +98,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
   name: "App",
   components: {
     AreaDisplay,
+    PopulationDisplay,
     ResourceList,
     UpgradeList,
     StructureList,

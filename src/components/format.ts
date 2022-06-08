@@ -65,6 +65,10 @@ export function formatNumber(num: number, style: string | undefined) {
   }
 }
 
+export function formatDown(num: number) {
+  return Math.floor(num);
+}
+
 function formatNormal(num: number) {
   if (Number.isInteger(num) || num > 1000) {
     return num.toFixed(0);

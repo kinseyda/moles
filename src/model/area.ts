@@ -1,4 +1,5 @@
 import { game } from "./game";
+import { logBaseA } from "./math-utils";
 import SerializableClass, { SerializableClasses } from "./serializable-class";
 
 /**
@@ -59,21 +60,28 @@ export default class Area extends SerializableClass {
    * @param diff - The amount of time since the last game tick.
    * @returns - What the new total amount of area should be.
    */
-  getNextAmount(diff: number) {
+  getNextAmount(diff: number): number {
     // Default: 10 seconds to fill up
     /**
      * Equation:
-     * y = (a/log(b+1)) * log(x + 1)
-     * a = [cap]
+     * y = a * log_{b+c}(x+c)
+     * y = area
+     * a = cap
      * b = total seconds to fill up
-     * x = time dug so far (not needed in our calculations)
-     * inverse : x = [log base] ^((y * log(b + 1) / a)) - 1
+     * c = offset (so equation passes through origin)
+     * x = time dug so far (derived through inverse in our calculations)
+     * inverse : x = (b+c)^{y/a}-c
      */
     if (!game.dig.digging) {
       return this.amount;
     }
-    const curX = 10 ** ((this.amount * Math.log10(11)) / this.cap) - 1;
+    const a = this.cap;
+    const b = 10;
+    const c = 1;
+    const curY = this.amount;
+    const curX = (b + c) ** (curY / a) - c;
     const nextX = curX + diff;
-    return (this.cap / Math.log10(11)) * Math.log10(nextX + 1);
+
+    return a * logBaseA(nextX + c, b + c);
   }
 }
