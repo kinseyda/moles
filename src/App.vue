@@ -80,7 +80,8 @@
     </empire-display>
     <prestige-menu
       v-if="popUpOpen == 'prestige'"
-      v-on:prestige="prestigeGame()"
+      v-on:prestige="prestigeGame"
+      :maxPotentialRates="gameData.getHighestPotentialRates()"
     >
     </prestige-menu>
   </div>
@@ -166,8 +167,8 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       }
       this.gameData = game;
     },
-    prestigeGame() {
-      game.prestige([]);
+    prestigeGame(resourcesSelected: number[]) {
+      game.prestige(resourcesSelected);
       this.gameData = game;
     },
     setDigging(isDigging: boolean) {

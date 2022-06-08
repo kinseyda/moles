@@ -57,7 +57,7 @@ export class Game extends SerializableClass {
    * {@link Expansion}.
    * @param civilizations - List of {@link Civilization}s that the player has
    * prestiged through.
-   * @param empireMultiplier - The percentage of total empire production you
+   * @param empireMultiplier - The fraction of total empire production you
    * receive.
    * @param eventsDict - A dictionary of valid ids (that correspond to an event
    * in {@link eventDataDict}) to the time they were achieved (ms since epoch).
@@ -343,7 +343,13 @@ export class Game extends SerializableClass {
 
   prestige(resIDs: number[]) {
     const prod = this.getHighestPotentialRates();
-    const civ = new Civilization(prod, this.name, this.population);
+    const resRates: { [resId: number]: number } = {};
+    for (const index in resIDs) {
+      const resId = resIDs[index];
+      resRates[resId] = prod[resId];
+    }
+
+    const civ = new Civilization(resRates, this.name, this.population);
     this.civilizations.push(civ);
 
     const g = new Game(
@@ -351,7 +357,7 @@ export class Game extends SerializableClass {
       startingDig(),
       startingArea(),
       1,
-      "",
+      "Civ " + Date.now(),
       startingResources(),
       startingUpgrades(),
       startingStructures(),
@@ -360,7 +366,7 @@ export class Game extends SerializableClass {
       this.empireMultiplier,
       {}
     );
-    console.log(JSON.stringify(g));
+
     Game.loadGame(JSON.stringify(g));
   }
 
