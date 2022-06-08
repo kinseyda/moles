@@ -33,6 +33,7 @@ export class Game extends SerializableClass {
   structureDict: { [id: number]: Structure };
   expansionDict: { [id: number]: Expansion };
   civilizations: Civilization[];
+  empireMultiplier: number;
   eventsDict: { [id: number]: number };
   // EventId: Time achieved / last achieved
 
@@ -56,6 +57,8 @@ export class Game extends SerializableClass {
    * {@link Expansion}.
    * @param civilizations - List of {@link Civilization}s that the player has
    * prestiged through.
+   * @param empireMultiplier - The percentage of total empire production you
+   * receive.
    * @param eventsDict - A dictionary of valid ids (that correspond to an event
    * in {@link eventDataDict}) to the time they were achieved (ms since epoch).
    */
@@ -70,6 +73,7 @@ export class Game extends SerializableClass {
     structureDict: { [id: number]: Structure },
     expansionDict: { [id: number]: Expansion },
     civilizations: Civilization[],
+    empireMultiplier: number,
     eventsDict: { [id: number]: number }
   ) {
     super(SerializableClasses.Game);
@@ -83,6 +87,7 @@ export class Game extends SerializableClass {
     this.structureDict = structureDict;
     this.expansionDict = expansionDict;
     this.civilizations = civilizations;
+    this.empireMultiplier = empireMultiplier;
     this.eventsDict = eventsDict;
     this.handleEvent(RequirementType.gameStart);
   }
@@ -121,13 +126,18 @@ export class Game extends SerializableClass {
       for (const resIdStr in civ.resourceRates) {
         const resId = Number(resIdStr);
         resChanges[resId] =
-          (resChanges[resId] || 0) + civ.resourceRates[resId] * tickSize;
+          (resChanges[resId] || 0) +
+          civ.resourceRates[resId] * this.empireMultiplier * tickSize;
       }
     }
 
     // Make changes
     for (const resID in resChanges) {
-      this.resourceDict[resID].incrementOrCap(resChanges[resID]);
+      if (resID in this.resourceDict) {
+        // makes sure you dont try to increment resources that haven't been
+        // unlocked yet(from previous civilizations)
+        this.resourceDict[resID].incrementOrCap(resChanges[resID]);
+      }
     }
 
     for (const resID in this.resourceDict) {
@@ -313,6 +323,16 @@ export class Game extends SerializableClass {
     }
   }
 
+  getEmpireRates() {
+    const resRates: { [resId: number]: number } = {};
+    for (const civ of this.civilizations) {
+      for (const resId in civ.resourceRates) {
+        resRates[resId] = (resRates[resId] || 0) + civ.resourceRates[resId];
+      }
+    }
+    return resRates;
+  }
+
   getHighestPotentialRates() {
     const resCaps: { [resId: number]: number } = {};
     for (const resId in this.resourceDict) {
@@ -337,8 +357,10 @@ export class Game extends SerializableClass {
       startingStructures(),
       startingExpansions(),
       this.civilizations,
+      this.empireMultiplier,
       {}
     );
+    console.log(JSON.stringify(g));
     Game.loadGame(JSON.stringify(g));
   }
 
@@ -346,7 +368,7 @@ export class Game extends SerializableClass {
     const recurConstruct = (obj: any) => {
       if (
         (Array.isArray(obj) && obj.length > 0) ||
-        Object.keys(obj).length > 0
+        (typeof obj !== "string" && Object.keys(obj).length > 0)
       ) {
         // If list or object, recurse through each thing contained to assign all
         // the referenced items into the class they need
@@ -372,6 +394,7 @@ export class Game extends SerializableClass {
               obj.structureDict,
               obj.expansionDict,
               obj.civilizations,
+              obj.empireMultiplier,
               obj.eventsDict
             );
           case "Resource":
@@ -435,12 +458,13 @@ export let game: Game = reactive(
     startingDig(),
     startingArea(),
     1,
-    "",
+    "Civ " + Date.now(),
     startingResources(),
     startingUpgrades(),
     startingStructures(),
     startingExpansions(),
     [],
+    5 / 100,
     {}
   )
 );
