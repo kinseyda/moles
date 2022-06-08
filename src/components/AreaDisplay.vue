@@ -4,7 +4,7 @@
       @mouseover="hoverDescString(uiDescriptions['area'])"
       @mouseleave="resetDesc()"
     >
-      Area: {{ formatNumber(area.cap) }} <br />
+      Max Area: {{ formatNumber(area.cap) }} <br />
       Usable: {{ formatNumber(area.amount) }} /
       {{ formatNumber(area.getUsableArea()) }} Mo
     </h2>

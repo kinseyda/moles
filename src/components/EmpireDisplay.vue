@@ -1,6 +1,9 @@
 <template>
   <pop-up-menu>
-    <template #title>Empire</template><template #content>Hello</template>
+    <template #title>Empire</template
+    ><template #content
+      ><button @click="$emit('prestige')">Prestige</button></template
+    >
   </pop-up-menu>
 </template>
 
@@ -18,6 +21,7 @@ export default defineComponent({
       uiDescriptions: uiDescriptions,
     };
   },
+  emits: ["prestige"],
   components: {
     PopUpMenu,
   },

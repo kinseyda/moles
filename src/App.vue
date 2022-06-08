@@ -72,7 +72,10 @@
     </div>
 
     <settings-display v-if="popUpOpen == 'settings'"></settings-display>
-    <empire-display v-if="popUpOpen == 'empire'"></empire-display>
+    <empire-display
+      v-if="popUpOpen == 'empire'"
+      v-on:prestige="prestigeGame"
+    ></empire-display>
   </div>
 </template>
 
@@ -152,6 +155,10 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       if (sto !== null) {
         Game.loadGame(sto);
       }
+      this.gameData = game;
+    },
+    prestigeGame() {
+      game.prestige([]);
       this.gameData = game;
     },
     setDigging(isDigging: boolean) {

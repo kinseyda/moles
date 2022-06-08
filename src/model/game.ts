@@ -8,6 +8,8 @@ import { handleEvent } from "./event-handling";
 import { RequirementType } from "../content/data-interfaces";
 import Area from "./area";
 import {
+  startingArea,
+  startingDig,
   startingExpansions,
   startingResources,
   startingStructures,
@@ -25,10 +27,12 @@ export class Game extends SerializableClass {
   dig: Dig;
   area: Area;
   population: number;
+  name: string;
   resourceDict: { [id: number]: Resource };
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
   expansionDict: { [id: number]: Expansion };
+  civilizations: Civilization[];
   eventsDict: { [id: number]: number };
   // EventId: Time achieved / last achieved
 
@@ -39,6 +43,7 @@ export class Game extends SerializableClass {
    * @param area - {@link Area} that stores the game's current area and related
    * stats.
    * @param population - The amount of moles in this current game.
+   * @param name - The name of the civilization currently being played.
    * @param resourceDict - A dictionary of ids to their corresponding
    * {@link Resource}. Does not
    *  necessarily contain every resource contained in the static
@@ -49,6 +54,8 @@ export class Game extends SerializableClass {
    * {@link Structure}.
    * @param expansionDict - A dictionary of ids to their corresponding
    * {@link Expansion}.
+   * @param civilizations - List of {@link Civilization}s that the player has
+   * prestiged through.
    * @param eventsDict - A dictionary of valid ids (that correspond to an event
    * in {@link eventDataDict}) to the time they were achieved (ms since epoch).
    */
@@ -57,10 +64,12 @@ export class Game extends SerializableClass {
     dig: Dig,
     area: Area,
     population: number,
+    name: string,
     resourceDict: { [id: number]: Resource },
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure },
     expansionDict: { [id: number]: Expansion },
+    civilizations: Civilization[],
     eventsDict: { [id: number]: number }
   ) {
     super(SerializableClasses.Game);
@@ -68,10 +77,12 @@ export class Game extends SerializableClass {
     this.dig = dig;
     this.area = area;
     this.population = population;
+    this.name = name;
     this.resourceDict = resourceDict;
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
     this.expansionDict = expansionDict;
+    this.civilizations = civilizations;
     this.eventsDict = eventsDict;
     this.handleEvent(RequirementType.gameStart);
   }
@@ -92,14 +103,49 @@ export class Game extends SerializableClass {
 
     this.population = this.getNextPopulation(tickSize);
 
-    const popMult = 1 + this.getPopulation() / 100;
-
-    const resChanges: { [resID: number]: number } = {};
-
     // Add area from digging
     if (this.dig.digging) {
       this.area.setOrCap(this.area.getNextAmount(tickSize));
+    }
 
+    const resCaps: { [resId: number]: number } = {};
+    for (const resId in this.resourceDict) {
+      resCaps[resId] = this.resourceDict[resId].cap;
+    }
+    const resChanges: {
+      [resId: number]: number;
+    } = this.getResourceChanges(tickSize, resCaps);
+
+    // Add civilization changes
+    for (const civ of this.civilizations) {
+      for (const resIdStr in civ.resourceRates) {
+        const resId = Number(resIdStr);
+        resChanges[resId] =
+          (resChanges[resId] || 0) + civ.resourceRates[resId] * tickSize;
+      }
+    }
+
+    // Make changes
+    for (const resID in resChanges) {
+      this.resourceDict[resID].incrementOrCap(resChanges[resID]);
+    }
+
+    for (const resID in this.resourceDict) {
+      this.resourceDict[resID].updateRateFromTick(
+        resChanges[resID] || 0,
+        tickSize
+      );
+    }
+
+    this.lastUpdate = updateTime;
+  }
+
+  getResourceChanges(tickSize: number, resCaps: { [resId: number]: number }) {
+    const resChanges: { [resId: number]: number } = {};
+
+    const popMult = 1 + this.getPopulation() / 100;
+
+    if (this.dig.digging) {
       for (const resID in this.dig.digRates) {
         resChanges[resID] =
           (resChanges[resID] || 0) +
@@ -118,7 +164,7 @@ export class Game extends SerializableClass {
       // Check space is not already filled in all resources
       let shouldProd = false;
       for (const resID in curStruct.dataObject.production) {
-        if (this.resourceDict[resID].amount < this.resourceDict[resID].cap) {
+        if (this.resourceDict[resID].amount < resCaps[resID]) {
           shouldProd = true;
           break;
         }
@@ -163,21 +209,7 @@ export class Game extends SerializableClass {
         }
       }
     }
-
-    // Make changes
-
-    for (const resID in resChanges) {
-      this.resourceDict[resID].incrementOrCap(resChanges[resID]);
-    }
-
-    for (const resID in this.resourceDict) {
-      this.resourceDict[resID].updateRateFromTick(
-        resChanges[resID] || 0,
-        tickSize
-      );
-    }
-
-    this.lastUpdate = updateTime;
+    return resChanges;
   }
 
   getPopulation(): number {
@@ -281,6 +313,35 @@ export class Game extends SerializableClass {
     }
   }
 
+  getHighestPotentialRates() {
+    const resCaps: { [resId: number]: number } = {};
+    for (const resId in this.resourceDict) {
+      resCaps[resId] = Infinity;
+    }
+    return this.getResourceChanges(1, resCaps);
+  }
+
+  prestige(resIDs: number[]) {
+    const prod = this.getHighestPotentialRates();
+    const civ = new Civilization(prod, this.name, this.population);
+    this.civilizations.push(civ);
+
+    const g = new Game(
+      Date.now(),
+      startingDig(),
+      startingArea(),
+      1,
+      "",
+      startingResources(),
+      startingUpgrades(),
+      startingStructures(),
+      startingExpansions(),
+      this.civilizations,
+      {}
+    );
+    Game.loadGame(JSON.stringify(g));
+  }
+
   static loadGame(gameString: string) {
     const recurConstruct = (obj: any) => {
       if (
@@ -305,10 +366,12 @@ export class Game extends SerializableClass {
               obj.dig,
               obj.area,
               obj.population,
+              obj.name,
               obj.resourceDict,
               obj.upgradeDict,
               obj.structureDict,
               obj.expansionDict,
+              obj.civilizations,
               obj.eventsDict
             );
           case "Resource":
@@ -330,7 +393,11 @@ export class Game extends SerializableClass {
           case "Area":
             return new Area(obj.amount, obj.cap, obj.multiplier);
           case "Civilization":
-            return new Civilization(obj.resRates, obj.name, obj.population);
+            return new Civilization(
+              obj.resourceRates,
+              obj.name,
+              obj.population
+            );
           default:
             // Shouldn't happen, nothing should be a SerializableClass without
             // being one of the classes listed above, and constructed that way
@@ -349,9 +416,13 @@ export class Game extends SerializableClass {
     };
     if (gameString) {
       const save = JSON.parse(gameString);
-      game = reactive(recurConstruct(save));
+      setGame(recurConstruct(save));
     }
   }
+}
+
+export function setGame(newGame: Game) {
+  game = reactive(newGame);
 }
 
 /**
@@ -361,13 +432,15 @@ export class Game extends SerializableClass {
 export let game: Game = reactive(
   new Game(
     Date.now(),
-    new Dig({ 0: 10, 1: 1 }),
-    new Area(0, 100, 1),
-    2,
-    startingResources,
-    startingUpgrades,
-    startingStructures,
-    startingExpansions,
+    startingDig(),
+    startingArea(),
+    1,
+    "",
+    startingResources(),
+    startingUpgrades(),
+    startingStructures(),
+    startingExpansions(),
+    [],
     {}
   )
 );
