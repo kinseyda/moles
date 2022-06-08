@@ -15,7 +15,6 @@ import {
 } from "./start";
 import Expansion from "./expansion";
 import Civilization from "./civilization";
-import { logBaseA } from "./math-utils";
 
 /**
  * Handles all internal game logic.
@@ -91,19 +90,22 @@ export class Game extends SerializableClass {
     const tickSize = (updateTime - this.lastUpdate) / 1000;
     // Fraction of a second
 
+    this.population = this.getNextPopulation(tickSize);
+
+    const popMult = 1 + this.getPopulation() / 100;
+
     const resChanges: { [resID: number]: number } = {};
 
     // Add area from digging
     if (this.dig.digging) {
-      this.area.setAmount(this.area.getNextAmount(tickSize));
-      if (this.area.amount > this.area.cap) {
-        this.area.setAmount(this.area.cap);
-      }
+      this.area.setOrCap(this.area.getNextAmount(tickSize));
+
       for (const resID in this.dig.digRates) {
         resChanges[resID] =
           (resChanges[resID] || 0) +
           this.dig.digRates[resID] *
             this.resourceDict[resID].multiplier *
+            popMult *
             tickSize;
       }
     }
@@ -153,6 +155,7 @@ export class Game extends SerializableClass {
           resChanges[resID] =
             (resChanges[resID] || 0) +
             curStruct.dataObject.production[resID] *
+              popMult *
               this.resourceDict[resID].multiplier *
               // Multiplier only for prod not consumption
               structAmount *
@@ -174,9 +177,11 @@ export class Game extends SerializableClass {
       );
     }
 
-    this.population = this.getNextPopulation(tickSize);
-
     this.lastUpdate = updateTime;
+  }
+
+  getPopulation(): number {
+    return Math.floor(this.population);
   }
 
   /**
@@ -225,7 +230,8 @@ export class Game extends SerializableClass {
     const s = 2;
     const M = popCap;
     // const a = 600; // 10 minutes
-    const a = 60; // 1 minute
+    // const a = 60; // 1 minute
+    const a = 5; // 5 sec
 
     const k = (2 * Math.log2(s / (M - s))) / a;
 

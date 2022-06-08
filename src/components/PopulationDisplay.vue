@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>
-      Population: {{ formatPop(population) }} / {{ formatNumber(popCap) }} Mo
+      Population: {{ formatPop(population) }} / {{ formatPop(popCap) }} Mo
     </h2>
   </div>
 </template>

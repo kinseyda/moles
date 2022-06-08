@@ -25,6 +25,14 @@ export default class Area extends SerializableClass {
   }
 
   /**
+   * Amount of space that can be used for resource storage and structure
+   * building.
+   */
+  getUsableArea(): number {
+    return this.cap - game.getPopulation();
+  }
+
+  /**
    * Changes the current amount of area and triggers the relevant event[s]
    * @param newAmount - Number to change amount to
    */
@@ -42,14 +50,27 @@ export default class Area extends SerializableClass {
   incrementAmount(incrementBy: number) {
     this.setAmount(this.amount + incrementBy);
   }
+
+  /**
+   * Changes the current amount of area and triggers the relevant event[s]
+   * @param newAmount - Number to change amount to
+   */
+  setOrCap(newAmount: number) {
+    if (newAmount > this.getUsableArea()) {
+      this.setAmount(this.getUsableArea());
+    } else {
+      this.setAmount(newAmount);
+    }
+  }
+
   /**
    * Increments the current amount of this resource and triggers the relevant
    * event[s] or sets the amount to the cap
    * @param newAmount - Number to increment amount by
    */
   incrementOrCap(incrementBy: number) {
-    if (this.amount + incrementBy > this.cap) {
-      this.setAmount(this.cap);
+    if (this.amount + incrementBy > this.getUsableArea()) {
+      this.setAmount(this.getUsableArea());
     } else {
       this.incrementAmount(incrementBy);
     }
