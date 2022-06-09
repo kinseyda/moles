@@ -5,7 +5,7 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
     // Pickaxe
     resources: [3],
     upgrades: [],
-    structures: [],
+    structures: [4],
   },
   1: {
     // Termite knowledge
@@ -14,8 +14,9 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
     structures: [],
   },
   2: {
+    // Termite Domestication
     resources: [5],
     upgrades: [],
-    structures: [2],
+    structures: [2, 3],
   },
 };

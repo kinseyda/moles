@@ -86,7 +86,7 @@ export function startingExpansions() {
 }
 
 export function startingDig() {
-  return new Dig({ 0: 10, 1: 1 });
+  return new Dig({ 0: 10, 1: 1, 2: 1 });
 }
 
 export function startingArea() {

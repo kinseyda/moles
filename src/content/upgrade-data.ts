@@ -31,8 +31,8 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       },
     ],
     cost: {
-      0: 10,
       1: 10,
+      2: 10,
     },
     startingParams: defaultStartingValues,
   },

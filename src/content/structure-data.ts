@@ -40,7 +40,31 @@ export const structureDataDict: { [id: number]: StructureData } = {
     consumption: { 1: 0.1 },
     areaCost: 10,
     cost: { 1: 25 },
-    increase: { 0: 1.2 },
+    increase: { 1: 1.2 },
+    startingParams: defaultStartingValues,
+  },
+  3: {
+    name: "Termite wood patrol",
+    description:
+      "Leash and train some termites to sniff out wood for you to gather",
+    sellDescription: defaultSellDesc,
+    production: { 1: 0.3 },
+    consumption: { 5: 0.2 },
+    areaCost: 5,
+    cost: { 5: 5 },
+    increase: { 5: 1.2 },
+    startingParams: defaultStartingValues,
+  },
+  4: {
+    name: "Iron forge",
+    description:
+      "Burn some dirt to extract some remaining iron you might have missed when putting it in the dirt pile",
+    sellDescription: defaultSellDesc,
+    production: { 3: 0.5 },
+    consumption: { 0: 1, 1: 1 },
+    areaCost: 50,
+    cost: { 2: 50 },
+    increase: { 2: 1.2 },
     startingParams: defaultStartingValues,
   },
 };
