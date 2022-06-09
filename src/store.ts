@@ -4,6 +4,7 @@ import { InjectionKey } from "vue";
 import Identifiable from "./model/identifiable";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import Structure from "./model/structure";
+import Civilization from "./model/civilization";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";
@@ -18,6 +19,7 @@ export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
+  civilizationInformationData: Civilization | undefined;
   structSellData: Structure | undefined;
   digData: boolean;
   debugMode: boolean;
@@ -30,6 +32,7 @@ export const store = createStore<State>({
     descriptionBoxIsEmpty: true,
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
+    civilizationInformationData: undefined,
     structSellData: undefined,
     digData: false,
     debugMode: false,
@@ -78,6 +81,7 @@ export const store = createStore<State>({
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;
+      state.civilizationInformationData = undefined;
       state.structSellData = undefined;
       state.descriptionBoxData = defaultDescription;
       state.digData = false;
@@ -88,6 +92,11 @@ export const store = createStore<State>({
         state.purchaseInformationData = describe;
       }
       state.descriptionBoxData = describe.dataObject.description;
+    },
+    hoverDescCivilization(state: State, describe: Civilization) {
+      state.descriptionBoxData = "";
+      state.descriptionBoxIsEmpty = false;
+      state.civilizationInformationData = describe;
     },
     hoverDescStructSell(state: State, describe: Structure) {
       state.descriptionBoxIsEmpty = false;

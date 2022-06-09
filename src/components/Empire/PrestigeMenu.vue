@@ -34,6 +34,8 @@
               $emit('prestige', resourcesSelected);
               togglePrestigeOpen();
             "
+            @mouseover="hoverDescString(uiDescriptions['prestigeConfirm'])"
+            @mouseleave="resetDesc()"
           >
             <h3>Prestige</h3>
           </button>

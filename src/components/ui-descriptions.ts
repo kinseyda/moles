@@ -3,6 +3,7 @@ export const uiDescriptions: { [id: string]: string } = {
   load: "Load the game from a cookie",
   debug:
     "Turn on/off debug mode. <br> <h4>Saving after using debug mode is not recommended</h4>",
+  settings: "Change various settings, such as theme and color options",
   settingsTheme: "Toggle theme type",
   settingsDescriptionPosition:
     "Toggle whether descriptions follow the mouse as a tooltip or stay at the bottom of the screen",
@@ -28,4 +29,13 @@ export const uiDescriptions: { [id: string]: string } = {
     "The current amount of this resource you can store (in mole-volumes)",
   resourceRate:
     "The current amount of this resource you are producing (in mole-volumes per second)",
+  population: "The amount of Moles in your colony",
+  empireButton: "View information about your mole empire",
+  civRename: "Change the name of your mole colony",
+  civInfo: "The stats of your current civilization",
+  civList: "The list of civilizations previously established",
+  empireResources:
+    "The sum total of all exported resources from all civilizations",
+  prestigeConfirm:
+    "Reset the game and export selected resources from your current civilization </br><b>This cannot be undone</b>",
 };

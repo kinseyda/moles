@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseover="hoverDescString(uiDescriptions['population'])"
+    @mouseleave="resetDesc()"
+  >
     <h2>
       Population: {{ formatPop(population) }} / {{ formatPop(popCap) }} Mo
     </h2>

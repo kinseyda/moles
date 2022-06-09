@@ -5,19 +5,34 @@
       <div id="empire-outer">
         <div id="current-info">
           <div id="name-container">
-            <p>Civilization name:</p>
-            <h3>{{ name }}</h3>
+            <div
+              @mouseover="hoverDescString(uiDescriptions['civInfo'])"
+              @mouseleave="resetDesc()"
+            >
+              <p>Civilization name:</p>
+              <h3>{{ name }}</h3>
+            </div>
             <input
               v-model="newName"
               @keyup.enter="setName"
               placeholder="edit name"
+              @mouseover="hoverDescString(uiDescriptions['civRename'])"
+              @mouseleave="resetDesc()"
             />
           </div>
-          <div id="population-container">
+          <div
+            id="population-container"
+            @mouseover="hoverDescString(uiDescriptions['civInfo'])"
+            @mouseleave="resetDesc()"
+          >
             <p>Current population: {{ population }}</p>
             <p>Status: {{ getPopString(population) }}</p>
           </div>
-          <div id="max-resources-container">
+          <div
+            id="max-resources-container"
+            @mouseover="hoverDescString(uiDescriptions['civInfo'])"
+            @mouseleave="resetDesc()"
+          >
             Current max rates:
             <div id="resource-rates">
               <ul>
@@ -31,7 +46,12 @@
         </div>
         <div id="empire-info">
           <div class="empire-side" id="civilizations">
-            <h3>Civilizations:</h3>
+            <h3
+              @mouseover="hoverDescString(uiDescriptions['civList'])"
+              @mouseleave="resetDesc()"
+            >
+              Civilizations:
+            </h3>
             <ul>
               <civilization-item
                 v-for="(civilization, index) in civilizations"
@@ -40,13 +60,27 @@
               ></civilization-item>
             </ul>
           </div>
-          <div class="empire-side" id="empire-resources">
+          <div
+            class="empire-side"
+            id="empire-resources"
+            @mouseover="hoverDescString(uiDescriptions['empireResources'])"
+            @mouseleave="resetDesc()"
+          >
             <h3>Empire Resources:</h3>
-            <ul>
-              <li v-for="(rate, resId) in empireRates" :key="resId">
-                {{ getResData(resId).name }}: {{ rate }}<small> Mo/s</small>
-              </li>
-            </ul>
+            <table>
+              <tr>
+                <td><b>Resource</b></td>
+                <td><b>Total</b></td>
+                <td><b>Available</b></td>
+              </tr>
+              <tr v-for="(rate, resId) in empireRates" :key="resId">
+                <td>{{ getResData(resId).name }}:</td>
+                <td>{{ formatNumber(rate) }}<small> Mo/s</small></td>
+                <td>
+                  {{ formatNumber(rate * empireMult) }}<small> Mo/s</small>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
         <div id="prestige-button">
@@ -77,6 +111,7 @@ export default defineComponent({
     "name",
     "population",
     "maxPotentialRates",
+    "empireMult",
   ],
   data() {
     return {

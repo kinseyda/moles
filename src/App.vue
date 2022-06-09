@@ -16,7 +16,13 @@
         Load
       </button>
 
-      <button @click="toggleSettingsOpen()">Settings</button>
+      <button
+        @click="toggleSettingsOpen()"
+        @mouseover="hoverDescString(uiDescriptions['settings'])"
+        @mouseleave="resetDesc()"
+      >
+        Settings
+      </button>
       <button
         @click="debugToggle"
         @mouseover="hoverDescString(uiDescriptions['debug'])"
@@ -32,7 +38,14 @@
           :resourceDict="gameData.resourceDict"
           :area="gameData.area"
         ></resource-list>
-        <button id="empire-button" @click="toggleEmpireOpen">Empire</button>
+        <button
+          id="empire-button"
+          @mouseover="hoverDescString(uiDescriptions['empireButton'])"
+          @mouseleave="resetDesc()"
+          @click="toggleEmpireOpen"
+        >
+          Empire
+        </button>
       </div>
       <div id="central-column">
         <area-display :area="gameData.area"></area-display>
@@ -79,6 +92,7 @@
       :maxPotentialRates="gameData.getHighestPotentialRates()"
       :name="gameData.name"
       :population="gameData.population"
+      :empireMult="gameData.empireMultiplier"
     >
     </empire-display>
     <prestige-menu
