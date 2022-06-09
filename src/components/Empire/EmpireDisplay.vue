@@ -60,12 +60,7 @@
               ></civilization-item>
             </ul>
           </div>
-          <div
-            class="empire-side"
-            id="empire-resources"
-            @mouseover="hoverDescString(uiDescriptions['empireResources'])"
-            @mouseleave="resetDesc()"
-          >
+          <div class="empire-side" id="empire-resources">
             <h3>Empire Resources:</h3>
             <table>
               <tr>
@@ -74,9 +69,37 @@
                 <td><b>Available</b></td>
               </tr>
               <tr v-for="(rate, resId) in empireRates" :key="resId">
-                <td>{{ getResData(resId).name }}:</td>
-                <td>{{ formatNumber(rate) }}<small> Mo/s</small></td>
-                <td>
+                <td
+                  @mouseover="
+                    hoverDescStringReg({
+                      str: uiDescriptions['empireRes'],
+                      args: [getResData(resId).name],
+                    })
+                  "
+                  @mouseleave="resetDesc()"
+                >
+                  {{ getResData(resId).name }}:
+                </td>
+                <td
+                  @mouseover="
+                    hoverDescStringReg({
+                      str: uiDescriptions['empireRes'],
+                      args: [getResData(resId).name],
+                    })
+                  "
+                  @mouseleave="resetDesc()"
+                >
+                  {{ formatNumber(rate) }}<small> Mo/s</small>
+                </td>
+                <td
+                  @mouseover="
+                    hoverDescStringReg({
+                      str: uiDescriptions['empireAvailable'],
+                      args: [getResData(resId).name, empireMult * 100],
+                    })
+                  "
+                  @mouseleave="resetDesc()"
+                >
                   {{ formatNumber(rate * empireMult) }}<small> Mo/s</small>
                 </td>
               </tr>
@@ -117,6 +140,7 @@ export default defineComponent({
     return {
       uiDescriptions: uiDescriptions,
       newName: "",
+      testStringAr: ["dan", "fillip"],
     };
   },
   emits: ["prestige"],
@@ -128,7 +152,12 @@ export default defineComponent({
     ...mapState(["settings"]),
   },
   methods: {
-    ...mapMutations(["togglePrestigeOpen", "hoverDescString", "resetDesc"]),
+    ...mapMutations([
+      "togglePrestigeOpen",
+      "hoverDescString",
+      "hoverDescStringReg",
+      "resetDesc",
+    ]),
     getResData(resId: number): ResourceData {
       return resourceDataDict[resId];
     },

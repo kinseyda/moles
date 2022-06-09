@@ -112,6 +112,26 @@ export const store = createStore<State>({
       state.descriptionBoxIsEmpty = false;
       state.descriptionBoxData = str;
     },
+    /**
+     * Uses strings of the form "abcd${x}efg" to replace the ${x} with a string
+     * from a list, where x is a number from 0-9.
+     * This is only to be used for small cases, larger strings should be their
+     * own custom component in the description container.
+     * @param args - Object with keys str (the base string) and args (list of
+     * strings to replace with)
+     */
+    hoverDescStringReg(state: State, args: { str: string; args: string[] }) {
+      let newStr = args.str;
+      const regexp = /(\$\{\d\})/gm;
+      const matches = args.str.matchAll(regexp);
+      for (const match of matches) {
+        const matStr = match[0].toString();
+        newStr = newStr.replace(matStr, args.args[Number(matStr[2])]);
+      }
+
+      state.descriptionBoxIsEmpty = false;
+      state.descriptionBoxData = newStr;
+    },
     toggleDebug(state: State) {
       state.debugMode = !state.debugMode;
     },
