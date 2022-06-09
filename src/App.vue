@@ -76,6 +76,9 @@
       v-if="popUpOpen == 'empire'"
       :civilizations="gameData.civilizations"
       :empireRates="gameData.getEmpireRates()"
+      :maxPotentialRates="gameData.getHighestPotentialRates()"
+      :name="gameData.name"
+      :population="gameData.population"
     >
     </empire-display>
     <prestige-menu
@@ -94,7 +97,7 @@ import AreaDisplay from "./components/AreaDisplay.vue";
 import PopulationDisplay from "./components/PopulationDisplay.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
 import EmpireDisplay from "./components/Empire/EmpireDisplay.vue";
-import PrestigeMenu from "./components/PrestigeMenu.vue";
+import PrestigeMenu from "./components/Empire/PrestigeMenu.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";

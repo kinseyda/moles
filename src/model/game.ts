@@ -172,16 +172,17 @@ export class Game extends SerializableClass {
       const structAmount = curStruct.amount;
 
       // Check space is not already filled in all resources
-      let shouldProd = false;
-      for (const resID in curStruct.dataObject.production) {
-        if (this.resourceDict[resID].amount < resCaps[resID]) {
-          shouldProd = true;
-          break;
-        }
-      }
-      if (!shouldProd) {
-        continue;
-      }
+      // Caused issues where rates would jitter annoyingly
+      //   let shouldProd = false;
+      //   for (const resID in curStruct.dataObject.production) {
+      //     if (this.resourceDict[resID].amount < resCaps[resID]) {
+      //       shouldProd = true;
+      //       break;
+      //     }
+      //   }
+      //   if (!shouldProd) {
+      //     continue;
+      //   }
 
       // Check all consumption requirements are met
       let canConsume = true;

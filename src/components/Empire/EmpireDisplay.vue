@@ -3,6 +3,32 @@
     <template #title>Empire</template>
     <template #content>
       <div id="empire-outer">
+        <div id="current-info">
+          <div id="name-container">
+            <p>Civilization name:</p>
+            <h3>{{ name }}</h3>
+            <input
+              v-model="newName"
+              @keyup.enter="setName"
+              placeholder="edit name"
+            />
+          </div>
+          <div id="population-container">
+            <p>Current population: {{ population }}</p>
+            <p>Status: {{ getPopString(population) }}</p>
+          </div>
+          <div id="max-resources-container">
+            Current max rates:
+            <div id="resource-rates">
+              <ul>
+                <li v-for="(rate, resId) in maxPotentialRates" :key="resId">
+                  {{ getResData(resId).name }}: {{ formatNumber(rate)
+                  }}<small> Mo/s</small>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <div id="empire-info">
           <div class="empire-side" id="civilizations">
             <h3>Civilizations:</h3>
@@ -35,17 +61,27 @@
 import { defineComponent } from "vue";
 import { uiDescriptions } from "../ui-descriptions";
 import { mapMutations, mapState } from "vuex";
-import PopUpMenu from "../PopUpMenu.vue";
+import PopUpMenu from "@/components/PopUpMenu.vue";
 import CivilizationItem from "./CivilizationItem.vue";
+import { game } from "@/model/game";
 import { resourceDataDict } from "@/content/resource-data";
 import { ResourceData } from "@/content/data-interfaces";
+import { getStatus, getStatusString } from "@/content/population-statuses";
+import { formatNumber } from "../format";
 
 export default defineComponent({
   name: "EmpireDisplay",
-  props: ["civilizations", "empireRates"],
+  props: [
+    "civilizations",
+    "empireRates",
+    "name",
+    "population",
+    "maxPotentialRates",
+  ],
   data() {
     return {
       uiDescriptions: uiDescriptions,
+      newName: "",
     };
   },
   emits: ["prestige"],
@@ -61,6 +97,15 @@ export default defineComponent({
     getResData(resId: number): ResourceData {
       return resourceDataDict[resId];
     },
+    formatNumber(num: number) {
+      return formatNumber(num, undefined);
+    },
+    getPopString(pop: number): string {
+      return getStatusString(getStatus(pop));
+    },
+    setName() {
+      game.name = this.newName;
+    },
   },
 });
 </script>
@@ -71,8 +116,27 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 }
+#current-info {
+  flex: 0 1 10%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+}
+#name-container {
+  flex: 1 1 0;
+}
+#population-container {
+  flex: 1 1 0;
+}
+#max-resources-container {
+  flex: 1 1 0;
+}
+#resource-rates {
+  height: 3.5em;
+  overflow: scroll;
+}
 #empire-info {
-  flex: 1 1 85%;
+  flex: 1 1 65%;
 }
 #prestige-button {
   flex: 1 1 15%;
@@ -91,5 +155,8 @@ export default defineComponent({
 }
 #empire-resources {
   float: right;
+}
+input {
+  border: 1px solid black;
 }
 </style>

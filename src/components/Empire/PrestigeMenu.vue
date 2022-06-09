@@ -21,7 +21,8 @@
                   "
                   number
                 />
-                {{ getResData(resId).name }}: {{ rate }}<small> Mo/s</small>
+                {{ getResData(resId).name }}: {{ formatNumber(rate)
+                }}<small> Mo/s</small>
               </label>
             </li>
           </ul>
@@ -44,11 +45,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { uiDescriptions } from "./ui-descriptions";
+import { uiDescriptions } from "../ui-descriptions";
 import { mapMutations, mapState } from "vuex";
-import PopUpMenu from "./PopUpMenu.vue";
+import PopUpMenu from "@/components/PopUpMenu.vue";
 import { ResourceData } from "@/content/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
+import { formatNumber } from "../format";
 
 export default defineComponent({
   name: "PrestigeMenu",
@@ -75,6 +77,9 @@ export default defineComponent({
     ]),
     getResData(resId: number): ResourceData {
       return resourceDataDict[resId];
+    },
+    formatNumber(num: number) {
+      return formatNumber(num, undefined);
     },
   },
 });
