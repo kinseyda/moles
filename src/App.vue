@@ -118,7 +118,7 @@ import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
-import { Game, game } from "./model/game";
+import { Game, game, startGame } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
@@ -201,6 +201,9 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
         );
       }
     },
+  },
+  beforeCreate() {
+    startGame();
   },
   mounted() {
     setInterval(this.gameLoop, 50);

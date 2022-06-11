@@ -1,11 +1,20 @@
 import { EventData, RequirementType } from "./data-interfaces";
+import { ResourceIDs } from "./resource-data";
+
+export enum EventIDs {
+  Start,
+  StartSecond,
+  Dirt5,
+  Dirt10Wood10,
+  Prestige,
+}
 
 /**
  * Stores data for all events, in the form of a dictionary from an id (number) to an {@link EventData} object.
  * Requirements on an event should be ordered from least likely to be met to most
  */
 export const eventDataDict: { [id: number]: EventData } = {
-  0: {
+  [EventIDs.Start]: {
     name: "Start",
     description: "Appears when first starting the game",
     eventText:
@@ -18,7 +27,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     ],
     repeatable: false,
   },
-  1: {
+  [EventIDs.StartSecond]: {
     name: "StartSecond",
     description:
       "Appears when starting the game after the first time (from loading the save)",
@@ -26,17 +35,17 @@ export const eventDataDict: { [id: number]: EventData } = {
       "You feel a faint sense of deja vu as you look around. You see some resources piled up around you. You feel you should gather even more.",
     eventRequirements: [
       {
-        requirementType: RequirementType.gameStart,
+        requirementType: RequirementType.loadGame,
         requirementDetails: {},
       },
       {
         requirementType: RequirementType.prevEvent,
-        requirementDetails: [0],
+        requirementDetails: [EventIDs.Start],
       },
     ],
     repeatable: true,
   },
-  2: {
+  [EventIDs.Dirt5]: {
     name: "Dirt5",
     description: "Acquire 5 dirt",
     eventText:
@@ -44,34 +53,38 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { 0: 5 },
+        requirementDetails: { [ResourceIDs.Dirt]: 5 },
       },
     ],
     repeatable: false,
   },
-  3: {
+  [EventIDs.Dirt10Wood10]: {
     name: "Dirt10Wood10",
     description: "Acquire 10 dirt and 10 wood",
     eventText: "You got 10 dirt and 10 wood",
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { 0: 10, 1: 10 },
+        requirementDetails: {
+          [ResourceIDs.Dirt]: 10,
+          [ResourceIDs.Wood]: 10,
+        },
       },
     ],
     repeatable: false,
   },
-  4: {
-    name: "Filler",
-    description: "Filler desc",
-    eventText: "Filler eventText",
+  [EventIDs.Prestige]: {
+    name: "Prestige",
+    description: "Appears whenever you prestige",
+    eventText:
+      "You wake up to find yourself in a strange new location, yet the same old materials lay around you. Better get digging again.",
     eventRequirements: [
       {
-        requirementType: RequirementType.none,
+        requirementType: RequirementType.prestige,
         requirementDetails: {},
       },
     ],
-    repeatable: false,
+    repeatable: true,
   },
 };
 

@@ -2,8 +2,8 @@ import Purchaseable from "./purchaseable";
 import { upgradeDataDict } from "../content/upgrade-data";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
-import { UpgradeData } from "../content/data-interfaces";
-import { unlockDataDict } from "../content/unlock-data";
+import { UpgradeData, UpgradeEffects } from "../content/data-interfaces";
+import { unlockDataDict } from "../content/upgrade-data";
 import Resource from "./resource";
 import { resourceDataDict } from "../content/resource-data";
 import { structureDataDict } from "../content/structure-data";
@@ -57,13 +57,13 @@ export default class Upgrade extends Purchaseable {
 
     for (const effect of this.dataObject.effects) {
       switch (effect.func) {
-        case "multiplier":
+        case UpgradeEffects.multiplier:
           Upgrade.applyMultiplier(effect.params[0]);
           break;
-        case "unlock":
+        case UpgradeEffects.unlock:
           Upgrade.applyUnlock(effect.params[0]);
           break;
-        case "none":
+        case UpgradeEffects.none:
           break;
         default:
           break;

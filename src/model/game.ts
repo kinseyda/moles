@@ -89,7 +89,6 @@ export class Game extends SerializableClass {
     this.civilizations = civilizations;
     this.empireMultiplier = empireMultiplier;
     this.eventsDict = eventsDict;
-    this.handleEvent(RequirementType.gameStart);
   }
 
   /**
@@ -365,10 +364,11 @@ export class Game extends SerializableClass {
       startingExpansions(),
       this.civilizations,
       this.empireMultiplier,
-      {}
+      this.eventsDict
     );
 
-    Game.loadGame(JSON.stringify(g));
+    setGame(g);
+    this.handleEvent(RequirementType.prestige);
   }
 
   static loadGame(gameString: string) {
@@ -447,6 +447,7 @@ export class Game extends SerializableClass {
     if (gameString) {
       const save = JSON.parse(gameString);
       setGame(recurConstruct(save));
+      game.handleEvent(RequirementType.loadGame);
     }
   }
 }
@@ -455,23 +456,28 @@ export function setGame(newGame: Game) {
   game = reactive(newGame);
 }
 
+export function startGame() {
+  setGame(
+    new Game(
+      Date.now(),
+      startingDig(),
+      startingArea(),
+      1,
+      "Civ " + Date.now(),
+      startingResources(),
+      startingUpgrades(),
+      startingStructures(),
+      startingExpansions(),
+      [],
+      5 / 100,
+      {}
+    )
+  );
+  handleEvent(RequirementType.gameStart, game);
+}
+
 /**
  * The static game being played
  * Use {@link setGame} to change
  */
-export let game: Game = reactive(
-  new Game(
-    Date.now(),
-    startingDig(),
-    startingArea(),
-    1,
-    "Civ " + Date.now(),
-    startingResources(),
-    startingUpgrades(),
-    startingStructures(),
-    startingExpansions(),
-    [],
-    5 / 100,
-    {}
-  )
-);
+export let game: Game;

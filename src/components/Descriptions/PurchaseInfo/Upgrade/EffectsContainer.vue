@@ -15,9 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { UpgradeEffects } from "@/content/data-interfaces";
 import EffectDetails from "./EffectDetails.vue";
 export default defineComponent({
   name: "EffectsContainer",
+  data() {
+    return { UpgradeEffects: UpgradeEffects };
+  },
   components: {
     EffectDetails,
   },
@@ -25,11 +29,11 @@ export default defineComponent({
     effects: Object,
   },
   methods: {
-    getEffectDescription(ef: String) {
+    getEffectDescription(ef: number) {
       switch (ef) {
-        case "multiplier":
+        case UpgradeEffects.multiplier:
           return "Multiplies resource gains:";
-        case "unlock":
+        case UpgradeEffects.unlock:
           return "Unlocks something";
         default:
           return "Does something?";
