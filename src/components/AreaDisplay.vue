@@ -1,12 +1,10 @@
 <template>
-  <div>
+  <div id="outer">
     <h2
       @mouseover="hoverDescString(uiDescriptions['area'])"
       @mouseleave="resetDesc()"
     >
-      Max Area: {{ formatNumber(area.cap) }} <br />
-      Usable: {{ formatNumber(area.amount) }} /
-      {{ formatNumber(area.getUsableArea()) }} Mo
+      Area: {{ formatNumber(area.amount) }} / {{ formatNumber(area.cap) }} Mo
     </h2>
   </div>
 </template>
@@ -21,6 +19,7 @@ export default defineComponent({
   props: ["area"],
   data() {
     return {
+      sliderVals: {} as { [resId: number]: number },
       uiDescriptions: uiDescriptions,
     };
   },

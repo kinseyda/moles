@@ -1,211 +1,171 @@
-import { UnlockData, UpgradeData, UpgradeEffects } from "./data-interfaces";
-import { ResourceIDs } from "./resource-data";
-import { StructureIDs } from "./structure-data";
+import { UpgradeData } from "./data-interfaces";
 
 const defaultStartingValues = {
   bought: false,
   discount: {},
 };
 
-export enum UpgradeIDs {
-  MakeshiftShovel,
-  Pickaxe,
-  TermiteKnowledge,
-  TermiteDomestication,
-  FindSecondMole,
-  Ledger,
-  TunnelToSurface,
-  Catapult,
-}
-
-export enum UnlockIDs {
-  Pickaxe,
-  TermiteKnowledge,
-  TermiteDomestication,
-  FindSecondMole,
-  Ledger,
-  TunnelToSurface,
-}
-
-export enum PermanentUnlocks {
-  Empire,
-  Prestige,
-  Population,
-}
-
 export const upgradeDataDict: { [id: number]: UpgradeData } = {
-  [UpgradeIDs.MakeshiftShovel]: {
+  0: {
     name: "Makeshift shovel",
     description: "Fashion some twigs and pebbles lying around into a shovel",
     effects: [
       {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Dirt]: 1 }],
+        func: "multiplier",
+        params: [{ 0: 1 }],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 10,
+      0: 10,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.Pickaxe]: {
+  1: {
     name: "Pickaxe",
     description:
       "Construct a pickaxe out of twigs to help you get at those iron veins you've been seeing",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.Pickaxe],
+        func: "unlock",
+        params: [0],
       },
     ],
     cost: {
-      [ResourceIDs.Wood]: 10,
-      [ResourceIDs.Rock]: 10,
+      0: 10,
+      1: 10,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.TermiteKnowledge]: {
+  2: {
     name: "Termite knowledge",
     description:
       "Ask the friendly local termites how they find so much wood in the ground",
     effects: [
       {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Wood]: 1 }],
+        func: "multiplier",
+        params: [{ 1: 1 }],
       },
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TermiteKnowledge],
+        func: "unlock",
+        params: [1],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 100,
+      0: 100,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.TermiteDomestication]: {
+  3: {
     name: "Termite Domestication",
     description:
       "Upon studying the termites for a while, you realize how useful it could be to keep them in one place",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TermiteDomestication],
+        func: "unlock",
+        params: [2],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 120,
+      0: 120,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.FindSecondMole]: {
-    name: "Find a second mole",
-    description:
-      "You think you can smell another mole digging about in the dirt nearby. You feel a sudden sense of loneliness, and think you ought to try and find them.",
+  4: {
+    name: "Filler",
+    description: "Filler desc",
     effects: [
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Population],
-      },
-      {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.FindSecondMole],
+        func: "none",
+        params: [],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 250,
+      0: 9999,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.Ledger]: {
-    name: "Ledger",
-    description:
-      "All these materials are getting hard to keep track of. You think you ought to start writing things down.",
+  5: {
+    name: "Filler",
+    description: "Filler desc",
     effects: [
       {
-        func: UpgradeEffects.empireMultiplier,
-        params: [5 / 100],
-      },
-      {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.Ledger],
-      },
-      {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Empire],
+        func: "none",
+        params: [],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 150,
-      [ResourceIDs.Wood]: 100,
+      0: 9999,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.TunnelToSurface]: {
-    name: "Tunnel to the surface",
-    description:
-      "You start wondering what could be above the dirt, it seems warm up there.",
+  6: {
+    name: "Filler",
+    description: "Filler desc",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TunnelToSurface],
-      },
-      {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Wood]: 1 }],
+        func: "none",
+        params: [],
       },
     ],
     cost: {
-      [ResourceIDs.Dirt]: 300,
+      0: 9999,
     },
     startingParams: defaultStartingValues,
   },
-  [UpgradeIDs.Catapult]: {
-    name: "Catapult",
-    description:
-      "All the warmth and light above the dirt is making you nauseous, you want to get away and start building nice tunnels under somewhere else as soon as possible",
+  7: {
+    name: "Filler",
+    description: "Filler desc",
     effects: [
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Prestige],
+        func: "none",
+        params: [],
       },
     ],
     cost: {
-      [ResourceIDs.Wood]: 300,
+      0: 9999,
     },
     startingParams: defaultStartingValues,
   },
-};
-
-export const unlockDataDict: { [id: number]: UnlockData } = {
-  [UnlockIDs.Pickaxe]: {
-    resources: [ResourceIDs.Iron],
-    upgrades: [],
-    structures: [StructureIDs.IronForge],
+  8: {
+    name: "Filler",
+    description: "Filler desc",
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
+    cost: {
+      0: 9999,
+    },
+    startingParams: defaultStartingValues,
   },
-  [UnlockIDs.TermiteKnowledge]: {
-    resources: [],
-    upgrades: [UpgradeIDs.TermiteDomestication],
-    structures: [],
+  9: {
+    name: "Filler",
+    description: "Filler desc",
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
+    cost: {
+      0: 9999,
+    },
+    startingParams: defaultStartingValues,
   },
-  [UnlockIDs.TermiteDomestication]: {
-    resources: [ResourceIDs.Termites],
-    upgrades: [],
-    structures: [StructureIDs.TermitePen, StructureIDs.TermiteWoodPatrol],
-  },
-  [UnlockIDs.FindSecondMole]: {
-    resources: [],
-    upgrades: [UpgradeIDs.Ledger],
-    structures: [],
-  },
-  [UnlockIDs.Ledger]: {
-    resources: [],
-    upgrades: [UpgradeIDs.TunnelToSurface],
-    structures: [],
-  },
-  [UnlockIDs.TunnelToSurface]: {
-    resources: [],
-    upgrades: [UpgradeIDs.Catapult],
-    structures: [],
+  10: {
+    name: "Filler",
+    description: "Filler desc",
+    effects: [
+      {
+        func: "none",
+        params: [],
+      },
+    ],
+    cost: {
+      0: 9999,
+    },
+    startingParams: defaultStartingValues,
   },
 };

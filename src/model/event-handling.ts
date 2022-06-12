@@ -17,63 +17,34 @@ export function handleEvent(
   game: Game,
   params?: { [x: string]: any }
 ) {
-  // Goal of this function is to narrow down the amount of events to check
-  // where possible(such as for resources)
   const idsAchieved: number[] = [];
   switch (triggerEventType) {
     case RequirementType.gameStart:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
-      break;
-    case RequirementType.loadGame:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
+      for (const evId of eventIdsByRequirementType[triggerEventType]) {
+        if (checkEventId(Number(evId), triggerEventType, game)) {
+          idsAchieved.push(Number(evId));
+        }
+      }
       break;
     case RequirementType.prevEvent:
       if (params !== undefined && params["evId"] !== undefined) {
-        idsAchieved.push(
-          ...checkAll(
-            triggerEventType,
-            game,
-            ...eventIdsByRequirementType[triggerEventType]
-          )
-        );
+        for (const id of eventIdsByRequirementType[triggerEventType]) {
+          if (checkEventId(Number(id), triggerEventType, game)) {
+            idsAchieved.push(Number(id));
+          }
+        }
       }
-      break;
-    case RequirementType.prestige:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
-      break;
-    case RequirementType.upgrade:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
       break;
     case RequirementType.resourceAmount:
       if (params !== undefined && params["resId"] !== undefined) {
         // Get all event ids that may be triggered (in part or full) by a change to this resource
         const evIds = resAmountEventIdsByResId[params["resId"]];
         if (evIds !== undefined) {
-          idsAchieved.push(...checkAll(triggerEventType, game, ...evIds));
+          for (const id of evIds) {
+            if (checkEventId(Number(id), triggerEventType, game)) {
+              idsAchieved.push(Number(id));
+            }
+          }
         }
       }
       break;
@@ -84,21 +55,6 @@ export function handleEvent(
     game.eventsDict[id] = Date.now();
   }
 }
-
-function checkAll(
-  triggerEventType: RequirementType,
-  game: Game,
-  ...evIds: number[]
-): number[] {
-  const idsAchieved: number[] = [];
-  for (const id of evIds) {
-    if (checkEventId(Number(id), triggerEventType, game)) {
-      idsAchieved.push(Number(id));
-    }
-  }
-  return idsAchieved;
-}
-
 function checkEventId(
   evId: number,
   triggerEventType: RequirementType,
@@ -113,21 +69,6 @@ function checkEventId(
       case RequirementType.gameStart:
         if (triggerEventType !== RequirementType.gameStart) {
           // So that gameStart requirements only fire if gameStart is the event that triggers them.
-          return false;
-        }
-        break;
-      case RequirementType.loadGame:
-        if (triggerEventType !== RequirementType.loadGame) {
-          return false;
-        }
-        break;
-      case RequirementType.prestige:
-        if (triggerEventType !== RequirementType.prestige) {
-          return false;
-        }
-        break;
-      case RequirementType.upgrade:
-        if (triggerEventType !== RequirementType.upgrade) {
           return false;
         }
         break;

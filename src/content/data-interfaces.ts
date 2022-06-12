@@ -5,16 +5,9 @@ export interface IdentifiableData {
 export interface PurchaseableData extends IdentifiableData {
   cost: { [id: number]: number };
 }
-export enum UpgradeEffects {
-  multiplier,
-  unlock,
-  permanentUnlock,
-  empireMultiplier,
-  none,
-}
 export interface UpgradeData extends PurchaseableData {
   effects: {
-    func: UpgradeEffects;
+    func: string;
     params: any[];
   }[];
   startingParams: {
@@ -59,11 +52,8 @@ export interface UnlockData {
 
 export enum RequirementType {
   gameStart,
-  loadGame,
   resourceAmount,
-  upgrade,
   prevEvent,
-  prestige,
   none,
 }
 export interface EventRequirement {

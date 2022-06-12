@@ -1,5 +1,5 @@
 <template>
-  <div id="res-list-outer">
+  <div id="outer">
     <h2
       @mouseover="hoverDescString(uiDescriptions['resources'])"
       @mouseleave="resetDesc()"
@@ -126,9 +126,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#res-list-outer {
-  flex: 1 0 85%;
-}
 button.slider-set {
   float: right;
   width: 2.5ch;

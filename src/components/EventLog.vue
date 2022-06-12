@@ -14,7 +14,7 @@
         @mouseover="hoverDescIdentifiable(ev)"
         @mouseleave="resetDesc()"
       >
-        [{{ formatTime(timeSince(ev.timeSeconds)) }}<small> ago</small>]
+        [{{ formatTime(timeSince(ev.timeSeconds)) }} ago]
         {{ ev.dataObject.eventText }}
       </li>
     </ol>

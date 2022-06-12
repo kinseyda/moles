@@ -40,7 +40,7 @@ export default class Expansion extends Purchaseable {
     return (
       dis *
       (this.dataObject.cost[resId] +
-        ((this.amount / 2) * this.dataObject.areaEach) / amountOfResources)
+        (this.amount * this.dataObject.areaEach) / amountOfResources)
     );
   }
 

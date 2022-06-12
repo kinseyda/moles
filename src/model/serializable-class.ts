@@ -10,7 +10,6 @@ export enum SerializableClasses {
   Structure,
   Expansion,
   Upgrade,
-  Civilization,
 }
 
 /**

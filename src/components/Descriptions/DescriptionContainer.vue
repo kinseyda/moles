@@ -16,10 +16,6 @@
       v-bind:structure="structSellData"
       v-if="structSellData"
     ></sell-info>
-    <civilization-info
-      :civilization="civilizationInformationData"
-      v-if="civilizationInformationData"
-    ></civilization-info>
   </div>
 </template>
 
@@ -30,14 +26,12 @@ import { mapState } from "vuex";
 import PurchaseInfo from "@/components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
 import SellInfo from "@/components/Descriptions/PurchaseInfo/SellInfo.vue";
 import DigInformation from "@/components/Descriptions/DigInformation.vue";
-import CivilizationInfo from "./CivilizationInfo.vue";
 export default defineComponent({
   name: "DescriptionContainer",
   computed: {
     ...mapState([
       "purchaseInformationData",
       "structSellData",
-      "civilizationInformationData",
       "descriptionBoxData",
       "descriptionBoxIsEmpty",
       "digData",
@@ -53,7 +47,6 @@ export default defineComponent({
     PurchaseInfo,
     SellInfo,
     DigInformation,
-    CivilizationInfo,
   },
 });
 </script>

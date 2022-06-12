@@ -1,23 +1,11 @@
-import Upgrade from "@/model/upgrade";
 import { EventData, RequirementType } from "./data-interfaces";
-import { ResourceIDs } from "./resource-data";
-import { UpgradeIDs } from "./upgrade-data";
-
-export enum EventIDs {
-  Start,
-  StartSecond,
-  Dirt5,
-  Dirt10Wood10,
-  Prestige,
-  TunnelToSurface,
-}
 
 /**
  * Stores data for all events, in the form of a dictionary from an id (number) to an {@link EventData} object.
  * Requirements on an event should be ordered from least likely to be met to most
  */
 export const eventDataDict: { [id: number]: EventData } = {
-  [EventIDs.Start]: {
+  0: {
     name: "Start",
     description: "Appears when first starting the game",
     eventText:
@@ -30,7 +18,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     ],
     repeatable: false,
   },
-  [EventIDs.StartSecond]: {
+  1: {
     name: "StartSecond",
     description:
       "Appears when starting the game after the first time (from loading the save)",
@@ -38,17 +26,17 @@ export const eventDataDict: { [id: number]: EventData } = {
       "You feel a faint sense of deja vu as you look around. You see some resources piled up around you. You feel you should gather even more.",
     eventRequirements: [
       {
-        requirementType: RequirementType.loadGame,
+        requirementType: RequirementType.gameStart,
         requirementDetails: {},
       },
       {
         requirementType: RequirementType.prevEvent,
-        requirementDetails: [EventIDs.Start],
+        requirementDetails: [0],
       },
     ],
     repeatable: true,
   },
-  [EventIDs.Dirt5]: {
+  2: {
     name: "Dirt5",
     description: "Acquire 5 dirt",
     eventText:
@@ -56,51 +44,34 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { [ResourceIDs.Dirt]: 5 },
+        requirementDetails: { 0: 5 },
       },
     ],
     repeatable: false,
   },
-  [EventIDs.Dirt10Wood10]: {
+  3: {
     name: "Dirt10Wood10",
     description: "Acquire 10 dirt and 10 wood",
     eventText: "You got 10 dirt and 10 wood",
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: {
-          [ResourceIDs.Dirt]: 10,
-          [ResourceIDs.Wood]: 10,
-        },
+        requirementDetails: { 0: 10, 1: 10 },
       },
     ],
     repeatable: false,
   },
-  [EventIDs.Prestige]: {
-    name: "Prestige",
-    description: "Appears whenever you prestige",
-    eventText:
-      "You wake up to find yourself in a strange new location, yet the same old materials lay around you. Better get digging again.",
+  4: {
+    name: "Filler",
+    description: "Filler desc",
+    eventText: "Filler eventText",
     eventRequirements: [
       {
-        requirementType: RequirementType.prestige,
+        requirementType: RequirementType.none,
         requirementDetails: {},
       },
     ],
-    repeatable: true,
-  },
-  [EventIDs.TunnelToSurface]: {
-    name: "TunnelToSurface",
-    description: "Tunnel to above the dirt",
-    eventText:
-      "Upon finally reaching the surface of all this dirt, you realize one thing: it is awful up here. Full of light, smell, grass, and much less dirt. You vow not to return unless you absolutely must.",
-    eventRequirements: [
-      {
-        requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.TunnelToSurface],
-      },
-    ],
-    repeatable: true,
+    repeatable: false,
   },
 };
 
