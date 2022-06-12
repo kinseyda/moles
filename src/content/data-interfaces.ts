@@ -8,6 +8,8 @@ export interface PurchaseableData extends IdentifiableData {
 export enum UpgradeEffects {
   multiplier,
   unlock,
+  permanentUnlock,
+  empireMultiplier,
   none,
 }
 export interface UpgradeData extends PurchaseableData {
@@ -59,6 +61,7 @@ export enum RequirementType {
   gameStart,
   loadGame,
   resourceAmount,
+  upgrade,
   prevEvent,
   prestige,
   none,

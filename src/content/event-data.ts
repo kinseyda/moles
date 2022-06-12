@@ -1,5 +1,7 @@
+import Upgrade from "@/model/upgrade";
 import { EventData, RequirementType } from "./data-interfaces";
 import { ResourceIDs } from "./resource-data";
+import { UpgradeIDs } from "./upgrade-data";
 
 export enum EventIDs {
   Start,
@@ -7,6 +9,7 @@ export enum EventIDs {
   Dirt5,
   Dirt10Wood10,
   Prestige,
+  TunnelToSurface,
 }
 
 /**
@@ -82,6 +85,19 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.prestige,
         requirementDetails: {},
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.TunnelToSurface]: {
+    name: "TunnelToSurface",
+    description: "Tunnel to above the dirt",
+    eventText:
+      "Upon finally reaching the surface of all this dirt, you realize one thing: it is awful up here. Full of light, smell, grass, and much less dirt. You vow not to return unless you absolutely must.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.TunnelToSurface],
       },
     ],
     repeatable: true,

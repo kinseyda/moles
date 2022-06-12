@@ -59,6 +59,15 @@ export function handleEvent(
         )
       );
       break;
+    case RequirementType.upgrade:
+      idsAchieved.push(
+        ...checkAll(
+          triggerEventType,
+          game,
+          ...eventIdsByRequirementType[triggerEventType]
+        )
+      );
+      break;
     case RequirementType.resourceAmount:
       if (params !== undefined && params["resId"] !== undefined) {
         // Get all event ids that may be triggered (in part or full) by a change to this resource
@@ -114,6 +123,11 @@ function checkEventId(
         break;
       case RequirementType.prestige:
         if (triggerEventType !== RequirementType.prestige) {
+          return false;
+        }
+        break;
+      case RequirementType.upgrade:
+        if (triggerEventType !== RequirementType.upgrade) {
           return false;
         }
         break;

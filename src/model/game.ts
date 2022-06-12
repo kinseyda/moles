@@ -14,7 +14,7 @@ import {
   startingResources,
   startingStructures,
   startingUpgrades,
-} from "./start";
+} from "../content/start";
 import Expansion from "./expansion";
 import Civilization from "./civilization";
 
@@ -32,6 +32,7 @@ export class Game extends SerializableClass {
   upgradeDict: { [id: number]: Upgrade };
   structureDict: { [id: number]: Structure };
   expansionDict: { [id: number]: Expansion };
+  permanentUnlocks: { [id: number]: boolean };
   civilizations: Civilization[];
   empireMultiplier: number;
   eventsDict: { [id: number]: number };
@@ -55,6 +56,9 @@ export class Game extends SerializableClass {
    * {@link Structure}.
    * @param expansionDict - A dictionary of ids to their corresponding
    * {@link Expansion}.
+   * @param permanentUnlocks - A dictionary of ids to booleans to show that the
+   * unlock has been unlocked (un-unlocked unlocks will not appear). These are
+   * mainly used for unlocking ui elements.
    * @param civilizations - List of {@link Civilization}s that the player has
    * prestiged through.
    * @param empireMultiplier - The fraction of total empire production you
@@ -72,6 +76,7 @@ export class Game extends SerializableClass {
     upgradeDict: { [id: number]: Upgrade },
     structureDict: { [id: number]: Structure },
     expansionDict: { [id: number]: Expansion },
+    permanentUnlocks: { [id: number]: boolean },
     civilizations: Civilization[],
     empireMultiplier: number,
     eventsDict: { [id: number]: number }
@@ -86,6 +91,7 @@ export class Game extends SerializableClass {
     this.upgradeDict = upgradeDict;
     this.structureDict = structureDict;
     this.expansionDict = expansionDict;
+    this.permanentUnlocks = permanentUnlocks;
     this.civilizations = civilizations;
     this.empireMultiplier = empireMultiplier;
     this.eventsDict = eventsDict;
@@ -106,6 +112,11 @@ export class Game extends SerializableClass {
     // Fraction of a second
 
     this.population = this.getNextPopulation(tickSize);
+    if (this.area.amount > this.area.getUsableArea()) {
+      this.area.amount = this.area.getUsableArea();
+      this.updateCaps();
+      this.checkCaps();
+    }
 
     // Add area from digging
     if (this.dig.digging) {
@@ -323,6 +334,12 @@ export class Game extends SerializableClass {
     }
   }
 
+  checkCaps() {
+    for (const resId in this.resourceDict) {
+      this.resourceDict[resId].checkCap();
+    }
+  }
+
   getEmpireRates() {
     const resRates: { [resId: number]: number } = {};
     for (const civ of this.civilizations) {
@@ -362,13 +379,23 @@ export class Game extends SerializableClass {
       startingUpgrades(),
       startingStructures(),
       startingExpansions(),
+      this.permanentUnlocks,
       this.civilizations,
-      this.empireMultiplier,
+      0,
       this.eventsDict
     );
 
     setGame(g);
     this.handleEvent(RequirementType.prestige);
+  }
+
+  /**
+   * Returns true if the given permanent unlock has been unlocked
+   * @param permId - The id of the unlock to check
+   * @returns Boolean value representing unlock status
+   */
+  isUnlocked(permId: number): boolean {
+    return this.permanentUnlocks[permId] || false;
   }
 
   static loadGame(gameString: string) {
@@ -400,6 +427,7 @@ export class Game extends SerializableClass {
               obj.upgradeDict,
               obj.structureDict,
               obj.expansionDict,
+              obj.permanentUnlocks,
               obj.civilizations,
               obj.empireMultiplier,
               obj.eventsDict
@@ -421,7 +449,7 @@ export class Game extends SerializableClass {
           case "Dig":
             return new Dig(obj.digRates);
           case "Area":
-            return new Area(obj.amount, obj.cap, obj.multiplier);
+            return new Area(obj.amount, obj.cap);
           case "Civilization":
             return new Civilization(
               obj.resourceRates,
@@ -468,8 +496,9 @@ export function startGame() {
       startingUpgrades(),
       startingStructures(),
       startingExpansions(),
+      {},
       [],
-      5 / 100,
+      0,
       {}
     )
   );

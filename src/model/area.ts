@@ -10,18 +10,16 @@ import SerializableClass, { SerializableClasses } from "./serializable-class";
 export default class Area extends SerializableClass {
   amount: number;
   cap: number;
-  multiplier: number;
 
   /**
    * @param amount - The amount of area the player has.
    * @param cap - The max amount of area that the player's molehill can take up
    * @param multiplier - A multiplier for all production of this resource.
    */
-  constructor(amount: number, cap: number, multiplier: number) {
+  constructor(amount: number, cap: number) {
     super(SerializableClasses.Area);
     this.amount = amount;
     this.cap = cap;
-    this.multiplier = multiplier;
   }
 
   /**

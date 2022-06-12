@@ -1,8 +1,16 @@
 import Purchaseable from "./purchaseable";
-import { upgradeDataDict } from "../content/upgrade-data";
+import {
+  PermanentUnlocks,
+  UnlockIDs,
+  upgradeDataDict,
+} from "../content/upgrade-data";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
-import { UpgradeData, UpgradeEffects } from "../content/data-interfaces";
+import {
+  RequirementType,
+  UpgradeData,
+  UpgradeEffects,
+} from "../content/data-interfaces";
 import { unlockDataDict } from "../content/upgrade-data";
 import Resource from "./resource";
 import { resourceDataDict } from "../content/resource-data";
@@ -63,12 +71,19 @@ export default class Upgrade extends Purchaseable {
         case UpgradeEffects.unlock:
           Upgrade.applyUnlock(effect.params[0]);
           break;
+        case UpgradeEffects.permanentUnlock:
+          Upgrade.applyPermanentUnlock(effect.params[0]);
+          break;
+        case UpgradeEffects.empireMultiplier:
+          Upgrade.applyEmpireMultiplier(effect.params[0]);
+          break;
         case UpgradeEffects.none:
           break;
         default:
           break;
       }
     }
+    game.handleEvent(RequirementType.upgrade, [this.id]);
     this.bought = true;
   }
 
@@ -119,6 +134,18 @@ export default class Upgrade extends Purchaseable {
       );
     }
   }
+  static applyPermanentUnlock(unlockId: number) {
+    game.permanentUnlocks[unlockId] = true;
+
+    // For random, one-off things that permanent unlocks might need to do
+    switch (unlockId) {
+      case PermanentUnlocks.Population:
+        game.population += 1;
+        break;
+      default:
+        break;
+    }
+  }
   static applyMultiplier(multDict: { [resId: number]: number }) {
     for (const resIdStr in multDict) {
       const resId: number = Number(resIdStr);
@@ -127,5 +154,8 @@ export default class Upgrade extends Purchaseable {
         res.multiplier += multDict[resId];
       }
     }
+  }
+  static applyEmpireMultiplier(amount: number) {
+    game.empireMultiplier += amount;
   }
 }

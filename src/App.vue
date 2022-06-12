@@ -40,6 +40,7 @@
         ></resource-list>
         <button
           id="empire-button"
+          v-if="gameData.isUnlocked(PermanentUnlocks.Empire)"
           @mouseover="hoverDescString(uiDescriptions['empireButton'])"
           @mouseleave="resetDesc()"
           @click="toggleEmpireOpen"
@@ -50,6 +51,7 @@
       <div id="central-column">
         <area-display :area="gameData.area"></area-display>
         <population-display
+          v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
           :population="gameData.population"
           :popCap="gameData.getPopulationCap()"
         ></population-display>
@@ -63,9 +65,7 @@
           >
             <h1>Dig</h1>
           </button>
-          <expansion-list
-            :expansionDict="gameData.expansionDict"
-          ></expansion-list>
+          <expansion-list :expansionDict="gameData.expansionDict"></expansion-list>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
@@ -78,9 +78,7 @@
       </div>
       <div id="purchaseable-column">
         <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-        <structure-list
-          :structureDict="gameData.structureDict"
-        ></structure-list>
+        <structure-list :structureDict="gameData.structureDict"></structure-list>
       </div>
     </div>
 
@@ -93,6 +91,7 @@
       :name="gameData.name"
       :population="gameData.population"
       :empireMult="gameData.empireMultiplier"
+      :prestigeUnlocked="gameData.isUnlocked(PermanentUnlocks.Prestige)"
     >
     </empire-display>
     <prestige-menu
@@ -118,6 +117,7 @@ import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
+import { PermanentUnlocks } from "./content/upgrade-data";
 import { Game, game, startGame } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
@@ -154,6 +154,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     return {
       gameData: game,
       uiDescriptions: uiDescriptions,
+      PermanentUnlocks: PermanentUnlocks,
     };
   },
   methods: {
@@ -211,11 +212,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (
-      loadTheme == "light" ||
-      loadTheme == "dark" ||
-      loadTheme == "true mole"
-    ) {
+    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {

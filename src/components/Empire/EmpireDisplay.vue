@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div id="empire-info">
+        <div id="empire-info" :class="{ hidden: civilizations.length < 1 }">
           <div class="empire-side" id="civilizations">
             <h3
               @mouseover="hoverDescString(uiDescriptions['civList'])"
@@ -106,7 +106,7 @@
             </table>
           </div>
         </div>
-        <div id="prestige-button">
+        <div id="prestige-button" v-if="prestigeUnlocked">
           <button @click="togglePrestigeOpen()">Prestige</button>
         </div>
       </div>
@@ -135,6 +135,7 @@ export default defineComponent({
     "population",
     "maxPotentialRates",
     "empireMult",
+    "prestigeUnlocked",
   ],
   data() {
     return {
@@ -222,5 +223,8 @@ export default defineComponent({
 }
 input {
   border: 1px solid black;
+}
+.hidden {
+  visibility: hidden;
 }
 </style>

@@ -12,13 +12,27 @@ export enum UpgradeIDs {
   Pickaxe,
   TermiteKnowledge,
   TermiteDomestication,
+  FindSecondMole,
+  Ledger,
+  TunnelToSurface,
+  Catapult,
 }
 
 export enum UnlockIDs {
   Pickaxe,
   TermiteKnowledge,
   TermiteDomestication,
+  FindSecondMole,
+  Ledger,
+  TunnelToSurface,
 }
+
+export enum PermanentUnlocks {
+  Empire,
+  Prestige,
+  Population,
+}
+
 export const upgradeDataDict: { [id: number]: UpgradeData } = {
   [UpgradeIDs.MakeshiftShovel]: {
     name: "Makeshift shovel",
@@ -84,6 +98,83 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     },
     startingParams: defaultStartingValues,
   },
+  [UpgradeIDs.FindSecondMole]: {
+    name: "Find a second mole",
+    description:
+      "You think you can smell another mole digging about in the dirt nearby. You feel a sudden sense of loneliness, and think you ought to try and find them.",
+    effects: [
+      {
+        func: UpgradeEffects.permanentUnlock,
+        params: [PermanentUnlocks.Population],
+      },
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.FindSecondMole],
+      },
+    ],
+    cost: {
+      [ResourceIDs.Dirt]: 250,
+    },
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.Ledger]: {
+    name: "Ledger",
+    description:
+      "All these materials are getting hard to keep track of. You think you ought to start writing things down.",
+    effects: [
+      {
+        func: UpgradeEffects.empireMultiplier,
+        params: [5 / 100],
+      },
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.Ledger],
+      },
+      {
+        func: UpgradeEffects.permanentUnlock,
+        params: [PermanentUnlocks.Empire],
+      },
+    ],
+    cost: {
+      [ResourceIDs.Dirt]: 150,
+      [ResourceIDs.Wood]: 100,
+    },
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.TunnelToSurface]: {
+    name: "Tunnel to the surface",
+    description:
+      "You start wondering what could be above the dirt, it seems warm up there.",
+    effects: [
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.TunnelToSurface],
+      },
+      {
+        func: UpgradeEffects.multiplier,
+        params: [{ [ResourceIDs.Wood]: 1 }],
+      },
+    ],
+    cost: {
+      [ResourceIDs.Dirt]: 300,
+    },
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.Catapult]: {
+    name: "Catapult",
+    description:
+      "All the warmth and light above the dirt is making you nauseous, you want to get away and start building nice tunnels under somewhere else as soon as possible",
+    effects: [
+      {
+        func: UpgradeEffects.permanentUnlock,
+        params: [PermanentUnlocks.Prestige],
+      },
+    ],
+    cost: {
+      [ResourceIDs.Wood]: 300,
+    },
+    startingParams: defaultStartingValues,
+  },
 };
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
@@ -101,5 +192,20 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
     resources: [ResourceIDs.Termites],
     upgrades: [],
     structures: [StructureIDs.TermitePen, StructureIDs.TermiteWoodPatrol],
+  },
+  [UnlockIDs.FindSecondMole]: {
+    resources: [],
+    upgrades: [UpgradeIDs.Ledger],
+    structures: [],
+  },
+  [UnlockIDs.Ledger]: {
+    resources: [],
+    upgrades: [UpgradeIDs.TunnelToSurface],
+    structures: [],
+  },
+  [UnlockIDs.TunnelToSurface]: {
+    resources: [],
+    upgrades: [UpgradeIDs.Catapult],
+    structures: [],
   },
 };
