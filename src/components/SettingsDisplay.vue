@@ -1,56 +1,58 @@
 <template>
-  <div id="outer">
-    <h2>Settings</h2>
-    <button id="exit-button" @click="toggleSettingsOpen()">X</button>
-    <ul>
-      <li>
-        <button
-          @click="toggleTheme"
-          @mouseover="hoverDescString(uiDescriptions['settingsTheme'])"
-          @mouseleave="resetDesc()"
-        >
-          Theme: {{ settings.theme == "light" ? "Light" : ""
-          }}{{ settings.theme == "dark" ? "Dark" : ""
-          }}{{ settings.theme == "true mole" ? "True Mole" : "" }}
-        </button>
-      </li>
-      <li>
-        <button
-          @click="toggleTooltips"
-          @mouseover="
-            hoverDescString(uiDescriptions['settingsDescriptionPosition'])
-          "
-          @mouseleave="resetDesc()"
-        >
-          Descriptions: {{ settings.tooltips ? "Tooltips" : "Fixed" }}
-        </button>
-      </li>
-      <li>
-        <button
-          @click="toggleCBMode"
-          @mouseover="hoverDescString(uiDescriptions['settingsCBMode'])"
-          @mouseleave="resetDesc()"
-        >
-          Color blind mode:
-          {{ settings.cbMode == "green red" ? "Green / Red" : ""
-          }}{{ settings.cbMode == "blue orange" ? "Blue / Orange" : ""
-          }}{{ settings.cbMode == "mono" ? "Monochrome" : ""
-          }}{{ settings.cbMode == "no color" ? "No color" : "" }}
-        </button>
-        <ul>
-          <li>
-            Example: <span class="good-text">Good thing</span> /
-            <span class="bad-text">Bad thing</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+  <pop-up-menu>
+    <template #title>Settings</template>
+    <template #content>
+      <ul>
+        <li>
+          <button
+            @click="toggleTheme"
+            @mouseover="hoverDescString(uiDescriptions['settingsTheme'])"
+            @mouseleave="resetDesc()"
+          >
+            Theme: {{ settings.theme == "light" ? "Light" : ""
+            }}{{ settings.theme == "dark" ? "Dark" : ""
+            }}{{ settings.theme == "true mole" ? "True Mole" : "" }}
+          </button>
+        </li>
+        <li>
+          <button
+            @click="toggleTooltips"
+            @mouseover="
+              hoverDescString(uiDescriptions['settingsDescriptionPosition'])
+            "
+            @mouseleave="resetDesc()"
+          >
+            Descriptions: {{ settings.tooltips ? "Tooltips" : "Fixed" }}
+          </button>
+        </li>
+        <li>
+          <button
+            @click="toggleCBMode"
+            @mouseover="hoverDescString(uiDescriptions['settingsCBMode'])"
+            @mouseleave="resetDesc()"
+          >
+            Color blind mode:
+            {{ settings.cbMode == "green red" ? "Green / Red" : ""
+            }}{{ settings.cbMode == "blue orange" ? "Blue / Orange" : ""
+            }}{{ settings.cbMode == "mono" ? "Monochrome" : ""
+            }}{{ settings.cbMode == "no color" ? "No color" : "" }}
+          </button>
+          <ul>
+            <li>
+              Example: <span class="good-text">Good thing</span> /
+              <span class="bad-text">Bad thing</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </template>
+  </pop-up-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { uiDescriptions } from "./ui-descriptions";
+import PopUpMenu from "./PopUpMenu.vue";
 import { mapMutations, mapState } from "vuex";
 
 export function setTooltips(tooltips: boolean) {
@@ -101,6 +103,9 @@ export default defineComponent({
   },
   computed: {
     ...mapState(["settings"]),
+  },
+  components: {
+    PopUpMenu,
   },
   methods: {
     ...mapMutations([
@@ -158,15 +163,5 @@ export default defineComponent({
 <style scoped>
 ul {
   list-style-type: none;
-}
-#outer {
-  background-color: var(--global-bg-color);
-}
-#exit-button {
-  font-size: x-large;
-  width: 2ch;
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 </style>

@@ -4,6 +4,7 @@ import { InjectionKey } from "vue";
 import Identifiable from "./model/identifiable";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import Structure from "./model/structure";
+import Civilization from "./model/civilization";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";
@@ -18,10 +19,11 @@ export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
   purchaseInformationData: Purchaseable | undefined;
+  civilizationInformationData: Civilization | undefined;
   structSellData: Structure | undefined;
   digData: boolean;
   debugMode: boolean;
-  settingsOpen: boolean;
+  popUpOpen: string;
   settings: Settings;
 }
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -30,10 +32,11 @@ export const store = createStore<State>({
     descriptionBoxIsEmpty: true,
     descriptionBoxData: defaultDescription,
     purchaseInformationData: undefined,
+    civilizationInformationData: undefined,
     structSellData: undefined,
     digData: false,
     debugMode: false,
-    settingsOpen: false,
+    popUpOpen: "",
     settings: {
       theme: "light",
       tooltips: true,
@@ -52,11 +55,33 @@ export const store = createStore<State>({
       state.settings.cbMode = newCBMode;
     },
     toggleSettingsOpen(state: State) {
-      state.settingsOpen = !state.settingsOpen;
+      if (state.popUpOpen == "settings") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "settings";
+      }
+    },
+    toggleEmpireOpen(state: State) {
+      if (state.popUpOpen == "empire") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "empire";
+      }
+    },
+    togglePrestigeOpen(state: State) {
+      if (state.popUpOpen == "prestige") {
+        state.popUpOpen = "";
+      } else {
+        state.popUpOpen = "prestige";
+      }
+    },
+    closePopUp(state: State) {
+      state.popUpOpen = "";
     },
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;
+      state.civilizationInformationData = undefined;
       state.structSellData = undefined;
       state.descriptionBoxData = defaultDescription;
       state.digData = false;
@@ -67,6 +92,11 @@ export const store = createStore<State>({
         state.purchaseInformationData = describe;
       }
       state.descriptionBoxData = describe.dataObject.description;
+    },
+    hoverDescCivilization(state: State, describe: Civilization) {
+      state.descriptionBoxData = "";
+      state.descriptionBoxIsEmpty = false;
+      state.civilizationInformationData = describe;
     },
     hoverDescStructSell(state: State, describe: Structure) {
       state.descriptionBoxIsEmpty = false;
@@ -81,6 +111,26 @@ export const store = createStore<State>({
     hoverDescString(state: State, str: string) {
       state.descriptionBoxIsEmpty = false;
       state.descriptionBoxData = str;
+    },
+    /**
+     * Uses strings of the form "abcd${x}efg" to replace the ${x} with a string
+     * from a list, where x is a number from 0-9.
+     * This is only to be used for small cases, larger strings should be their
+     * own custom component in the description container.
+     * @param args - Object with keys str (the base string) and args (list of
+     * strings to replace with)
+     */
+    hoverDescStringReg(state: State, args: { str: string; args: string[] }) {
+      let newStr = args.str;
+      const regexp = /(\$\{\d\})/gm;
+      const matches = args.str.matchAll(regexp);
+      for (const match of matches) {
+        const matStr = match[0].toString();
+        newStr = newStr.replace(matStr, args.args[Number(matStr[2])]);
+      }
+
+      state.descriptionBoxIsEmpty = false;
+      state.descriptionBoxData = newStr;
     },
     toggleDebug(state: State) {
       state.debugMode = !state.debugMode;

@@ -3,7 +3,7 @@
     <li>
       <p>{{ detailedDesc }}</p>
       <multiply-effect
-        v-if="upgradeType == 'multiplier'"
+        v-if="upgradeType == UpgradeEffects.multiplier"
         v-bind:effect="effect"
       ></multiply-effect>
     </li>
@@ -12,14 +12,20 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { UpgradeEffects } from "@/content/data-interfaces";
 import MultiplyEffect from "./MultiplyEffect.vue";
 export default defineComponent({
   name: "EffectDetails",
+  data() {
+    return {
+      UpgradeEffects: UpgradeEffects,
+    };
+  },
   components: {
     MultiplyEffect,
   },
   props: {
-    upgradeType: String,
+    upgradeType: Number,
     effect: Object,
     detailedDesc: String,
   },

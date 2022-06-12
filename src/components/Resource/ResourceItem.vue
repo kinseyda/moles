@@ -9,7 +9,9 @@
     </td>
     <td
       class="res-amount"
-      @mouseover="hoverDescString(numDesc)"
+      @mouseover="
+        hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })
+      "
       @mouseleave="resetDesc()"
     >
       <b>{{ formatNumber(resource.amount) }}</b>
@@ -17,7 +19,9 @@
     <td class="res-slash">/</td>
     <td
       class="res-cap"
-      @mouseover="hoverDescString(denomDesc)"
+      @mouseover="
+        hoverDescStringReg({ str: denomDesc, args: [resource.dataObject.name] })
+      "
       @mouseleave="resetDesc()"
     >
       <b>{{ formatNumber(resource.cap) }}</b
@@ -25,7 +29,9 @@
     </td>
     <td
       class="res-rate"
-      @mouseover="hoverDescString(rateDesc)"
+      @mouseover="
+        hoverDescStringReg({ str: rateDesc, args: [resource.dataObject.name] })
+      "
       @mouseleave="resetDesc()"
     >
       <b
@@ -46,7 +52,9 @@
     </td>
     <td class="res-slider">
       <input
-        @mouseover="hoverDescString(capDesc)"
+        @mouseover="
+          hoverDescStringReg({ str: capDesc, args: [resource.dataObject.name] })
+        "
         @mouseleave="resetDesc()"
         class="slider"
         :id="'slider' + resource.id"
@@ -61,7 +69,9 @@
       <button
         class="slider-set"
         @click="$emit('slider-max', resource.id)"
-        @mouseover="hoverDescString(maxDesc)"
+        @mouseover="
+          hoverDescStringReg({ str: maxDesc, args: [resource.dataObject.name] })
+        "
         @mouseleave="resetDesc()"
       >
         X
@@ -91,7 +101,12 @@ export default defineComponent({
     };
   },
   methods: {
-    ...mapMutations(["hoverDescIdentifiable", "hoverDescString", "resetDesc"]),
+    ...mapMutations([
+      "hoverDescIdentifiable",
+      "hoverDescString",
+      "hoverDescStringReg",
+      "resetDesc",
+    ]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },

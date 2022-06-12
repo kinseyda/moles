@@ -9,8 +9,17 @@ const defaultStartingValues = {
   trueRate: 0,
 };
 
+export enum ResourceIDs {
+  Dirt,
+  Wood,
+  Rock,
+  Iron,
+  Gold,
+  Termites,
+}
+
 export const resourceDataDict: { [id: number]: ResourceData } = {
-  0: {
+  [ResourceIDs.Dirt]: {
     name: "Dirt",
     description: "The basic building block of all mole civilization",
     startingParams: {
@@ -22,7 +31,7 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       trueRate: 0,
     },
   },
-  1: {
+  [ResourceIDs.Wood]: {
     name: "Wood",
     description:
       "Twigs and roots that look like they can be made into all sorts of things",
@@ -35,7 +44,7 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       trueRate: 0,
     },
   },
-  2: {
+  [ResourceIDs.Rock]: {
     name: "Rock",
     description: "A hard, grey lump of... whatever rocks are made of.",
     startingParams: {
@@ -47,39 +56,19 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       trueRate: 0,
     },
   },
-  3: {
+  [ResourceIDs.Iron]: {
     name: "Iron",
     description: "A particularly shiny kind of rock",
     startingParams: defaultStartingValues,
   },
-  4: {
+  [ResourceIDs.Gold]: {
     name: "Gold",
     description: "An even shinier kind of rock",
     startingParams: defaultStartingValues,
   },
-  5: {
+  [ResourceIDs.Termites]: {
     name: "Termites",
     description: "Your friendly, delicious neighbours",
-    startingParams: defaultStartingValues,
-  },
-  6: {
-    name: "Filler",
-    description: "Filler desc",
-    startingParams: defaultStartingValues,
-  },
-  7: {
-    name: "Filler",
-    description: "Filler desc",
-    startingParams: defaultStartingValues,
-  },
-  8: {
-    name: "Filler",
-    description: "Filler desc",
-    startingParams: defaultStartingValues,
-  },
-  9: {
-    name: "Filler",
-    description: "Filler desc",
     startingParams: defaultStartingValues,
   },
 };

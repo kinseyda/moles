@@ -3,6 +3,7 @@ export const uiDescriptions: { [id: string]: string } = {
   load: "Load the game from a cookie",
   debug:
     "Turn on/off debug mode. <br> <h4>Saving after using debug mode is not recommended</h4>",
+  settings: "Change various settings, such as theme and color options",
   settingsTheme: "Toggle theme type",
   settingsDescriptionPosition:
     "Toggle whether descriptions follow the mouse as a tooltip or stay at the bottom of the screen",
@@ -17,15 +18,26 @@ export const uiDescriptions: { [id: string]: string } = {
   log: "The history of your short mole life",
   resources:
     "All the materials you've discovered during your time digging this hole",
-  capSliders:
-    "How much of this resource you want to store (relative to the others)",
+  capSliders: "How much ${0} you want to store (relative to other resources)",
   sliderSet1: "Sets all sliders to 1 (equal distribution of space)",
   sliderSet0: "Sets all sliders to 0 (no resources stored at all)",
-  sliderSetMax: "Sets this slider to the maximum (10) and all others to 0",
-  resourceNumerator:
-    "The current amount of this resource you have (in mole-volumes)",
+  sliderSetMax:
+    "Sets this slider (${0}) to the maximum (10) and all others to 0",
+  resourceNumerator: "The current amount of ${0} you have (in mole-volumes)",
   resourceDenominator:
-    "The current amount of this resource you can store (in mole-volumes)",
+    "The current amount of ${0} you can store (in mole-volumes)",
   resourceRate:
-    "The current amount of this resource you are producing (in mole-volumes per second)",
+    "The current amount of ${0} you are producing (in mole-volumes per second)",
+  population: "The amount of Moles in your colony",
+  empireButton: "View information about your mole empire",
+  civRename: "Change the name of your mole colony",
+  civInfo: "The stats of your current civilization",
+  civList: "The list of civilizations previously established",
+  empireResources:
+    "The sum total of all exported resources from all civilizations",
+  empireRes: "The current amount of ${0} your empire is producing",
+  empireAvailable:
+    "The current amount of ${0} that is available to you (currently ${1}% of total)",
+  prestigeConfirm:
+    "Reset the game and export selected resources from your current civilization </br><b>This cannot be undone</b>",
 };
