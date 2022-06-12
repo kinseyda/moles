@@ -7,9 +7,6 @@ A game of mole miners.
 ## To do (before initial release)
 
 - Global multiplier upgrades?
-- Prestige system / Empire tab
-- Settings menu
-- Better theming
 - Documentation
 - Animations / effects? (Dirt particles falling off of button maybe?)
 - Content (maybe an hour or so of active play)
