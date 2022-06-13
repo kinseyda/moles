@@ -3,10 +3,11 @@
     class="list-row clickable"
     @mouseover="hoverDescIdentifiable(upgrade)"
     @mouseleave="resetDesc()"
-    :class="{ 'purchase-available': upgrade.canBuy }"
     @click="buyUpgrade(upgrade)"
   >
-    <td>{{ upgrade.dataObject.name }}</td>
+    <td :class="{ 'purchase-available': upgrade.canBuy }">
+      {{ upgrade.dataObject.name }}
+    </td>
   </tr>
 </template>
 

@@ -1,4 +1,4 @@
-import Purchaseable from "./model/purchaseable";
+import Purchasable from "./model/purchasable";
 import { createStore, Store } from "vuex";
 import { InjectionKey } from "vue";
 import Identifiable from "./model/identifiable";
@@ -18,7 +18,7 @@ interface Settings {
 export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
-  purchaseInformationData: Purchaseable | undefined;
+  purchaseInformationData: Purchasable | undefined;
   civilizationInformationData: Civilization | undefined;
   structSellData: Structure | undefined;
   digData: boolean;
@@ -74,7 +74,7 @@ export const store = createStore<State>({
     },
     hoverDescIdentifiable(state: State, describe: Identifiable) {
       state.descriptionBoxIsEmpty = false;
-      if (describe instanceof Purchaseable) {
+      if (describe instanceof Purchasable) {
         state.purchaseInformationData = describe;
       }
       state.descriptionBoxData = describe.dataObject.description;

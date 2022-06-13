@@ -1,4 +1,4 @@
-import Purchaseable from "./purchaseable";
+import Purchasable from "./purchasable";
 import { ExpansionData } from "../content/data-interfaces";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
@@ -9,7 +9,7 @@ import { expansionDataDict } from "../content/expansion-data";
  * To buy an expansion the player must dedicate all their storage to a "low level" resource, like wood.
  * Theres only one type of expansion at the moment but more should unlock upon prestige / "territory expansion"
  */
-export default class Expansion extends Purchaseable {
+export default class Expansion extends Purchasable {
   amount: number;
   discount: { [id: number]: number };
 

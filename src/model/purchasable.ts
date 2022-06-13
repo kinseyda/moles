@@ -4,7 +4,7 @@ import { SerializableClasses } from "./serializable-class";
 /**
  * Super-type for {@link Structure}s and {@link Upgrade}s
  */
-export default abstract class Purchaseable extends Identifiable {
+export default abstract class Purchasable extends Identifiable {
   constructor(id: number, typeName: SerializableClasses) {
     super(id, typeName);
   }

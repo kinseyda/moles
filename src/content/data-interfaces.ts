@@ -2,7 +2,7 @@ export interface IdentifiableData {
   name: string;
   description: string;
 }
-export interface PurchaseableData extends IdentifiableData {
+export interface PurchasableData extends IdentifiableData {
   cost: { [id: number]: number };
 }
 export enum UpgradeEffects {
@@ -12,7 +12,7 @@ export enum UpgradeEffects {
   empireMultiplier,
   none,
 }
-export interface UpgradeData extends PurchaseableData {
+export interface UpgradeData extends PurchasableData {
   effects: {
     func: UpgradeEffects;
     params: any[];
@@ -22,7 +22,7 @@ export interface UpgradeData extends PurchaseableData {
     discount: { [resId: number]: number };
   };
 }
-export interface StructureData extends PurchaseableData {
+export interface StructureData extends PurchasableData {
   areaCost: number;
   production: { [id: number]: number };
   consumption: { [id: number]: number };
@@ -33,7 +33,7 @@ export interface StructureData extends PurchaseableData {
   };
   sellDescription: string;
 }
-export interface ExpansionData extends PurchaseableData {
+export interface ExpansionData extends PurchasableData {
   areaEach: number;
   startingParams: {
     amount: number;

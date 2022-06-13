@@ -1,4 +1,4 @@
-import Purchaseable from "./purchaseable";
+import Purchasable from "./purchasable";
 import { structureDataDict } from "../content/structure-data";
 import { StructureData } from "../content/data-interfaces";
 import { game } from "./game";
@@ -8,7 +8,7 @@ import { SerializableClasses } from "./serializable-class";
  * Stores and updates non-static data relating to a kind of structure.
  * Structures passively generate resources (when their consumption needs are met), and cost both resources and area.
  */
-export default class Structure extends Purchaseable {
+export default class Structure extends Purchasable {
   amount: number;
   discount: { [id: number]: number };
 

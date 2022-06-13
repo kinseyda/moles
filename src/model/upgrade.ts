@@ -1,4 +1,4 @@
-import Purchaseable from "./purchaseable";
+import Purchasable from "./purchasable";
 import {
   PermanentUnlocks,
   UnlockIDs,
@@ -22,7 +22,7 @@ import Structure from "./structure";
  * Upgrades are single-time purchases that increase performance in some way, such as multiplying resource gains.
  * Upgrades cost resources and no area.
  */
-export default class Upgrade extends Purchaseable {
+export default class Upgrade extends Purchasable {
   bought: boolean;
   discount: { [id: number]: number };
 

@@ -88,13 +88,18 @@
             >
               Dig
             </h1>
-            <p v-if="gameData.area.amount == gameData.area.getUsableArea()">Dig</p>
+            <p v-if="gameData.area.amount == gameData.area.getUsableArea()">
+              Dig
+            </p>
           </button>
-          <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
+          <expansion-list :expansionDict="gameData.expansionDict">
+          </expansion-list>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
-            <button @click="setDigging(!gameData.dig.digging)">Toggle digging</button>
+            <button @click="setDigging(!gameData.dig.digging)">
+              Toggle digging
+            </button>
           </div>
         </div>
         <div id="event-log-container">
@@ -102,9 +107,10 @@
         </div>
         <description-container></description-container>
       </div>
-      <div id="purchaseable-column">
+      <div id="purchasable-column">
         <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-        <structure-list :structureDict="gameData.structureDict"> </structure-list>
+        <structure-list :structureDict="gameData.structureDict">
+        </structure-list>
       </div>
     </div>
 
@@ -246,7 +252,11 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
+    if (
+      loadTheme == "light" ||
+      loadTheme == "dark" ||
+      loadTheme == "true mole"
+    ) {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -332,7 +342,7 @@ export default class App extends Vue {}
 #settings-display {
   position: absolute;
 }
-#purchaseable-column {
+#purchasable-column {
   flex: 0 0 30ch;
   display: flex;
   flex-direction: column;

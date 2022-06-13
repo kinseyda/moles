@@ -20,14 +20,26 @@
       @mouseover="hoverDescIdentifiable(structure)"
       @mouseleave="resetDesc()"
     >
-      <button class="buy-sell" @click="buyStructure(structure)">+</button>
+      <button
+        class="buy-sell"
+        @click="buyStructure(structure)"
+        :class="{ 'good-text': structure.canBuy }"
+      >
+        +
+      </button>
     </td>
     <td
       class="struct-sell"
       @mouseover="hoverDescStructSell(structure)"
       @mouseleave="resetDesc()"
     >
-      <button class="buy-sell" @click="sellStructure(structure)">-</button>
+      <button
+        class="buy-sell"
+        @click="sellStructure(structure)"
+        :class="{ 'bad-text': structure.canSell() }"
+      >
+        -
+      </button>
     </td>
   </tr>
 </template>
@@ -42,11 +54,7 @@ export default defineComponent({
   name: "StructureItem",
   props: ["structure"],
   methods: {
-    ...mapMutations([
-      "hoverDescIdentifiable",
-      "hoverDescStructSell",
-      "resetDesc",
-    ]),
+    ...mapMutations(["hoverDescIdentifiable", "hoverDescStructSell", "resetDesc"]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },
