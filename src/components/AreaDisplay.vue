@@ -1,13 +1,21 @@
 <template>
   <div>
-    <h2
+    <p
+      id="area-text"
       @mouseover="hoverDescString(uiDescriptions['area'])"
       @mouseleave="resetDesc()"
     >
-      Max Area: {{ formatNumber(area.cap) }} <br />
-      Usable: {{ formatNumber(area.amount) }} /
-      {{ formatNumber(area.getUsableArea()) }} Mo
-    </h2>
+      Max Area: <b>{{ formatNumber(area.cap) }}</b> <br />
+      Usable:
+      <b
+        :class="{
+          'bad-text': area.amount < area.getUsableArea(),
+          'good-text': area.amount == area.getUsableArea(),
+        }"
+        >{{ formatNumber(area.amount) }}</b
+      >
+      / <b class="good-text">{{ formatNumber(area.getUsableArea()) }}</b> Mo
+    </p>
   </div>
 </template>
 
@@ -34,7 +42,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h2 {
+#area-text {
+  font-size: x-large;
   text-align: center;
 }
 </style>

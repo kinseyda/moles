@@ -79,6 +79,7 @@
             ]"
           >
             <h1
+              v-if="gameData.area.amount != gameData.area.getUsableArea()"
               :style="[
                 gameData.dig.digging
                   ? { background: 'var(--tertiary-bg-color)' }
@@ -87,6 +88,7 @@
             >
               Dig
             </h1>
+            <p v-if="gameData.area.amount == gameData.area.getUsableArea()">Dig</p>
           </button>
           <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
           <div id="debug-buttons" v-if="debugMode">

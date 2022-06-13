@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>
+    <p id="pop-text">
       <span
         @mouseover="hoverDescString(uiDescriptions['population'])"
         @mouseleave="resetDesc()"
@@ -12,7 +12,7 @@
         @mouseleave="resetDesc()"
         >{{ formatPop(popCap) }} Mo</span
       >
-    </h2>
+    </p>
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-h2 {
+#pop-text {
   text-align: center;
 }
 </style>
