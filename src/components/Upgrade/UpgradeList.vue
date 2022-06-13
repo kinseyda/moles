@@ -4,7 +4,7 @@
       @mouseover="hoverDescString(uiDescriptions['upgrades'])"
       @mouseleave="resetDesc()"
     >
-      Upgrades:
+      {{ showPrev ? "Previous" : "" }} Upgrades:
     </h2>
     <div id="upgrades">
       <table>
@@ -15,6 +15,9 @@
         ></upgrade-item>
       </table>
     </div>
+    <button @click="showPrev = !showPrev">
+      {{ showPrev ? "Hide" : "Show" }} previously bought upgrades
+    </button>
   </div>
 </template>
 
@@ -33,13 +36,14 @@ export default defineComponent({
   data() {
     return {
       uiDescriptions: uiDescriptions,
+      showPrev: false,
     };
   },
   computed: {
     visibleUpgrades() {
       let lst: Upgrade[] = [];
       for (const id in this.upgradeDict) {
-        if (!this.upgradeDict[id].bought) {
+        if (this.showPrev == this.upgradeDict[id].bought) {
           lst.push(this.upgradeDict[id]);
         }
       }
@@ -54,9 +58,11 @@ export default defineComponent({
 <style scoped>
 #outer {
   height: 25%;
+  display: flex;
+  flex-direction: column;
 }
 #upgrades {
-  height: calc(100% - 1em);
+  height: calc(100% - 2em);
   overflow-y: auto;
 }
 </style>

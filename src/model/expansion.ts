@@ -46,7 +46,7 @@ export default class Expansion extends Purchasable {
 
   buy() {
     if (!this.canBuy) {
-      return;
+      return false;
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
@@ -57,6 +57,7 @@ export default class Expansion extends Purchasable {
     }
     game.area.cap += this.dataObject.areaEach;
     this.amount += 1;
+    return true;
   }
 
   get canBuy() {

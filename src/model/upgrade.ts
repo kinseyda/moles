@@ -54,7 +54,7 @@ export default class Upgrade extends Purchasable {
 
   buy() {
     if (!this.canBuy) {
-      return;
+      return false;
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
@@ -85,6 +85,7 @@ export default class Upgrade extends Purchasable {
     }
     this.bought = true;
     game.handleEvent(RequirementType.upgrade, [this.id]);
+    return true;
   }
 
   get canBuy() {

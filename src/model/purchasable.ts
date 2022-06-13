@@ -21,6 +21,7 @@ export default abstract class Purchasable extends Identifiable {
   abstract get canBuy(): boolean;
   /**
    * Attempts to buy this purchase, and decements resources where needed if the purchase is successful.
+   * Returns true if bought successfully
    */
-  abstract buy(): void;
+  abstract buy(): boolean;
 }

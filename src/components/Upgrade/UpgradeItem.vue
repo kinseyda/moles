@@ -26,8 +26,9 @@ export default defineComponent({
       return formatNumber(num, undefined);
     },
     buyUpgrade(upgrade: Upgrade) {
-      upgrade.buy();
-      this.resetDesc();
+      if (upgrade.buy()) {
+        this.resetDesc();
+      }
     },
   },
 });

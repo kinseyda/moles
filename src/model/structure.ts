@@ -61,7 +61,7 @@ export default class Structure extends Purchasable {
 
   buy() {
     if (!this.canBuy) {
-      return;
+      return false;
     }
     for (const resIdStr in this.dataObject.cost) {
       const resId: number = Number(resIdStr);
@@ -72,6 +72,7 @@ export default class Structure extends Purchasable {
     }
     game.area.incrementAmount(-1 * this.trueCostArea());
     this.amount += 1;
+    return true;
   }
   /**
    * Finds the amount that should be given back upon selling a structure.
