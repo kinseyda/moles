@@ -66,16 +66,33 @@
           <button
             id="dig-button"
             @mouseover="hoverDescDig()"
-            @mouseleave="resetDesc()"
+            @mouseleave="
+              resetDesc();
+              setDigging(false);
+            "
             @mousedown="setDigging(true)"
             @mouseup="setDigging(false)"
+            :style="[
+              gameData.dig.digging
+                ? { background: 'var(--tertiary-bg-color)' }
+                : { background: 'var(--global-bg-color)' },
+            ]"
           >
-            <h1>Dig</h1>
+            <h1
+              :style="[
+                gameData.dig.digging
+                  ? { background: 'var(--tertiary-bg-color)' }
+                  : { background: 'var(--global-bg-color)' },
+              ]"
+            >
+              Dig
+            </h1>
           </button>
-          <expansion-list :expansionDict="gameData.expansionDict"></expansion-list>
+          <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
+            <button @click="setDigging(!gameData.dig.digging)">Toggle digging</button>
           </div>
         </div>
         <div id="event-log-container">
@@ -85,7 +102,7 @@
       </div>
       <div id="purchaseable-column">
         <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-        <structure-list :structureDict="gameData.structureDict"></structure-list>
+        <structure-list :structureDict="gameData.structureDict"> </structure-list>
       </div>
     </div>
 
@@ -111,7 +128,8 @@
       v-if="popUpOpen == 'info'"
       :appVersion="appVersion"
       :gameSaveVersion="gameData.creationVersion"
-    ></info-display>
+    >
+    </info-display>
   </div>
 </template>
 
