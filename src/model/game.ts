@@ -170,7 +170,8 @@ export class Game extends SerializableClass {
   getResourceChanges(tickSize: number, resCaps: { [resId: number]: number }) {
     const resChanges: { [resId: number]: number } = {};
 
-    const popMult = 1 + this.getPopulation() / 100;
+    const popMult =
+      this.getPopulation() >= 2 ? 1 + this.getPopulation() / 100 : 1;
 
     if (this.dig.digging) {
       for (const resID in this.dig.digRates) {
@@ -291,7 +292,8 @@ export class Game extends SerializableClass {
     const M = popCap;
     // const a = 600; // 10 minutes
     // const a = 60; // 1 minute
-    const a = 5; // 5 sec
+    // const a = 5; // 5 sec
+    const a = 1200;
 
     const k = (2 * Math.log2(s / (M - s))) / a;
 

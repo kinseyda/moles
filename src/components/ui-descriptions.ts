@@ -27,7 +27,9 @@ export const uiDescriptions: { [id: string]: string } = {
     "The current amount of ${0} you can store (in mole-volumes)",
   resourceRate:
     "The current amount of ${0} you are producing (in mole-volumes per second)",
-  population: "The amount of Moles in your colony",
+  population: "The amount of moles in your colony",
+  populationMax:
+    "The maximum amount of moles the colony can support (moles don't like to be too crowded)",
   empireButton: "View information about your mole empire",
   civRename: "Change the name of your mole colony",
   civInfo: "The stats of your current civilization",

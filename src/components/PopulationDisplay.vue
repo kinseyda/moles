@@ -1,10 +1,17 @@
 <template>
-  <div
-    @mouseover="hoverDescString(uiDescriptions['population'])"
-    @mouseleave="resetDesc()"
-  >
+  <div>
     <h2>
-      Population: {{ formatPop(population) }} / {{ formatPop(popCap) }} Mo
+      <span
+        @mouseover="hoverDescString(uiDescriptions['population'])"
+        @mouseleave="resetDesc()"
+        >Population: {{ formatPop(population) }}</span
+      >
+      /
+      <span
+        @mouseover="hoverDescString(uiDescriptions['populationMax'])"
+        @mouseleave="resetDesc()"
+        >{{ formatPop(popCap) }} Mo</span
+      >
     </h2>
   </div>
 </template>
