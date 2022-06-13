@@ -83,8 +83,8 @@ export default class Upgrade extends Purchaseable {
           break;
       }
     }
-    game.handleEvent(RequirementType.upgrade, [this.id]);
     this.bought = true;
+    game.handleEvent(RequirementType.upgrade, [this.id]);
   }
 
   get canBuy() {

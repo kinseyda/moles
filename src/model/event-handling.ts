@@ -127,7 +127,7 @@ function checkEventId(
         }
         break;
       case RequirementType.upgrade:
-        if (triggerEventType !== RequirementType.upgrade) {
+        if (!checkEventUpgrade(eventRequirement.requirementDetails[0], game)) {
           return false;
         }
         break;
@@ -162,6 +162,12 @@ function checkEventPrevEvent(eventList: number[], game: Game) {
     }
   }
   return true;
+}
+function checkEventUpgrade(upgradeId: number, game: Game) {
+  if (!game.upgradeDict[upgradeId]) {
+    return false;
+  }
+  return game.upgradeDict[upgradeId].bought;
 }
 function checkEventResourceAmount(
   resReqs: { [resId: number]: number },
