@@ -18,11 +18,14 @@ import {
 import Expansion from "./expansion";
 import Civilization from "./civilization";
 
+export const currentVersion = "0.1.0";
+
 /**
  * Handles all internal game logic.
  * @extends SerializableClass {@link SerializableClass}
  */
 export class Game extends SerializableClass {
+  creationVersion: string;
   lastUpdate: number;
   dig: Dig;
   area: Area;
@@ -39,6 +42,8 @@ export class Game extends SerializableClass {
   // EventId: Time achieved / last achieved
 
   /**
+   * @param creationVersion - Value of currentVersion at time of creation, used
+   * to tell how bad a savegame mismatch is
    * @param lastUpdate - Time of the most recent tick (in ms since epoch).
    * Use Date.now().
    * @param dig - {@link Dig} that stores the game's current dig stats.
@@ -67,6 +72,7 @@ export class Game extends SerializableClass {
    * in {@link eventDataDict}) to the time they were achieved (ms since epoch).
    */
   constructor(
+    creationVersion: string,
     lastUpdate: number,
     dig: Dig,
     area: Area,
@@ -82,6 +88,7 @@ export class Game extends SerializableClass {
     eventsDict: { [id: number]: number }
   ) {
     super(SerializableClasses.Game);
+    this.creationVersion = creationVersion;
     this.lastUpdate = lastUpdate;
     this.dig = dig;
     this.area = area;
@@ -370,6 +377,7 @@ export class Game extends SerializableClass {
     this.civilizations.push(civ);
 
     const g = new Game(
+      this.creationVersion,
       Date.now(),
       startingDig(),
       startingArea(),
@@ -418,6 +426,7 @@ export class Game extends SerializableClass {
         switch (SerializableClasses[Number(obj["_class"])]) {
           case "Game":
             return new Game(
+              obj.creationVersion,
               obj.lastUpdate,
               obj.dig,
               obj.area,
@@ -487,6 +496,7 @@ export function setGame(newGame: Game) {
 export function startGame() {
   setGame(
     new Game(
+      currentVersion,
       Date.now(),
       startingDig(),
       startingArea(),

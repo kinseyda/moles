@@ -54,25 +54,11 @@ export const store = createStore<State>({
     settingsSetCBMode(state: State, newCBMode: string) {
       state.settings.cbMode = newCBMode;
     },
-    toggleSettingsOpen(state: State) {
-      if (state.popUpOpen == "settings") {
+    togglePopupOpen(state: State, popUpType: string) {
+      if (state.popUpOpen == popUpType) {
         state.popUpOpen = "";
       } else {
-        state.popUpOpen = "settings";
-      }
-    },
-    toggleEmpireOpen(state: State) {
-      if (state.popUpOpen == "empire") {
-        state.popUpOpen = "";
-      } else {
-        state.popUpOpen = "empire";
-      }
-    },
-    togglePrestigeOpen(state: State) {
-      if (state.popUpOpen == "prestige") {
-        state.popUpOpen = "";
-      } else {
-        state.popUpOpen = "prestige";
+        state.popUpOpen = popUpType;
       }
     },
     closePopUp(state: State) {

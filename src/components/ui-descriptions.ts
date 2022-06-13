@@ -8,8 +8,7 @@ export const uiDescriptions: { [id: string]: string } = {
   settingsDescriptionPosition:
     "Toggle whether descriptions follow the mouse as a tooltip or stay at the bottom of the screen",
   settingsCBMode: "Change the way good/bad things are indicated on screen",
-  area:
-    "The total amount of space (in mole-volumes) you can expand to without cave-in",
+  area: "The total amount of space (in mole-volumes) you can expand to without cave-in",
   dig: "You feel an urge to dig",
   upgrades:
     "Your little mole mind races with ideas to improve your tunneling ability",
@@ -40,4 +39,7 @@ export const uiDescriptions: { [id: string]: string } = {
     "The current amount of ${0} that is available to you (currently ${1}% of total)",
   prestigeConfirm:
     "Reset the game and export selected resources from your current civilization </br><b>This cannot be undone</b>",
+  infoButton: "See information about the game",
+  versions:
+    "When version numbers are different, the game is <b>unsupported</b>, and can behave unpredictably.</br>Different <b>patch</b> versions are <i>probably</i> fine.</br>Different <b>minor</b> versions <i>may or may not</i> be fine.</br>Different <b>major</b> versions are <i>certainly not</i> going to be compatible.",
 };

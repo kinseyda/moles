@@ -4,10 +4,7 @@
     <template #content>
       <div id="prestige-outer">
         <div id="resource-select">
-          <p>
-            Select up to 2 resources to export from this civilization when you
-            leave.
-          </p>
+          <p>Select up to 2 resources to export from this civilization when you leave.</p>
           <ul>
             <li v-for="(rate, resId) in maxPotentialRates" :key="resId">
               <label>
@@ -21,18 +18,17 @@
                   "
                   number
                 />
-                {{ getResData(resId).name }}: {{ formatNumber(rate)
-                }}<small> Mo/s</small>
+                {{ getResData(resId).name }}: {{ formatNumber(rate) }}<small> Mo/s</small>
               </label>
             </li>
           </ul>
         </div>
         <div id="buttons">
-          <button @click="toggleEmpireOpen()">Cancel</button>
+          <button @click="togglePopupOpen('empire')">Cancel</button>
           <button
             @click="
               $emit('prestige', resourcesSelected);
-              togglePrestigeOpen();
+              togglePopupOpen('prestige');
             "
             @mouseover="hoverDescString(uiDescriptions['prestigeConfirm'])"
             @mouseleave="resetDesc()"
@@ -71,12 +67,7 @@ export default defineComponent({
     ...mapState(["settings"]),
   },
   methods: {
-    ...mapMutations([
-      "toggleEmpireOpen",
-      "togglePrestigeOpen",
-      "hoverDescString",
-      "resetDesc",
-    ]),
+    ...mapMutations(["togglePopupOpen", "hoverDescString", "resetDesc"]),
     getResData(resId: number): ResourceData {
       return resourceDataDict[resId];
     },

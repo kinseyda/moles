@@ -17,11 +17,18 @@
       </button>
 
       <button
-        @click="toggleSettingsOpen()"
+        @click="togglePopupOpen('settings')"
         @mouseover="hoverDescString(uiDescriptions['settings'])"
         @mouseleave="resetDesc()"
       >
         Settings
+      </button>
+      <button
+        @click="togglePopupOpen('info')"
+        @mouseover="hoverDescString(uiDescriptions['infoButton'])"
+        @mouseleave="resetDesc()"
+      >
+        Info
       </button>
       <button
         @click="debugToggle"
@@ -43,7 +50,7 @@
           v-if="gameData.isUnlocked(PermanentUnlocks.Empire)"
           @mouseover="hoverDescString(uiDescriptions['empireButton'])"
           @mouseleave="resetDesc()"
-          @click="toggleEmpireOpen"
+          @click="togglePopupOpen('empire')"
         >
           Empire
         </button>
@@ -100,6 +107,11 @@
       :maxPotentialRates="gameData.getHighestPotentialRates()"
     >
     </prestige-menu>
+    <info-display
+      v-if="popUpOpen == 'info'"
+      :appVersion="appVersion"
+      :gameSaveVersion="gameData.creationVersion"
+    ></info-display>
   </div>
 </template>
 
@@ -110,6 +122,7 @@ import AreaDisplay from "./components/AreaDisplay.vue";
 import PopulationDisplay from "./components/PopulationDisplay.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
 import EmpireDisplay from "./components/Empire/EmpireDisplay.vue";
+import InfoDisplay from "./components/InfoDisplay.vue";
 import PrestigeMenu from "./components/Empire/PrestigeMenu.vue";
 import ResourceList from "./components/Resource/ResourceList.vue";
 import UpgradeList from "./components/Upgrade/UpgradeList.vue";
@@ -118,7 +131,7 @@ import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
 import { PermanentUnlocks } from "./content/upgrade-data";
-import { Game, game, startGame } from "./model/game";
+import { Game, game, startGame, currentVersion } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
@@ -135,6 +148,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     DescriptionContainer,
     EventLog,
     SettingsDisplay,
+    InfoDisplay,
     EmpireDisplay,
     PrestigeMenu,
   },
@@ -155,6 +169,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       gameData: game,
       uiDescriptions: uiDescriptions,
       PermanentUnlocks: PermanentUnlocks,
+      appVersion: currentVersion,
     };
   },
   methods: {
@@ -163,8 +178,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       "hoverDescDig",
       "hoverDescString",
       "resetDesc",
-      "toggleEmpireOpen",
-      "toggleSettingsOpen",
+      "togglePopupOpen",
       "settingsSetTheme",
       "settingsSetTooltips",
       "settingsSetCBMode",

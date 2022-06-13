@@ -107,7 +107,7 @@
           </div>
         </div>
         <div id="prestige-button" v-if="prestigeUnlocked">
-          <button @click="togglePrestigeOpen()">Prestige</button>
+          <button @click="togglePopupOpen('prestige')">Prestige</button>
         </div>
       </div>
     </template>
@@ -154,7 +154,7 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations([
-      "togglePrestigeOpen",
+      "togglePopupOpen",
       "hoverDescString",
       "hoverDescStringReg",
       "resetDesc",

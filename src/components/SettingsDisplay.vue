@@ -17,9 +17,7 @@
         <li>
           <button
             @click="toggleTooltips"
-            @mouseover="
-              hoverDescString(uiDescriptions['settingsDescriptionPosition'])
-            "
+            @mouseover="hoverDescString(uiDescriptions['settingsDescriptionPosition'])"
             @mouseleave="resetDesc()"
           >
             Descriptions: {{ settings.tooltips ? "Tooltips" : "Fixed" }}
@@ -109,7 +107,6 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations([
-      "toggleSettingsOpen",
       "settingsSetTheme",
       "settingsSetTooltips",
       "settingsSetCBMode",

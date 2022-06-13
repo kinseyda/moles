@@ -51,7 +51,7 @@ button {
 
 .purchase-available {
   font-weight: bolder;
-  text-shadow: 0px 1px #000
+  text-shadow: 0px 1px var(--text-color)
 }
 .good-text {
 	color: var(--good-text-color);
