@@ -72,6 +72,7 @@ button.buy-sell {
   float: right;
   width: 2.5ch;
   margin-right: 5px;
+  background-color: var(--global-bg-color);
 }
 td.struct-name {
   width: 23ch;

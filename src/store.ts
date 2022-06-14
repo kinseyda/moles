@@ -5,6 +5,7 @@ import Identifiable from "./model/identifiable";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import Structure from "./model/structure";
 import Civilization from "./model/civilization";
+import { ResourceRate } from "./content/data-interfaces";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";
@@ -21,6 +22,7 @@ export interface State {
   purchaseInformationData: Purchasable | undefined;
   civilizationInformationData: Civilization | undefined;
   structSellData: Structure | undefined;
+  resourceRateData: ResourceRate | undefined;
   digData: boolean;
   debugMode: boolean;
   popUpOpen: string;
@@ -34,6 +36,7 @@ export const store = createStore<State>({
     purchaseInformationData: undefined,
     civilizationInformationData: undefined,
     structSellData: undefined,
+    resourceRateData: undefined,
     digData: false,
     debugMode: false,
     popUpOpen: "",
@@ -67,6 +70,7 @@ export const store = createStore<State>({
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;
       state.purchaseInformationData = undefined;
+      state.resourceRateData = undefined;
       state.civilizationInformationData = undefined;
       state.structSellData = undefined;
       state.descriptionBoxData = defaultDescription;
@@ -94,6 +98,16 @@ export const store = createStore<State>({
       state.digData = true;
       state.descriptionBoxData = uiDescriptions["dig"];
     },
+    hoverDescResRate(
+      state: State,
+      args: { resName: string; rr: ResourceRate }
+    ) {
+      state.descriptionBoxIsEmpty = false;
+      state.resourceRateData = args.rr;
+      state.descriptionBoxData = stringReg(uiDescriptions["resourceRate"], [
+        args.resName,
+      ]);
+    },
     hoverDescString(state: State, str: string) {
       state.descriptionBoxIsEmpty = false;
       state.descriptionBoxData = str;
@@ -107,19 +121,23 @@ export const store = createStore<State>({
      * strings to replace with)
      */
     hoverDescStringReg(state: State, args: { str: string; args: string[] }) {
-      let newStr = args.str;
-      const regexp = /(\$\{\d\})/gm;
-      const matches = args.str.matchAll(regexp);
-      for (const match of matches) {
-        const matStr = match[0].toString();
-        newStr = newStr.replace(matStr, args.args[Number(matStr[2])]);
-      }
-
       state.descriptionBoxIsEmpty = false;
-      state.descriptionBoxData = newStr;
+      state.descriptionBoxData = stringReg(args.str, args.args);
     },
     toggleDebug(state: State) {
       state.debugMode = !state.debugMode;
     },
   },
 });
+
+function stringReg(str: string, args: string[]) {
+  let newStr = str;
+  const regexp = /(\$\{\d\})/gm;
+  const matches = str.matchAll(regexp);
+  for (const match of matches) {
+    const matStr = match[0].toString();
+    newStr = newStr.replace(matStr, args[Number(matStr[2])]);
+  }
+
+  return newStr;
+}

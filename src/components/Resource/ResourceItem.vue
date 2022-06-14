@@ -9,9 +9,7 @@
     </td>
     <td
       class="res-amount"
-      @mouseover="
-        hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })
-      "
+      @mouseover="hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })"
       @mouseleave="resetDesc()"
     >
       <b>{{ formatNumber(resource.amount) }}</b>
@@ -30,7 +28,10 @@
     <td
       class="res-rate"
       @mouseover="
-        hoverDescStringReg({ str: rateDesc, args: [resource.dataObject.name] })
+        hoverDescResRate({
+          resName: resource.dataObject.name,
+          rr: resource.rateBreakdown,
+        })
       "
       @mouseleave="resetDesc()"
     >
@@ -103,6 +104,7 @@ export default defineComponent({
   methods: {
     ...mapMutations([
       "hoverDescIdentifiable",
+      "hoverDescResRate",
       "hoverDescString",
       "hoverDescStringReg",
       "resetDesc",

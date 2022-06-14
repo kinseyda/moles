@@ -51,6 +51,16 @@ export interface ResourceData extends IdentifiableData {
   };
 }
 
+export interface ResourceRate {
+  digRate: number;
+  structureProd: number;
+  structureCons: number;
+  resourceMult: number;
+  popMult: number;
+  empireRate: number;
+  empireMult: number;
+}
+
 export interface UnlockData {
   resources: number[];
   upgrades: number[];

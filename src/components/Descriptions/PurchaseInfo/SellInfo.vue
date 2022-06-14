@@ -5,10 +5,7 @@
       <h4>Refund:</h4>
       <ul>
         <li><b>Area:</b> {{ structure.dataObject.areaCost }}</li>
-        <li
-          v-for="resId in Object.keys(structure.dataObject.cost)"
-          :key="resId"
-        >
+        <li v-for="resId in Object.keys(structure.dataObject.cost)" :key="resId">
           {{ getResourceData(resId).name }}:
           <span class="good-text"
             >+{{ formatNumber(structure.sellFor(resId))
@@ -53,7 +50,7 @@ export default defineComponent({
   },
 });
 </script>
-<style>
+<style scoped>
 .half-side {
   width: 48%;
 }

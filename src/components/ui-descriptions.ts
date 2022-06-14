@@ -26,7 +26,7 @@ export const uiDescriptions: { [id: string]: string } = {
   resourceDenominator:
     "The current amount of ${0} you can store (in mole-volumes)",
   resourceRate:
-    "The current amount of ${0} you are producing (in mole-volumes per second)",
+    "The current amount of <b>${0}</b> you are producing (in mole-volumes per second):",
   population: "The amount of moles in your colony",
   populationMax:
     "The maximum amount of moles the colony can support (moles don't like to be too crowded)",

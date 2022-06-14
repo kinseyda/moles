@@ -1,5 +1,9 @@
 import { resourceDataDict } from "@/content/resource-data";
-import { RequirementType, ResourceData } from "../content/data-interfaces";
+import {
+  RequirementType,
+  ResourceData,
+  ResourceRate,
+} from "../content/data-interfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
 import { SerializableClasses } from "./serializable-class";
@@ -13,7 +17,8 @@ export default class Resource extends Identifiable {
   cap: number;
   capPriority: number;
   multiplier: number;
-  rateLastTick: number; // Rate in Mo/s derived from game tick increase
+  rateLastTick: number;
+  rateBreakdown: ResourceRate; // Rate in Mo/s derived from game tick increase
 
   /**
    * @param id - A unique id corresponding to the relevant item in {@link resourceDataDict}.
@@ -35,6 +40,15 @@ export default class Resource extends Identifiable {
     this.capPriority = capPriority;
     this.multiplier = multiplier;
     this.rateLastTick = 0;
+    this.rateBreakdown = {
+      digRate: 0,
+      structureProd: 0,
+      structureCons: 0,
+      resourceMult: 0,
+      popMult: 0,
+      empireRate: 0,
+      empireMult: 0,
+    };
   }
 
   /**
@@ -111,8 +125,9 @@ export default class Resource extends Identifiable {
    * @param change
    * @param ticksize
    */
-  updateRateFromTick(change: number, ticksize: number) {
-    this.rateLastTick = change / ticksize;
+  updateRateFromTick(change: number, tickSize: number, rates: ResourceRate) {
+    this.rateLastTick = change / tickSize;
+    this.rateBreakdown = rates;
   }
 
   /**

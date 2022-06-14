@@ -5,7 +5,7 @@ import Resource from "./resource";
 import Dig from "./dig";
 import { reactive } from "vue";
 import { handleEvent } from "./event-handling";
-import { RequirementType } from "../content/data-interfaces";
+import { RequirementType, ResourceRate } from "../content/data-interfaces";
 import Area from "./area";
 import {
   startingArea,
@@ -134,19 +134,15 @@ export class Game extends SerializableClass {
     for (const resId in this.resourceDict) {
       resCaps[resId] = this.resourceDict[resId].cap;
     }
+
+    const resCh = this.getResourceChanges(tickSize, resCaps);
+
     const resChanges: {
       [resId: number]: number;
-    } = this.getResourceChanges(tickSize, resCaps);
-
-    // Add civilization changes
-    for (const civ of this.civilizations) {
-      for (const resIdStr in civ.resourceRates) {
-        const resId = Number(resIdStr);
-        resChanges[resId] =
-          (resChanges[resId] || 0) +
-          civ.resourceRates[resId] * this.empireMultiplier * tickSize;
-      }
-    }
+    } = resCh["changes"];
+    const resBreakdown: {
+      [resId: number]: ResourceRate;
+    } = resCh["breakdown"];
 
     // Make changes
     for (const resID in resChanges) {
@@ -160,7 +156,8 @@ export class Game extends SerializableClass {
     for (const resID in this.resourceDict) {
       this.resourceDict[resID].updateRateFromTick(
         resChanges[resID] || 0,
-        tickSize
+        tickSize,
+        resBreakdown[resID]
       );
     }
 
@@ -168,13 +165,26 @@ export class Game extends SerializableClass {
   }
 
   getResourceChanges(tickSize: number, resCaps: { [resId: number]: number }) {
-    const resChanges: { [resId: number]: number } = {};
-
     const popMult =
       this.getPopulation() >= 2 ? 1 + this.getPopulation() / 100 : 1;
+    const resChanges: { [resId: number]: number } = {};
+    const rateBreakdown: { [resId: number]: ResourceRate } = {};
+
+    for (const resId in this.resourceDict) {
+      rateBreakdown[resId] = {
+        digRate: 0,
+        structureProd: 0,
+        structureCons: 0,
+        resourceMult: this.resourceDict[resId].multiplier,
+        popMult: popMult,
+        empireRate: 0,
+        empireMult: this.empireMultiplier,
+      };
+    }
 
     if (this.dig.digging) {
       for (const resID in this.dig.digRates) {
+        rateBreakdown[resID].digRate = this.dig.digRates[resID];
         resChanges[resID] =
           (resChanges[resID] || 0) +
           this.dig.digRates[resID] *
@@ -225,6 +235,8 @@ export class Game extends SerializableClass {
       } else {
         for (const resID in structConsume) {
           resChanges[resID] = (resChanges[resID] || 0) - structConsume[resID];
+          rateBreakdown[resID].structureCons =
+            (rateBreakdown[resID].structureCons || 0) + structConsume[resID];
         }
         for (const resID in curStruct.dataObject.production) {
           resChanges[resID] =
@@ -235,10 +247,29 @@ export class Game extends SerializableClass {
               // Multiplier only for prod not consumption
               structAmount *
               tickSize;
+          rateBreakdown[resID].structureProd =
+            (rateBreakdown[resID].structureProd || 0) +
+            curStruct.dataObject.production[resID] * structAmount * tickSize;
         }
       }
     }
-    return resChanges;
+
+    // Add civilization changes
+    for (const civ of this.civilizations) {
+      for (const resIdStr in civ.resourceRates) {
+        if (resChanges[resIdStr] === undefined) {
+          continue;
+        }
+        const resId = Number(resIdStr);
+        resChanges[resId] =
+          (resChanges[resId] || 0) +
+          civ.resourceRates[resId] * this.empireMultiplier * tickSize;
+        rateBreakdown[resId].empireRate =
+          (rateBreakdown[resId].empireRate || 0) +
+          civ.resourceRates[resId] * tickSize;
+      }
+    }
+    return { changes: resChanges, breakdown: rateBreakdown };
   }
 
   getPopulation(): number {
@@ -364,7 +395,7 @@ export class Game extends SerializableClass {
     for (const resId in this.resourceDict) {
       resCaps[resId] = Infinity;
     }
-    return this.getResourceChanges(1, resCaps);
+    return this.getResourceChanges(1, resCaps)["changes"];
   }
 
   prestige(resIDs: number[]) {

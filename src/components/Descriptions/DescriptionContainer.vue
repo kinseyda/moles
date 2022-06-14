@@ -12,14 +12,15 @@
       v-if="purchaseInformationData"
     ></purchase-info>
     <dig-information :dig="gameData.dig" v-if="digData"></dig-information>
-    <sell-info
-      v-bind:structure="structSellData"
-      v-if="structSellData"
-    ></sell-info>
+    <sell-info v-bind:structure="structSellData" v-if="structSellData"></sell-info>
     <civilization-info
       :civilization="civilizationInformationData"
       v-if="civilizationInformationData"
     ></civilization-info>
+    <resource-rate
+      :resourceRate="resourceRateData"
+      v-if="resourceRateData"
+    ></resource-rate>
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import { game } from "@/model/game";
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
 import PurchaseInfo from "@/components/Descriptions/PurchaseInfo/PurchaseInfo.vue";
+import ResourceRate from "@/components/Descriptions/ResourceRate.vue";
 import SellInfo from "@/components/Descriptions/PurchaseInfo/SellInfo.vue";
 import DigInformation from "@/components/Descriptions/DigInformation.vue";
 import CivilizationInfo from "./CivilizationInfo.vue";
@@ -36,6 +38,7 @@ export default defineComponent({
   computed: {
     ...mapState([
       "purchaseInformationData",
+      "resourceRateData",
       "structSellData",
       "civilizationInformationData",
       "descriptionBoxData",
@@ -54,6 +57,7 @@ export default defineComponent({
     SellInfo,
     DigInformation,
     CivilizationInfo,
+    ResourceRate,
   },
 });
 </script>
