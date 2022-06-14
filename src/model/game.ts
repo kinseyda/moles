@@ -249,7 +249,7 @@ export class Game extends SerializableClass {
               tickSize;
           rateBreakdown[resID].structureProd =
             (rateBreakdown[resID].structureProd || 0) +
-            curStruct.dataObject.production[resID] * structAmount * tickSize;
+            curStruct.dataObject.production[resID] * structAmount;
         }
       }
     }
@@ -265,8 +265,7 @@ export class Game extends SerializableClass {
           (resChanges[resId] || 0) +
           civ.resourceRates[resId] * this.empireMultiplier * tickSize;
         rateBreakdown[resId].empireRate =
-          (rateBreakdown[resId].empireRate || 0) +
-          civ.resourceRates[resId] * tickSize;
+          (rateBreakdown[resId].empireRate || 0) + civ.resourceRates[resId];
       }
     }
     return { changes: resChanges, breakdown: rateBreakdown };
