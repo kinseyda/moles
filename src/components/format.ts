@@ -77,7 +77,10 @@ function formatNormal(num: number) {
   ) {
     return num.toFixed(0);
   }
-  return num.toFixed(2);
+  if (num < 100) {
+    return num.toFixed(2);
+  }
+  return num.toFixed(1);
 }
 function formatIllion(num: number) {
   const millions = num / 1000000;

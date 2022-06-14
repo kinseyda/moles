@@ -6,7 +6,7 @@
   >
     {{ civilization.name }} <br />
     <ul>
-      <li>Population: {{ civilization.population }}</li>
+      <li>Population: {{ formatPop(civilization.population) }}</li>
       <li>Status: {{ getPopString(civilization.population) }}</li>
     </ul>
   </li>
@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import { formatNumber } from "@/components/format";
+import { formatNumber, formatDown } from "@/components/format";
 import { getStatus, getStatusString } from "@/content/population-statuses";
 
 export default defineComponent({
@@ -28,6 +28,9 @@ export default defineComponent({
     },
     getPopString(pop: number): string {
       return getStatusString(getStatus(pop));
+    },
+    formatPop(num: number) {
+      return formatDown(num);
     },
   },
 });

@@ -12,6 +12,7 @@ export const uiDescriptions: { [id: string]: string } = {
   dig: "You feel an urge to dig",
   upgrades:
     "Your little mole mind races with ideas to improve your tunneling ability",
+  prevUpgrades: "Show upgrades that have previously been purchased",
   structures:
     "You think all this empty space and all these resources should be put to good use",
   log: "The history of your short mole life",

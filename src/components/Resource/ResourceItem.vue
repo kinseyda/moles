@@ -175,7 +175,7 @@ td.res-cap {
   min-width: 9ch;
 }
 td.res-rate {
-  min-width: 10ch;
+  min-width: 11ch;
 }
 td.res-slider {
   min-width: 10ch;

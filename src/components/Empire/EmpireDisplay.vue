@@ -25,7 +25,7 @@
             @mouseover="hoverDescString(uiDescriptions['civInfo'])"
             @mouseleave="resetDesc()"
           >
-            <p>Current population: {{ population }}</p>
+            <p>Current population: {{ formatPop(population) }}</p>
             <p>Status: {{ getPopString(population) }}</p>
           </div>
           <div
@@ -124,7 +124,7 @@ import { game } from "@/model/game";
 import { resourceDataDict } from "@/content/resource-data";
 import { ResourceData } from "@/content/data-interfaces";
 import { getStatus, getStatusString } from "@/content/population-statuses";
-import { formatNumber } from "../format";
+import { formatNumber, formatDown } from "../format";
 
 export default defineComponent({
   name: "EmpireDisplay",
@@ -167,6 +167,9 @@ export default defineComponent({
     },
     getPopString(pop: number): string {
       return getStatusString(getStatus(pop));
+    },
+    formatPop(num: number) {
+      return formatDown(num);
     },
     setName() {
       game.name = this.newName;

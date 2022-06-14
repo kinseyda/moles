@@ -15,7 +15,11 @@
         ></upgrade-item>
       </table>
     </div>
-    <button @click="showPrev = !showPrev">
+    <button
+      @mouseover="hoverDescString(uiDescriptions['prevUpgrades'])"
+      @mouseleave="resetDesc()"
+      @click="showPrev = !showPrev"
+    >
       {{ showPrev ? "Hide" : "Show" }} previously bought upgrades
     </button>
   </div>
