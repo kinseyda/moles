@@ -23,3 +23,7 @@ git add -A
 git commit -m "Updating to version `echo $1` - `date +'%Y-%m-%d %H:%M:%S'`"
 git checkout main
 git merge dev
+git push
+./deploy.sh
+git checkout dev
+git push
