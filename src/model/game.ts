@@ -17,8 +17,9 @@ import {
 } from "../content/start";
 import Expansion from "./expansion";
 import Civilization from "./civilization";
+import meta from "../metadata.json";
 
-export const currentVersion = "0.1.0";
+export const currentVersion = meta["gameVersion"];
 
 /**
  * Handles all internal game logic.
