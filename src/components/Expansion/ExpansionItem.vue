@@ -3,9 +3,10 @@
     @mouseover="hoverDescIdentifiable(expansion)"
     @mouseleave="resetDesc()"
     @click="expansion.buy()"
-    :class="{ 'purchase-available': expansion.canBuy }"
   >
-    Buy {{ expansion.dataObject.name }}
+    <span :class="{ 'purchase-available': expansion.canBuy }"
+      >Buy {{ expansion.dataObject.name }}</span
+    >
   </button>
 </template>
 

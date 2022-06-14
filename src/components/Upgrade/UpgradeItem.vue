@@ -6,7 +6,9 @@
     @click="buyUpgrade(upgrade)"
   >
     <td :class="{ 'purchase-available': upgrade.canBuy }">
-      {{ upgrade.dataObject.name }}
+      <span :class="{ 'purchase-available': upgrade.canBuy }">{{
+        upgrade.dataObject.name
+      }}</span>
     </td>
   </tr>
 </template>
