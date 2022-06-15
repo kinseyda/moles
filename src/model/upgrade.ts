@@ -16,6 +16,8 @@ import Resource from "./resource";
 import { resourceDataDict } from "../content/resource-data";
 import { structureDataDict } from "../content/structure-data";
 import Structure from "./structure";
+import { expansionDataDict } from "@/content/expansion-data";
+import Expansion from "./expansion";
 
 /**
  * Stores and updates non-static data relating to a kind of upgrade.
@@ -132,6 +134,14 @@ export default class Upgrade extends Purchasable {
         Number(stId),
         sp.amount,
         sp.discount
+      );
+    }
+    for (const exId of unlockData.expansions) {
+      const ex = expansionDataDict[exId].startingParams;
+      game.expansionDict[exId] = new Expansion(
+        Number(exId),
+        ex.amount,
+        ex.discount
       );
     }
   }

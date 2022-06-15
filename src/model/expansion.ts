@@ -36,12 +36,11 @@ export default class Expansion extends Purchasable {
     if (!dis) {
       dis = 1;
     }
-    const amountOfResources = Object.keys(this.dataObject.cost).length;
-    return (
-      dis *
-      (this.dataObject.cost[resId] +
-        ((this.amount / 2) * this.dataObject.areaEach) / amountOfResources)
-    );
+    let inc = this.dataObject.increase[resId];
+    if (!inc) {
+      inc = 1;
+    }
+    return dis * this.dataObject.cost[resId] * inc ** this.amount;
   }
 
   buy() {

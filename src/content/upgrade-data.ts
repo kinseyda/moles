@@ -1,4 +1,5 @@
 import { UnlockData, UpgradeData, UpgradeEffects } from "./data-interfaces";
+import { ExpansionIDs } from "./expansion-data";
 import { ResourceIDs } from "./resource-data";
 import { StructureIDs } from "./structure-data";
 
@@ -16,15 +17,22 @@ export enum UpgradeIDs {
   Ledger,
   TunnelToSurface,
   Catapult,
+  Carpentry,
+  Cairnery,
+  MetalWorking,
 }
 
 export enum UnlockIDs {
+  MakeshiftShovel,
   Pickaxe,
   TermiteKnowledge,
   TermiteDomestication,
   FindSecondMole,
   Ledger,
   TunnelToSurface,
+  Carpentry,
+  Cairnery,
+  MetalWorking,
 }
 
 export enum PermanentUnlocks {
@@ -42,6 +50,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         func: UpgradeEffects.multiplier,
         params: [{ [ResourceIDs.Dirt]: 1 }],
       },
+      { func: UpgradeEffects.unlock, params: [UnlockIDs.MakeshiftShovel] },
     ],
     cost: {
       [ResourceIDs.Dirt]: 10,
@@ -175,37 +184,93 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     },
     startingParams: defaultStartingValues,
   },
+  [UpgradeIDs.Carpentry]: {
+    name: "Carpentry",
+    description:
+      "The brilliant idea to rotate some sticks vertically crosses your mind",
+    effects: [{ func: UpgradeEffects.unlock, params: [UnlockIDs.Carpentry] }],
+    cost: { [ResourceIDs.Wood]: 25 },
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.Cairnery]: {
+    name: "Cairnery",
+    description:
+      "While idly stacking rocks on top of each other, you start to wonder if this could actually be useful",
+    effects: [{ func: UpgradeEffects.unlock, params: [UnlockIDs.Cairnery] }],
+    cost: { [ResourceIDs.Rock]: 150 },
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.MetalWorking]: {
+    name: "Metal working",
+    description:
+      "By focusing all your mole strength you realize you can actually bend some iron into more useful shapes",
+    effects: [
+      { func: UpgradeEffects.unlock, params: [UnlockIDs.MetalWorking] },
+    ],
+    cost: { [ResourceIDs.Iron]: 500 },
+    startingParams: defaultStartingValues,
+  },
 };
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
+  [UnlockIDs.MakeshiftShovel]: {
+    resources: [],
+    upgrades: [UpgradeIDs.Pickaxe],
+    structures: [],
+    expansions: [],
+  },
   [UnlockIDs.Pickaxe]: {
     resources: [ResourceIDs.Iron],
     upgrades: [],
     structures: [StructureIDs.IronForge],
+    expansions: [],
   },
   [UnlockIDs.TermiteKnowledge]: {
     resources: [],
     upgrades: [UpgradeIDs.TermiteDomestication],
     structures: [],
+    expansions: [],
   },
   [UnlockIDs.TermiteDomestication]: {
     resources: [ResourceIDs.Termites],
     upgrades: [],
     structures: [StructureIDs.TermitePen, StructureIDs.TermiteWoodPatrol],
+    expansions: [],
   },
   [UnlockIDs.FindSecondMole]: {
     resources: [],
     upgrades: [UpgradeIDs.Ledger],
     structures: [],
+    expansions: [],
   },
   [UnlockIDs.Ledger]: {
     resources: [],
     upgrades: [UpgradeIDs.TunnelToSurface],
     structures: [],
+    expansions: [],
   },
   [UnlockIDs.TunnelToSurface]: {
     resources: [],
     upgrades: [UpgradeIDs.Catapult],
     structures: [],
+    expansions: [],
+  },
+  [UnlockIDs.Carpentry]: {
+    resources: [],
+    upgrades: [UpgradeIDs.Cairnery],
+    structures: [],
+    expansions: [ExpansionIDs.WoodenStrut],
+  },
+  [UnlockIDs.Cairnery]: {
+    resources: [],
+    upgrades: [UpgradeIDs.MetalWorking],
+    structures: [],
+    expansions: [ExpansionIDs.RockColumn],
+  },
+  [UnlockIDs.MetalWorking]: {
+    resources: [],
+    upgrades: [],
+    structures: [],
+    expansions: [ExpansionIDs.IronBeam],
   },
 };

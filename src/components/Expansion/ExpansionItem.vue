@@ -7,6 +7,8 @@
     <span :class="{ 'purchase-available': expansion.canBuy }"
       >Buy {{ expansion.dataObject.name }}</span
     >
+    <br />
+    <p>Amount: {{ expansion.amount }}</p>
   </button>
 </template>
 

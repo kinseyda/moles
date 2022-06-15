@@ -42,11 +42,6 @@ export function startingUpgrades() {
       upgradeDataDict[UpgradeIDs.MakeshiftShovel].startingParams.bought,
       upgradeDataDict[UpgradeIDs.MakeshiftShovel].startingParams.discount
     ),
-    [UpgradeIDs.Pickaxe]: new Upgrade(
-      UpgradeIDs.Pickaxe,
-      upgradeDataDict[UpgradeIDs.Pickaxe].startingParams.bought,
-      upgradeDataDict[UpgradeIDs.Pickaxe].startingParams.discount
-    ),
     [UpgradeIDs.TermiteKnowledge]: new Upgrade(
       UpgradeIDs.TermiteKnowledge,
       upgradeDataDict[UpgradeIDs.TermiteKnowledge].startingParams.bought,
@@ -56,6 +51,11 @@ export function startingUpgrades() {
       UpgradeIDs.FindSecondMole,
       upgradeDataDict[UpgradeIDs.FindSecondMole].startingParams.bought,
       upgradeDataDict[UpgradeIDs.FindSecondMole].startingParams.discount
+    ),
+    [UpgradeIDs.Carpentry]: new Upgrade(
+      UpgradeIDs.Carpentry,
+      upgradeDataDict[UpgradeIDs.Carpentry].startingParams.bought,
+      upgradeDataDict[UpgradeIDs.Carpentry].startingParams.discount
     ),
   };
 }
@@ -76,25 +76,14 @@ export function startingStructures() {
 }
 
 export function startingExpansions() {
-  return {
-    [ExpansionIDs.WoodenStrut]: new Expansion(
-      ExpansionIDs.WoodenStrut,
-      expansionDataDict[ExpansionIDs.WoodenStrut].startingParams.amount,
-      expansionDataDict[ExpansionIDs.WoodenStrut].startingParams.discount
-    ),
-    [ExpansionIDs.IronBeam]: new Expansion(
-      ExpansionIDs.IronBeam,
-      expansionDataDict[ExpansionIDs.IronBeam].startingParams.amount,
-      expansionDataDict[ExpansionIDs.IronBeam].startingParams.discount
-    ),
-  };
+  return {};
 }
 
 export function startingDig() {
   return new Dig({
     [ResourceIDs.Dirt]: 10,
     [ResourceIDs.Wood]: 1,
-    [ResourceIDs.Rock]: 1,
+    [ResourceIDs.Rock]: 0.5,
   });
 }
 
