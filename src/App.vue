@@ -74,8 +74,9 @@
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
             <button @click="setDigging(true)">Toggle digging on</button>
-              Toggle digging
-            </button>
+            <button @click="debugMultiplier *= 2">Time x2</button> Current:
+            {{ debugMultiplier }}
+            <button @click="debugMultiplier /= 2">Time /2</button>
           </div>
         </div>
         <div id="event-log-container">
@@ -174,6 +175,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       uiDescriptions: uiDescriptions,
       PermanentUnlocks: PermanentUnlocks,
       appVersion: currentVersion,
+      debugMultiplier: 1,
     };
   },
   methods: {
@@ -191,7 +193,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       return formatNumber(num, "");
     },
     gameLoop() {
-      this.gameData.tick();
+      this.gameData.tick(this.debugMultiplier);
     },
     saveGame() {
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
