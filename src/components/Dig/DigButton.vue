@@ -2,6 +2,7 @@
   <div id="outer">
     <button
       id="dig-button"
+      @mouseleave="resetDesc()"
       @mouseover="hoverDescDig()"
       @mousedown="$emit('setDigging', true)"
       @mouseup="$emit('setDigging', false)"

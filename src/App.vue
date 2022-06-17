@@ -73,7 +73,7 @@
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
-            <button @click="setDigging(!gameData.dig.digging)">
+            <button @click="setDigging(true)">Toggle digging on</button>
               Toggle digging
             </button>
           </div>
