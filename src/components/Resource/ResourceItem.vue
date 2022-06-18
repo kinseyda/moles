@@ -9,10 +9,15 @@
     </td>
     <td
       class="res-amount"
-      @mouseover="hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })"
+      @mouseover="
+        hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })
+      "
       @mouseleave="resetDesc()"
     >
       <b>{{ formatNumber(resource.amount) }}</b>
+      <p class="res-purchase-cost bad-text">
+        {{ getResCost(purchaseInformationData) }}
+      </p>
     </td>
     <td class="res-slash">/</td>
     <td
@@ -35,13 +40,29 @@
       "
       @mouseleave="resetDesc()"
     >
-      <b
-        :class="{
-          'good-text': resource.rateLastTick > 0,
-          'bad-text': resource.rateLastTick < 0,
-        }"
-        >{{ formatNumber(resource.rateLastTick) }}</b
-      >
+      <span class="res-rate-number">
+        <b
+          :class="{
+            'good-text': resource.rateLastTick > 0,
+            'bad-text': resource.rateLastTick < 0,
+          }"
+          >{{ formatNumber(resource.rateLastTick) }}</b
+        >
+        <p
+          class="res-purchase-rate"
+          v-if="
+            purchaseInformationData &&
+            purchaseInformationData['_class'] == SerializableClasses.Structure
+          "
+        >
+          <span class="good-text">
+            {{ getResRateProd(purchaseInformationData) }}</span
+          >
+          <span class="bad-text">
+            {{ getResRateCons(purchaseInformationData) }}</span
+          >
+        </p>
+      </span>
       <small
         :class="{
           'good-text': resource.rateLastTick > 0,
@@ -83,9 +104,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { formatNumber } from "@/components/format";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import { SerializableClasses } from "@/model/serializable-class";
+import Purchasable from "@/model/purchasable";
+import Structure from "@/model/structure";
 
 export default defineComponent({
   name: "ResourceItem",
@@ -99,7 +123,11 @@ export default defineComponent({
       capDesc: uiDescriptions["capSliders"],
       maxDesc: uiDescriptions["sliderSetMax"],
       sliderVal: this.resource.capPriority,
+      SerializableClasses: SerializableClasses,
     };
+  },
+  computed: {
+    ...mapState(["purchaseInformationData"]),
   },
   methods: {
     ...mapMutations([
@@ -109,6 +137,27 @@ export default defineComponent({
       "hoverDescStringReg",
       "resetDesc",
     ]),
+    getResCost(purchase: Purchasable) {
+      return purchase
+        ? !isNaN(purchase.trueCost(this.resource.id))
+          ? "-" + this.formatNumber(purchase.trueCost(this.resource.id))
+          : ""
+        : "";
+    },
+    getResRateProd(structure: Structure) {
+      return !isNaN(structure.dataObject.production[this.resource.id])
+        ? "+" +
+            this.formatNumber(structure.dataObject.production[this.resource.id])
+        : "";
+    },
+    getResRateCons(structure: Structure) {
+      return !isNaN(structure.dataObject.consumption[this.resource.id])
+        ? "-" +
+            this.formatNumber(
+              structure.dataObject.consumption[this.resource.id]
+            )
+        : "";
+    },
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },
@@ -159,6 +208,28 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -0.45em;
+}
+.res-amount,
+.res-rate-number {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.res-purchase-cost {
+  position: absolute;
+  font-size: small;
+  right: -1.5ch;
+  top: -0.25em;
+}
+.res-purchase-rate {
+  position: absolute;
+  font-size: small;
+  right: -3ch;
+  top: -0.75em;
+}
+
+tr {
+  height: 2em;
 }
 
 td {

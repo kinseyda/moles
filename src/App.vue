@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @mouseup="setDigging(false)">
     <div id="top-bar">
       <button
         @click="saveGame"
@@ -63,43 +63,20 @@
           :popCap="gameData.getPopulationCap()"
         ></population-display>
         <div id="buttons-container">
-          <button
-            id="dig-button"
-            @mouseover="hoverDescDig()"
-            @mouseleave="
-              resetDesc();
-              setDigging(false);
-            "
-            @mousedown="setDigging(true)"
-            @mouseup="setDigging(false)"
-            :style="[
-              gameData.dig.digging
-                ? { background: 'var(--tertiary-bg-color)' }
-                : { background: 'var(--global-bg-color)' },
-            ]"
-          >
-            <h1
-              v-if="gameData.area.amount != gameData.area.getUsableArea()"
-              :style="[
-                gameData.dig.digging
-                  ? { background: 'var(--tertiary-bg-color)' }
-                  : { background: 'var(--global-bg-color)' },
-              ]"
-            >
-              Dig
-            </h1>
-            <p v-if="gameData.area.amount == gameData.area.getUsableArea()">
-              Dig
-            </p>
-          </button>
+          <dig-button
+            :dig="gameData.dig"
+            :area="gameData.area"
+            v-on:setDigging="setDigging"
+          ></dig-button>
           <expansion-list :expansionDict="gameData.expansionDict">
           </expansion-list>
           <div id="debug-buttons" v-if="debugMode">
             <button @click="gameLoop">Tick</button>
             <button @click="debugFillAll">Fill all resources</button>
-            <button @click="setDigging(!gameData.dig.digging)">
-              Toggle digging
-            </button>
+            <button @click="setDigging(true)">Toggle digging on</button>
+            <button @click="debugMultiplier *= 2">Time x2</button> Current:
+            {{ debugMultiplier }}
+            <button @click="debugMultiplier /= 2">Time /2</button>
           </div>
         </div>
         <div id="event-log-container">
@@ -146,6 +123,7 @@ import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
 import PopulationDisplay from "./components/PopulationDisplay.vue";
+import DigButton from "./components/Dig/DigButton.vue";
 import SettingsDisplay from "./components/SettingsDisplay.vue";
 import EmpireDisplay from "./components/Empire/EmpireDisplay.vue";
 import InfoDisplay from "./components/InfoDisplay.vue";
@@ -170,6 +148,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     ResourceList,
     UpgradeList,
     StructureList,
+    DigButton,
     ExpansionList,
     DescriptionContainer,
     EventLog,
@@ -196,6 +175,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       uiDescriptions: uiDescriptions,
       PermanentUnlocks: PermanentUnlocks,
       appVersion: currentVersion,
+      debugMultiplier: 1,
     };
   },
   methods: {
@@ -213,7 +193,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       return formatNumber(num, "");
     },
     gameLoop() {
-      this.gameData.tick();
+      this.gameData.tick(this.debugMultiplier);
     },
     saveGame() {
       localStorage.setItem("molesSave", JSON.stringify(this.gameData));
@@ -322,11 +302,6 @@ export default class App extends Vue {}
   display: flex;
   flex-direction: column;
   margin: 1em;
-}
-#dig-button {
-  width: 100%;
-  font-size: xx-large;
-  flex: 1 1 0;
 }
 #buttons-container {
   width: 100%;

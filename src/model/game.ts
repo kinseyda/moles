@@ -110,13 +110,16 @@ export class Game extends SerializableClass {
    * based on their {@link Resource.trueRate trueRate} property and how long it
    * has been since {@link Game.lastUpdate lastUpdate}
    *
+   * @param debugMultiplier - "Makes time go faster" by this amount.
+   *
    * Works by going over all structures (checking that consumption requirements
    * are met) and creating a dict of changes to make in the next tick (which is
    * then converted to Mo/s for the rate)
    */
-  tick() {
+  tick(debugMultiplier?: number) {
     const updateTime = Date.now();
-    const tickSize = (updateTime - this.lastUpdate) / 1000;
+    const tickSize =
+      ((updateTime - this.lastUpdate) * (debugMultiplier || 1)) / 1000;
     // Fraction of a second
 
     this.population = this.getNextPopulation(tickSize);

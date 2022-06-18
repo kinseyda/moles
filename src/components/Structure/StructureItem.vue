@@ -4,9 +4,10 @@
       class="struct-name"
       @mouseover="hoverDescIdentifiable(structure)"
       @mouseleave="resetDesc()"
-      :class="{ 'purchase-available': structure.canBuy }"
     >
-      {{ structure.dataObject.name }}
+      <span :class="{ 'purchase-available': structure.canBuy }">{{
+        structure.dataObject.name
+      }}</span>
     </td>
     <td
       class="struct-amount"
@@ -54,7 +55,11 @@ export default defineComponent({
   name: "StructureItem",
   props: ["structure"],
   methods: {
-    ...mapMutations(["hoverDescIdentifiable", "hoverDescStructSell", "resetDesc"]),
+    ...mapMutations([
+      "hoverDescIdentifiable",
+      "hoverDescStructSell",
+      "resetDesc",
+    ]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },

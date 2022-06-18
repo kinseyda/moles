@@ -35,6 +35,7 @@ export interface StructureData extends PurchasableData {
 }
 export interface ExpansionData extends PurchasableData {
   areaEach: number;
+  increase: { [id: number]: number };
   startingParams: {
     amount: number;
     discount: { [resId: number]: number };
@@ -65,6 +66,7 @@ export interface UnlockData {
   resources: number[];
   upgrades: number[];
   structures: number[];
+  expansions: number[];
 }
 
 export enum RequirementType {
