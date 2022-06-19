@@ -24,8 +24,10 @@
       </h1>
       <p v-if="area.amount == area.getUsableArea()">Dig</p>
     </button>
-    <dig-particle v-for="p in particles" :key="p.baseX" :digParticle="p">
-    </dig-particle>
+    <transition-group name="slide-fade">
+      <dig-particle v-for="p in particles" :key="p.baseX" :digParticle="p">
+      </dig-particle>
+    </transition-group>
   </div>
 </template>
 
@@ -33,7 +35,6 @@
 interface Particle {
   baseX: number;
   baseY: number;
-  age: number;
 }
 
 import { defineComponent } from "vue";
@@ -58,21 +59,22 @@ export default defineComponent({
       if (buttonEl) {
         const width = buttonEl.clientWidth;
         const height = buttonEl.clientHeight;
-
-        for (const p of this.particles) {
-          p.age += 0.5;
-        }
-        this.particles = this.particles.filter((p) => p.age < 24);
-        if (this.dig.digging) {
-          const newPX = Math.random() * width;
-          const newPY = Math.random() * height;
-          this.particles.push({ baseX: newPX, baseY: newPY, age: 0 });
+        if (this.particles.length > 0) {
+          this.particles = [];
+        } else {
+          if (this.dig.digging) {
+            for (let i = 0; i < 8; i++) {
+              const newPX = Math.random() * width;
+              const newPY = Math.random() * height;
+              this.particles.push({ baseX: newPX, baseY: newPY });
+            }
+          }
         }
       }
     },
   },
   mounted() {
-    setInterval(this.updateParticles, 16);
+    setInterval(this.updateParticles, 50);
   },
 });
 </script>
@@ -87,5 +89,14 @@ export default defineComponent({
   font-size: xx-large;
   width: 100%;
   height: 100%;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.65s cubic-bezier(0.33333, 0, 0.66667, 0.33333);
+}
+
+.slide-fade-leave-to {
+  transform: translateY(250px);
+  opacity: 0;
 }
 </style>

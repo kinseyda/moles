@@ -1,12 +1,11 @@
 <template>
-  <span
-    class="circle"
-    :style="{
-      top: digParticle.baseY + digParticle.age ** 2 + 'px',
-      left: digParticle.baseX + 'px',
-      opacity: (24 - digParticle.age) / 24,
-    }"
-  ></span>
+    <span
+      class="circle"
+      :style="{
+        top: digParticle.baseY + 'px',
+        left: digParticle.baseX + 'px',
+      }"
+    ></span>
 </template>
 
 <script lang="ts">
