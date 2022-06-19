@@ -15,8 +15,6 @@ export default defineComponent({
   data() {
     return {
       particles: [] as Particle[],
-      parentHeight: 0,
-      parentWidth: 0,
     };
   },
   components: {
@@ -32,10 +30,15 @@ export default defineComponent({
       setTimeout(() => this.fall(), 16);
     },
     scatter(intensity: number) {
-      for (let i = 0; i < intensity; i++) {
-        const newPX = Math.random() * this.parentWidth;
-        const newPY = Math.random() * this.parentHeight;
-        this.particles.push({ baseX: newPX, baseY: newPY });
+      const p = this.$parent;
+      if (p) {
+        const parentHeight = p.$el.offsetHeight;
+        const parentWidth = p.$el.offsetWidth;
+        for (let i = 0; i < intensity; i++) {
+          const newPX = Math.random() * parentWidth;
+          const newPY = Math.random() * parentHeight;
+          this.particles.push({ baseX: newPX, baseY: newPY });
+        }
       }
     },
     fall() {
@@ -43,11 +46,6 @@ export default defineComponent({
     },
   },
   mounted() {
-    const p = this.$parent;
-    if (p) {
-      this.parentHeight = p.$el.offsetHeight;
-      this.parentWidth = p.$el.offsetWidth;
-    }
     if (this.immediate) {
       this.updateParticles();
     }
