@@ -307,7 +307,7 @@ export default class App extends Vue {}
   transition: 1s;
 }
 #tunneling-indicator.indicate {
-  transition: 5s;
+  transition: 3s;
   opacity: 0.75;
 }
 #top-bar {

@@ -21,15 +21,26 @@ export default defineComponent({
     DirtParticle,
   },
   methods: {
-    updateParticles(intensity?: number) {
+    /**
+     * @param colorCumulProbs - Cumulative weights of every color that could be selected.
+     * For example, if red were to have 50% chance, blue 30% and green 20% it should be:
+     * [{weight: 0.5, color: red}, {weight: 0.8, color: blue}, {weight: 1, color: green}]
+     */
+    updateParticles(
+      intensity?: number,
+      colorCumulProbs?: { weight: number; color: string }[]
+    ) {
       if (!intensity) {
         intensity = 1;
       }
-      this.scatter(intensity);
+      this.scatter(intensity, colorCumulProbs);
       // Vue will only render changes if the particles are onscreen for a non-zero amount of time
       setTimeout(() => this.fall(), 16);
     },
-    scatter(intensity: number) {
+    scatter(
+      intensity: number,
+      colorCumulProbs?: { weight: number; color: string }[]
+    ) {
       const p = this.$parent;
       if (p) {
         const parentHeight = p.$el.offsetHeight;
@@ -37,7 +48,19 @@ export default defineComponent({
         for (let i = 0; i < intensity; i++) {
           const newPX = Math.random() * parentWidth;
           const newPY = Math.random() * parentHeight;
-          this.particles.push({ baseX: newPX, baseY: newPY });
+          if (colorCumulProbs) {
+            const chosenProb = Math.random();
+            let chosenColor = "";
+            for (const prob of colorCumulProbs) {
+              if (chosenProb < prob["weight"]) {
+                chosenColor = prob["color"];
+                break;
+              }
+            }
+            this.particles.push(new Particle(newPX, newPY, chosenColor));
+          } else {
+            this.particles.push(new Particle(newPX, newPY));
+          }
         }
       }
     },

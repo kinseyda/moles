@@ -32,6 +32,8 @@
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import DirtProducer from "@/components/Particles/DirtProducer.vue";
+import { resourceDataDict } from "@/content/resource-data";
+import { game } from "@/model/game";
 
 export default defineComponent({
   name: "DigButton",
@@ -44,7 +46,30 @@ export default defineComponent({
     ...mapMutations(["hoverDescDig", "resetDesc"]),
     updateParticles() {
       if (this.dig.digging) {
-        (this.$refs["dirtProd"] as typeof DirtProducer).updateParticles(4);
+        let sum = 0;
+        const diggingResources: number[] = [];
+        for (const resIdStr in this.dig.digRates) {
+          const resId = Number(resIdStr);
+          if (game.resourceDict[resId].amount < game.resourceDict[resId].cap) {
+            diggingResources.push(resId);
+            sum += this.dig.digRates[resId];
+          }
+        }
+        if (diggingResources.length > 0) {
+          const cumulLst: { weight: number; color: string }[] = [];
+          let cumul = 0;
+          for (const resId of diggingResources) {
+            cumul += this.dig.digRates[resId] / sum;
+            cumulLst.push({
+              color: resourceDataDict[resId].color,
+              weight: cumul,
+            });
+          }
+          (this.$refs["dirtProd"] as typeof DirtProducer).updateParticles(
+            4,
+            cumulLst
+          );
+        }
       }
     },
   },
