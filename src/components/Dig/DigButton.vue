@@ -23,15 +23,15 @@
         Dig
       </h1>
       <p v-if="area.amount == area.getUsableArea()">Dig</p>
+      <dirt-producer ref="dirtProd"></dirt-producer>
     </button>
-    <dirt-producer ref="dirtProd"></dirt-producer>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import DirtProducer from "./DirtProducer.vue";
+import DirtProducer from "@/components/Particles/DirtProducer.vue";
 
 export default defineComponent({
   name: "DigButton",
@@ -44,7 +44,7 @@ export default defineComponent({
     ...mapMutations(["hoverDescDig", "resetDesc"]),
     updateParticles() {
       if (this.dig.digging) {
-        (this.$refs["dirtProd"] as typeof DirtProducer).updateParticles();
+        (this.$refs["dirtProd"] as typeof DirtProducer).updateParticles(4);
       }
     },
   },

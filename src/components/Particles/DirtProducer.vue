@@ -8,10 +8,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DirtParticle from "./DirtParticle.vue";
-import { Particle } from "./DirtParticle";
+import { Particle } from "./DirtParticle.vue";
 export default defineComponent({
   name: "DirtProducer",
-  props: [],
+  props: ["immediate"],
   data() {
     return {
       particles: [] as Particle[],
@@ -23,13 +23,16 @@ export default defineComponent({
     DirtParticle,
   },
   methods: {
-    updateParticles() {
-      this.scatter();
+    updateParticles(intensity?: number) {
+      if (!intensity) {
+        intensity = 1;
+      }
+      this.scatter(intensity);
       // Vue will only render changes if the particles are onscreen for a non-zero amount of time
       setTimeout(() => this.fall(), 16);
     },
-    scatter() {
-      for (let i = 0; i < 8; i++) {
+    scatter(intensity: number) {
+      for (let i = 0; i < intensity; i++) {
         const newPX = Math.random() * this.parentWidth;
         const newPY = Math.random() * this.parentHeight;
         this.particles.push({ baseX: newPX, baseY: newPY });
@@ -40,8 +43,14 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.parentHeight = this.$parent.$el.offsetHeight;
-    this.parentWidth = this.$parent.$el.offsetWidth;
+    const p = this.$parent;
+    if (p) {
+      this.parentHeight = p.$el.offsetHeight;
+      this.parentWidth = p.$el.offsetWidth;
+    }
+    if (this.immediate) {
+      this.updateParticles();
+    }
   },
 });
 </script>

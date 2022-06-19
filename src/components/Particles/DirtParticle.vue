@@ -26,8 +26,8 @@ export default defineComponent({
 
 <style scoped>
 .circle {
-  height: 10px;
-  width: 10px;
+  height: 7px;
+  width: 7px;
   background-color: #915a30;
   border-radius: 50%;
   display: inline-block;
