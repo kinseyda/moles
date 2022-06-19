@@ -1,18 +1,23 @@
 <template>
-    <span
-      class="circle"
-      :style="{
-        top: digParticle.baseY + 'px',
-        left: digParticle.baseX + 'px',
-      }"
-    ></span>
+  <span
+    class="circle"
+    :style="{
+      top: dirtParticle.baseY + 'px',
+      left: dirtParticle.baseX + 'px',
+    }"
+  ></span>
 </template>
 
 <script lang="ts">
+export interface Particle {
+  baseX: number;
+  baseY: number;
+}
+
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "DigParticle",
-  props: ["digParticle"],
+  name: "DirtParticle",
+  props: ["dirtParticle"],
   data() {
     return {};
   },
