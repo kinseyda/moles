@@ -7,7 +7,8 @@
           <h4>
             Area:
             <span class="bad-text"
-              >{{ purchase.dataObject.areaCost }}<small class="bad-text"> Mo</small></span
+              >{{ purchase.dataObject.areaCost
+              }}<small class="bad-text"> Mo</small></span
             >
           </h4>
         </li>
@@ -86,8 +87,5 @@ export default defineComponent({
 }
 #effect-produce-container {
   float: right;
-}
-ul {
-  padding-left: 1.2em;
 }
 </style>

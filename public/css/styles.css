@@ -31,7 +31,9 @@ tr.list-row:nth-child(odd),
 tr.list-row:nth-child(odd) td {
   background-color: var(--secondary-bg-color);
 }
-
+ul {
+	padding-left: 2ch;
+}
 table {
   min-width: 100%;
   table-layout: fixed;

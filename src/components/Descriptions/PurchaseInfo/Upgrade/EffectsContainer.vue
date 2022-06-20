@@ -8,7 +8,8 @@
         :effect="effect"
         :upgradeType="effect.func"
         :detailedDesc="getEffectDescription(effect.func)"
-      ></effect-details>
+      >
+      </effect-details>
     </ul>
   </div>
 </template>

@@ -3,13 +3,11 @@
     <h4>Dig rates:</h4>
     <ul>
       <li v-for="id in Object.keys(dig.digRates)" :key="id">
-        <p>
-          {{ getResource(id).dataObject.name }}:
-          <span class="good-text"
-            >{{ formatNumber(dig.findTrueDigRate(id))
-            }}<small class="good-text"> Mo/s</small></span
-          >
-        </p>
+        {{ getResource(id).dataObject.name }}:
+        <span class="good-text"
+          >{{ formatNumber(dig.findTrueDigRate(id))
+          }}<small class="good-text"> Mo/s</small></span
+        >
       </li>
     </ul>
   </div>
