@@ -37,7 +37,8 @@
       >
         Debug
       </button>
-      <h4 v-if="debugMode">DEBUG MODE</h4>
+      <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
+      <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
       <div
@@ -323,6 +324,9 @@ export default class App extends Vue {}
 #top-bar button {
   padding-left: 5px;
   padding-right: 5px;
+}
+#version-text {
+  margin-left: auto;
 }
 #left-column {
   flex: 0 0 44ch;

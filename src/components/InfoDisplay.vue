@@ -4,7 +4,10 @@
     <template #content>
       <div id="info-outer">
         <div id="info-top">
-          <p>Moles is a game</p>
+          <p>
+            <b><i>Moles</i></b> is an open-source, text-based incremental game,
+            built using Vue 3.
+          </p>
         </div>
         <div id="info-bottom">
           <div
