@@ -19,7 +19,7 @@
           {{ ev.dataObject.eventText }}
         </li>
       </transition-group>
-      <dirt-producer ref="dirtProd"></dirt-producer>
+      <particle-producer ref="dirtProd"></particle-producer>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ import { formatTimeConcise } from "@/components/format";
 import { game } from "@/model/game";
 import { mapMutations } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
-import DirtProducer from "@/components/Particles/DirtProducer.vue";
+import ParticleProducer from "@/components/Particles/ParticleProducer.vue";
 
 class TextLogEvent {
   id: number;
@@ -56,7 +56,7 @@ export default defineComponent({
     };
   },
   components: {
-    DirtProducer,
+    ParticleProducer,
   },
   computed: {
     eventList(): TextLogEvent[] {
@@ -70,7 +70,7 @@ export default defineComponent({
       });
       if (this.eventList) {
         if (this.eventList[0].timeSeconds != lst[0].timeSeconds) {
-          const prod = this.$refs["dirtProd"] as typeof DirtProducer;
+          const prod = this.$refs["dirtProd"] as typeof ParticleProducer;
           if (prod) {
             for (let i = 0; i < 4; i++) {
               prod.updateParticles(8);

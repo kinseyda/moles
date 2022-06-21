@@ -37,8 +37,10 @@
             <div id="resource-rates">
               <ul>
                 <li v-for="(rate, resId) in maxPotentialRates" :key="resId">
-                  {{ getResData(resId).name }}: {{ formatNumber(rate)
-                  }}<small> Mo/s</small>
+                  <colored-resource
+                    :resData="getResData(Number(resId))"
+                  ></colored-resource
+                  >: {{ formatNumber(rate) }}<small> Mo/s</small>
                 </li>
               </ul>
             </div>
@@ -78,7 +80,10 @@
                   "
                   @mouseleave="resetDesc()"
                 >
-                  {{ getResData(resId).name }}:
+                  <colored-resource
+                    :resData="getResData(Number(resId))"
+                  ></colored-resource
+                  >:
                 </td>
                 <td
                   @mouseover="
@@ -125,6 +130,7 @@ import { resourceDataDict } from "@/content/resource-data";
 import { ResourceData } from "@/content/data-interfaces";
 import { getStatus, getStatusString } from "@/content/population-statuses";
 import { formatNumber, formatDown } from "../format";
+import ColoredResource from "@/components/ColoredResource.vue";
 
 export default defineComponent({
   name: "EmpireDisplay",
@@ -148,6 +154,7 @@ export default defineComponent({
   components: {
     PopUpMenu,
     CivilizationItem,
+    ColoredResource,
   },
   computed: {
     ...mapState(["settings"]),
@@ -229,5 +236,8 @@ input {
 }
 .hidden {
   visibility: hidden;
+}
+#resource-rates ul {
+  list-style-type: none;
 }
 </style>

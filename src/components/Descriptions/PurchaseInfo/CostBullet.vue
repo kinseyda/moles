@@ -1,7 +1,7 @@
 <template>
   <li>
     <p>
-      {{ getResourceData().name }}:
+      <colored-resource :resData="getResourceData()"></colored-resource>:
       <span class="bad-text"
         >{{ formatNumber(cost) }} <small class="bad-text"> Mo</small></span
       >,
@@ -21,12 +21,14 @@ import { formatNumber, formatTime } from "@/components/format";
 import { game } from "@/model/game";
 import { resourceDataDict } from "@/content/resource-data";
 import { defineComponent } from "vue";
+import ColoredResource from "@/components/ColoredResource.vue";
 export default defineComponent({
   name: "CostBullet",
   props: {
     cost: Number,
     resourceId: Number,
   },
+  components: { ColoredResource },
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);
@@ -63,3 +65,4 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped></style>

@@ -2,23 +2,18 @@
   <span
     class="circle"
     :style="{
-      top: dirtParticle.baseY + 'px',
-      left: dirtParticle.baseX + 'px',
-      'background-color': dirtParticle.color,
+      'background-color': particle.color,
     }"
-  ></span>
+  >
+  </span>
 </template>
 
 <script lang="ts">
 import { resourceDataDict, ResourceIDs } from "@/content/resource-data";
 
 export class Particle {
-  baseX: number;
-  baseY: number;
   color: string;
-  constructor(baseX: number, baseY: number, color?: string) {
-    this.baseX = baseX;
-    this.baseY = baseY;
+  constructor(color?: string) {
     if (color) {
       this.color = color;
     } else {
@@ -28,9 +23,10 @@ export class Particle {
 }
 
 import { defineComponent } from "vue";
+
 export default defineComponent({
-  name: "DirtParticle",
-  props: ["dirtParticle"],
+  name: "BasicParticle",
+  props: ["particle"],
   data() {
     return {};
   },
@@ -39,8 +35,8 @@ export default defineComponent({
 
 <style scoped>
 .circle {
-  height: 7px;
-  width: 7px;
+  height: 6px;
+  width: 6px;
   border-radius: 50%;
   display: inline-block;
   position: absolute;

@@ -45,8 +45,7 @@
         id="tunneling-indicator"
         :class="{
           indicate:
-            gameData.dig.digging &&
-            gameData.area.amount < gameData.area.getUsableArea(),
+            gameData.dig.digging && gameData.area.amount < gameData.area.getUsableArea(),
         }"
       ></div>
       <div id="game-columns">
@@ -78,8 +77,7 @@
               :area="gameData.area"
               v-on:setDigging="setDigging"
             ></dig-button>
-            <expansion-list :expansionDict="gameData.expansionDict">
-            </expansion-list>
+            <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
               <button @click="debugFillAll">Fill all resources</button>
@@ -96,8 +94,7 @@
         </div>
         <div id="purchasable-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-          <structure-list :structureDict="gameData.structureDict">
-          </structure-list>
+          <structure-list :structureDict="gameData.structureDict"> </structure-list>
         </div>
       </div>
 
@@ -243,11 +240,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (
-      loadTheme == "light" ||
-      loadTheme == "dark" ||
-      loadTheme == "true mole"
-    ) {
+    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -363,5 +356,6 @@ export default class App extends Vue {}
 #empire-button {
   flex: 1 1 0;
   margin-left: 1em;
+  margin-bottom: 1.3em;
 }
 </style>

@@ -23,7 +23,7 @@
         Dig
       </h1>
       <p v-if="area.amount == area.getUsableArea()">Dig</p>
-      <dirt-producer ref="dirtProd"></dirt-producer>
+      <particle-producer ref="dirtProd"></particle-producer>
     </button>
   </div>
 </template>
@@ -31,7 +31,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import DirtProducer from "@/components/Particles/DirtProducer.vue";
+import ParticleProducer from "@/components/Particles/ParticleProducer.vue";
 import { resourceDataDict } from "@/content/resource-data";
 import { game } from "@/model/game";
 
@@ -39,7 +39,7 @@ export default defineComponent({
   name: "DigButton",
   props: ["dig", "area"],
   components: {
-    DirtProducer,
+    ParticleProducer,
   },
   emits: ["setDigging"],
   methods: {
@@ -65,7 +65,7 @@ export default defineComponent({
               weight: cumul,
             });
           }
-          (this.$refs["dirtProd"] as typeof DirtProducer).updateParticles(
+          (this.$refs["dirtProd"] as typeof ParticleProducer).updateParticles(
             4,
             cumulLst
           );

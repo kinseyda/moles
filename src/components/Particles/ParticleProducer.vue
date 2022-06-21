@@ -1,24 +1,24 @@
 <template>
   <transition-group name="slide-fade">
-    <dirt-particle v-for="p in particles" :key="p.baseX" :dirtParticle="p">
-    </dirt-particle>
+    <rendered-particle v-for="p in particles" :key="p.baseX" :posParticle="p">
+    </rendered-particle>
   </transition-group>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import DirtParticle from "./DirtParticle.vue";
-import { Particle } from "./DirtParticle.vue";
+import { PositionedParticle } from "./RenderedParticle.vue";
+import RenderedParticle from "./RenderedParticle.vue";
 export default defineComponent({
-  name: "DirtProducer",
+  name: "ParticleProducer",
   props: ["immediate"],
   data() {
     return {
-      particles: [] as Particle[],
+      particles: [] as PositionedParticle[],
     };
   },
   components: {
-    DirtParticle,
+    RenderedParticle,
   },
   methods: {
     /**
@@ -37,10 +37,7 @@ export default defineComponent({
       // Vue will only render changes if the particles are onscreen for a non-zero amount of time
       setTimeout(() => this.fall(), 16);
     },
-    scatter(
-      intensity: number,
-      colorCumulProbs?: { weight: number; color: string }[]
-    ) {
+    scatter(intensity: number, colorCumulProbs?: { weight: number; color: string }[]) {
       const p = this.$parent;
       if (p) {
         const parentHeight = p.$el.offsetHeight;
@@ -57,9 +54,9 @@ export default defineComponent({
                 break;
               }
             }
-            this.particles.push(new Particle(newPX, newPY, chosenColor));
+            this.particles.push(new PositionedParticle(newPX, newPY, chosenColor));
           } else {
-            this.particles.push(new Particle(newPX, newPY));
+            this.particles.push(new PositionedParticle(newPX, newPY));
           }
         }
       }

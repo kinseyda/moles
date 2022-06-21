@@ -5,13 +5,11 @@
       @mouseover="hoverDescIdentifiable(resource)"
       @mouseleave="resetDesc()"
     >
-      <b></b>{{ resource.dataObject.name }}:
+      <colored-resource :resData="resource.dataObject"></colored-resource>:
     </td>
     <td
       class="res-amount"
-      @mouseover="
-        hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })
-      "
+      @mouseover="hoverDescStringReg({ str: numDesc, args: [resource.dataObject.name] })"
       @mouseleave="resetDesc()"
     >
       <b>{{ formatNumber(resource.amount) }}</b>
@@ -55,12 +53,8 @@
             purchaseInformationData['_class'] == SerializableClasses.Structure
           "
         >
-          <span class="good-text">
-            {{ getResRateProd(purchaseInformationData) }}</span
-          >
-          <span class="bad-text">
-            {{ getResRateCons(purchaseInformationData) }}</span
-          >
+          <span class="good-text"> {{ getResRateProd(purchaseInformationData) }}</span>
+          <span class="bad-text"> {{ getResRateCons(purchaseInformationData) }}</span>
         </p>
       </span>
       <small
@@ -108,6 +102,8 @@ import { mapMutations, mapState } from "vuex";
 import { formatNumber } from "@/components/format";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import { SerializableClasses } from "@/model/serializable-class";
+import { Particle } from "@/components/Particles/BasicParticle.vue";
+import ColoredResource from "@/components/ColoredResource.vue";
 import Purchasable from "@/model/purchasable";
 import Structure from "@/model/structure";
 
@@ -115,6 +111,9 @@ export default defineComponent({
   name: "ResourceItem",
   props: ["resource"],
   emits: ["update:slider-val", "slider-max"],
+  components: {
+    ColoredResource,
+  },
   data() {
     return {
       numDesc: uiDescriptions["resourceNumerator"],
@@ -124,6 +123,7 @@ export default defineComponent({
       maxDesc: uiDescriptions["sliderSetMax"],
       sliderVal: this.resource.capPriority,
       SerializableClasses: SerializableClasses,
+      particle: new Particle(this.resource.dataObject.color),
     };
   },
   computed: {
@@ -146,16 +146,12 @@ export default defineComponent({
     },
     getResRateProd(structure: Structure) {
       return !isNaN(structure.dataObject.production[this.resource.id])
-        ? "+" +
-            this.formatNumber(structure.dataObject.production[this.resource.id])
+        ? "+" + this.formatNumber(structure.dataObject.production[this.resource.id])
         : "";
     },
     getResRateCons(structure: Structure) {
       return !isNaN(structure.dataObject.consumption[this.resource.id])
-        ? "-" +
-            this.formatNumber(
-              structure.dataObject.consumption[this.resource.id]
-            )
+        ? "-" + this.formatNumber(structure.dataObject.consumption[this.resource.id])
         : "";
     },
     formatNumber(num: number) {

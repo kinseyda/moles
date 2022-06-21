@@ -4,7 +4,7 @@
     <ul>
       <li v-for="id in Object.keys(structure.dataObject.production)" :key="id">
         <p>
-          {{ getResource(id).dataObject.name }}:
+          <colored-resource :resData="getResource(id).dataObject"></colored-resource>:
           <span class="good-text"
             >+{{ formatNumber(structure.dataObject.production[id]) }}
             <small class="good-text"> Mo/s</small></span
@@ -13,7 +13,7 @@
       </li>
       <li v-for="id in Object.keys(structure.dataObject.consumption)" :key="id">
         <p>
-          {{ getResource(id).dataObject.name }}:
+          <colored-resource :resData="getResource(id).dataObject"></colored-resource>:
           <span class="bad-text"
             >-{{ formatNumber(structure.dataObject.consumption[id]) }}
             <small class="bad-text"> Mo/s</small></span
@@ -28,9 +28,11 @@
 import { game } from "@/model/game";
 import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
+import ColoredResource from "@/components/ColoredResource.vue";
 export default defineComponent({
   name: "ProduceDetails",
   props: ["structure"],
+  components: { ColoredResource },
   methods: {
     formatNumber(num: number) {
       return formatNumber(num, undefined);
@@ -41,3 +43,8 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+ul {
+  list-style-type: none;
+}
+</style>

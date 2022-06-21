@@ -82,9 +82,7 @@ export default defineComponent({
       // Change value behind the scenes
       this.sliderVals[sliderIndex] = setTo;
       // Change actual slider position
-      const slider = document.getElementById(
-        `slider${sliderIndex}`
-      ) as HTMLInputElement;
+      const slider = document.getElementById(`slider${sliderIndex}`) as HTMLInputElement;
       if (slider !== null) {
         slider.value = String(setTo);
       } else {
@@ -127,7 +125,7 @@ export default defineComponent({
 
 <style scoped>
 #res-list-outer {
-  flex: 1 0 85%;
+  flex: 1 0 80%;
 }
 button.slider-set {
   float: right;
