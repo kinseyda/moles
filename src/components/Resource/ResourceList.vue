@@ -6,34 +6,38 @@
     >
       Resources:
     </h2>
-    <table>
-      <resource-item
-        v-for="item in resourceDict"
-        v-bind:resource="item"
-        v-bind:key="item.id"
-        v-model:sliderVal="sliderVals[item.id]"
-        v-on:slider-max="maxOne(item.id)"
-      ></resource-item>
-    </table>
-
-    <button
-      class="slider-set"
-      id="set-1"
-      @click="setSliders(1)"
-      @mouseover="hoverDescString(uiDescriptions['sliderSet1'])"
-      @mouseleave="resetDesc()"
-    >
-      1
-    </button>
-    <button
-      class="slider-set"
-      id="set-0"
-      @click="setSliders(0)"
-      @mouseover="hoverDescString(uiDescriptions['sliderSet0'])"
-      @mouseleave="resetDesc()"
-    >
-      0
-    </button>
+    <div id="list">
+      <button
+        class="slider-set"
+        id="set-1"
+        @click="setSliders(1)"
+        @mouseover="hoverDescString(uiDescriptions['sliderSet1'])"
+        @mouseleave="resetDesc()"
+      >
+        1
+      </button>
+      <button
+        class="slider-set"
+        id="set-0"
+        @click="setSliders(0)"
+        @mouseover="hoverDescString(uiDescriptions['sliderSet0'])"
+        @mouseleave="resetDesc()"
+      >
+        0
+      </button>
+      <table>
+        <resource-item
+          v-for="item in resourceDict"
+          v-bind:resource="item"
+          v-bind:key="item.id"
+          v-model:sliderVal="sliderVals[item.id]"
+          v-on:slider-max="maxOne(item.id)"
+        ></resource-item>
+      </table>
+      <div id="prod-cont">
+        <particle-producer ref="resListDirtProd"></particle-producer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -42,6 +46,8 @@ import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import ResourceItem from "./ResourceItem.vue";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import ParticleProducer from "@/components/Particles/ParticleProducer.vue";
+import { getColorCumulProbs } from "@/components/Particles/ParticleProducer.vue";
 export default defineComponent({
   name: "ResourceList",
   props: ["resourceDict", "area"],
@@ -53,9 +59,25 @@ export default defineComponent({
   },
   components: {
     ResourceItem,
+    ParticleProducer,
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
+    updateParticles() {
+      const curRates: { [resId: number]: number } = {};
+      for (const resIdStr in this.resourceDict) {
+        const resId = Number(resIdStr);
+        if (this.resourceDict[resId].realRateLastTick != 0) {
+          curRates[resId] = this.resourceDict[resId].realRateLastTick;
+        }
+      }
+      if (Object.keys(curRates).length > 0) {
+        (this.$refs["resListDirtProd"] as typeof ParticleProducer).updateParticles(
+          1,
+          getColorCumulProbs(curRates)
+        );
+      }
+    },
     getSlider(resId: number) {
       // When a resource is added (through unlocks) it doesnt have a key in sliderVals until the slider is moved.
       // This ensures we never get NaNs (and also string errors)
@@ -119,6 +141,8 @@ export default defineComponent({
       const resId = Number(resIdStr);
       this.sliderVals[resId] = this.resourceDict[resId].capPriority;
     }
+
+    setInterval(this.updateParticles, 50);
   },
 });
 </script>
@@ -127,14 +151,23 @@ export default defineComponent({
 #res-list-outer {
   flex: 1 0 80%;
 }
+#prod-cont {
+  position: relative;
+  height: 0;
+  width: 100%;
+}
+#list {
+  margin-top: -2ch;
+}
 button.slider-set {
   float: right;
   width: 2.5ch;
+  height: 2.5ch;
 }
 button.slider-set#set-0 {
   margin-right: 1ch;
 }
 button.slider-set#set-1 {
-  margin-right: 13ch;
+  margin-right: 13.25ch;
 }
 </style>

@@ -19,8 +19,8 @@ export class PositionedParticle {
   particle: Particle;
   constructor(baseX: number | string, baseY: number | string, color?: string) {
     if (typeof baseX === "number" && typeof baseY === "number") {
-      this.baseX = baseX + "px";
-      this.baseY = baseY + "px";
+      this.baseX = baseX + "%";
+      this.baseY = baseY + "%";
     } else {
       this.baseX = String(baseX);
       this.baseY = String(baseY);

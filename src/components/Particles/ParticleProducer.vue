@@ -9,9 +9,30 @@
 import { defineComponent } from "vue";
 import { PositionedParticle } from "./RenderedParticle.vue";
 import RenderedParticle from "./RenderedParticle.vue";
+import { resourceDataDict } from "@/content/resource-data";
+
+export function getColorCumulProbs(resourceRateDict: {
+  [resId: number]: number;
+}): { weight: number; color: string }[] {
+  let sum = 0;
+  for (const resIdStr in resourceRateDict) {
+    sum += resourceRateDict[Number(resIdStr)];
+  }
+  const cumulLst: { weight: number; color: string }[] = [];
+  let cumul = 0;
+  for (const resId in resourceRateDict) {
+    cumul += resourceRateDict[resId] / sum;
+    cumulLst.push({
+      color: resourceDataDict[resId].color,
+      weight: cumul,
+    });
+  }
+  return cumulLst;
+}
+
 export default defineComponent({
   name: "ParticleProducer",
-  props: ["immediate"],
+  props: [],
   data() {
     return {
       particles: [] as PositionedParticle[],
@@ -38,26 +59,21 @@ export default defineComponent({
       setTimeout(() => this.fall(), 16);
     },
     scatter(intensity: number, colorCumulProbs?: { weight: number; color: string }[]) {
-      const p = this.$parent;
-      if (p) {
-        const parentHeight = p.$el.offsetHeight;
-        const parentWidth = p.$el.offsetWidth;
-        for (let i = 0; i < intensity; i++) {
-          const newPX = Math.random() * parentWidth;
-          const newPY = Math.random() * parentHeight;
-          if (colorCumulProbs) {
-            const chosenProb = Math.random();
-            let chosenColor = "";
-            for (const prob of colorCumulProbs) {
-              if (chosenProb < prob["weight"]) {
-                chosenColor = prob["color"];
-                break;
-              }
+      for (let i = 0; i < intensity; i++) {
+        const newPX = Math.random() * 100;
+        const newPY = Math.random() * 100;
+        if (colorCumulProbs) {
+          const chosenProb = Math.random();
+          let chosenColor = "";
+          for (const prob of colorCumulProbs) {
+            if (chosenProb < prob["weight"]) {
+              chosenColor = prob["color"];
+              break;
             }
-            this.particles.push(new PositionedParticle(newPX, newPY, chosenColor));
-          } else {
-            this.particles.push(new PositionedParticle(newPX, newPY));
           }
+          this.particles.push(new PositionedParticle(newPX, newPY, chosenColor));
+        } else {
+          this.particles.push(new PositionedParticle(newPX, newPY));
         }
       }
     },
@@ -65,11 +81,7 @@ export default defineComponent({
       this.particles = [];
     },
   },
-  mounted() {
-    if (this.immediate) {
-      this.updateParticles();
-    }
-  },
+  mounted() {},
 });
 </script>
 

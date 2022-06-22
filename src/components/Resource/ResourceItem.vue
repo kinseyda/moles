@@ -41,10 +41,10 @@
       <span class="res-rate-number">
         <b
           :class="{
-            'good-text': resource.rateLastTick > 0,
-            'bad-text': resource.rateLastTick < 0,
+            'good-text': resource.attemptedRateLastTick > 0,
+            'bad-text': resource.attemptedRateLastTick < 0,
           }"
-          >{{ formatNumber(resource.rateLastTick) }}</b
+          >{{ formatNumber(resource.attemptedRateLastTick) }}</b
         >
         <p
           class="res-purchase-rate"
@@ -59,8 +59,8 @@
       </span>
       <small
         :class="{
-          'good-text': resource.rateLastTick > 0,
-          'bad-text': resource.rateLastTick < 0,
+          'good-text': resource.attemptedRateLastTick > 0,
+          'bad-text': resource.attemptedRateLastTick < 0,
         }"
       >
         Mo/s</small

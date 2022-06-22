@@ -19,7 +19,7 @@
           {{ ev.dataObject.eventText }}
         </li>
       </transition-group>
-      <particle-producer ref="dirtProd"></particle-producer>
+      <particle-producer ref="eventLogDirtProd"></particle-producer>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@ export default defineComponent({
       });
       if (this.eventList) {
         if (this.eventList[0].timeSeconds != lst[0].timeSeconds) {
-          const prod = this.$refs["dirtProd"] as typeof ParticleProducer;
+          const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
           if (prod) {
             for (let i = 0; i < 4; i++) {
               prod.updateParticles(8);
@@ -108,8 +108,8 @@ ol {
   flex: 1 0 0;
 }
 li {
-  padding-left: 10ch;
-  text-indent: -10ch;
+  padding-left: 9.5ch;
+  text-indent: -9.5ch;
 }
 #label {
   flex: 0 0 1em;
