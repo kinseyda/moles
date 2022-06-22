@@ -95,7 +95,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
   [UpgradeIDs.TermiteDomestication]: {
     name: "Termite Domestication",
     description:
-      "Upon studying the termites for a while, you realize how useful it could be to keep them in one place",
+      "Upon studying the termites for a while, you realize how useful it could be to keep them in one place and harness their wood-finding abilities",
     effects: [
       {
         func: UpgradeEffects.unlock,
