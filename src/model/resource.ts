@@ -17,7 +17,8 @@ export default class Resource extends Identifiable {
   cap: number;
   capPriority: number;
   multiplier: number;
-  rateLastTick: number;
+  attemptedRateLastTick: number;
+  realRateLastTick: number;
   rateBreakdown: ResourceRate; // Rate in Mo/s derived from game tick increase
 
   /**
@@ -39,7 +40,8 @@ export default class Resource extends Identifiable {
     this.cap = cap;
     this.capPriority = capPriority;
     this.multiplier = multiplier;
-    this.rateLastTick = 0;
+    this.attemptedRateLastTick = 0;
+    this.realRateLastTick = 0;
     this.rateBreakdown = {
       digRate: 0,
       structureProd: 0,
@@ -125,8 +127,14 @@ export default class Resource extends Identifiable {
    * @param change
    * @param ticksize
    */
-  updateRateFromTick(change: number, tickSize: number, rates: ResourceRate) {
-    this.rateLastTick = change / tickSize;
+  updateRateFromTick(
+    attemptedChange: number,
+    oldVal: number,
+    tickSize: number,
+    rates: ResourceRate
+  ) {
+    this.attemptedRateLastTick = attemptedChange / tickSize;
+    this.realRateLastTick = (this.amount - oldVal) / tickSize;
     this.rateBreakdown = rates;
   }
 

@@ -5,7 +5,10 @@
       <h4>Refund:</h4>
       <ul>
         <li><b>Area:</b> {{ structure.dataObject.areaCost }}</li>
-        <li v-for="resId in Object.keys(structure.dataObject.cost)" :key="resId">
+        <li
+          v-for="resId in Object.keys(structure.dataObject.cost)"
+          :key="resId"
+        >
           {{ getResourceData(resId).name }}:
           <span class="good-text"
             >+{{ formatNumber(structure.sellFor(resId))
@@ -59,8 +62,5 @@ export default defineComponent({
 }
 #effect-container {
   float: right;
-}
-ul {
-  padding-left: 1.2em;
 }
 </style>

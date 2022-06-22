@@ -9,7 +9,10 @@ export enum EventIDs {
   Dirt5,
   Dirt10Wood10,
   Prestige,
-  TunnelToSurface,
+  UpgradeMakshiftShovel,
+  UpgradeFindSecondMole,
+  UpgradeTunnelToSurface,
+  UpgradeTermiteKnowledge,
 }
 
 /**
@@ -89,8 +92,33 @@ export const eventDataDict: { [id: number]: EventData } = {
     ],
     repeatable: true,
   },
-  [EventIDs.TunnelToSurface]: {
-    name: "TunnelToSurface",
+  [EventIDs.UpgradeMakshiftShovel]: {
+    name: "UpgradeMakshiftShovel",
+    description: "Create a simple digging tool",
+    eventText:
+      "Now that you can dig through the ground at incredible speed, you feel like you ought to put more thought into these shiny rocks you keep finding.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.MakeshiftShovel],
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.UpgradeFindSecondMole]: {
+    name: "UpgradeFindSecondMole",
+    description: "Start building up a mole colony",
+    eventText: "With another mole around to help the colony things should start moving much quicker, though you worry management will start to become an issue. You were never much of a moles mole.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.FindSecondMole],
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.UpgradeTunnelToSurface]: {
+    name: "UpgradeTunnelToSurface",
     description: "Tunnel to above the dirt",
     eventText:
       "Upon finally reaching the surface of all this dirt, you realize one thing: it is awful up here. Full of light, smell, grass, and much less dirt. You vow not to return unless you absolutely must.",
@@ -98,6 +126,19 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.upgrade,
         requirementDetails: [UpgradeIDs.TunnelToSurface],
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.UpgradeTermiteKnowledge]: {
+    name: "UpgradeTermiteKnowledge",
+    description: "Find out how the local termites find so much wood",
+    eventText:
+      "The termites graciously teach you their ways of finding roots in the ground, but your mind starts to wander. These termites look pretty tasty, and also pretty useful.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.TermiteKnowledge],
       },
     ],
     repeatable: true,

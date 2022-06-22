@@ -18,7 +18,12 @@
                   "
                   number
                 />
-                {{ getResData(resId).name }}: {{ formatNumber(rate) }}<small> Mo/s</small>
+                <span class="res-text">
+                  <colored-resource
+                    :resData="getResData(Number(resId))"
+                  ></colored-resource
+                  >: {{ formatNumber(rate) }}<small> Mo/s</small></span
+                >
               </label>
             </li>
           </ul>
@@ -49,6 +54,7 @@ import PopUpMenu from "@/components/PopUpMenu.vue";
 import { ResourceData } from "@/content/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
 import { formatNumber } from "../format";
+import ColoredResource from "@/components/ColoredResource.vue";
 
 export default defineComponent({
   name: "PrestigeMenu",
@@ -62,6 +68,7 @@ export default defineComponent({
   emits: ["prestige"],
   components: {
     PopUpMenu,
+    ColoredResource,
   },
   computed: {
     ...mapState(["settings"]),
@@ -96,5 +103,19 @@ export default defineComponent({
 #buttons button {
   height: 75%;
   width: 25%;
+}
+input {
+  margin-right: 1ch;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
+ul {
+  position: relative;
+  list-style-type: none;
+}
+.res-text {
+  margin-left: 2ch;
 }
 </style>

@@ -5,7 +5,10 @@
       <multiply-effect
         v-if="upgradeType == UpgradeEffects.multiplier"
         v-bind:effect="effect"
-      ></multiply-effect>
+      >
+      </multiply-effect>
+      <unlock-effect v-if="upgradeType == UpgradeEffects.unlock" v-bind:effect="effect">
+      </unlock-effect>
     </li>
   </div>
 </template>
@@ -14,6 +17,7 @@
 import { defineComponent } from "vue";
 import { UpgradeEffects } from "@/content/data-interfaces";
 import MultiplyEffect from "./MultiplyEffect.vue";
+import UnlockEffect from "./UnlockEffect.vue";
 export default defineComponent({
   name: "EffectDetails",
   data() {
@@ -23,6 +27,7 @@ export default defineComponent({
   },
   components: {
     MultiplyEffect,
+    UnlockEffect,
   },
   props: {
     upgradeType: Number,

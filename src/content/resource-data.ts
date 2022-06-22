@@ -30,6 +30,7 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       multiplier: 1,
       trueRate: 0,
     },
+    color: "#915a30",
   },
   [ResourceIDs.Wood]: {
     name: "Wood",
@@ -43,6 +44,7 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       multiplier: 1,
       trueRate: 0,
     },
+    color: "#cfab59",
   },
   [ResourceIDs.Rock]: {
     name: "Rock",
@@ -55,20 +57,24 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
       multiplier: 1,
       trueRate: 0,
     },
+    color: "#454545",
   },
   [ResourceIDs.Iron]: {
     name: "Iron",
     description: "A particularly shiny kind of rock",
     startingParams: defaultStartingValues,
+    color: "#bdbdbd",
   },
   [ResourceIDs.Gold]: {
     name: "Gold",
     description: "An even shinier kind of rock",
     startingParams: defaultStartingValues,
+    color: "#e8d241",
   },
   [ResourceIDs.Termites]: {
     name: "Termites",
     description: "Your friendly, delicious neighbours",
     startingParams: defaultStartingValues,
+    color: "#a66f1e",
   },
 };

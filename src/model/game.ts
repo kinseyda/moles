@@ -149,10 +149,12 @@ export class Game extends SerializableClass {
     } = resCh["breakdown"];
 
     // Make changes
+    const oldVals: { [resId: number]: number } = {};
     for (const resID in resChanges) {
       if (resID in this.resourceDict) {
         // makes sure you dont try to increment resources that haven't been
         // unlocked yet(from previous civilizations)
+        oldVals[resID] = this.resourceDict[resID].amount;
         this.resourceDict[resID].incrementOrCap(resChanges[resID]);
       }
     }
@@ -160,6 +162,7 @@ export class Game extends SerializableClass {
     for (const resID in this.resourceDict) {
       this.resourceDict[resID].updateRateFromTick(
         resChanges[resID] || 0,
+        oldVals[resID] || this.resourceDict[resID].amount,
         tickSize,
         resBreakdown[resID]
       );

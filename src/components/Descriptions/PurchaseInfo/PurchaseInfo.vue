@@ -88,6 +88,6 @@ export default defineComponent({
   float: right;
 }
 ul {
-  padding-left: 1.2em;
+  list-style-type: none;
 }
 </style>

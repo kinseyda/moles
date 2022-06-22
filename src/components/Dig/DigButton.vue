@@ -23,56 +23,47 @@
         Dig
       </h1>
       <p v-if="area.amount == area.getUsableArea()">Dig</p>
+      <particle-producer ref="digButtonDirtProd"></particle-producer>
     </button>
-    <dig-particle v-for="p in particles" :key="p.baseX" :digParticle="p">
-    </dig-particle>
   </div>
 </template>
 
 <script lang="ts">
-interface Particle {
-  baseX: number;
-  baseY: number;
-  age: number;
-}
-
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-import DigParticle from "./DigParticle.vue";
+import ParticleProducer from "@/components/Particles/ParticleProducer.vue";
+import { getColorCumulProbs } from "@/components/Particles/ParticleProducer.vue";
+import { game } from "@/model/game";
+
 export default defineComponent({
   name: "DigButton",
   props: ["dig", "area"],
-  data() {
-    return {
-      particles: [] as Particle[],
-    };
-  },
   components: {
-    DigParticle,
+    ParticleProducer,
   },
   emits: ["setDigging"],
   methods: {
     ...mapMutations(["hoverDescDig", "resetDesc"]),
     updateParticles() {
-      const buttonEl = document.getElementById("dig-button");
-      if (buttonEl) {
-        const width = buttonEl.clientWidth;
-        const height = buttonEl.clientHeight;
-
-        for (const p of this.particles) {
-          p.age += 0.5;
+      if (this.dig.digging) {
+        const curDiggingRates: { [resId: number]: number } = {};
+        for (const resIdStr in this.dig.digRates) {
+          const resId = Number(resIdStr);
+          if (game.resourceDict[resId].amount < game.resourceDict[resId].cap) {
+            curDiggingRates[resId] = this.dig.digRates[resId];
+          }
         }
-        this.particles = this.particles.filter((p) => p.age < 24);
-        if (this.dig.digging) {
-          const newPX = Math.random() * width;
-          const newPY = Math.random() * height;
-          this.particles.push({ baseX: newPX, baseY: newPY, age: 0 });
+        if (Object.keys(curDiggingRates).length > 0) {
+          (this.$refs["digButtonDirtProd"] as typeof ParticleProducer).updateParticles(
+            4,
+            getColorCumulProbs(curDiggingRates)
+          );
         }
       }
     },
   },
   mounted() {
-    setInterval(this.updateParticles, 16);
+    setInterval(this.updateParticles, 50);
   },
 });
 </script>

@@ -61,7 +61,7 @@ export function setTooltips(tooltips: boolean) {
     }
     const xDist = 20,
       yDist = 5; // Distance from mouse
-    const descWidth = descContainer.offsetWidth; // Will match App.vue css
+    const descWidth = descContainer.offsetWidth; // Will match DescriptionContainer.vue css
     const descHeight = descContainer.clientHeight; // Can change based on content
     const x = e.clientX,
       y = e.clientY;

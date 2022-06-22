@@ -37,84 +37,93 @@
       >
         Debug
       </button>
-      <h4 v-if="debugMode">DEBUG MODE</h4>
+      <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
+      <b id="dev-text" v-if="mode == 'development'" class="bad-text">Dev Mode</b>
+      <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
-      <div id="left-column">
-        <resource-list
-          :resourceDict="gameData.resourceDict"
-          :area="gameData.area"
-        ></resource-list>
-        <button
-          id="empire-button"
-          v-if="gameData.isUnlocked(PermanentUnlocks.Empire)"
-          @mouseover="hoverDescString(uiDescriptions['empireButton'])"
-          @mouseleave="resetDesc()"
-          @click="togglePopupOpen('empire')"
-        >
-          Empire
-        </button>
-      </div>
-      <div id="central-column">
-        <area-display :area="gameData.area"></area-display>
-        <population-display
-          v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
-          :population="gameData.population"
-          :popCap="gameData.getPopulationCap()"
-        ></population-display>
-        <div id="buttons-container">
-          <dig-button
-            :dig="gameData.dig"
+      <div
+        id="tunneling-indicator"
+        :class="{
+          indicate:
+            gameData.dig.digging && gameData.area.amount < gameData.area.getUsableArea(),
+        }"
+      ></div>
+      <div id="game-columns">
+        <div id="left-column">
+          <resource-list
+            :resourceDict="gameData.resourceDict"
             :area="gameData.area"
-            v-on:setDigging="setDigging"
-          ></dig-button>
-          <expansion-list :expansionDict="gameData.expansionDict">
-          </expansion-list>
-          <div id="debug-buttons" v-if="debugMode">
-            <button @click="gameLoop">Tick</button>
-            <button @click="debugFillAll">Fill all resources</button>
-            <button @click="setDigging(true)">Toggle digging on</button>
-            <button @click="debugMultiplier *= 2">Time x2</button> Current:
-            {{ debugMultiplier }}
-            <button @click="debugMultiplier /= 2">Time /2</button>
+          ></resource-list>
+          <button
+            id="empire-button"
+            v-if="gameData.isUnlocked(PermanentUnlocks.Empire)"
+            @mouseover="hoverDescString(uiDescriptions['empireButton'])"
+            @mouseleave="resetDesc()"
+            @click="togglePopupOpen('empire')"
+          >
+            Empire
+          </button>
+        </div>
+        <div id="central-column">
+          <area-display :area="gameData.area"></area-display>
+          <population-display
+            v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
+            :population="gameData.population"
+            :popCap="gameData.getPopulationCap()"
+          ></population-display>
+          <div id="buttons-container">
+            <dig-button
+              :dig="gameData.dig"
+              :area="gameData.area"
+              v-on:setDigging="setDigging"
+            ></dig-button>
+            <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
+            <div id="debug-buttons" v-if="debugMode">
+              <button @click="gameLoop">Tick</button>
+              <button @click="debugFillAll">Fill all resources</button>
+              <button @click="setDigging(true)">Toggle digging on</button>
+              <button @click="debugMultiplier *= 2">Time x2</button> Current:
+              {{ debugMultiplier }}
+              <button @click="debugMultiplier /= 2">Time /2</button>
+            </div>
           </div>
+          <div id="event-log-container">
+            <event-log :eventsDict="gameData.eventsDict"></event-log>
+          </div>
+          <description-container></description-container>
         </div>
-        <div id="event-log-container">
-          <event-log :eventsDict="gameData.eventsDict"></event-log>
+        <div id="purchasable-column">
+          <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
+          <structure-list :structureDict="gameData.structureDict"> </structure-list>
         </div>
-        <description-container></description-container>
       </div>
-      <div id="purchasable-column">
-        <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-        <structure-list :structureDict="gameData.structureDict">
-        </structure-list>
-      </div>
-    </div>
 
-    <settings-display v-if="popUpOpen == 'settings'"></settings-display>
-    <empire-display
-      v-if="popUpOpen == 'empire'"
-      :civilizations="gameData.civilizations"
-      :empireRates="gameData.getEmpireRates()"
-      :maxPotentialRates="gameData.getHighestPotentialRates()"
-      :name="gameData.name"
-      :population="gameData.population"
-      :empireMult="gameData.empireMultiplier"
-      :prestigeUnlocked="gameData.isUnlocked(PermanentUnlocks.Prestige)"
-    >
-    </empire-display>
-    <prestige-menu
-      v-if="popUpOpen == 'prestige'"
-      v-on:prestige="prestigeGame"
-      :maxPotentialRates="gameData.getHighestPotentialRates()"
-    >
-    </prestige-menu>
-    <info-display
-      v-if="popUpOpen == 'info'"
-      :appVersion="appVersion"
-      :gameSaveVersion="gameData.creationVersion"
-    >
-    </info-display>
+      <settings-display v-if="popUpOpen == 'settings'"></settings-display>
+      <empire-display
+        v-if="popUpOpen == 'empire'"
+        :civilizations="gameData.civilizations"
+        :empireRates="gameData.getEmpireRates()"
+        :maxPotentialRates="gameData.getHighestPotentialRates()"
+        :name="gameData.name"
+        :population="gameData.population"
+        :empireMult="gameData.empireMultiplier"
+        :prestigeUnlocked="gameData.isUnlocked(PermanentUnlocks.Prestige)"
+      >
+      </empire-display>
+      <prestige-menu
+        v-if="popUpOpen == 'prestige'"
+        v-on:prestige="prestigeGame"
+        :maxPotentialRates="gameData.getHighestPotentialRates()"
+      >
+      </prestige-menu>
+      <info-display
+        v-if="popUpOpen == 'info'"
+        :appVersion="appVersion"
+        :gameSaveVersion="gameData.creationVersion"
+      >
+      </info-display>
+    </div>
   </div>
 </template>
 
@@ -176,6 +185,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       PermanentUnlocks: PermanentUnlocks,
       appVersion: currentVersion,
       debugMultiplier: 1,
+      mode: process.env.NODE_ENV,
     };
   },
   methods: {
@@ -232,11 +242,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (
-      loadTheme == "light" ||
-      loadTheme == "dark" ||
-      loadTheme == "true mole"
-    ) {
+    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -269,12 +275,36 @@ export default class App extends Vue {}
 <style scoped>
 #game-space {
   position: absolute;
+  top: 25px;
+  height: calc(100% - 25px);
+  width: 100%;
+  background-size: 100% 100%;
+  background-image: var(--background-image);
+  background-color: var(--far-bg-color);
+}
+#game-columns {
   display: flex;
   flex-direction: row;
   flex: 1 0 0;
-  top: 25px;
-  min-height: calc(100% - 25px);
+  position: absolute;
+  height: 100%;
   width: 100%;
+}
+#tunneling-indicator {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  background-image: var(--background-image);
+  background: radial-gradient(transparent 50%, var(--text-color));
+  background-size: 100% 100%;
+  opacity: 0;
+  transition: 1s;
+}
+#tunneling-indicator.indicate {
+  transition: 3s;
+  opacity: 0.75;
 }
 #top-bar {
   background-color: var(--global-bg-color);
@@ -289,6 +319,13 @@ export default class App extends Vue {}
 #top-bar button {
   padding-left: 5px;
   padding-right: 5px;
+}
+#version-text {
+  margin-left: auto;
+}
+#dev-text {
+  margin-left: auto;
+  text-shadow: 1px 1px var(--text-color);
 }
 #left-column {
   flex: 0 0 44ch;
@@ -325,5 +362,6 @@ export default class App extends Vue {}
 #empire-button {
   flex: 1 1 0;
   margin-left: 1em;
+  margin-bottom: 1.3em;
 }
 </style>

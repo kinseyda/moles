@@ -67,7 +67,7 @@ export default defineComponent({
 }
 #description-container.floating-tooltip {
   border: 1px solid var(--text-color);
-  width: 384px;
+  width: 40ch;
   display: block;
   position: absolute;
   z-index: 1000;

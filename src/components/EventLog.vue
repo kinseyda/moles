@@ -7,17 +7,20 @@
     >
       Log:
     </h2>
-    <ol>
-      <li
-        v-for="ev in eventList"
-        :key="ev.id"
-        @mouseover="hoverDescIdentifiable(ev)"
-        @mouseleave="resetDesc()"
-      >
-        [{{ formatTime(timeSince(ev.timeSeconds)) }}<small> ago</small>]
-        {{ ev.dataObject.eventText }}
-      </li>
-    </ol>
+    <div id="log-container">
+      <transition-group name="list" tag="ol">
+        <li
+          v-for="ev in eventList"
+          :key="ev.id"
+          @mouseover="hoverDescIdentifiable(ev)"
+          @mouseleave="resetDesc()"
+        >
+          [{{ formatTime(timeSince(ev.timeSeconds)) }}<small> ago</small>]
+          {{ ev.dataObject.eventText }}
+        </li>
+      </transition-group>
+      <particle-producer ref="eventLogDirtProd"></particle-producer>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -27,6 +30,7 @@ import { formatTimeConcise } from "@/components/format";
 import { game } from "@/model/game";
 import { mapMutations } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import ParticleProducer from "@/components/Particles/ParticleProducer.vue";
 
 class TextLogEvent {
   id: number;
@@ -51,6 +55,9 @@ export default defineComponent({
       uiDescriptions: uiDescriptions,
     };
   },
+  components: {
+    ParticleProducer,
+  },
   computed: {
     eventList(): TextLogEvent[] {
       let lst = [];
@@ -61,6 +68,16 @@ export default defineComponent({
       lst.sort(function (a, b) {
         return b.timeSeconds - a.timeSeconds;
       });
+      if (this.eventList) {
+        if (this.eventList[0].timeSeconds != lst[0].timeSeconds) {
+          const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
+          if (prod) {
+            for (let i = 0; i < 4; i++) {
+              prod.updateParticles(8);
+            }
+          }
+        }
+      }
       return lst;
     },
   },
@@ -91,8 +108,8 @@ ol {
   flex: 1 0 0;
 }
 li {
-  padding-left: 10ch;
-  text-indent: -10ch;
+  padding-left: 9.5ch;
+  text-indent: -9.5ch;
 }
 #label {
   flex: 0 0 1em;
@@ -101,5 +118,29 @@ li {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+}
+#log-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1 0 0;
+}
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+
+.list-enter-from {
+  background-color: var(--text-color);
+  color: var(--global-bg-color);
+  opacity: 0;
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
 }
 </style>

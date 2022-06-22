@@ -50,6 +50,7 @@ export interface ResourceData extends IdentifiableData {
     multiplier: number;
     trueRate: number;
   };
+  color: string;
 }
 
 export interface ResourceRate {

@@ -7,19 +7,33 @@
     <link rel="icon" href="<%= BASE_URL %>mole-icon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="css/styles.css" />
     <title>Moles</title>
+    <style>
+      noscript {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+    </style>
   </head>
   <body>
-    <noscript>
-      Moles won't work without Javascript enabled. See the github repository
-      <a href="https://www.github.com/kinseyda/moles">here</a> to see what the
-      Javascript would do if you'd like.
-    </noscript>
+    <div id="noscript-container">
+      <noscript>
+        <p>
+          <b><i>Moles</i></b> is an open-source, text-based incremental game,
+          built using Vue 3.
+        </p>
+        <p>
+          <b><i>Moles</i></b> will not work without Javascript enabled. Have a
+          look at the Github repository
+          <a href="https://www.github.com/kinseyda/moles">here</a> if you'd like
+          to see what the Javascript will do if you enable it.
+        </p>
+      </noscript>
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

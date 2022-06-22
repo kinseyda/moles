@@ -13,11 +13,6 @@ html {
   font-size: large;
   overflow: hidden;
 }
-#game-space {
-  background-color: var(--far-bg-color);
-  background-image: var(--background-image);
-  background-size: 100% 100%; 
-}
 
 button {
   border: 1px solid var(--text-color);
@@ -36,7 +31,9 @@ tr.list-row:nth-child(odd),
 tr.list-row:nth-child(odd) td {
   background-color: var(--secondary-bg-color);
 }
-
+ul {
+	padding-left: 1ch;
+}
 table {
   min-width: 100%;
   table-layout: fixed;
@@ -63,3 +60,4 @@ button {
 	color: var(--bad-text-color);
 	background-color: var(--cb-background);
 }
+

@@ -8,7 +8,8 @@
         :effect="effect"
         :upgradeType="effect.func"
         :detailedDesc="getEffectDescription(effect.func)"
-      ></effect-details>
+      >
+      </effect-details>
     </ul>
   </div>
 </template>
@@ -34,7 +35,9 @@ export default defineComponent({
         case UpgradeEffects.multiplier:
           return "Multiplies resource gains:";
         case UpgradeEffects.unlock:
-          return "Unlocks something";
+          return "Unlocks:";
+        case UpgradeEffects.permanentUnlock:
+          return "Grants a new ability";
         default:
           return "Does something?";
       }
