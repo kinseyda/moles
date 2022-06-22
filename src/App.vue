@@ -38,6 +38,7 @@
         Debug
       </button>
       <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
+      <b id="dev-text" v-if="mode == 'development'" class="bad-text">Dev Mode</b>
       <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
@@ -184,6 +185,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
       PermanentUnlocks: PermanentUnlocks,
       appVersion: currentVersion,
       debugMultiplier: 1,
+      mode: process.env.NODE_ENV,
     };
   },
   methods: {
@@ -320,6 +322,10 @@ export default class App extends Vue {}
 }
 #version-text {
   margin-left: auto;
+}
+#dev-text {
+  margin-left: auto;
+  text-shadow: 1px 1px var(--text-color);
 }
 #left-column {
   flex: 0 0 44ch;
