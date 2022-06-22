@@ -35,7 +35,6 @@ import { resourceDataDict } from "@/content/resource-data";
 import { upgradeDataDict, unlockDataDict } from "@/content/upgrade-data";
 import { structureDataDict } from "@/content/structure-data";
 import { expansionDataDict } from "@/content/expansion-data";
-import { UnlockData } from "@/model/serializable-classes";
 export default defineComponent({
   name: "UnlockEffect",
   props: {
@@ -51,8 +50,10 @@ export default defineComponent({
     getResourceData(id: number) {
       return resourceDataDict[id];
     },
-    getUnlockData(): UnlockData {
-      return unlockDataDict[this.effect.params[0]];
+    getUnlockData() {
+      if (this.effect) {
+        return unlockDataDict[this.effect.params[0]];
+      }
     },
     getUpgradeData(id: number) {
       return upgradeDataDict[id];
