@@ -5,7 +5,7 @@
     </p>
     <ul>
       <li v-for="id in Object.keys(civilization?.resourceRates)" :key="id">
-        <colored-resource :resData="getResource(Number(id))"> </colored-resource>:
+        <colored-resource :resData="getResource(Number(id))" />:
         <span class="good-text">
           {{ formatNumber(civilization?.resourceRates[id])
           }}<small class="good-text"> Mo/s</small>
@@ -39,7 +39,6 @@ export default defineComponent({
 </script>
 <style scoped>
 ul {
-  columns: 2;
   list-style-type: none;
 }
 </style>

@@ -192,7 +192,7 @@ export default defineComponent({
   flex-direction: column;
 }
 #current-info {
-  flex: 0 1 10%;
+  flex: 0 1 15%;
   display: flex;
   flex-direction: row;
   margin-bottom: 2em;
@@ -207,11 +207,11 @@ export default defineComponent({
   flex: 1 1 0;
 }
 #resource-rates {
-  height: 3.5em;
+  height: 100%;
   overflow: scroll;
 }
 #empire-info {
-  flex: 1 1 65%;
+  flex: 1 1 60%;
 }
 #prestige-button {
   flex: 1 1 15%;
@@ -239,5 +239,6 @@ input {
 }
 #resource-rates ul {
   list-style-type: none;
+  columns: 2;
 }
 </style>
