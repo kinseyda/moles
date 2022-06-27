@@ -4,7 +4,10 @@
     <template #content>
       <div id="prestige-outer">
         <div id="resource-select">
-          <p>Select up to 2 resources to export from this civilization when you leave.</p>
+          <p>
+            Select up to 2 resources to export from this civilization when you
+            leave.
+          </p>
           <ul>
             <li v-for="(rate, resId) in maxPotentialRates" :key="resId">
               <label>
@@ -13,8 +16,9 @@
                   v-model="resourcesSelected"
                   :value="resId"
                   :disabled="
-                    resourcesSelected.length >= 2 &&
-                    resourcesSelected.indexOf(resId) === -1
+                    (resourcesSelected.length >= 2 &&
+                      resourcesSelected.indexOf(resId) === -1) ||
+                    rate <= 0
                   "
                   number
                 />
@@ -105,11 +109,10 @@ export default defineComponent({
   width: 25%;
 }
 input {
-  margin-right: 1ch;
-  position: absolute;
+  margin-right: -1ch;
   top: 50%;
-  -webkit-transform: translate(0, -50%);
-  transform: translate(0, -50%);
+  -webkit-transform: translate(0, -25%);
+  transform: translate(0, -25%);
 }
 ul {
   position: relative;
