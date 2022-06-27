@@ -3,6 +3,7 @@ import {
   eventDataDict,
   eventIdsByRequirementType,
   resAmountEventIdsByResId,
+  upgradeEventIdsByUpgradeId,
 } from "../content/event-data";
 import { Game } from "./game";
 
@@ -60,13 +61,13 @@ export function handleEvent(
       );
       break;
     case RequirementType.upgrade:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
+      if (params !== undefined && params["upId"] !== undefined) {
+        const evIds = upgradeEventIdsByUpgradeId[params["upId"]];
+        console.log(evIds);
+        if (evIds !== undefined) {
+          idsAchieved.push(...checkAll(triggerEventType, game, ...evIds));
+        }
+      }
       break;
     case RequirementType.resourceAmount:
       if (params !== undefined && params["resId"] !== undefined) {

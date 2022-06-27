@@ -108,7 +108,8 @@ export const eventDataDict: { [id: number]: EventData } = {
   [EventIDs.UpgradeFindSecondMole]: {
     name: "UpgradeFindSecondMole",
     description: "Start building up a mole colony",
-    eventText: "With another mole around to help the colony things should start moving much quicker, though you worry management will start to become an issue. You were never much of a moles mole.",
+    eventText:
+      "With another mole around to help the colony things should start moving much quicker, though you worry management will start to become an issue. You were never much of a moles mole.",
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
@@ -186,3 +187,24 @@ for (const evId in eventDataDict) {
 export const resAmountEventIdsByResId: {
   [resId: number]: number[];
 } = resAmountdict;
+
+const upgradeEventDict: {
+  [upId: number]: number[];
+} = {};
+for (const evId in eventDataDict) {
+  for (const req of eventDataDict[evId].eventRequirements) {
+    if (req.requirementType === RequirementType.upgrade) {
+      const eventUpId = req.requirementDetails[0];
+      if (!upgradeEventDict[eventUpId]) {
+        upgradeEventDict[eventUpId] = [];
+      }
+      upgradeEventDict[eventUpId].push(Number(evId));
+    }
+  }
+}
+/**
+ * A dictionary of {@link Upgrade} ids to event ids that correspond to an event which contains an upgrade requirement involving the given Upgrade.
+ */
+export const upgradeEventIdsByUpgradeId: {
+  [resId: number]: number[];
+} = upgradeEventDict;
