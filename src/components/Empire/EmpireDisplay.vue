@@ -128,7 +128,10 @@ import CivilizationItem from "./CivilizationItem.vue";
 import { game } from "@/model/game";
 import { resourceDataDict } from "@/content/resource-data";
 import { ResourceData } from "@/content/data-interfaces";
-import { getStatus, getStatusString } from "@/content/population-statuses";
+import {
+  getPopulationStatus,
+  getPopulationStatusString,
+} from "@/content/population-statuses";
 import { formatNumber, formatDown } from "../format";
 import ColoredResource from "@/components/ColoredResource.vue";
 
@@ -173,7 +176,7 @@ export default defineComponent({
       return formatNumber(num, undefined);
     },
     getPopString(pop: number): string {
-      return getStatusString(getStatus(pop));
+      return getPopulationStatusString(getPopulationStatus(pop));
     },
     formatPop(num: number) {
       return formatDown(num);

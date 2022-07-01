@@ -2,6 +2,15 @@
   <div>
     <div class="desc-side" id="cost-container">
       <h4>Cost:</h4>
+      <b
+        class="good-text"
+        v-if="
+          Object.keys(purchase.dataObject.cost).length == 0 &&
+          (purchase.dataObject.areaCost === undefined ||
+            purchasase.dataObject.areaCost == 0)
+        "
+        >No cost!</b
+      >
       <ul>
         <li v-if="purchase._class === structureEnum">
           <h4>

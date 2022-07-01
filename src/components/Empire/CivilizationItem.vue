@@ -16,7 +16,10 @@
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
 import { formatNumber, formatDown } from "@/components/format";
-import { getStatus, getStatusString } from "@/content/population-statuses";
+import {
+  getPopulationStatus,
+  getPopulationStatusString,
+} from "@/content/population-statuses";
 
 export default defineComponent({
   name: "CivilizationItem",
@@ -27,7 +30,7 @@ export default defineComponent({
       return formatNumber(num, undefined);
     },
     getPopString(pop: number): string {
-      return getStatusString(getStatus(pop));
+      return getPopulationStatusString(getPopulationStatus(pop));
     },
     formatPop(num: number) {
       return formatDown(num);

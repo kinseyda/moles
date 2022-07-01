@@ -38,6 +38,8 @@ export default defineComponent({
           return "Unlocks:";
         case UpgradeEffects.permanentUnlock:
           return "Grants a new ability";
+        case UpgradeEffects.digRate:
+          return "Allows resources to be gathered while digging:";
         default:
           return "Does something?";
       }

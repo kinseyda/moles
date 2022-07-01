@@ -328,7 +328,7 @@ export default class App extends Vue {}
   text-shadow: 1px 1px var(--text-color);
 }
 #left-column {
-  flex: 0 0 44ch;
+  flex: 0 0 50ch;
   display: flex;
   flex-direction: column;
   min-height: 100%;

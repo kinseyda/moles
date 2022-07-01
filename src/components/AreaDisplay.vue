@@ -5,7 +5,7 @@
       @mouseover="hoverDescString(uiDescriptions['area'])"
       @mouseleave="resetDesc()"
     >
-      Max Area: <b>{{ formatNumber(area.cap) }}</b> <br />
+      Max {{ getAreaString(area.cap) }} Area: <b>{{ formatNumber(area.cap) }}</b> <br />
       Usable:
       <b
         :class="{
@@ -24,6 +24,7 @@ import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
 import { mapMutations } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import { getAreaStatus, getAreaStatusString } from "@/content/area-statuses";
 export default defineComponent({
   name: "AreaDisplay",
   props: ["area"],
@@ -36,6 +37,9 @@ export default defineComponent({
     ...mapMutations(["hoverDescString", "resetDesc"]),
     formatNumber(num: number) {
       return formatNumber(num, undefined);
+    },
+    getAreaString(area: number) {
+      return getAreaStatusString(getAreaStatus(area));
     },
   },
 });

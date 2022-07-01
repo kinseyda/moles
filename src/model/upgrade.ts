@@ -79,6 +79,9 @@ export default class Upgrade extends Purchasable {
         case UpgradeEffects.empireMultiplier:
           Upgrade.applyEmpireMultiplier(effect.params[0]);
           break;
+        case UpgradeEffects.digRate:
+          Upgrade.applyDigRate(effect.params[0]);
+          break;
         case UpgradeEffects.none:
           break;
         default:
@@ -163,6 +166,16 @@ export default class Upgrade extends Purchasable {
       const res = game.resourceDict[resId];
       if (res) {
         res.multiplier += multDict[resId];
+      }
+    }
+  }
+  static applyDigRate(digRates: { [resId: number]: number }) {
+    for (const resIdStr in digRates) {
+      const resId: number = Number(resIdStr);
+      if (game.dig.digRates[resId] !== undefined) {
+        game.dig.digRates[resId] += digRates[resId];
+      } else {
+        game.dig.digRates[resId] = digRates[resId];
       }
     }
   }

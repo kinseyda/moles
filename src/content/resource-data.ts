@@ -36,27 +36,13 @@ export const resourceDataDict: { [id: number]: ResourceData } = {
     name: "Wood",
     description:
       "Twigs and roots that look like they can be made into all sorts of things",
-    startingParams: {
-      amount: 0,
-      cap: 0,
-      capPriority: 1,
-      baseRate: 0,
-      multiplier: 1,
-      trueRate: 0,
-    },
+    startingParams: defaultStartingValues,
     color: "#cfab59",
   },
   [ResourceIDs.Rock]: {
     name: "Rock",
     description: "A hard, grey lump of... whatever rocks are made of.",
-    startingParams: {
-      amount: 0,
-      cap: 0,
-      capPriority: 1,
-      baseRate: 0,
-      multiplier: 1,
-      trueRate: 0,
-    },
+    startingParams: defaultStartingValues,
     color: "#454545",
   },
   [ResourceIDs.Iron]: {

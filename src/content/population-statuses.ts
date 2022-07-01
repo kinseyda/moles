@@ -4,7 +4,7 @@ export enum PopulationStatuses {
   Town,
   City,
 }
-export function getStatusString(status: PopulationStatuses): string {
+export function getPopulationStatusString(status: PopulationStatuses): string {
   switch (status) {
     case PopulationStatuses.SolitaryMole:
       return "Solitary mole";
@@ -17,7 +17,7 @@ export function getStatusString(status: PopulationStatuses): string {
   }
 }
 
-export function getStatus(pop: number): PopulationStatuses {
+export function getPopulationStatus(pop: number): PopulationStatuses {
   if (pop < 2) {
     return PopulationStatuses.SolitaryMole;
   } else if (pop < 10) {

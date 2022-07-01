@@ -9,6 +9,8 @@ const defaultStartingValues = {
 };
 
 export enum UpgradeIDs {
+  LookAround,
+  SurveyTower,
   MakeshiftShovel,
   Pickaxe,
   TermiteKnowledge,
@@ -23,6 +25,8 @@ export enum UpgradeIDs {
 }
 
 export enum UnlockIDs {
+  LookAround,
+  SurveyTower,
   MakeshiftShovel,
   Pickaxe,
   TermiteKnowledge,
@@ -42,6 +46,41 @@ export enum PermanentUnlocks {
 }
 
 export const upgradeDataDict: { [id: number]: UpgradeData } = {
+  [UpgradeIDs.LookAround]: {
+    name: "Look around",
+    description: "Examine your sorroundings",
+    effects: [
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.LookAround],
+      },
+      {
+        func: UpgradeEffects.digRate,
+        params: [{ [ResourceIDs.Dirt]: 5 }],
+      },
+    ],
+    cost: {},
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.SurveyTower]: {
+    name: "Survey tower",
+    description:
+      "Construct a survey tower (maybe more of a small hill) inside your cave to search outmore useful materials.",
+    effects: [
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.SurveyTower],
+      },
+      {
+        func: UpgradeEffects.digRate,
+        params: [{ [ResourceIDs.Wood]: 1, [ResourceIDs.Rock]: 0.5 }],
+      },
+    ],
+    cost: {
+      [ResourceIDs.Dirt]: 10,
+    },
+    startingParams: defaultStartingValues,
+  },
   [UpgradeIDs.MakeshiftShovel]: {
     name: "Makeshift shovel",
     description: "Fashion some twigs and pebbles lying around into a shovel",
@@ -213,6 +252,23 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
 };
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
+  [UnlockIDs.LookAround]: {
+    resources: [ResourceIDs.Dirt],
+    upgrades: [UpgradeIDs.SurveyTower],
+    structures: [StructureIDs.BallOfDirt],
+    expansions: [],
+  },
+  [UnlockIDs.SurveyTower]: {
+    resources: [ResourceIDs.Wood, ResourceIDs.Rock],
+    upgrades: [
+      UpgradeIDs.MakeshiftShovel,
+      UpgradeIDs.TermiteKnowledge,
+      UpgradeIDs.FindSecondMole,
+      UpgradeIDs.Carpentry,
+    ],
+    structures: [],
+    expansions: [],
+  },
   [UnlockIDs.MakeshiftShovel]: {
     resources: [],
     upgrades: [UpgradeIDs.Pickaxe],
@@ -228,7 +284,7 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
   [UnlockIDs.TermiteKnowledge]: {
     resources: [],
     upgrades: [UpgradeIDs.TermiteDomestication],
-    structures: [],
+    structures: [StructureIDs.TunnelBore],
     expansions: [],
   },
   [UnlockIDs.TermiteDomestication]: {

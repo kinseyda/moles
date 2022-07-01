@@ -10,6 +10,7 @@ export enum UpgradeEffects {
   unlock,
   permanentUnlock,
   empireMultiplier,
+  digRate,
   none,
 }
 export interface UpgradeData extends PurchasableData {
