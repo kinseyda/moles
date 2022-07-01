@@ -8,9 +8,9 @@
       Max {{ getAreaString(area.cap) }} Area: <b>{{ formatNumber(area.cap) }}</b> <br />
       Usable:
       <b
-        :class="{
-          'bad-text': area.amount < area.getUsableArea(),
-          'good-text': area.amount == area.getUsableArea(),
+        id="amount"
+        :style="{
+          color: getColorScale(1 - area.amount / area.getUsableArea()),
         }"
         >{{ formatNumber(area.amount) }}</b
       >
@@ -22,9 +22,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import { getAreaStatus, getAreaStatusString } from "@/content/area-statuses";
+import { getColorScale } from "./color";
+
 export default defineComponent({
   name: "AreaDisplay",
   props: ["area"],
@@ -32,6 +34,9 @@ export default defineComponent({
     return {
       uiDescriptions: uiDescriptions,
     };
+  },
+  computed: {
+    ...mapState(["settings"]),
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
@@ -41,6 +46,9 @@ export default defineComponent({
     getAreaString(area: number) {
       return getAreaStatusString(getAreaStatus(area));
     },
+    getColorScale(level: number) {
+      return getColorScale(this.settings.cbMode, level);
+    },
   },
 });
 </script>
@@ -49,5 +57,8 @@ export default defineComponent({
 #area-text {
   font-size: x-large;
   text-align: center;
+}
+#amount {
+  background-color: var(--cb-background);
 }
 </style>
