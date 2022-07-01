@@ -9,6 +9,8 @@ export enum EventIDs {
   Dirt5,
   Dirt10Wood10,
   Prestige,
+  UpgradeLookAround,
+  UpgradeExamineDirt,
   UpgradeMakshiftShovel,
   UpgradeFindSecondMole,
   UpgradeTunnelToSurface,
@@ -23,8 +25,7 @@ export const eventDataDict: { [id: number]: EventData } = {
   [EventIDs.Start]: {
     name: "Start",
     description: "Appears when first starting the game",
-    eventText:
-      "You open your mole eyes and look around you. Though you can't see much you can feel dirt under your feet. You feel an urge to start digging into it.",
+    eventText: "You are a mole.",
     eventRequirements: [
       {
         requirementType: RequirementType.gameStart,
@@ -101,6 +102,32 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.upgrade,
         requirementDetails: [UpgradeIDs.MakeshiftShovel],
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.UpgradeLookAround]: {
+    name: "UpgradeLookAround",
+    description: "Take a look around",
+    eventText:
+      "You open your mole eyes and look around you. Though you can't see much you can feel dirt under your feet. You feel an urge to start digging into it.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.LookAround],
+      },
+    ],
+    repeatable: true,
+  },
+  [EventIDs.UpgradeExamineDirt]: {
+    name: "UpgradeExamineDirt",
+    description: "Examine the ground around you",
+    eventText:
+      "The ground in this cave is a comfort to you, and you find yourself longing to keep some piled up.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: [UpgradeIDs.ExamineDirt],
       },
     ],
     repeatable: true,

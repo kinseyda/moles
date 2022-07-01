@@ -10,6 +10,7 @@ const defaultStartingValues = {
 
 export enum UpgradeIDs {
   LookAround,
+  ExamineDirt,
   SurveyTower,
   MakeshiftShovel,
   Pickaxe,
@@ -26,6 +27,7 @@ export enum UpgradeIDs {
 
 export enum UnlockIDs {
   LookAround,
+  ExamineDirt,
   SurveyTower,
   MakeshiftShovel,
   Pickaxe,
@@ -40,6 +42,7 @@ export enum UnlockIDs {
 }
 
 export enum PermanentUnlocks {
+  Digging,
   Empire,
   Prestige,
   Population,
@@ -53,6 +56,23 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       {
         func: UpgradeEffects.unlock,
         params: [UnlockIDs.LookAround],
+      },
+      {
+        func: UpgradeEffects.permanentUnlock,
+        params: [PermanentUnlocks.Digging],
+      },
+    ],
+    cost: {},
+    startingParams: defaultStartingValues,
+  },
+  [UpgradeIDs.ExamineDirt]: {
+    name: "Examine the ground",
+    description:
+      "Take a closer look at this strange brown substance you see all around",
+    effects: [
+      {
+        func: UpgradeEffects.unlock,
+        params: [UnlockIDs.ExamineDirt],
       },
       {
         func: UpgradeEffects.digRate,
@@ -253,6 +273,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
   [UnlockIDs.LookAround]: {
+    resources: [],
+    upgrades: [UpgradeIDs.ExamineDirt],
+    structures: [],
+    expansions: [],
+  },
+  [UnlockIDs.ExamineDirt]: {
     resources: [ResourceIDs.Dirt],
     upgrades: [UpgradeIDs.SurveyTower],
     structures: [StructureIDs.BallOfDirt],

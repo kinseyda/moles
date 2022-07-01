@@ -38,7 +38,9 @@
         Debug
       </button>
       <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
-      <b id="dev-text" v-if="mode == 'development'" class="bad-text">Dev Mode</b>
+      <b id="dev-text" v-if="mode == 'development'" class="bad-text"
+        >Dev Mode</b
+      >
       <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
@@ -46,7 +48,8 @@
         id="tunneling-indicator"
         :class="{
           indicate:
-            gameData.dig.digging && gameData.area.amount < gameData.area.getUsableArea(),
+            gameData.dig.digging &&
+            gameData.area.amount < gameData.area.getUsableArea(),
         }"
       ></div>
       <div id="game-columns">
@@ -66,19 +69,26 @@
           </button>
         </div>
         <div id="central-column">
-          <area-display :area="gameData.area"></area-display>
-          <population-display
-            v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
-            :population="gameData.population"
-            :popCap="gameData.getPopulationCap()"
-          ></population-display>
+          <div id="area-pop">
+            <area-display
+              v-if="gameData.isUnlocked(PermanentUnlocks.Digging)"
+              :area="gameData.area"
+            ></area-display>
+            <population-display
+              v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
+              :population="gameData.population"
+              :popCap="gameData.getPopulationCap()"
+            ></population-display>
+          </div>
           <div id="buttons-container">
             <dig-button
+              v-show="gameData.isUnlocked(PermanentUnlocks.Digging)"
               :dig="gameData.dig"
               :area="gameData.area"
               v-on:setDigging="setDigging"
             ></dig-button>
-            <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
+            <expansion-list :expansionDict="gameData.expansionDict">
+            </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
               <button @click="debugFillAll">Fill all resources</button>
@@ -95,7 +105,8 @@
         </div>
         <div id="purchasable-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-          <structure-list :structureDict="gameData.structureDict"> </structure-list>
+          <structure-list :structureDict="gameData.structureDict">
+          </structure-list>
         </div>
       </div>
 
@@ -242,7 +253,11 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
+    if (
+      loadTheme == "light" ||
+      loadTheme == "dark" ||
+      loadTheme == "true mole"
+    ) {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {
@@ -340,16 +355,20 @@ export default class App extends Vue {}
   flex-direction: column;
   margin: 1em;
 }
+#area-pop {
+  width: 100%;
+  flex: 0 0 12%;
+}
 #buttons-container {
   width: 100%;
   margin-top: 1em;
   margin-bottom: 1em;
-  flex: 0 0 50%;
+  flex: 0 1 50%;
   display: flex;
   flex-direction: column;
 }
 #event-log-container {
-  flex: 1 0 0;
+  flex: 0 0 35%;
 }
 #settings-display {
   position: absolute;

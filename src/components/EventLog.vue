@@ -68,6 +68,12 @@ export default defineComponent({
       lst.sort(function (a, b) {
         return b.timeSeconds - a.timeSeconds;
       });
+
+      for (let i = 0; i < lst.length; i++) {
+        // Prevents weird movements when adding items
+        lst[lst.length - 1 - i].id = i;
+      }
+
       if (this.eventList) {
         if (this.eventList[0].timeSeconds != lst[0].timeSeconds) {
           const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
