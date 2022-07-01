@@ -402,7 +402,6 @@ export class Game extends SerializableClass {
     for (const resId in this.resourceDict) {
       resCaps[resId] = Infinity;
     }
-    console.log(this.getResourceChanges(1, resCaps)["changes"]);
     return this.getResourceChanges(1, resCaps)["changes"];
   }
 

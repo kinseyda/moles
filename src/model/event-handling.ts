@@ -63,7 +63,6 @@ export function handleEvent(
     case RequirementType.upgrade:
       if (params !== undefined && params["upId"] !== undefined) {
         const evIds = upgradeEventIdsByUpgradeId[params["upId"]];
-        console.log(evIds);
         if (evIds !== undefined) {
           idsAchieved.push(...checkAll(triggerEventType, game, ...evIds));
         }
