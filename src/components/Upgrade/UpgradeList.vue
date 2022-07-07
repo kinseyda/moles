@@ -1,5 +1,5 @@
 <template>
-  <div id="outer">
+  <div id="outer" v-if="Object.keys(upgradeDict).length > 0">
     <h2
       @mouseover="hoverDescString(uiDescriptions['upgrades'])"
       @mouseleave="resetDesc()"

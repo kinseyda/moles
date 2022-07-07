@@ -26,7 +26,8 @@ export enum UpgradeIDs {
 }
 
 export enum UnlockIDs {
-  LookAround,
+  StartingUnlock,
+  UnlockExamineDirt,
   ExamineDirt,
   SurveyTower,
   MakeshiftShovel,
@@ -53,10 +54,6 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     name: "Look around",
     description: "Examine your sorroundings",
     effects: [
-      {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.LookAround],
-      },
       {
         func: UpgradeEffects.permanentUnlock,
         params: [PermanentUnlocks.Digging],
@@ -272,7 +269,13 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
 };
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
-  [UnlockIDs.LookAround]: {
+  [UnlockIDs.StartingUnlock]: {
+    resources: [],
+    upgrades: [UpgradeIDs.LookAround],
+    structures: [],
+    expansions: [],
+  },
+  [UnlockIDs.UnlockExamineDirt]: {
     resources: [],
     upgrades: [UpgradeIDs.ExamineDirt],
     structures: [],

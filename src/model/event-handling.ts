@@ -7,6 +7,7 @@ import {
   upgradeEventIdsByUpgradeId,
 } from "../content/event-data";
 import { game, Game } from "./game";
+import { applyUnlock } from "./unlock";
 
 /**
  * Checks whether a triggering event has successfully completed all the requirements for any applicable {@link EventData} in {@link eventDataDict}.
@@ -78,6 +79,15 @@ export function handleEvent(
         }
       }
       break;
+    case RequirementType.areaAmount:
+      idsAchieved.push(
+        ...checkAll(
+          triggerEventType,
+          game,
+          ...eventIdsByRequirementType[triggerEventType]
+        )
+      );
+      break;
     case RequirementType.timed:
       idsAchieved.push(
         ...checkAll(
@@ -92,6 +102,10 @@ export function handleEvent(
   }
   for (const id of idsAchieved) {
     game.eventsDict[id] = Date.now();
+    const unlock = eventDataDict[id].unlock;
+    if (unlock !== undefined) {
+      applyUnlock(unlock);
+    }
   }
 }
 
@@ -166,6 +180,16 @@ function checkEventId(
           return false;
         }
         break;
+      case RequirementType.areaAmount:
+        if (
+          !checkEventAreaAmount(
+            eventRequirement.requirementDetails as number,
+            game
+          )
+        ) {
+          return false;
+        }
+        break;
       case RequirementType.timed:
         if (
           !checkEventTimed(eventRequirement.requirementDetails as number, game)
@@ -179,6 +203,10 @@ function checkEventId(
   }
 
   return true;
+}
+
+function checkEventAreaAmount(areaAmount: number, game: Game): boolean {
+  return game.area.amount >= areaAmount;
 }
 function checkEventTimed(requiredEmpireAge: number, game: Game): boolean {
   return Date.now() - game.creationTime >= requiredEmpireAge;

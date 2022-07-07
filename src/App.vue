@@ -38,9 +38,7 @@
         Debug
       </button>
       <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
-      <b id="dev-text" v-if="mode == 'development'" class="bad-text"
-        >Dev Mode</b
-      >
+      <b id="dev-text" v-if="mode == 'development'" class="bad-text">Dev Mode</b>
       <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
@@ -48,8 +46,7 @@
         id="tunneling-indicator"
         :class="{
           indicate:
-            gameData.dig.digging &&
-            gameData.area.amount < gameData.area.getUsableArea(),
+            gameData.dig.digging && gameData.area.amount < gameData.area.getUsableArea(),
         }"
       ></div>
       <div id="game-columns">
@@ -87,8 +84,7 @@
               :area="gameData.area"
               v-on:setDigging="setDigging"
             ></dig-button>
-            <expansion-list :expansionDict="gameData.expansionDict">
-            </expansion-list>
+            <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
               <button @click="debugFillAll">Fill all resources</button>
@@ -105,8 +101,7 @@
         </div>
         <div id="purchasable-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
-          <structure-list :structureDict="gameData.structureDict">
-          </structure-list>
+          <structure-list :structureDict="gameData.structureDict"> </structure-list>
         </div>
       </div>
 
@@ -154,11 +149,11 @@ import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
-import { PermanentUnlocks } from "./content/upgrade-data";
 import { Game, game, startGame, currentVersion } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
+import { PermanentUnlocks } from "./content/upgrade-unlock-data";
 
 @Options({
   name: "App",
@@ -253,11 +248,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     // Load theme selection
     const htmlTag = document.getElementsByTagName("html")[0];
     const loadTheme = localStorage.getItem("molesTheme");
-    if (
-      loadTheme == "light" ||
-      loadTheme == "dark" ||
-      loadTheme == "true mole"
-    ) {
+    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
       htmlTag.setAttribute("theme", loadTheme);
       this.settingsSetTheme(loadTheme);
     } else {

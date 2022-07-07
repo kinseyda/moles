@@ -75,6 +75,7 @@ export enum RequirementType {
   gameStart, // details not used
   loadGame, // details not used
   resourceAmount, // details: {[resourceID]: resourceAmount}
+  areaAmount, // details: amount (just one number)
   upgrade, // details: upgradeId[]
   prevEvent, // details: {[eventID]: msSinceAchieved}
   prestige, // details not used
@@ -88,4 +89,5 @@ export interface EventData extends IdentifiableData {
   eventRequirements: EventRequirement[];
   eventText: string;
   repeatable: boolean;
+  unlock: number | undefined;
 }

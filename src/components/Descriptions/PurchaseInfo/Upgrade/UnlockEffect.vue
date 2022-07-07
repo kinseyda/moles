@@ -36,9 +36,9 @@ import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
 import ColoredResource from "@/components/ColoredResource.vue";
 import { resourceDataDict } from "@/content/resource-data";
-import { upgradeDataDict, unlockDataDict } from "@/content/upgrade-data";
 import { structureDataDict } from "@/content/structure-data";
 import { expansionDataDict } from "@/content/expansion-data";
+import { unlockDataDict, upgradeDataDict } from "@/content/upgrade-unlock-data";
 export default defineComponent({
   name: "UnlockEffect",
   props: {

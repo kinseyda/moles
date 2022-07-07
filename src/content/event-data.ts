@@ -1,12 +1,13 @@
 import Upgrade from "@/model/upgrade";
 import { EventData, RequirementType } from "./data-interfaces";
 import { ResourceIDs } from "./resource-data";
-import { UpgradeIDs } from "./upgrade-data";
+import { UnlockIDs, UpgradeIDs } from "./upgrade-unlock-data";
 
 export enum EventIDs {
   Start,
   StartSecond,
   Time2Sec,
+  Area50,
   Dirt5,
   Dirt10Wood10,
   Prestige,
@@ -26,7 +27,8 @@ export const eventDataDict: { [id: number]: EventData } = {
   [EventIDs.Start]: {
     name: "Start",
     description: "Appears when first starting the game",
-    eventText: "You are a mole.",
+    eventText:
+      "You are a mole, waking from a deep sleep. You are unsure where you are or how you got here, but it feels like as good a place as any to start a life for a mole.",
     eventRequirements: [
       {
         requirementType: RequirementType.gameStart,
@@ -34,6 +36,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.StartSecond]: {
     name: "StartSecond",
@@ -52,15 +55,29 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.Time2Sec]: {
     name: "Time2Sec",
-    description: "The game has been running for 2 seconds",
-    eventText: "The game has been running for 2 seconds",
+    description: "Recall the ability of sight",
+    eventText:
+      "As you slowly regain consciousness, you remember that you have eyes, though they never worked too well.",
     eventRequirements: [
       { requirementType: RequirementType.timed, requirementDetails: 2000 },
     ],
     repeatable: false,
+    unlock: UnlockIDs.StartingUnlock,
+  },
+  [EventIDs.Area50]: {
+    name: "Area50",
+    description: "Reach 50 area",
+    eventText:
+      "Now that you've expanded this cave to a reasonable size you feel like you ought to take a closer look at this stuff the ground seems to be made out of.",
+    eventRequirements: [
+      { requirementType: RequirementType.areaAmount, requirementDetails: 50 },
+    ],
+    repeatable: false,
+    unlock: UnlockIDs.UnlockExamineDirt,
   },
   [EventIDs.Dirt5]: {
     name: "Dirt5",
@@ -74,6 +91,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.Dirt10Wood10]: {
     name: "Dirt10Wood10",
@@ -89,6 +107,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.Prestige]: {
     name: "Prestige",
@@ -102,6 +121,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: UnlockIDs.UnlockExamineDirt,
   },
   [EventIDs.UpgradeMakshiftShovel]: {
     name: "UpgradeMakshiftShovel",
@@ -115,6 +135,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeLookAround]: {
     name: "UpgradeLookAround",
@@ -128,6 +149,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeExamineDirt]: {
     name: "UpgradeExamineDirt",
@@ -141,6 +163,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeFindSecondMole]: {
     name: "UpgradeFindSecondMole",
@@ -154,6 +177,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeTunnelToSurface]: {
     name: "UpgradeTunnelToSurface",
@@ -167,6 +191,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeTermiteKnowledge]: {
     name: "UpgradeTermiteKnowledge",
@@ -180,6 +205,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
 };
 

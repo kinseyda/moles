@@ -1,8 +1,9 @@
 <template>
-  <div id="outer" v-if="Object.keys(structureDict).length > 0">
+  <div id="outer">
     <h2
       @mouseover="hoverDescString(uiDescriptions['structures'])"
       @mouseleave="resetDesc()"
+      v-if="Object.keys(structureDict).length > 0"
     >
       Structures:
     </h2>

@@ -1,7 +1,7 @@
 import { resourceDataDict, ResourceIDs } from "./resource-data";
 import Resource from "../model/resource";
 import Upgrade from "../model/upgrade";
-import { upgradeDataDict, UpgradeIDs } from "./upgrade-data";
+import { upgradeDataDict, UpgradeIDs } from "./upgrade-unlock-data";
 import Structure from "../model/structure";
 import { structureDataDict, StructureIDs } from "./structure-data";
 import Expansion from "../model/expansion";
@@ -14,13 +14,7 @@ export function startingResources() {
 }
 
 export function startingUpgrades() {
-  return {
-    [UpgradeIDs.LookAround]: new Upgrade(
-      UpgradeIDs.LookAround,
-      upgradeDataDict[UpgradeIDs.LookAround].startingParams.bought,
-      upgradeDataDict[UpgradeIDs.LookAround].startingParams.discount
-    ),
-  };
+  return {};
 }
 
 export function startingStructures() {
