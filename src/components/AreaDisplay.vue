@@ -12,7 +12,10 @@
         :style="{
           color: getColorScale(1 - area.amount / area.getUsableArea()),
         }"
-        >{{ formatNumber(area.amount) }}</b
+        >{{ formatNumber(area.amount) }}
+        <span class="area-purchase-cost bad-text">
+          {{ getAreaCost(purchaseInformationData) }}
+        </span></b
       >
       / <b class="good-text">{{ formatNumber(area.getUsableArea()) }}</b> Mo
     </p>
@@ -26,6 +29,9 @@ import { mapMutations, mapState } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import { getAreaStatus, getAreaStatusString } from "@/content/area-statuses";
 import { getColorScale } from "./color";
+import Purchasable from "@/model/purchasable";
+import Structure from "@/model/structure";
+import { SerializableClasses } from "@/model/serializable-class";
 
 export default defineComponent({
   name: "AreaDisplay",
@@ -36,7 +42,7 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapState(["settings"]),
+    ...mapState(["settings", "purchaseInformationData"]),
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
@@ -49,6 +55,13 @@ export default defineComponent({
     getColorScale(level: number) {
       return getColorScale(this.settings.cbMode, level);
     },
+    getAreaCost(purchase: Purchasable) {
+      return purchase
+        ? purchase["_class"] === SerializableClasses.Structure
+          ? "-" + this.formatNumber((purchase as Structure).trueCostArea())
+          : ""
+        : "";
+    },
   },
 });
 </script>
@@ -58,7 +71,14 @@ export default defineComponent({
   font-size: x-large;
   text-align: center;
 }
+.area-purchase-cost {
+  position: absolute;
+  font-size: small;
+  right: -1ch;
+  top: -0.25em;
+}
 #amount {
   background-color: var(--cb-background);
+  position: relative;
 }
 </style>
