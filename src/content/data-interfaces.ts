@@ -72,17 +72,17 @@ export interface UnlockData {
 }
 
 export enum RequirementType {
-  gameStart,
-  loadGame,
-  resourceAmount,
-  upgrade,
-  prevEvent,
-  prestige,
-  none,
+  gameStart, // details not used
+  loadGame, // details not used
+  resourceAmount, // details: {[resourceID]: resourceAmount}
+  upgrade, // details: upgradeId[]
+  prevEvent, // details: {[eventID]: msSinceAchieved}
+  prestige, // details not used
+  timed, // details: empireAgeInMS (just one number)
 }
 export interface EventRequirement {
   requirementType: RequirementType;
-  requirementDetails: { [id: number]: number } | number[];
+  requirementDetails: unknown;
 }
 export interface EventData extends IdentifiableData {
   eventRequirements: EventRequirement[];

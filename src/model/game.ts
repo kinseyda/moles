@@ -27,6 +27,7 @@ export const currentVersion = meta["gameVersion"];
  */
 export class Game extends SerializableClass {
   creationVersion: string;
+  creationTime: number;
   lastUpdate: number;
   dig: Dig;
   area: Area;
@@ -45,6 +46,8 @@ export class Game extends SerializableClass {
   /**
    * @param creationVersion - Value of currentVersion at time of creation, used
    * to tell how bad a savegame mismatch is
+   * @param creationTime - The time of the start of the game, not reset during
+   * prestiges. Used for play time.
    * @param lastUpdate - Time of the most recent tick (in ms since epoch).
    * Use Date.now().
    * @param dig - {@link Dig} that stores the game's current dig stats.
@@ -74,6 +77,7 @@ export class Game extends SerializableClass {
    */
   constructor(
     creationVersion: string,
+    creationTime: number,
     lastUpdate: number,
     dig: Dig,
     area: Area,
@@ -90,6 +94,7 @@ export class Game extends SerializableClass {
   ) {
     super(SerializableClasses.Game);
     this.creationVersion = creationVersion;
+    this.creationTime = creationTime;
     this.lastUpdate = lastUpdate;
     this.dig = dig;
     this.area = area;
@@ -167,6 +172,8 @@ export class Game extends SerializableClass {
         resBreakdown[resID]
       );
     }
+
+    this.handleEvent(RequirementType.timed);
 
     this.lastUpdate = updateTime;
   }
@@ -418,6 +425,7 @@ export class Game extends SerializableClass {
 
     const g = new Game(
       this.creationVersion,
+      this.creationTime,
       Date.now(),
       startingDig(),
       startingArea(),
@@ -467,6 +475,7 @@ export class Game extends SerializableClass {
           case "Game":
             return new Game(
               obj.creationVersion,
+              obj.creationTime,
               obj.lastUpdate,
               obj.dig,
               obj.area,
@@ -537,6 +546,7 @@ export function startGame() {
   setGame(
     new Game(
       currentVersion,
+      Date.now(),
       Date.now(),
       startingDig(),
       startingArea(),

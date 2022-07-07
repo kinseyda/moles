@@ -6,6 +6,7 @@ import { UpgradeIDs } from "./upgrade-data";
 export enum EventIDs {
   Start,
   StartSecond,
+  Time2Sec,
   Dirt5,
   Dirt10Wood10,
   Prestige,
@@ -47,10 +48,19 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
       {
         requirementType: RequirementType.prevEvent,
-        requirementDetails: [EventIDs.Start],
+        requirementDetails: { [EventIDs.Start]: 0 },
       },
     ],
     repeatable: true,
+  },
+  [EventIDs.Time2Sec]: {
+    name: "Time2Sec",
+    description: "The game has been running for 2 seconds",
+    eventText: "The game has been running for 2 seconds",
+    eventRequirements: [
+      { requirementType: RequirementType.timed, requirementDetails: 2000 },
+    ],
+    repeatable: false,
   },
   [EventIDs.Dirt5]: {
     name: "Dirt5",
@@ -199,7 +209,9 @@ const resAmountdict: {
 for (const evId in eventDataDict) {
   for (const req of eventDataDict[evId].eventRequirements) {
     if (req.requirementType === RequirementType.resourceAmount) {
-      for (const resId in req.requirementDetails) {
+      for (const resId in req.requirementDetails as {
+        [eventID: number]: number;
+      }) {
         if (!resAmountdict[resId]) {
           resAmountdict[resId] = [];
         }
@@ -221,11 +233,13 @@ const upgradeEventDict: {
 for (const evId in eventDataDict) {
   for (const req of eventDataDict[evId].eventRequirements) {
     if (req.requirementType === RequirementType.upgrade) {
-      const eventUpId = req.requirementDetails[0];
-      if (!upgradeEventDict[eventUpId]) {
-        upgradeEventDict[eventUpId] = [];
+      const eventUpIds = req.requirementDetails as number[];
+      for (const eventUpId of eventUpIds) {
+        if (!upgradeEventDict[eventUpId]) {
+          upgradeEventDict[eventUpId] = [];
+        }
+        upgradeEventDict[eventUpId].push(Number(evId));
       }
-      upgradeEventDict[eventUpId].push(Number(evId));
     }
   }
 }

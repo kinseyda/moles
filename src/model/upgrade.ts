@@ -122,6 +122,11 @@ export default class Upgrade extends Purchasable {
         sp.capPriority,
         sp.multiplier
       );
+      game.resourceDict[resId].setCapPriority(
+        sp.capPriority,
+        game.area.amount,
+        game.totalPriorities()
+      );
     }
     for (const upId of unlockData.upgrades) {
       const sp = upgradeDataDict[upId].startingParams;
