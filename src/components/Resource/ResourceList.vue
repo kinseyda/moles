@@ -1,5 +1,5 @@
 <template>
-  <div id="res-list-outer">
+  <div id="res-list-outer" v-if="Object.keys(resourceDict).length > 0">
     <h2
       @mouseover="hoverDescString(uiDescriptions['resources'])"
       @mouseleave="resetDesc()"
@@ -74,10 +74,9 @@ export default defineComponent({
         }
       }
       if (Object.keys(curRates).length > 0) {
-        (this.$refs["resListDirtProd"] as typeof ParticleProducer).updateParticles(
-          1,
-          getColorCumulProbs(curRates)
-        );
+        (
+          this.$refs["resListDirtProd"] as typeof ParticleProducer
+        ).updateParticles(1, getColorCumulProbs(curRates));
       }
     },
     getSlider(resId: number) {
@@ -106,7 +105,9 @@ export default defineComponent({
       // Change value behind the scenes
       this.sliderVals[sliderIndex] = setTo;
       // Change actual slider position
-      const slider = document.getElementById(`slider${sliderIndex}`) as HTMLInputElement;
+      const slider = document.getElementById(
+        `slider${sliderIndex}`
+      ) as HTMLInputElement;
       if (slider !== null) {
         slider.value = String(setTo);
       } else {
