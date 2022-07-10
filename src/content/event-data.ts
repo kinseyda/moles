@@ -6,7 +6,7 @@ import { UnlockIDs, UpgradeIDs } from "./upgrade-unlock-data";
 export enum EventIDs {
   Start,
   StartSecond,
-  Time2Sec,
+  Time5Sec,
   Area50,
   Dirt5,
   Dirt10Wood10,
@@ -57,13 +57,13 @@ export const eventDataDict: { [id: number]: EventData } = {
     repeatable: true,
     unlock: undefined,
   },
-  [EventIDs.Time2Sec]: {
-    name: "Time2Sec",
+  [EventIDs.Time5Sec]: {
+    name: "Time5Sec",
     description: "Recall the ability of sight",
     eventText:
       "As you slowly regain consciousness, you remember that you have eyes, though they never worked too well.",
     eventRequirements: [
-      { requirementType: RequirementType.timed, requirementDetails: 2000 },
+      { requirementType: RequirementType.timed, requirementDetails: 5000 },
     ],
     repeatable: false,
     unlock: UnlockIDs.StartingUnlock,

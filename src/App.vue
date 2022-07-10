@@ -95,7 +95,7 @@
             </div>
           </div>
           <div id="event-log-container">
-            <event-log :eventsDict="gameData.eventsDict"></event-log>
+            <event-log :eventsDict="gameData.eventsDict" ref="eventLog"></event-log>
           </div>
           <description-container></description-container>
         </div>
@@ -220,6 +220,7 @@ import { PermanentUnlocks } from "./content/upgrade-unlock-data";
         Game.loadGame(sto);
       }
       this.gameData = game;
+      this.$refs["eventLog"].resetNextUp = true;
     },
     prestigeGame(resourcesSelected: number[]) {
       game.prestige(resourcesSelected);
