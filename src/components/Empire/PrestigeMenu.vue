@@ -4,10 +4,7 @@
     <template #content>
       <div id="prestige-outer">
         <div id="resource-select">
-          <p>
-            Select up to 2 resources to export from this civilization when you
-            leave.
-          </p>
+          <p>Select up to 2 resources to export from this civilization when you leave.</p>
           <ul>
             <li v-for="(rate, resId) in maxPotentialRates" :key="resId">
               <label>
@@ -55,7 +52,7 @@ import { defineComponent } from "vue";
 import { uiDescriptions } from "../ui-descriptions";
 import { mapMutations, mapState } from "vuex";
 import PopUpMenu from "@/components/PopUpMenu.vue";
-import { ResourceData } from "@/content/data-interfaces";
+import { ResourceData } from "@/model/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
 import { formatNumber } from "../format";
 import ColoredResource from "@/components/ColoredResource.vue";

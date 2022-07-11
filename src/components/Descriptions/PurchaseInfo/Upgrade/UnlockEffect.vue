@@ -39,8 +39,14 @@ import { resourceDataDict } from "@/content/resource-data";
 import { structureDataDict } from "@/content/structure-data";
 import { expansionDataDict } from "@/content/expansion-data";
 import { unlockDataDict, upgradeDataDict } from "@/content/upgrade-unlock-data";
+import { UpgradeTypes } from "@/model/data-interfaces";
 export default defineComponent({
   name: "UnlockEffect",
+  data() {
+    return {
+      UpgradeTypes: UpgradeTypes,
+    };
+  },
   props: {
     effect: Object,
     detailedDesc: String,
@@ -55,7 +61,7 @@ export default defineComponent({
     },
     getUnlockData() {
       if (this.effect) {
-        return unlockDataDict[this.effect.params[0]];
+        return unlockDataDict[this.effect.params[UpgradeTypes.unlock]];
       }
     },
     getUpgradeData(id: number) {

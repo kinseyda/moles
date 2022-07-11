@@ -5,7 +5,7 @@ export interface IdentifiableData {
 export interface PurchasableData extends IdentifiableData {
   cost: { [id: number]: number };
 }
-export enum UpgradeEffects {
+export enum UpgradeTypes {
   multiplier,
   unlock,
   permanentUnlock,
@@ -13,10 +13,18 @@ export enum UpgradeEffects {
   digRate,
   none,
 }
+export interface UpgradeDetails {
+  [UpgradeTypes.multiplier]?: { [resId: number]: number };
+  [UpgradeTypes.unlock]?: number;
+  [UpgradeTypes.permanentUnlock]?: number;
+  [UpgradeTypes.empireMultiplier]?: number;
+  [UpgradeTypes.digRate]?: { [resId: number]: number };
+  [UpgradeTypes.none]?: undefined;
+}
 export interface UpgradeData extends PurchasableData {
   effects: {
-    func: UpgradeEffects;
-    params: any[];
+    func: UpgradeTypes;
+    params: UpgradeDetails;
   }[];
   startingParams: {
     bought: boolean;
@@ -81,13 +89,23 @@ export enum RequirementType {
   prestige, // details not used
   timed, // details: empireAgeInMS (just one number)
 }
+export interface RequirementDetails {
+  [RequirementType.gameStart]?: undefined;
+  [RequirementType.loadGame]?: undefined;
+  [RequirementType.resourceAmount]?: { [resourceID: number]: number };
+  [RequirementType.areaAmount]?: number;
+  [RequirementType.upgrade]?: number[];
+  [RequirementType.prevEvent]?: { [eventID: number]: number };
+  [RequirementType.prestige]?: undefined;
+  [RequirementType.timed]?: number;
+}
 export interface EventRequirement {
   requirementType: RequirementType;
-  requirementDetails: unknown;
+  requirementDetails: RequirementDetails;
 }
 export interface EventData extends IdentifiableData {
   eventRequirements: EventRequirement[];
   eventText: string;
   repeatable: boolean;
-  unlock: number | undefined;
+  unlock?: number;
 }

@@ -127,7 +127,7 @@ import PopUpMenu from "@/components/PopUpMenu.vue";
 import CivilizationItem from "./CivilizationItem.vue";
 import { game } from "@/model/game";
 import { resourceDataDict } from "@/content/resource-data";
-import { ResourceData } from "@/content/data-interfaces";
+import { ResourceData } from "@/model/data-interfaces";
 import {
   getPopulationStatus,
   getPopulationStatusString,
@@ -150,7 +150,6 @@ export default defineComponent({
     return {
       uiDescriptions: uiDescriptions,
       newName: "",
-      testStringAr: ["dan", "fillip"],
     };
   },
   emits: ["prestige"],

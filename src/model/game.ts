@@ -5,7 +5,7 @@ import Resource from "./resource";
 import Dig from "./dig";
 import { reactive } from "vue";
 import { handleEvent } from "./event-handling";
-import { RequirementType, ResourceRate } from "../content/data-interfaces";
+import { RequirementType, ResourceRate, UpgradeTypes } from "./data-interfaces";
 import Area from "./area";
 import {
   startingArea,
@@ -18,6 +18,12 @@ import {
 import Expansion from "./expansion";
 import Civilization from "./civilization";
 import meta from "../metadata.json";
+import {
+  unlockDataDict,
+  UnlockIDs,
+  upgradeDataDict,
+  UpgradeIDs,
+} from "@/content/upgrade-unlock-data";
 
 export const currentVersion = meta["gameVersion"];
 
@@ -535,6 +541,48 @@ export class Game extends SerializableClass {
       setGame(recurConstruct(save));
       game.handleEvent(RequirementType.loadGame);
     }
+  }
+  static getUpgradeUnlockTreeString(
+    curId?: number,
+    depth?: number,
+    curStr?: string
+  ): string {
+    if (curId === undefined) {
+      curId = UpgradeIDs.ExamineDirt;
+    }
+    if (depth === undefined) {
+      depth = 0;
+    }
+    if (curStr === undefined) {
+      curStr = "";
+    }
+    if (depth == 0) {
+      curStr = `${upgradeDataDict[curId].name}\n`;
+    } else if (depth == 1) {
+      curStr = `${curStr}|${"────".repeat(depth)} ${
+        upgradeDataDict[curId].name
+      }\n`;
+    } else {
+      curStr = `${curStr}|${"    ".repeat(depth - 1)} |──── ${
+        upgradeDataDict[curId].name
+      }\n`;
+    }
+    const unlockEffect = upgradeDataDict[curId].effects.find(
+      (a) => a.func == UpgradeTypes.unlock
+    );
+    if (unlockEffect !== undefined) {
+      unlockDataDict[
+        unlockEffect.params[UpgradeTypes.unlock]!
+      ].upgrades.forEach(
+        (curr) =>
+          (curStr = `${curStr}${Game.getUpgradeUnlockTreeString(
+            curr,
+            (depth || 0) + 1,
+            ""
+          )}`)
+      );
+    }
+    return curStr;
   }
 }
 

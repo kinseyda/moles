@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <li v-for="id in Object.keys(effect.params[0])" :key="id">
+      <li v-for="id in Object.keys(effect.params[UpgradeTypes.multiplier])" :key="id">
         <p>
           <colored-resource :resData="getResource(id).dataObject"></colored-resource>:
           <span class="good-text">+{{ formatNumber(effect.params[0][id] * 100) }}%</span>
@@ -13,11 +13,17 @@
 
 <script lang="ts">
 import { game } from "@/model/game";
+import { UpgradeTypes } from "@/model/data-interfaces";
 import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
 import ColoredResource from "@/components/ColoredResource.vue";
 export default defineComponent({
   name: "MultiplyEffect",
+  data() {
+    return {
+      UpgradeTypes: UpgradeTypes,
+    };
+  },
   props: {
     effect: Object,
     detailedDesc: String,

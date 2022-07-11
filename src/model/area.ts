@@ -1,4 +1,4 @@
-import { RequirementType } from "@/content/data-interfaces";
+import { RequirementType } from "@/model/data-interfaces";
 import { game } from "./game";
 import { logBaseA } from "./math-utils";
 import SerializableClass, { SerializableClasses } from "./serializable-class";

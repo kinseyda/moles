@@ -1,3 +1,4 @@
+UpgradeTypes
 <template>
   <div>
     <li>
@@ -20,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { UpgradeEffects } from "@/content/data-interfaces";
+import { UpgradeTypes } from "@/model/data-interfaces";
 import MultiplyEffect from "./MultiplyEffect.vue";
 import UnlockEffect from "./UnlockEffect.vue";
 import DigRateEffect from "./DigRateEffect.vue";
@@ -28,7 +29,7 @@ export default defineComponent({
   name: "EffectDetails",
   data() {
     return {
-      UpgradeEffects: UpgradeEffects,
+      UpgradeEffects: UpgradeTypes,
     };
   },
   components: {

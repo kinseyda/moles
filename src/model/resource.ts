@@ -3,7 +3,7 @@ import {
   RequirementType,
   ResourceData,
   ResourceRate,
-} from "../content/data-interfaces";
+} from "./data-interfaces";
 import { game } from "./game";
 import Identifiable from "./identifiable";
 import { SerializableClasses } from "./serializable-class";

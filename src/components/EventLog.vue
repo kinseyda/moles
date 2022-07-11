@@ -78,11 +78,14 @@ export default defineComponent({
           this.resetList();
           this.resetNextUp = false;
         } else {
-          this.updateList();
-        }
-        const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
-        if (prod) {
-          prod.updateParticles(32);
+          const newList = this.makeList(this.eventList);
+          if (this.eventList != newList) {
+            this.eventList = newList;
+            const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
+            if (prod) {
+              prod.updateParticles(32);
+            }
+          }
         }
       },
     },
@@ -114,11 +117,9 @@ export default defineComponent({
     },
     updateList() {
       this.eventList = this.makeList(this.eventList);
-      console.log(this.eventList);
     },
     resetList() {
       this.eventList = this.makeList([], true);
-      console.log(this.eventList);
     },
     adjustTime() {
       this.currentTime = Date.now() / 1000;

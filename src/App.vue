@@ -87,6 +87,7 @@
             <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
+              <button @click="logUnlockTree">Log unlock tree</button>
               <button @click="debugFillAll">Fill all resources</button>
               <button @click="setDigging(true)">Toggle digging on</button>
               <button @click="debugMultiplier *= 2">Time x2</button> Current:
@@ -97,7 +98,7 @@
           <div id="event-log-container">
             <event-log :eventsDict="gameData.eventsDict" ref="eventLog"></event-log>
           </div>
-          <description-container></description-container>
+          <description-container :gameData="gameData"></description-container>
         </div>
         <div id="purchasable-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
@@ -228,6 +229,9 @@ import { PermanentUnlocks } from "./content/upgrade-unlock-data";
     },
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
+    },
+    logUnlockTree() {
+      console.log(Game.getUpgradeUnlockTreeString());
     },
     debugToggle() {
       this.toggleDebug();

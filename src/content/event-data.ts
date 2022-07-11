@@ -1,5 +1,5 @@
 import Upgrade from "@/model/upgrade";
-import { EventData, RequirementType } from "./data-interfaces";
+import { EventData, RequirementType } from "../model/data-interfaces";
 import { ResourceIDs } from "./resource-data";
 import { UnlockIDs, UpgradeIDs } from "./upgrade-unlock-data";
 
@@ -51,7 +51,9 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
       {
         requirementType: RequirementType.prevEvent,
-        requirementDetails: { [EventIDs.Start]: 0 },
+        requirementDetails: {
+          [RequirementType.prevEvent]: { [EventIDs.Start]: 0 },
+        },
       },
     ],
     repeatable: true,
@@ -63,7 +65,10 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText:
       "As you slowly regain consciousness, you remember that you have eyes, though they never worked too well.",
     eventRequirements: [
-      { requirementType: RequirementType.timed, requirementDetails: 5000 },
+      {
+        requirementType: RequirementType.timed,
+        requirementDetails: { [RequirementType.timed]: 5000 },
+      },
     ],
     repeatable: false,
     unlock: UnlockIDs.StartingUnlock,
@@ -74,7 +79,10 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventText:
       "Now that you've expanded this cave to a reasonable size you feel like you ought to take a closer look at this stuff the ground seems to be made out of.",
     eventRequirements: [
-      { requirementType: RequirementType.areaAmount, requirementDetails: 50 },
+      {
+        requirementType: RequirementType.areaAmount,
+        requirementDetails: { [RequirementType.areaAmount]: 50 },
+      },
     ],
     repeatable: false,
     unlock: UnlockIDs.UnlockExamineDirt,
@@ -87,7 +95,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { [ResourceIDs.Dirt]: 5 },
+        requirementDetails: {
+          [RequirementType.resourceAmount]: { [ResourceIDs.Dirt]: 5 },
+        },
       },
     ],
     repeatable: false,
@@ -101,8 +111,10 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.resourceAmount,
         requirementDetails: {
-          [ResourceIDs.Dirt]: 10,
-          [ResourceIDs.Wood]: 10,
+          [RequirementType.resourceAmount]: {
+            [ResourceIDs.Dirt]: 10,
+            [ResourceIDs.Wood]: 10,
+          },
         },
       },
     ],
@@ -131,7 +143,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.MakeshiftShovel],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.MakeshiftShovel],
+        },
       },
     ],
     repeatable: true,
@@ -145,7 +159,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.LookAround],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.LookAround],
+        },
       },
     ],
     repeatable: true,
@@ -159,7 +175,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.ExamineDirt],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.ExamineDirt],
+        },
       },
     ],
     repeatable: true,
@@ -173,7 +191,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.FindSecondMole],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.FindSecondMole],
+        },
       },
     ],
     repeatable: true,
@@ -187,7 +207,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.TunnelToSurface],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.TunnelToSurface],
+        },
       },
     ],
     repeatable: true,
@@ -201,7 +223,9 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.TermiteKnowledge],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.TermiteKnowledge],
+        },
       },
     ],
     repeatable: true,
@@ -259,7 +283,7 @@ const upgradeEventDict: {
 for (const evId in eventDataDict) {
   for (const req of eventDataDict[evId].eventRequirements) {
     if (req.requirementType === RequirementType.upgrade) {
-      const eventUpIds = req.requirementDetails as number[];
+      const eventUpIds = req.requirementDetails[RequirementType.upgrade]!;
       for (const eventUpId of eventUpIds) {
         if (!upgradeEventDict[eventUpId]) {
           upgradeEventDict[eventUpId] = [];

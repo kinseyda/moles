@@ -1,5 +1,5 @@
 import { ResourceIDs } from "@/content/resource-data";
-import { RequirementType } from "../content/data-interfaces";
+import { RequirementType } from "./data-interfaces";
 import {
   eventDataDict,
   eventIdsByRequirementType,
@@ -153,7 +153,7 @@ function checkEventId(
       case RequirementType.upgrade:
         if (
           !checkEventUpgrade(
-            eventRequirement.requirementDetails as number[],
+            eventRequirement.requirementDetails[RequirementType.upgrade]!,
             game
           )
         ) {
@@ -163,7 +163,9 @@ function checkEventId(
       case RequirementType.resourceAmount:
         if (
           !checkEventResourceAmount(
-            eventRequirement.requirementDetails as Record<number, number>,
+            eventRequirement.requirementDetails[
+              RequirementType.resourceAmount
+            ]!,
             game
           )
         ) {
@@ -173,7 +175,7 @@ function checkEventId(
       case RequirementType.prevEvent:
         if (
           !checkEventPrevEvent(
-            eventRequirement.requirementDetails as Record<number, number>,
+            eventRequirement.requirementDetails[RequirementType.prevEvent]!,
             game
           )
         ) {
@@ -183,7 +185,7 @@ function checkEventId(
       case RequirementType.areaAmount:
         if (
           !checkEventAreaAmount(
-            eventRequirement.requirementDetails as number,
+            eventRequirement.requirementDetails[RequirementType.areaAmount]!,
             game
           )
         ) {
@@ -192,7 +194,10 @@ function checkEventId(
         break;
       case RequirementType.timed:
         if (
-          !checkEventTimed(eventRequirement.requirementDetails as number, game)
+          !checkEventTimed(
+            eventRequirement.requirementDetails[RequirementType.timed]!,
+            game
+          )
         ) {
           return false;
         }

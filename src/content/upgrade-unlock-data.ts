@@ -1,4 +1,8 @@
-import { UnlockData, UpgradeData, UpgradeEffects } from "./data-interfaces";
+import {
+  UnlockData,
+  UpgradeData,
+  UpgradeTypes,
+} from "../model/data-interfaces";
 import { ExpansionIDs } from "./expansion-data";
 import { ResourceIDs } from "./resource-data";
 import { StructureIDs } from "./structure-data";
@@ -55,8 +59,8 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     description: "Examine your sorroundings",
     effects: [
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Digging],
+        func: UpgradeTypes.permanentUnlock,
+        params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Digging },
       },
     ],
     cost: {},
@@ -68,12 +72,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "Take a closer look at this strange brown substance you see all around",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.ExamineDirt],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.ExamineDirt },
       },
       {
-        func: UpgradeEffects.digRate,
-        params: [{ [ResourceIDs.Dirt]: 5 }],
+        func: UpgradeTypes.digRate,
+        params: { [UpgradeTypes.digRate]: { [ResourceIDs.Dirt]: 5 } },
       },
     ],
     cost: {},
@@ -85,12 +89,17 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "Construct a survey tower (maybe more of a small hill) inside your cave to search outmore useful materials.",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.SurveyTower],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.SurveyTower },
       },
       {
-        func: UpgradeEffects.digRate,
-        params: [{ [ResourceIDs.Wood]: 1, [ResourceIDs.Rock]: 0.5 }],
+        func: UpgradeTypes.digRate,
+        params: {
+          [UpgradeTypes.digRate]: {
+            [ResourceIDs.Wood]: 1,
+            [ResourceIDs.Rock]: 0.5,
+          },
+        },
       },
     ],
     cost: {
@@ -103,10 +112,13 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     description: "Fashion some twigs and pebbles lying around into a shovel",
     effects: [
       {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Dirt]: 1 }],
+        func: UpgradeTypes.multiplier,
+        params: { [UpgradeTypes.multiplier]: { [ResourceIDs.Dirt]: 1 } },
       },
-      { func: UpgradeEffects.unlock, params: [UnlockIDs.MakeshiftShovel] },
+      {
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.MakeshiftShovel },
+      },
     ],
     cost: {
       [ResourceIDs.Dirt]: 10,
@@ -119,8 +131,8 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "Construct a pickaxe out of twigs to help you get at those iron veins you've been seeing",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.Pickaxe],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.Pickaxe },
       },
     ],
     cost: {
@@ -135,12 +147,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "Ask the friendly local termites how they find so much wood in the ground",
     effects: [
       {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Wood]: 1 }],
+        func: UpgradeTypes.multiplier,
+        params: { [UpgradeTypes.multiplier]: { [ResourceIDs.Wood]: 1 } },
       },
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TermiteKnowledge],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.TermiteKnowledge },
       },
     ],
     cost: {
@@ -154,8 +166,8 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "Upon studying the termites for a while, you realize how useful it could be to keep them in one place and harness their wood-finding abilities",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TermiteDomestication],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.TermiteDomestication },
       },
     ],
     cost: {
@@ -169,12 +181,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "You think you can smell another mole digging about in the dirt nearby. You feel a sudden sense of loneliness, and think you ought to try and find them.",
     effects: [
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Population],
+        func: UpgradeTypes.permanentUnlock,
+        params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Population },
       },
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.FindSecondMole],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.FindSecondMole },
       },
     ],
     cost: {
@@ -188,16 +200,16 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "All these materials are getting hard to keep track of. You think you ought to start writing things down.",
     effects: [
       {
-        func: UpgradeEffects.empireMultiplier,
-        params: [5 / 100],
+        func: UpgradeTypes.empireMultiplier,
+        params: { [UpgradeTypes.empireMultiplier]: 5 / 100 },
       },
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.Ledger],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.Ledger },
       },
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Empire],
+        func: UpgradeTypes.permanentUnlock,
+        params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Empire },
       },
     ],
     cost: {
@@ -212,12 +224,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "You start wondering what could be above the dirt, it seems warm up there.",
     effects: [
       {
-        func: UpgradeEffects.unlock,
-        params: [UnlockIDs.TunnelToSurface],
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.TunnelToSurface },
       },
       {
-        func: UpgradeEffects.multiplier,
-        params: [{ [ResourceIDs.Wood]: 1 }],
+        func: UpgradeTypes.multiplier,
+        params: { [UpgradeTypes.multiplier]: { [ResourceIDs.Wood]: 1 } },
       },
     ],
     cost: {
@@ -231,8 +243,8 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
       "All the warmth and light above the dirt is making you nauseous, you want to get away and start building nice tunnels under somewhere else as soon as possible",
     effects: [
       {
-        func: UpgradeEffects.permanentUnlock,
-        params: [PermanentUnlocks.Prestige],
+        func: UpgradeTypes.permanentUnlock,
+        params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Prestige },
       },
     ],
     cost: {
@@ -244,7 +256,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     name: "Carpentry",
     description:
       "The brilliant idea to rotate some sticks vertically crosses your mind",
-    effects: [{ func: UpgradeEffects.unlock, params: [UnlockIDs.Carpentry] }],
+    effects: [
+      {
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.Carpentry },
+      },
+    ],
     cost: { [ResourceIDs.Wood]: 25 },
     startingParams: defaultStartingValues,
   },
@@ -252,7 +269,12 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     name: "Cairnery",
     description:
       "While idly stacking rocks on top of each other, you start to wonder if this could actually be useful",
-    effects: [{ func: UpgradeEffects.unlock, params: [UnlockIDs.Cairnery] }],
+    effects: [
+      {
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.Cairnery },
+      },
+    ],
     cost: { [ResourceIDs.Rock]: 150 },
     startingParams: defaultStartingValues,
   },
@@ -261,7 +283,10 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     description:
       "By focusing all your mole strength you realize you can actually bend some iron into more useful shapes",
     effects: [
-      { func: UpgradeEffects.unlock, params: [UnlockIDs.MetalWorking] },
+      {
+        func: UpgradeTypes.unlock,
+        params: { [UpgradeTypes.unlock]: UnlockIDs.MetalWorking },
+      },
     ],
     cost: { [ResourceIDs.Iron]: 500 },
     startingParams: defaultStartingValues,

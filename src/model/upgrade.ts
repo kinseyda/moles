@@ -1,11 +1,7 @@
 import Purchasable from "./purchasable";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
-import {
-  RequirementType,
-  UpgradeData,
-  UpgradeEffects,
-} from "../content/data-interfaces";
+import { RequirementType, UpgradeData, UpgradeTypes } from "./data-interfaces";
 import { upgradeDataDict } from "@/content/upgrade-unlock-data";
 import { applyUnlock, applyPermanentUnlock } from "./unlock";
 
@@ -57,22 +53,24 @@ export default class Upgrade extends Purchasable {
 
     for (const effect of this.dataObject.effects) {
       switch (effect.func) {
-        case UpgradeEffects.multiplier:
-          Upgrade.applyMultiplier(effect.params[0]);
+        case UpgradeTypes.multiplier:
+          Upgrade.applyMultiplier(effect.params[UpgradeTypes.multiplier]!);
           break;
-        case UpgradeEffects.unlock:
-          applyUnlock(effect.params[0]);
+        case UpgradeTypes.unlock:
+          applyUnlock(effect.params[UpgradeTypes.unlock]!);
           break;
-        case UpgradeEffects.permanentUnlock:
-          applyPermanentUnlock(effect.params[0]);
+        case UpgradeTypes.permanentUnlock:
+          applyPermanentUnlock(effect.params[UpgradeTypes.permanentUnlock]!);
           break;
-        case UpgradeEffects.empireMultiplier:
-          Upgrade.applyEmpireMultiplier(effect.params[0]);
+        case UpgradeTypes.empireMultiplier:
+          Upgrade.applyEmpireMultiplier(
+            effect.params[UpgradeTypes.empireMultiplier]!
+          );
           break;
-        case UpgradeEffects.digRate:
-          Upgrade.applyDigRate(effect.params[0]);
+        case UpgradeTypes.digRate:
+          Upgrade.applyDigRate(effect.params[UpgradeTypes.digRate]!);
           break;
-        case UpgradeEffects.none:
+        case UpgradeTypes.none:
           break;
         default:
           break;
