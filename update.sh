@@ -17,7 +17,7 @@ EOF
 cat new_package.json > package.json
 rm new_package.json
 
-npm install
+npm install --legacy-peer-deps
 
 git add -A
 git commit -m "Updating to version `echo $1` - `date +'%Y-%m-%d %H:%M:%S'`"
