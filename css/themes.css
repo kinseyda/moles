@@ -1,0 +1,39 @@
+[theme="light"] {
+  --far-bg-color: #fff;
+  --global-bg-color: #fff;
+  --secondary-bg-color: #eee;
+  --tertiary-bg-color: #ddd;
+  --text-color: #000;
+}
+
+[theme="dark"] {
+  --far-bg-color: #000;
+  --global-bg-color: #000;
+  --secondary-bg-color: #222;
+  --tertiary-bg-color: #333;
+  --text-color: #fff;
+}
+
+[theme="true mole"] {
+    /* --far-bg-color: transparent; */
+    --global-bg-color: #fff;
+    --secondary-bg-color: #eee;
+    --tertiary-bg-color: #ddd;
+    --text-color: #000;
+    --background-image: url("css/background/mole\ background.png");
+    background-size: 100vw 100vh;
+}
+
+[cbMode="green red"] {
+	--good-text-color: #15b115;
+	--bad-text-color: #ff0000;
+}
+[cbMode="blue orange"] {
+	--good-text-color: #4444f9;
+	--bad-text-color: #ffa500;
+}
+[cbMode="mono"] {
+	--good-text-color: #ffffff;
+	--bad-text-color: #000000;
+	--cb-background: #808080;
+}
