@@ -5,7 +5,7 @@ import Identifiable from "./model/identifiable";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import Structure from "./model/structure";
 import Civilization from "./model/civilization";
-import { ResourceRate } from "./content/data-interfaces";
+import { ResourceRate } from "./model/data-interfaces";
 
 const defaultDescription =
   "Hover over something to see a description of it here.";

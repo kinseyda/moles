@@ -13,8 +13,9 @@
                   v-model="resourcesSelected"
                   :value="resId"
                   :disabled="
-                    resourcesSelected.length >= 2 &&
-                    resourcesSelected.indexOf(resId) === -1
+                    (resourcesSelected.length >= 2 &&
+                      resourcesSelected.indexOf(resId) === -1) ||
+                    rate <= 0
                   "
                   number
                 />
@@ -51,7 +52,7 @@ import { defineComponent } from "vue";
 import { uiDescriptions } from "../ui-descriptions";
 import { mapMutations, mapState } from "vuex";
 import PopUpMenu from "@/components/PopUpMenu.vue";
-import { ResourceData } from "@/content/data-interfaces";
+import { ResourceData } from "@/model/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
 import { formatNumber } from "../format";
 import ColoredResource from "@/components/ColoredResource.vue";
@@ -105,11 +106,10 @@ export default defineComponent({
   width: 25%;
 }
 input {
-  margin-right: 1ch;
-  position: absolute;
+  margin-right: -1ch;
   top: 50%;
-  -webkit-transform: translate(0, -50%);
-  transform: translate(0, -50%);
+  -webkit-transform: translate(0, -25%);
+  transform: translate(0, -25%);
 }
 ul {
   position: relative;

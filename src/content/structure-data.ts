@@ -1,4 +1,4 @@
-import { StructureData } from "./data-interfaces";
+import { StructureData } from "../model/data-interfaces";
 import { ResourceIDs } from "./resource-data";
 
 const defaultStartingValues = {

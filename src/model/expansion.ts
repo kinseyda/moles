@@ -1,5 +1,5 @@
 import Purchasable from "./purchasable";
-import { ExpansionData } from "../content/data-interfaces";
+import { ExpansionData } from "./data-interfaces";
 import { game } from "./game";
 import { SerializableClasses } from "./serializable-class";
 import { expansionDataDict } from "../content/expansion-data";

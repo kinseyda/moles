@@ -3,28 +3,31 @@
     <h2
       @mouseover="hoverDescString(uiDescriptions['resources'])"
       @mouseleave="resetDesc()"
+      v-if="Object.keys(resourceDict).length > 0"
     >
       Resources:
     </h2>
     <div id="list">
-      <button
-        class="slider-set"
-        id="set-1"
-        @click="setSliders(1)"
-        @mouseover="hoverDescString(uiDescriptions['sliderSet1'])"
-        @mouseleave="resetDesc()"
-      >
-        1
-      </button>
-      <button
-        class="slider-set"
-        id="set-0"
-        @click="setSliders(0)"
-        @mouseover="hoverDescString(uiDescriptions['sliderSet0'])"
-        @mouseleave="resetDesc()"
-      >
-        0
-      </button>
+      <div id="top-buttons" v-if="Object.keys(resourceDict).length > 1">
+        <button
+          class="slider-set"
+          id="set-1"
+          @click="setSliders(1)"
+          @mouseover="hoverDescString(uiDescriptions['sliderSet1'])"
+          @mouseleave="resetDesc()"
+        >
+          1
+        </button>
+        <button
+          class="slider-set"
+          id="set-0"
+          @click="setSliders(0)"
+          @mouseover="hoverDescString(uiDescriptions['sliderSet0'])"
+          @mouseleave="resetDesc()"
+        >
+          0
+        </button>
+      </div>
       <table>
         <resource-item
           v-for="item in resourceDict"
@@ -156,7 +159,7 @@ export default defineComponent({
   height: 0;
   width: 100%;
 }
-#list {
+#top-buttons {
   margin-top: -2ch;
 }
 button.slider-set {

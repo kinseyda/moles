@@ -1,4 +1,4 @@
-import { ExpansionData } from "./data-interfaces";
+import { ExpansionData } from "../model/data-interfaces";
 import { ResourceIDs } from "./resource-data";
 
 export enum ExpansionIDs {

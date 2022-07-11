@@ -12,17 +12,16 @@
           : { background: 'var(--global-bg-color)' },
       ]"
     >
-      <h1
-        v-if="area.amount != area.getUsableArea()"
+      <p
         :style="[
-          dig.digging
-            ? { background: 'var(--tertiary-bg-color)' }
-            : { background: 'var(--global-bg-color)' },
+          area.amount < area.getUsableArea()
+            ? { 'font-size': 'xxx-large', 'font-weight': 'bold' }
+            : {},
         ]"
+        id="dig-text"
       >
         Dig
-      </h1>
-      <p v-if="area.amount == area.getUsableArea()">Dig</p>
+      </p>
       <particle-producer ref="digButtonDirtProd"></particle-producer>
     </button>
   </div>
@@ -78,5 +77,8 @@ export default defineComponent({
   font-size: xx-large;
   width: 100%;
   height: 100%;
+}
+#dig-text {
+  transition: all 1s ease;
 }
 </style>

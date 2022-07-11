@@ -1,3 +1,4 @@
+UpgradeTypes
 <template>
   <div>
     <h4>Effects</h4>
@@ -16,12 +17,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { UpgradeEffects } from "@/content/data-interfaces";
+import { UpgradeTypes } from "@/model/data-interfaces";
 import EffectDetails from "./EffectDetails.vue";
 export default defineComponent({
   name: "EffectsContainer",
   data() {
-    return { UpgradeEffects: UpgradeEffects };
+    return { UpgradeEffects: UpgradeTypes };
   },
   components: {
     EffectDetails,
@@ -32,12 +33,14 @@ export default defineComponent({
   methods: {
     getEffectDescription(ef: number) {
       switch (ef) {
-        case UpgradeEffects.multiplier:
+        case UpgradeTypes.multiplier:
           return "Multiplies resource gains:";
-        case UpgradeEffects.unlock:
+        case UpgradeTypes.unlock:
           return "Unlocks:";
-        case UpgradeEffects.permanentUnlock:
+        case UpgradeTypes.permanentUnlock:
           return "Grants a new ability";
+        case UpgradeTypes.digRate:
+          return "Allows resources to be gathered while digging:";
         default:
           return "Does something?";
       }

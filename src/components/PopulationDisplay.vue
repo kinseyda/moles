@@ -4,7 +4,11 @@
       <span
         @mouseover="hoverDescString(uiDescriptions['population'])"
         @mouseleave="resetDesc()"
-        >Population: {{ formatPop(population) }}</span
+        >{{ getPopString(population)
+        }}{{
+          getPopString(population).slice(-1) == "s" ? "'" : "'s"
+        }}
+        Population: {{ formatPop(population) }}</span
       >
       /
       <span
@@ -21,6 +25,10 @@ import { defineComponent } from "vue";
 import { formatDown, formatNumber } from "@/components/format";
 import { mapMutations } from "vuex";
 import { uiDescriptions } from "@/components/ui-descriptions";
+import {
+  getPopulationStatus,
+  getPopulationStatusString,
+} from "@/content/population-statuses";
 export default defineComponent({
   name: "PopulationDisplay",
   props: ["population", "popCap"],
@@ -31,6 +39,9 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
+    getPopString(pop: number): string {
+      return getPopulationStatusString(getPopulationStatus(pop));
+    },
     formatPop(num: number) {
       return formatDown(num);
     },

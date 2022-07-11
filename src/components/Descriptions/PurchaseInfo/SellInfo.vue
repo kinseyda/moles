@@ -5,11 +5,8 @@
       <h4>Refund:</h4>
       <ul>
         <li><b>Area:</b> {{ structure.dataObject.areaCost }}</li>
-        <li
-          v-for="resId in Object.keys(structure.dataObject.cost)"
-          :key="resId"
-        >
-          {{ getResourceData(resId).name }}:
+        <li v-for="resId in Object.keys(structure.dataObject.cost)" :key="resId">
+          <colored-resource :resData="getResourceData(resId)"></colored-resource>:
           <span class="good-text"
             >+{{ formatNumber(structure.sellFor(resId))
             }}<small class="good-text"> Mo</small></span
@@ -31,10 +28,12 @@ import { defineComponent } from "vue";
 import { resourceDataDict } from "@/content/resource-data";
 import { game } from "@/model/game";
 import { SerializableClasses } from "@/model/serializable-class";
+import ColoredResource from "@/components/ColoredResource.vue";
 
 export default defineComponent({
   name: "SellInfo",
   props: ["structure"],
+  components: { ColoredResource },
   data() {
     return {
       gameData: game,
@@ -62,5 +61,8 @@ export default defineComponent({
 }
 #effect-container {
   float: right;
+}
+ul {
+  list-style-type: none;
 }
 </style>

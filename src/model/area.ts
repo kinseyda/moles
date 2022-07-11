@@ -1,3 +1,4 @@
+import { RequirementType } from "@/model/data-interfaces";
 import { game } from "./game";
 import { logBaseA } from "./math-utils";
 import SerializableClass, { SerializableClasses } from "./serializable-class";
@@ -14,7 +15,6 @@ export default class Area extends SerializableClass {
   /**
    * @param amount - The amount of area the player has.
    * @param cap - The max amount of area that the player's molehill can take up
-   * @param multiplier - A multiplier for all production of this resource.
    */
   constructor(amount: number, cap: number) {
     super(SerializableClasses.Area);
@@ -38,7 +38,7 @@ export default class Area extends SerializableClass {
     if (this.amount != newAmount) {
       this.amount = newAmount;
       game.updateCaps();
-      //   game.handleEvent(RequirementType.areaAmount, );
+      game.handleEvent(RequirementType.areaAmount);
     }
   }
   /**

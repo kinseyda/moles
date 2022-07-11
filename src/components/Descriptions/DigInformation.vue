@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Object.keys(dig.digRates).length > 0">
     <h4>Dig rates:</h4>
     <ul>
       <li v-for="id in Object.keys(dig.digRates)" :key="id">

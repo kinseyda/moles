@@ -1,5 +1,5 @@
 <template>
-  <div id="outer">
+  <div id="outer" v-if="Object.keys(upgradeDict).length > 0">
     <h2
       @mouseover="hoverDescString(uiDescriptions['upgrades'])"
       @mouseleave="resetDesc()"
@@ -9,7 +9,7 @@
     <div id="upgrades">
       <table>
         <upgrade-item
-          v-for="item in visibleUpgrades"
+          v-for="item in visibleUpgrades(showPrev)"
           v-bind:upgrade="item"
           v-bind:key="item.id"
         ></upgrade-item>
@@ -19,6 +19,7 @@
       @mouseover="hoverDescString(uiDescriptions['prevUpgrades'])"
       @mouseleave="resetDesc()"
       @click="showPrev = !showPrev"
+      v-if="visibleUpgrades(!showPrev).length > 0 || showPrev"
     >
       {{ showPrev ? "Hide" : "Show" }} previously bought upgrades
     </button>
@@ -43,19 +44,18 @@ export default defineComponent({
       showPrev: false,
     };
   },
-  computed: {
-    visibleUpgrades() {
+  computed: {},
+  methods: {
+    ...mapMutations(["hoverDescString", "resetDesc"]),
+    visibleUpgrades(prev: boolean) {
       let lst: Upgrade[] = [];
       for (const id in this.upgradeDict) {
-        if (this.showPrev == this.upgradeDict[id].bought) {
+        if (prev == this.upgradeDict[id].bought) {
           lst.push(this.upgradeDict[id]);
         }
       }
       return lst;
     },
-  },
-  methods: {
-    ...mapMutations(["hoverDescString", "resetDesc"]),
   },
 });
 </script>

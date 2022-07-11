@@ -5,8 +5,8 @@
       <div id="info-outer">
         <div id="info-top">
           <p>
-            <b><i>Moles</i></b> is an open-source, text-based incremental game,
-            built using Vue 3.
+            <b><i>Moles</i></b> is an open-source, text-based incremental game, built
+            using Vue 3.
           </p>
         </div>
         <div id="info-bottom">
@@ -41,7 +41,7 @@ import { defineComponent } from "vue";
 import { uiDescriptions } from "@/components/ui-descriptions";
 import { mapMutations } from "vuex";
 import PopUpMenu from "@/components/PopUpMenu.vue";
-import { ResourceData } from "@/content/data-interfaces";
+import { ResourceData } from "@/model/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
 import { formatNumber } from "@/components/format";
 

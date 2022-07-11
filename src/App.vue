@@ -66,14 +66,20 @@
           </button>
         </div>
         <div id="central-column">
-          <area-display :area="gameData.area"></area-display>
-          <population-display
-            v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
-            :population="gameData.population"
-            :popCap="gameData.getPopulationCap()"
-          ></population-display>
+          <div id="area-pop">
+            <area-display
+              v-if="gameData.isUnlocked(PermanentUnlocks.Digging)"
+              :area="gameData.area"
+            ></area-display>
+            <population-display
+              v-if="gameData.isUnlocked(PermanentUnlocks.Population)"
+              :population="gameData.population"
+              :popCap="gameData.getPopulationCap()"
+            ></population-display>
+          </div>
           <div id="buttons-container">
             <dig-button
+              v-show="gameData.isUnlocked(PermanentUnlocks.Digging)"
               :dig="gameData.dig"
               :area="gameData.area"
               v-on:setDigging="setDigging"
@@ -81,6 +87,7 @@
             <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
+              <button @click="logUnlockTree">Log unlock tree</button>
               <button @click="debugFillAll">Fill all resources</button>
               <button @click="setDigging(true)">Toggle digging on</button>
               <button @click="debugMultiplier *= 2">Time x2</button> Current:
@@ -89,9 +96,9 @@
             </div>
           </div>
           <div id="event-log-container">
-            <event-log :eventsDict="gameData.eventsDict"></event-log>
+            <event-log :eventsDict="gameData.eventsDict" ref="eventLog"></event-log>
           </div>
-          <description-container></description-container>
+          <description-container :gameData="gameData"></description-container>
         </div>
         <div id="purchasable-column">
           <upgrade-list :upgradeDict="gameData.upgradeDict"> </upgrade-list>
@@ -143,11 +150,11 @@ import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
-import { PermanentUnlocks } from "./content/upgrade-data";
 import { Game, game, startGame, currentVersion } from "./model/game";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
+import { PermanentUnlocks } from "./content/upgrade-unlock-data";
 
 @Options({
   name: "App",
@@ -214,6 +221,7 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
         Game.loadGame(sto);
       }
       this.gameData = game;
+      this.$refs["eventLog"].resetNextUp = true;
     },
     prestigeGame(resourcesSelected: number[]) {
       game.prestige(resourcesSelected);
@@ -221,6 +229,9 @@ import { setTooltips } from "./components/SettingsDisplay.vue";
     },
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
+    },
+    logUnlockTree() {
+      console.log(Game.getUpgradeUnlockTreeString());
     },
     debugToggle() {
       this.toggleDebug();
@@ -328,7 +339,7 @@ export default class App extends Vue {}
   text-shadow: 1px 1px var(--text-color);
 }
 #left-column {
-  flex: 0 0 44ch;
+  flex: 0 0 50ch;
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -340,16 +351,20 @@ export default class App extends Vue {}
   flex-direction: column;
   margin: 1em;
 }
+#area-pop {
+  width: 100%;
+  flex: 0 0 12%;
+}
 #buttons-container {
   width: 100%;
   margin-top: 1em;
   margin-bottom: 1em;
-  flex: 0 0 50%;
+  flex: 0 1 50%;
   display: flex;
   flex-direction: column;
 }
 #event-log-container {
-  flex: 1 0 0;
+  flex: 0 0 35%;
 }
 #settings-display {
   position: absolute;

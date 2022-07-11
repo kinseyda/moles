@@ -1,14 +1,18 @@
 import Upgrade from "@/model/upgrade";
-import { EventData, RequirementType } from "./data-interfaces";
+import { EventData, RequirementType } from "../model/data-interfaces";
 import { ResourceIDs } from "./resource-data";
-import { UpgradeIDs } from "./upgrade-data";
+import { UnlockIDs, UpgradeIDs } from "./upgrade-unlock-data";
 
 export enum EventIDs {
   Start,
   StartSecond,
+  Time5Sec,
+  Area50,
   Dirt5,
   Dirt10Wood10,
   Prestige,
+  UpgradeLookAround,
+  UpgradeExamineDirt,
   UpgradeMakshiftShovel,
   UpgradeFindSecondMole,
   UpgradeTunnelToSurface,
@@ -24,7 +28,7 @@ export const eventDataDict: { [id: number]: EventData } = {
     name: "Start",
     description: "Appears when first starting the game",
     eventText:
-      "You open your mole eyes and look around you. Though you can't see much you can feel dirt under your feet. You feel an urge to start digging into it.",
+      "You are a mole, waking from a deep sleep. You are unsure where you are or how you got here, but it feels like as good a place as any to start a life for a mole.",
     eventRequirements: [
       {
         requirementType: RequirementType.gameStart,
@@ -32,6 +36,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.StartSecond]: {
     name: "StartSecond",
@@ -46,10 +51,41 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
       {
         requirementType: RequirementType.prevEvent,
-        requirementDetails: [EventIDs.Start],
+        requirementDetails: {
+          [RequirementType.prevEvent]: { [EventIDs.Start]: 0 },
+        },
       },
     ],
     repeatable: true,
+    unlock: undefined,
+  },
+  [EventIDs.Time5Sec]: {
+    name: "Time5Sec",
+    description: "Recall the ability of sight",
+    eventText:
+      "As you slowly regain consciousness, you remember that you have eyes, though they never worked too well.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.timed,
+        requirementDetails: { [RequirementType.timed]: 5000 },
+      },
+    ],
+    repeatable: false,
+    unlock: UnlockIDs.StartingUnlock,
+  },
+  [EventIDs.Area50]: {
+    name: "Area50",
+    description: "Reach 50 area",
+    eventText:
+      "Now that you've expanded this cave to a reasonable size you feel like you ought to take a closer look at this stuff the ground seems to be made out of.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.areaAmount,
+        requirementDetails: { [RequirementType.areaAmount]: 50 },
+      },
+    ],
+    repeatable: false,
+    unlock: UnlockIDs.UnlockExamineDirt,
   },
   [EventIDs.Dirt5]: {
     name: "Dirt5",
@@ -59,10 +95,13 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.resourceAmount,
-        requirementDetails: { [ResourceIDs.Dirt]: 5 },
+        requirementDetails: {
+          [RequirementType.resourceAmount]: { [ResourceIDs.Dirt]: 5 },
+        },
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.Dirt10Wood10]: {
     name: "Dirt10Wood10",
@@ -72,12 +111,15 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.resourceAmount,
         requirementDetails: {
-          [ResourceIDs.Dirt]: 10,
-          [ResourceIDs.Wood]: 10,
+          [RequirementType.resourceAmount]: {
+            [ResourceIDs.Dirt]: 10,
+            [ResourceIDs.Wood]: 10,
+          },
         },
       },
     ],
     repeatable: false,
+    unlock: undefined,
   },
   [EventIDs.Prestige]: {
     name: "Prestige",
@@ -91,6 +133,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       },
     ],
     repeatable: true,
+    unlock: UnlockIDs.UnlockExamineDirt,
   },
   [EventIDs.UpgradeMakshiftShovel]: {
     name: "UpgradeMakshiftShovel",
@@ -100,22 +143,61 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.MakeshiftShovel],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.MakeshiftShovel],
+        },
       },
     ],
     repeatable: true,
+    unlock: undefined,
+  },
+  [EventIDs.UpgradeLookAround]: {
+    name: "UpgradeLookAround",
+    description: "Take a look around",
+    eventText:
+      "You open your mole eyes and look around you. Though you can't see much you can feel dirt under your feet. You feel an urge to start digging into it.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.LookAround],
+        },
+      },
+    ],
+    repeatable: true,
+    unlock: undefined,
+  },
+  [EventIDs.UpgradeExamineDirt]: {
+    name: "UpgradeExamineDirt",
+    description: "Examine the ground around you",
+    eventText:
+      "The ground in this cave is a comfort to you, and you find yourself longing to keep some piled up.",
+    eventRequirements: [
+      {
+        requirementType: RequirementType.upgrade,
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.ExamineDirt],
+        },
+      },
+    ],
+    repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeFindSecondMole]: {
     name: "UpgradeFindSecondMole",
     description: "Start building up a mole colony",
-    eventText: "With another mole around to help the colony things should start moving much quicker, though you worry management will start to become an issue. You were never much of a moles mole.",
+    eventText:
+      "With another mole around to help the colony things should start moving much quicker, though you worry management will start to become an issue. You were never much of a moles mole.",
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.FindSecondMole],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.FindSecondMole],
+        },
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeTunnelToSurface]: {
     name: "UpgradeTunnelToSurface",
@@ -125,10 +207,13 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.TunnelToSurface],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.TunnelToSurface],
+        },
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
   [EventIDs.UpgradeTermiteKnowledge]: {
     name: "UpgradeTermiteKnowledge",
@@ -138,10 +223,13 @@ export const eventDataDict: { [id: number]: EventData } = {
     eventRequirements: [
       {
         requirementType: RequirementType.upgrade,
-        requirementDetails: [UpgradeIDs.TermiteKnowledge],
+        requirementDetails: {
+          [RequirementType.upgrade]: [UpgradeIDs.TermiteKnowledge],
+        },
       },
     ],
     repeatable: true,
+    unlock: undefined,
   },
 };
 
@@ -171,7 +259,9 @@ const resAmountdict: {
 for (const evId in eventDataDict) {
   for (const req of eventDataDict[evId].eventRequirements) {
     if (req.requirementType === RequirementType.resourceAmount) {
-      for (const resId in req.requirementDetails) {
+      for (const resId in req.requirementDetails as {
+        [eventID: number]: number;
+      }) {
         if (!resAmountdict[resId]) {
           resAmountdict[resId] = [];
         }
@@ -186,3 +276,26 @@ for (const evId in eventDataDict) {
 export const resAmountEventIdsByResId: {
   [resId: number]: number[];
 } = resAmountdict;
+
+const upgradeEventDict: {
+  [upId: number]: number[];
+} = {};
+for (const evId in eventDataDict) {
+  for (const req of eventDataDict[evId].eventRequirements) {
+    if (req.requirementType === RequirementType.upgrade) {
+      const eventUpIds = req.requirementDetails[RequirementType.upgrade]!;
+      for (const eventUpId of eventUpIds) {
+        if (!upgradeEventDict[eventUpId]) {
+          upgradeEventDict[eventUpId] = [];
+        }
+        upgradeEventDict[eventUpId].push(Number(evId));
+      }
+    }
+  }
+}
+/**
+ * A dictionary of {@link Upgrade} ids to event ids that correspond to an event which contains an upgrade requirement involving the given Upgrade.
+ */
+export const upgradeEventIdsByUpgradeId: {
+  [resId: number]: number[];
+} = upgradeEventDict;

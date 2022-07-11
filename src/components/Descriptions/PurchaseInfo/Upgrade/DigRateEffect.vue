@@ -1,10 +1,13 @@
 <template>
   <div>
     <ul>
-      <li v-for="id in Object.keys(effect.params[UpgradeTypes.multiplier])" :key="id">
+      <li v-for="id in Object.keys(effect.params[UpgradeTypes.digRate])" :key="id">
         <p>
-          <colored-resource :resData="getResource(id).dataObject"></colored-resource>:
-          <span class="good-text">+{{ formatNumber(effect.params[0][id] * 100) }}%</span>
+          <colored-resource :resData="getResourceData(id)"></colored-resource>:
+          <span class="good-text"
+            >+{{ formatNumber(effect.params[UpgradeTypes.digRate][id])
+            }}<small class="good-text"> Mo/s</small></span
+          >
         </p>
       </li>
     </ul>
@@ -12,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import { game } from "@/model/game";
-import { UpgradeTypes } from "@/model/data-interfaces";
 import { defineComponent } from "vue";
 import { formatNumber } from "@/components/format";
 import ColoredResource from "@/components/ColoredResource.vue";
+import { resourceDataDict } from "@/content/resource-data";
+import { UpgradeTypes } from "@/model/data-interfaces";
 export default defineComponent({
-  name: "MultiplyEffect",
+  name: "DigRateEffect",
   data() {
     return {
       UpgradeTypes: UpgradeTypes,
@@ -33,8 +36,8 @@ export default defineComponent({
     formatNumber(num: number) {
       return formatNumber(num, undefined);
     },
-    getResource(id: number) {
-      return game.resourceDict[id];
+    getResourceData(id: number) {
+      return resourceDataDict[id];
     },
   },
 });

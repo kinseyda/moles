@@ -1,10 +1,13 @@
-import { RequirementType } from "../content/data-interfaces";
+import { ResourceIDs } from "@/content/resource-data";
+import { RequirementType } from "./data-interfaces";
 import {
   eventDataDict,
   eventIdsByRequirementType,
   resAmountEventIdsByResId,
+  upgradeEventIdsByUpgradeId,
 } from "../content/event-data";
-import { Game } from "./game";
+import { game, Game } from "./game";
+import { applyUnlock } from "./unlock";
 
 /**
  * Checks whether a triggering event has successfully completed all the requirements for any applicable {@link EventData} in {@link eventDataDict}.
@@ -60,13 +63,12 @@ export function handleEvent(
       );
       break;
     case RequirementType.upgrade:
-      idsAchieved.push(
-        ...checkAll(
-          triggerEventType,
-          game,
-          ...eventIdsByRequirementType[triggerEventType]
-        )
-      );
+      if (params !== undefined && params["upId"] !== undefined) {
+        const evIds = upgradeEventIdsByUpgradeId[params["upId"]];
+        if (evIds !== undefined) {
+          idsAchieved.push(...checkAll(triggerEventType, game, ...evIds));
+        }
+      }
       break;
     case RequirementType.resourceAmount:
       if (params !== undefined && params["resId"] !== undefined) {
@@ -77,11 +79,33 @@ export function handleEvent(
         }
       }
       break;
+    case RequirementType.areaAmount:
+      idsAchieved.push(
+        ...checkAll(
+          triggerEventType,
+          game,
+          ...eventIdsByRequirementType[triggerEventType]
+        )
+      );
+      break;
+    case RequirementType.timed:
+      idsAchieved.push(
+        ...checkAll(
+          triggerEventType,
+          game,
+          ...eventIdsByRequirementType[triggerEventType]
+        )
+      );
+      break;
     default:
       throw new Error(`Unknown event type '${triggerEventType}'`);
   }
   for (const id of idsAchieved) {
     game.eventsDict[id] = Date.now();
+    const unlock = eventDataDict[id].unlock;
+    if (unlock !== undefined) {
+      applyUnlock(unlock);
+    }
   }
 }
 
@@ -127,13 +151,23 @@ function checkEventId(
         }
         break;
       case RequirementType.upgrade:
-        if (!checkEventUpgrade(eventRequirement.requirementDetails[0], game)) {
+        if (
+          !checkEventUpgrade(
+            eventRequirement.requirementDetails[RequirementType.upgrade]!,
+            game
+          )
+        ) {
           return false;
         }
         break;
       case RequirementType.resourceAmount:
         if (
-          !checkEventResourceAmount(eventRequirement.requirementDetails, game)
+          !checkEventResourceAmount(
+            eventRequirement.requirementDetails[
+              RequirementType.resourceAmount
+            ]!,
+            game
+          )
         ) {
           return false;
         }
@@ -141,7 +175,27 @@ function checkEventId(
       case RequirementType.prevEvent:
         if (
           !checkEventPrevEvent(
-            eventRequirement.requirementDetails as number[],
+            eventRequirement.requirementDetails[RequirementType.prevEvent]!,
+            game
+          )
+        ) {
+          return false;
+        }
+        break;
+      case RequirementType.areaAmount:
+        if (
+          !checkEventAreaAmount(
+            eventRequirement.requirementDetails[RequirementType.areaAmount]!,
+            game
+          )
+        ) {
+          return false;
+        }
+        break;
+      case RequirementType.timed:
+        if (
+          !checkEventTimed(
+            eventRequirement.requirementDetails[RequirementType.timed]!,
             game
           )
         ) {
@@ -155,24 +209,42 @@ function checkEventId(
 
   return true;
 }
-function checkEventPrevEvent(eventList: number[], game: Game) {
-  for (const prevEventId in eventList) {
+
+function checkEventAreaAmount(areaAmount: number, game: Game): boolean {
+  return game.area.amount >= areaAmount;
+}
+function checkEventTimed(requiredEmpireAge: number, game: Game): boolean {
+  return Date.now() - game.creationTime >= requiredEmpireAge;
+}
+function checkEventPrevEvent(
+  events: { [eventId: number]: number },
+  game: Game
+): boolean {
+  for (const prevEventId in events) {
     if (game.eventsDict[prevEventId] === undefined) {
+      return false;
+    }
+    if (Date.now() - game.eventsDict[prevEventId] < events[prevEventId]) {
       return false;
     }
   }
   return true;
 }
-function checkEventUpgrade(upgradeId: number, game: Game) {
-  if (!game.upgradeDict[upgradeId]) {
-    return false;
+function checkEventUpgrade(upgradeList: number[], game: Game): boolean {
+  for (const upgradeId of upgradeList) {
+    if (!game.upgradeDict[upgradeId]) {
+      return false;
+    }
+    if (!game.upgradeDict[upgradeId].bought) {
+      return false;
+    }
   }
-  return game.upgradeDict[upgradeId].bought;
+  return true;
 }
 function checkEventResourceAmount(
   resReqs: { [resId: number]: number },
   game: Game
-) {
+): boolean {
   for (const resId in resReqs) {
     if (game.resourceDict[resId] === undefined) {
       // Resource for requirement not unlocked yet

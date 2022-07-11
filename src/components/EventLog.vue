@@ -7,13 +7,18 @@
     >
       Log:
     </h2>
+    <button @click="resetList()" id="see-button">Mark all seen</button>
     <div id="log-container">
       <transition-group name="list" tag="ol">
         <li
           v-for="ev in eventList"
           :key="ev.id"
-          @mouseover="hoverDescIdentifiable(ev)"
+          @mouseover="
+            hoverDescIdentifiable(ev);
+            ev.see();
+          "
           @mouseleave="resetDesc()"
+          :class="{ unseen: !ev.seen }"
         >
           [{{ formatTime(timeSince(ev.timeSeconds)) }}<small> ago</small>]
           {{ ev.dataObject.eventText }}
@@ -36,13 +41,18 @@ class TextLogEvent {
   id: number;
   timeSeconds: number;
   eventId: number;
-  constructor(id: number, eventId: number) {
+  seen: boolean;
+  constructor(id: number, eventId: number, seen?: boolean) {
     this.id = id;
     this.timeSeconds = game.eventsDict[eventId] / 1000;
     this.eventId = eventId;
+    this.seen = seen || false;
   }
   get dataObject() {
     return eventDataDict[this.eventId];
+  }
+  see() {
+    this.seen = true;
   }
 }
 
@@ -53,32 +63,31 @@ export default defineComponent({
     return {
       currentTime: 0,
       uiDescriptions: uiDescriptions,
+      eventList: [] as TextLogEvent[],
+      resetNextUp: false,
     };
   },
   components: {
     ParticleProducer,
   },
-  computed: {
-    eventList(): TextLogEvent[] {
-      let lst = [];
-      let currentEvId = 0;
-      for (const evId in this.eventsDict) {
-        lst.push(new TextLogEvent(currentEvId++, Number(evId)));
-      }
-      lst.sort(function (a, b) {
-        return b.timeSeconds - a.timeSeconds;
-      });
-      if (this.eventList) {
-        if (this.eventList[0].timeSeconds != lst[0].timeSeconds) {
-          const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
-          if (prod) {
-            for (let i = 0; i < 4; i++) {
-              prod.updateParticles(8);
+  watch: {
+    eventsDict: {
+      deep: true,
+      handler: function () {
+        if (this.resetNextUp) {
+          this.resetList();
+          this.resetNextUp = false;
+        } else {
+          const newList = this.makeList(this.eventList);
+          if (this.eventList != newList) {
+            this.eventList = newList;
+            const prod = this.$refs["eventLogDirtProd"] as typeof ParticleProducer;
+            if (prod) {
+              prod.updateParticles(32);
             }
           }
         }
-      }
-      return lst;
+      },
     },
   },
   methods: {
@@ -89,6 +98,29 @@ export default defineComponent({
     formatTime(time: number) {
       return formatTimeConcise(time);
     },
+    makeList(lst: TextLogEvent[], newSeen?: boolean) {
+      let currentLogEvId = lst.length;
+      for (const evId in this.eventsDict) {
+        if (!lst.find((element) => element.eventId == Number(evId))) {
+          lst.push(new TextLogEvent(currentLogEvId++, Number(evId), newSeen));
+        }
+      }
+      lst.sort(function (a, b) {
+        return b.timeSeconds - a.timeSeconds;
+      });
+
+      for (let i = 0; i < lst.length; i++) {
+        // Prevents weird movements when adding items
+        lst[lst.length - 1 - i].id = i;
+      }
+      return lst;
+    },
+    updateList() {
+      this.eventList = this.makeList(this.eventList);
+    },
+    resetList() {
+      this.eventList = this.makeList([], true);
+    },
     adjustTime() {
       this.currentTime = Date.now() / 1000;
     },
@@ -96,6 +128,7 @@ export default defineComponent({
   mounted() {
     this.adjustTime();
     setInterval(this.adjustTime, 1000);
+    this.updateList();
   },
 });
 </script>
@@ -110,6 +143,7 @@ ol {
 li {
   padding-left: 9.5ch;
   text-indent: -9.5ch;
+  transition: all 1s ease;
 }
 #label {
   flex: 0 0 1em;
@@ -124,6 +158,14 @@ li {
   flex-direction: column;
   position: relative;
   flex: 1 0 0;
+}
+#see-button {
+  margin-left: auto;
+  margin-top: -1.5em;
+  width: 15ch;
+}
+.unseen {
+  font-weight: bold;
 }
 
 .list-move,
