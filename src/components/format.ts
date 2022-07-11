@@ -72,8 +72,8 @@ export function formatDown(num: number) {
 function formatNormal(num: number) {
   if (
     Number.isInteger(num) ||
-    num > 1000 ||
-    Math.abs((num % 1) - 1) < 0.00000001
+    num >= 1000 ||
+    Math.abs(((num - 0.5) % 1) - 0.5) < 0.005
   ) {
     return num.toFixed(0);
   }
