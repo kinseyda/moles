@@ -16,6 +16,13 @@ interface Settings {
   cbMode: string;
 }
 
+export enum PopupTypes {
+  Settings,
+  Info,
+  Empire,
+  Prestige,
+}
+
 export interface State {
   descriptionBoxIsEmpty: boolean;
   descriptionBoxData: string;
@@ -25,7 +32,7 @@ export interface State {
   resourceRateData: ResourceRate | undefined;
   digData: boolean;
   debugMode: boolean;
-  popUpOpen: string;
+  popUpOpen: PopupTypes | undefined;
   settings: Settings;
 }
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -39,7 +46,7 @@ export const store = createStore<State>({
     resourceRateData: undefined,
     digData: false,
     debugMode: false,
-    popUpOpen: "",
+    popUpOpen: undefined,
     settings: {
       theme: "light",
       tooltips: true,
@@ -57,15 +64,15 @@ export const store = createStore<State>({
     settingsSetCBMode(state: State, newCBMode: string) {
       state.settings.cbMode = newCBMode;
     },
-    togglePopupOpen(state: State, popUpType: string) {
+    togglePopupOpen(state: State, popUpType: PopupTypes) {
       if (state.popUpOpen == popUpType) {
-        state.popUpOpen = "";
+        state.popUpOpen = undefined;
       } else {
         state.popUpOpen = popUpType;
       }
     },
     closePopUp(state: State) {
-      state.popUpOpen = "";
+      state.popUpOpen = undefined;
     },
     resetDesc(state: State) {
       state.descriptionBoxIsEmpty = true;

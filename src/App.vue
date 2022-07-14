@@ -17,14 +17,14 @@
       </button>
 
       <button
-        @click="togglePopupOpen('settings')"
+        @click="togglePopupOpen(PopupTypes.Settings)"
         @mouseover="hoverDescString(uiDescriptions['settings'])"
         @mouseleave="resetDesc()"
       >
         Settings
       </button>
       <button
-        @click="togglePopupOpen('info')"
+        @click="togglePopupOpen(PopupTypes.Info)"
         @mouseover="hoverDescString(uiDescriptions['infoButton'])"
         @mouseleave="resetDesc()"
       >
@@ -60,7 +60,7 @@
             v-if="gameData.isUnlocked(PermanentUnlocks.Empire)"
             @mouseover="hoverDescString(uiDescriptions['empireButton'])"
             @mouseleave="resetDesc()"
-            @click="togglePopupOpen('empire')"
+            @click="togglePopupOpen(PopupTypes.Empire)"
           >
             Empire
           </button>
@@ -106,9 +106,9 @@
         </div>
       </div>
 
-      <settings-display v-if="popUpOpen == 'settings'"></settings-display>
+      <settings-display v-if="popUpOpen == PopupTypes.Settings"></settings-display>
       <empire-display
-        v-if="popUpOpen == 'empire'"
+        v-if="popUpOpen == PopupTypes.Empire"
         :civilizations="gameData.civilizations"
         :empireRates="gameData.getEmpireRates()"
         :maxPotentialRates="gameData.getHighestPotentialRates()"
@@ -119,13 +119,13 @@
       >
       </empire-display>
       <prestige-menu
-        v-if="popUpOpen == 'prestige'"
+        v-if="popUpOpen == PopupTypes.Prestige"
         v-on:prestige="prestigeGame"
         :maxPotentialRates="gameData.getHighestPotentialRates()"
       >
       </prestige-menu>
       <info-display
-        v-if="popUpOpen == 'info'"
+        v-if="popUpOpen == PopupTypes.Info"
         :appVersion="appVersion"
         :gameSaveVersion="gameData.creationVersion"
       >
@@ -155,6 +155,7 @@ import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
 import { PermanentUnlocks } from "./content/upgrade-unlock-data";
+import { PopupTypes } from "./store";
 
 @Options({
   name: "App",
@@ -190,6 +191,7 @@ import { PermanentUnlocks } from "./content/upgrade-unlock-data";
       gameData: game,
       uiDescriptions: uiDescriptions,
       PermanentUnlocks: PermanentUnlocks,
+      PopupTypes: PopupTypes,
       appVersion: currentVersion,
       debugMultiplier: 1,
       mode: process.env.NODE_ENV,
@@ -378,5 +380,9 @@ export default class App extends Vue {}
   flex: 1 1 0;
   margin-left: 1em;
   margin-bottom: 1.3em;
+}
+#dev-stuff {
+  flex: 1 0 0;
+  height: 25px;
 }
 </style>

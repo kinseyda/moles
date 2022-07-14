@@ -30,7 +30,7 @@
           </ul>
         </div>
         <div id="buttons">
-          <button @click="togglePopupOpen('empire')">Cancel</button>
+          <button @click="togglePopupOpen(PopupTypes.Empire)">Cancel</button>
           <button
             @click="
               $emit('prestige', resourcesSelected);
@@ -56,6 +56,7 @@ import { ResourceData } from "@/model/data-interfaces";
 import { resourceDataDict } from "@/content/resource-data";
 import { formatNumber } from "../format";
 import ColoredResource from "@/components/ColoredResource.vue";
+import { PopupTypes } from "@/store";
 
 export default defineComponent({
   name: "PrestigeMenu",
@@ -64,6 +65,7 @@ export default defineComponent({
     return {
       uiDescriptions: uiDescriptions,
       resourcesSelected: [] as number[],
+      PopupTypes: PopupTypes,
     };
   },
   emits: ["prestige"],

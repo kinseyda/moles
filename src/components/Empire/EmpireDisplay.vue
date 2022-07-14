@@ -112,7 +112,7 @@
           </div>
         </div>
         <div id="prestige-button" v-if="prestigeUnlocked">
-          <button @click="togglePopupOpen('prestige')">Prestige</button>
+          <button @click="togglePopupOpen(PopupTypes.Prestige)">Prestige</button>
         </div>
       </div>
     </template>
@@ -134,6 +134,7 @@ import {
 } from "@/content/population-statuses";
 import { formatNumber, formatDown } from "../format";
 import ColoredResource from "@/components/ColoredResource.vue";
+import { PopupTypes } from "@/store";
 
 export default defineComponent({
   name: "EmpireDisplay",
@@ -150,6 +151,7 @@ export default defineComponent({
     return {
       uiDescriptions: uiDescriptions,
       newName: "",
+      PopupTypes: PopupTypes,
     };
   },
   emits: ["prestige"],
