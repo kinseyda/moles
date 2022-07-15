@@ -106,7 +106,10 @@
         </div>
       </div>
 
-      <settings-display v-if="popUpOpen == PopupTypes.Settings"></settings-display>
+      <settings-display
+        v-if="popUpOpen == PopupTypes.Settings"
+        @settingsChange="(newSettings: Settings) => applySettings(newSettings)"
+      ></settings-display>
       <empire-display
         v-if="popUpOpen == PopupTypes.Empire"
         :civilizations="gameData.civilizations"
@@ -155,7 +158,7 @@ import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
 import { PermanentUnlocks } from "./content/upgrade-unlock-data";
-import { PopupTypes } from "./store";
+import { PopupTypes, Settings, defaultSettings } from "./store";
 
 @Options({
   name: "App",
@@ -204,9 +207,7 @@ import { PopupTypes } from "./store";
       "hoverDescString",
       "resetDesc",
       "togglePopupOpen",
-      "settingsSetTheme",
-      "settingsSetTooltips",
-      "settingsSetCBMode",
+      "setSettings",
     ]),
     formatNumber(num: number) {
       return formatNumber(num, "");
@@ -245,6 +246,38 @@ import { PopupTypes } from "./store";
         );
       }
     },
+    applySettings(newSettings: Settings) {
+      // Theme selection
+      const htmlTag = document.getElementsByTagName("html")[0];
+      const newTheme = newSettings.theme;
+      if (newTheme == "light" || newTheme == "dark" || newTheme == "true mole") {
+        htmlTag.setAttribute("theme", newTheme);
+      } else {
+        htmlTag.setAttribute("theme", "light");
+      }
+
+      // Description position selection
+      const newDescPos = newSettings.tooltips;
+      if (!newDescPos) {
+        setTooltips(false);
+      } else {
+        setTooltips(true);
+      }
+
+      // Color blindness mode
+      const newCBMode = newSettings.cbMode;
+      if (
+        newCBMode == "green red" ||
+        newCBMode == "blue orange" ||
+        newCBMode == "mono" ||
+        newCBMode == "no color"
+      ) {
+        htmlTag.setAttribute("cbMode", newCBMode);
+      } else {
+        htmlTag.setAttribute("cbMode", "green red");
+      }
+      this.setSettings(newSettings);
+    },
   },
   beforeCreate() {
     startGame();
@@ -252,33 +285,11 @@ import { PopupTypes } from "./store";
   mounted() {
     setInterval(this.gameLoop, 50);
 
-    // Load theme selection
-    const htmlTag = document.getElementsByTagName("html")[0];
-    const loadTheme = localStorage.getItem("molesTheme");
-    if (loadTheme == "light" || loadTheme == "dark" || loadTheme == "true mole") {
-      htmlTag.setAttribute("theme", loadTheme);
-      this.settingsSetTheme(loadTheme);
+    const localSettings = localStorage.getItem("settings");
+    if (localSettings != null) {
+      this.applySettings(JSON.parse(localSettings));
     } else {
-      htmlTag.setAttribute("theme", "light");
-    }
-
-    // Load description position selection
-    const loadDescPos = localStorage.getItem("molesDescPos");
-    if (loadDescPos == "fixed") {
-      this.settingsSetTooltips(false);
-      setTooltips(false);
-    } else {
-      this.settingsSetTooltips(true);
-      setTooltips(true);
-    }
-
-    // Load color blindness mode
-    const loadCBMode = localStorage.getItem("cbMode");
-    if (loadCBMode == "green red" || loadCBMode == "blue orange") {
-      htmlTag.setAttribute("cbMode", loadCBMode);
-      this.settingsSetCBMode(loadCBMode);
-    } else {
-      htmlTag.setAttribute("cbMode", "green red");
+      this.applySettings(defaultSettings);
     }
   },
 })

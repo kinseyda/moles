@@ -1,7 +1,7 @@
 <template>
-  <pop-up-menu>
+  <pop-up-menu :tab-names="['Color', 'Performance']">
     <template #title>Settings</template>
-    <template #content>
+    <template #Color>
       <ul>
         <li>
           <button
@@ -44,6 +44,7 @@
         </li>
       </ul>
     </template>
+    <template #Performance> </template>
   </pop-up-menu>
 </template>
 
@@ -52,6 +53,7 @@ import { defineComponent } from "vue";
 import { uiDescriptions } from "./ui-descriptions";
 import PopUpMenu from "./PopUpMenu.vue";
 import { mapMutations, mapState } from "vuex";
+import { Settings } from "@/store";
 
 export function setTooltips(tooltips: boolean) {
   let tooltipPos = function (e: MouseEvent) {
@@ -83,10 +85,8 @@ export function setTooltips(tooltips: boolean) {
     }
   };
   if (tooltips) {
-    localStorage.setItem("molesDescPos", "tooltip");
     window.addEventListener("mousemove", tooltipPos);
   } else {
-    localStorage.setItem("molesDescPos", "fixed");
     window.removeEventListener("mousemove", tooltipPos);
   }
 }
@@ -99,6 +99,7 @@ export default defineComponent({
       uiDescriptions: uiDescriptions,
     };
   },
+  emits: ["settingsChange"],
   computed: {
     ...mapState(["settings"]),
   },
@@ -106,52 +107,44 @@ export default defineComponent({
     PopUpMenu,
   },
   methods: {
-    ...mapMutations([
-      "settingsSetTheme",
-      "settingsSetTooltips",
-      "settingsSetCBMode",
-      "hoverDescString",
-      "resetDesc",
-    ]),
+    ...mapMutations(["setSettings", "hoverDescString", "resetDesc"]),
+    updateSettings(newSettings: Settings) {
+      this.$emit("settingsChange", newSettings);
+      localStorage.setItem("settings", JSON.stringify(this.settings));
+    },
     toggleTheme() {
-      const htmlTag = document.getElementsByTagName("html")[0];
+      const newSettings: Settings = { ...this.settings };
       if (this.settings.theme == "light") {
-        htmlTag.setAttribute("theme", "dark");
-        localStorage.setItem("molesTheme", "dark");
-        this.settingsSetTheme("dark");
+        newSettings.theme = "dark";
       } else if (this.settings.theme == "dark") {
-        htmlTag.setAttribute("theme", "true mole");
-        localStorage.setItem("molesTheme", "true mole");
-        this.settingsSetTheme("true mole");
+        newSettings.theme = "true mole";
       } else if (this.settings.theme == "true mole") {
-        htmlTag.setAttribute("theme", "light");
-        localStorage.setItem("molesTheme", "light");
-        this.settingsSetTheme("light");
+        newSettings.theme = "light";
       }
+      this.updateSettings(newSettings);
     },
     toggleTooltips() {
-      this.settingsSetTooltips(!this.settings.tooltips);
-      setTooltips(this.settings.tooltips);
+      const newSettings: Settings = { ...this.settings };
+      newSettings.tooltips = !this.settings.tooltips;
+      this.updateSettings(newSettings);
     },
     toggleCBMode() {
+      const newSettings: Settings = { ...this.settings };
       const htmlTag = document.getElementsByTagName("html")[0];
       if (this.settings.cbMode == "green red") {
         htmlTag.setAttribute("cbMode", "blue orange");
-        localStorage.setItem("cbMode", "blue orange");
-        this.settingsSetCBMode("blue orange");
+        newSettings.cbMode = "blue orange";
       } else if (this.settings.cbMode == "blue orange") {
         htmlTag.setAttribute("cbMode", "mono");
-        localStorage.setItem("cbMode", "mono");
-        this.settingsSetCBMode("mono");
+        newSettings.cbMode = "mono";
       } else if (this.settings.cbMode == "mono") {
         htmlTag.setAttribute("cbMode", "no color");
-        localStorage.setItem("cbMode", "no color");
-        this.settingsSetCBMode("no color");
+        newSettings.cbMode = "no color";
       } else if (this.settings.cbMode == "no color") {
         htmlTag.setAttribute("cbMode", "green red");
-        localStorage.setItem("cbMode", "green red");
-        this.settingsSetCBMode("green red");
+        newSettings.cbMode = "green red";
       }
+      this.updateSettings(newSettings);
     },
   },
 });

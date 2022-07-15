@@ -10,17 +10,27 @@ import { ResourceRate } from "./model/data-interfaces";
 const defaultDescription =
   "Hover over something to see a description of it here.";
 
-interface Settings {
+export interface Settings {
   theme: string;
   tooltips: boolean;
   cbMode: string;
+  gameLoopInterval: number;
 }
+
+export const defaultSettings: Settings = {
+  theme: "light",
+  tooltips: true,
+  cbMode: "green red",
+  gameLoopInterval: 50,
+};
 
 export enum PopupTypes {
   Settings,
   Info,
   Empire,
   Prestige,
+  DevUnlockTree,
+  DevEditor,
 }
 
 export interface State {
@@ -51,18 +61,13 @@ export const store = createStore<State>({
       theme: "light",
       tooltips: true,
       cbMode: "green red",
+      gameLoopInterval: 50,
     },
   },
   getters: {},
   mutations: {
-    settingsSetTheme(state: State, newTheme: string) {
-      state.settings.theme = newTheme;
-    },
-    settingsSetTooltips(state: State, newTooltips: boolean) {
-      state.settings.tooltips = newTooltips;
-    },
-    settingsSetCBMode(state: State, newCBMode: string) {
-      state.settings.cbMode = newCBMode;
+    setSettings(state: State, newSettings: Settings) {
+      state.settings = newSettings;
     },
     togglePopupOpen(state: State, popUpType: PopupTypes) {
       if (state.popUpOpen == popUpType) {
