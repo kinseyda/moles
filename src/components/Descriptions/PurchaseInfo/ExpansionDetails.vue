@@ -3,8 +3,7 @@
     <p>
       Expands total area by
       <b class="good-text"
-        >{{ expansion.dataObject.areaEach
-        }}<small class="good-text"> Mo</small></b
+        >{{ expansion.dataObject.areaEach }}<small class="good-text"> Mo</small></b
       >
     </p>
   </div>
@@ -19,7 +18,7 @@ export default defineComponent({
   props: ["expansion"],
   methods: {
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getResource(id: number) {
       return game.resourceDict[id];

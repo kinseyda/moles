@@ -34,7 +34,7 @@ export default defineComponent({
   components: { ColoredResource },
   methods: {
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getResourceData(id: number) {
       return resourceDataDict[id];

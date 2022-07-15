@@ -155,7 +155,7 @@ export default defineComponent({
         : "";
     },
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getCap() {
       return this.resource.cap;

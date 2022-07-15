@@ -210,7 +210,7 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
       "setSettings",
     ]),
     formatNumber(num: number) {
-      return formatNumber(num, "");
+      return formatNumber(num);
     },
     gameLoop() {
       this.gameData.tick(this.debugMultiplier);

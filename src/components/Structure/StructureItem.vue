@@ -55,13 +55,9 @@ export default defineComponent({
   name: "StructureItem",
   props: ["structure"],
   methods: {
-    ...mapMutations([
-      "hoverDescIdentifiable",
-      "hoverDescStructSell",
-      "resetDesc",
-    ]),
+    ...mapMutations(["hoverDescIdentifiable", "hoverDescStructSell", "resetDesc"]),
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     buyStructure(structure: Structure) {
       structure.buy();

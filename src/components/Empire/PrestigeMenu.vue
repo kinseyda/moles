@@ -82,7 +82,7 @@ export default defineComponent({
       return resourceDataDict[resId];
     },
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
   },
 });

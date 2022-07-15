@@ -27,7 +27,7 @@ export default defineComponent({
   methods: {
     ...mapMutations(["hoverDescCivilization", "resetDesc"]),
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getPopString(pop: number): string {
       return getPopulationStatusString(getPopulationStatus(pop));

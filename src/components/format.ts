@@ -44,7 +44,7 @@ export function formatTimeConcise(numSeconds: number) {
   return str;
 }
 
-export function formatNumber(num: number, style: string | undefined) {
+export function formatNumber(num: number, style?: string) {
   if (!(style === "normal" || style === "illion" || style === "exp")) {
     if (num < 1000) {
       style = "normal";

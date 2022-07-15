@@ -71,7 +71,7 @@ export default defineComponent({
   components: {},
   methods: {
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
   },
 });

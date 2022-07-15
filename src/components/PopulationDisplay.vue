@@ -5,10 +5,8 @@
         @mouseover="hoverDescString(uiDescriptions['population'])"
         @mouseleave="resetDesc()"
         >{{ getPopString(population)
-        }}{{
-          getPopString(population).slice(-1) == "s" ? "'" : "'s"
-        }}
-        Population: {{ formatPop(population) }}</span
+        }}{{ getPopString(population).slice(-1) == "s" ? "'" : "'s" }} Population:
+        {{ formatPop(population) }}</span
       >
       /
       <span
@@ -46,11 +44,10 @@ export default defineComponent({
       return formatDown(num);
     },
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
   },
-});
-</script>
+});</script>
 
 <style scoped>
 #pop-text {

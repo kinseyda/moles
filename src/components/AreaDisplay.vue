@@ -47,7 +47,7 @@ export default defineComponent({
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getAreaString(area: number) {
       return getAreaStatusString(getAreaStatus(area));

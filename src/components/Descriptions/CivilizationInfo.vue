@@ -29,7 +29,7 @@ export default defineComponent({
   },
   methods: {
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getResource(id: number) {
       return resourceDataDict[id];

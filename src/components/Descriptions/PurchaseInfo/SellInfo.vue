@@ -44,7 +44,7 @@ export default defineComponent({
   },
   methods: {
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     getResourceData(resId: number) {
       return resourceDataDict[resId];

@@ -25,7 +25,7 @@ export default defineComponent({
   methods: {
     ...mapMutations(["hoverDescIdentifiable", "resetDesc"]),
     formatNumber(num: number) {
-      return formatNumber(num, undefined);
+      return formatNumber(num);
     },
     buyUpgrade(upgrade: Upgrade) {
       if (upgrade.buy()) {
