@@ -67,19 +67,16 @@
       >
     </td>
     <td class="res-slider">
-      <input
+      <slider-input
         @mouseover="
           hoverDescStringReg({ str: capDesc, args: [resource.dataObject.name] })
         "
         @mouseleave="resetDesc()"
-        class="slider"
-        :id="'slider' + resource.id"
-        type="range"
-        min="0"
-        max="10"
-        :value="resource.capPriority"
-        @input="$emit('update:slider-val', $event.target.value)"
-      />
+        :startingValue="resource.capPriority"
+        :min="0"
+        :max="10"
+        @slider-val="(n) => $emit('update:slider-val', n)"
+      ></slider-input>
     </td>
     <td class="res-slider-set">
       <button
@@ -104,6 +101,7 @@ import { uiDescriptions } from "@/components/ui-descriptions";
 import { SerializableClasses } from "@/model/serializable-class";
 import { Particle } from "@/components/Particles/BasicParticle.vue";
 import ColoredResource from "@/components/ColoredResource.vue";
+import SliderInput from "../SliderInput.vue";
 import Purchasable from "@/model/purchasable";
 import Structure from "@/model/structure";
 
@@ -113,6 +111,7 @@ export default defineComponent({
   emits: ["update:slider-val", "slider-max"],
   components: {
     ColoredResource,
+    SliderInput,
   },
   data() {
     return {
@@ -164,47 +163,6 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-input[type="range"] {
-  height: 1em;
-  -webkit-appearance: none;
-  width: 100%;
-  cursor: pointer;
-  background: inherit;
-}
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 0.5em;
-  background: var(--global-bg-color);
-  border-radius: 0.25em;
-  border: 1px solid var(--text-color);
-}
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 0.5em;
-  background: var(--global-bg-color);
-  border-radius: 0.25em;
-  border: 1px solid var(--text-color);
-}
-input[type="range"]::-webkit-slider-thumb {
-  border: 1px solid var(--text-color);
-  height: 1.25em;
-  width: 1.25em;
-  border-radius: 0.625em;
-  background: var(--global-bg-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -0.45em;
-}
-input[type="range"]::-moz-range-thumb {
-  border: 1px solid var(--text-color);
-  height: 1.25em;
-  width: 1.25em;
-  border-radius: 0.625em;
-  background: var(--global-bg-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -0.45em;
-}
 .res-amount,
 .res-rate-number {
   width: 100%;
