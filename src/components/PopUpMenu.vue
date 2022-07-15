@@ -1,9 +1,22 @@
 <template>
   <div id="pop-up-outer">
-    <h2><slot name="title"></slot></h2>
+    <div id="top-container">
+      <span id="title-text"><slot name="title"></slot></span>
+      <div id="tab-container">
+        <button
+          class="tab"
+          v-for="name in tabNames"
+          :key="name"
+          @click="curTab = name"
+          :class="{ 'selected-tab': curTab == name }"
+        >
+          {{ name }}
+        </button>
+      </div>
+    </div>
     <button id="exit-button" @click="closePopUp()"><b>X</b></button>
     <div id="content-outer">
-      <slot name="content"></slot>
+      <slot :name="[curTab]"></slot>
     </div>
   </div>
 </template>
@@ -15,10 +28,11 @@ import { mapMutations } from "vuex";
 
 export default defineComponent({
   name: "PopUpMenu",
-  props: [],
+  props: ["tabNames"],
   data() {
     return {
       uiDescriptions: uiDescriptions,
+      curTab: this.tabNames ? this.tabNames[0] : "content",
     };
   },
   methods: {
@@ -32,16 +46,16 @@ export default defineComponent({
   position: absolute;
   background-color: var(--global-bg-color);
   z-index: 1;
-  top: 100px;
-  bottom: 100px;
-  left: 100px;
-  right: 100px;
+  top: 75px;
+  bottom: 75px;
+  left: 75px;
+  right: 75px;
   border: 1px solid var(--text-color);
 }
 #content-outer {
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 1.5em - 10px);
+  min-height: calc(100% - 1.75em - 10px);
 }
 #exit-button {
   font-size: x-large;
@@ -50,5 +64,23 @@ export default defineComponent({
   position: absolute;
   top: 0;
   right: 0;
+}
+#top-container {
+  display: flex;
+  flex: 1 1 0;
+}
+#title-text {
+  font-weight: bold;
+  font-size: xx-large;
+}
+#tab-container {
+  margin-left: 1ch;
+}
+.tab {
+  height: 3em;
+  padding: 1ch;
+}
+.selected-tab {
+  background-color: var(--tertiary-bg-color);
 }
 </style>
