@@ -22,9 +22,6 @@ export default defineComponent({
     };
   },
   methods: {},
-  mounted() {
-    console.log(this.startingValue);
-  },
 });
 </script>
 

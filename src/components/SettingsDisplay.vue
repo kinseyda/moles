@@ -44,7 +44,70 @@
         </li>
       </ul>
     </template>
-    <template #Performance> </template>
+    <template #Performance>
+      <ul>
+        <li>
+          <p>
+            Game tick rate: {{ formatNumber(settings.gameLoopInterval) }} ms,
+            {{ formatNumber(1000 / settings.gameLoopInterval) }} per second
+          </p>
+          <slider-input
+            class="perf-slider"
+            :min="1"
+            :max="51"
+            :startingValue="tenToThousandInverse(settings.gameLoopInterval)"
+            @slider-val="(n) => updateGameTickRate(Number(n))"
+          ></slider-input>
+        </li>
+        <li>
+          <p>
+            Event log time update rate:
+            {{ formatNumber(settings.eventLogUpdateInterval) }} ms,
+            {{ formatNumber(1000 / settings.eventLogUpdateInterval) }} per second
+          </p>
+          <slider-input
+            class="perf-slider"
+            :min="1"
+            :max="51"
+            :startingValue="sixtyToSixtyThousandInverse(settings.eventLogUpdateInterval)"
+            @slider-val="(n) => updateEventLogUpdateRate(Number(n))"
+          ></slider-input>
+        </li>
+        <li>
+          <b>Particles:</b>
+          <ul>
+            <li>
+              <p>
+                Dig particle re-scatter rate:
+                {{ formatNumber(settings.digParticleInterval) }} ms,
+                {{ formatNumber(1000 / settings.digParticleInterval) }} per second
+              </p>
+              <slider-input
+                class="perf-slider"
+                :min="1"
+                :max="51"
+                :startingValue="tenToThousandInverse(settings.digParticleInterval)"
+                @slider-val="(n) => updateDigParticleRate(Number(n))"
+              ></slider-input>
+            </li>
+            <li>
+              <p>
+                Resource-list particle re-scatter rate:
+                {{ formatNumber(settings.resListParticleInterval) }} ms,
+                {{ formatNumber(1000 / settings.resListParticleInterval) }} per second
+              </p>
+              <slider-input
+                class="perf-slider"
+                :min="1"
+                :max="51"
+                :startingValue="tenToThousandInverse(settings.resListParticleInterval)"
+                @slider-val="(n) => updateResListParticleRate(Number(n))"
+              ></slider-input>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </template>
   </pop-up-menu>
 </template>
 
@@ -52,8 +115,10 @@
 import { defineComponent } from "vue";
 import { uiDescriptions } from "./ui-descriptions";
 import PopUpMenu from "./PopUpMenu.vue";
+import SliderInput from "./SliderInput.vue";
 import { mapMutations, mapState } from "vuex";
 import { Settings } from "@/store";
+import { formatNumber } from "./format";
 
 export function setTooltips(tooltips: boolean) {
   let tooltipPos = function (e: MouseEvent) {
@@ -105,9 +170,13 @@ export default defineComponent({
   },
   components: {
     PopUpMenu,
+    SliderInput,
   },
   methods: {
     ...mapMutations(["setSettings", "hoverDescString", "resetDesc"]),
+    formatNumber(n: number) {
+      return formatNumber(n);
+    },
     updateSettings(newSettings: Settings) {
       this.$emit("settingsChange", newSettings);
       localStorage.setItem("settings", JSON.stringify(this.settings));
@@ -130,21 +199,48 @@ export default defineComponent({
     },
     toggleCBMode() {
       const newSettings: Settings = { ...this.settings };
-      const htmlTag = document.getElementsByTagName("html")[0];
       if (this.settings.cbMode == "green red") {
-        htmlTag.setAttribute("cbMode", "blue orange");
         newSettings.cbMode = "blue orange";
       } else if (this.settings.cbMode == "blue orange") {
-        htmlTag.setAttribute("cbMode", "mono");
         newSettings.cbMode = "mono";
       } else if (this.settings.cbMode == "mono") {
-        htmlTag.setAttribute("cbMode", "no color");
         newSettings.cbMode = "no color";
       } else if (this.settings.cbMode == "no color") {
-        htmlTag.setAttribute("cbMode", "green red");
         newSettings.cbMode = "green red";
       }
       this.updateSettings(newSettings);
+    },
+    updateGameTickRate(newInterval: number) {
+      const newSettings: Settings = { ...this.settings };
+      newSettings.gameLoopInterval = this.tenToThousand(newInterval);
+      this.updateSettings(newSettings);
+    },
+    updateEventLogUpdateRate(newInterval: number) {
+      const newSettings: Settings = { ...this.settings };
+      newSettings.eventLogUpdateInterval = this.sixtyToSixtyThousand(newInterval);
+      this.updateSettings(newSettings);
+    },
+    updateDigParticleRate(newInterval: number) {
+      const newSettings: Settings = { ...this.settings };
+      newSettings.digParticleInterval = this.tenToThousand(newInterval);
+      this.updateSettings(newSettings);
+    },
+    updateResListParticleRate(newInterval: number) {
+      const newSettings: Settings = { ...this.settings };
+      newSettings.resListParticleInterval = this.tenToThousand(newInterval);
+      this.updateSettings(newSettings);
+    },
+    sixtyToSixtyThousand(x: number): number {
+      return Math.floor(10 ** ((3 * x + 47) / 50) * 6);
+    },
+    sixtyToSixtyThousandInverse(y: number): number {
+      return Math.ceil((50 * Math.log10(y / 6) - 47) / 3);
+    },
+    tenToThousand(x: number): number {
+      return Math.floor(10 ** ((x + 24) / 25));
+    },
+    tenToThousandInverse(y: number): number {
+      return Math.ceil(25 * Math.log10(y) - 24);
     },
   },
 });
@@ -153,5 +249,8 @@ export default defineComponent({
 <style scoped>
 ul {
   list-style-type: none;
+}
+.perf-slider {
+  max-width: 50ch;
 }
 </style>

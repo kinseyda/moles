@@ -58,6 +58,7 @@ export default defineComponent({
     return {
       sliderVals: {} as { [resId: number]: number },
       uiDescriptions: uiDescriptions,
+      particleIntervalID: -1,
     };
   },
   components: {
@@ -66,6 +67,18 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(["hoverDescString", "resetDesc"]),
+    changeInterval(newInterval: number) {
+      if (this.particleIntervalID != -1) {
+        clearInterval(this.particleIntervalID);
+      }
+      this.particleIntervalID = setInterval(this.updateParticles, newInterval);
+    },
+    stopParticles() {
+      if (this.particleIntervalID != -1) {
+        clearInterval(this.particleIntervalID);
+        this.particleIntervalID = -1;
+      }
+    },
     updateParticles() {
       const curRates: { [resId: number]: number } = {};
       for (const resIdStr in this.resourceDict) {
@@ -144,8 +157,6 @@ export default defineComponent({
       const resId = Number(resIdStr);
       this.sliderVals[resId] = this.resourceDict[resId].capPriority;
     }
-
-    setInterval(this.updateParticles, 50);
   },
 });
 </script>

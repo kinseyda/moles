@@ -15,13 +15,19 @@ export interface Settings {
   tooltips: boolean;
   cbMode: string;
   gameLoopInterval: number;
+  digParticleInterval: number;
+  resListParticleInterval: number;
+  eventLogUpdateInterval: number;
 }
 
 export const defaultSettings: Settings = {
   theme: "light",
   tooltips: true,
   cbMode: "green red",
-  gameLoopInterval: 50,
+  gameLoopInterval: 30,
+  digParticleInterval: 30,
+  resListParticleInterval: 30,
+  eventLogUpdateInterval: 950,
 };
 
 export enum PopupTypes {
@@ -57,12 +63,7 @@ export const store = createStore<State>({
     digData: false,
     debugMode: false,
     popUpOpen: undefined,
-    settings: {
-      theme: "light",
-      tooltips: true,
-      cbMode: "green red",
-      gameLoopInterval: 50,
-    },
+    settings: defaultSettings,
   },
   getters: {},
   mutations: {

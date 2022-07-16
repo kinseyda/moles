@@ -52,6 +52,7 @@
       <div id="game-columns">
         <div id="left-column">
           <resource-list
+            ref="resList"
             :resourceDict="gameData.resourceDict"
             :area="gameData.area"
           ></resource-list>
@@ -79,6 +80,7 @@
           </div>
           <div id="buttons-container">
             <dig-button
+              ref="digButton"
               v-show="gameData.isUnlocked(PermanentUnlocks.Digging)"
               :dig="gameData.dig"
               :area="gameData.area"
@@ -197,6 +199,7 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
       PopupTypes: PopupTypes,
       appVersion: currentVersion,
       debugMultiplier: 1,
+      gameLoopID: -1,
       mode: process.env.NODE_ENV,
     };
   },
@@ -276,6 +279,32 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
       } else {
         htmlTag.setAttribute("cbMode", "green red");
       }
+
+      // Gameloop rate
+      const newGameloopInterval = newSettings.gameLoopInterval;
+      if (this.gameLoopID != -1) {
+        clearInterval(this.gameLoopID);
+      }
+      this.gameLoopID = setInterval(this.gameLoop, newGameloopInterval);
+
+      // Event log time update rate
+      const newEventLogUpdateInterval = newSettings.eventLogUpdateInterval;
+      (this.$refs["eventLog"] as typeof EventLog).changeInterval(
+        newEventLogUpdateInterval
+      );
+
+      // Dig particles
+      const newDigParticlesInterval = newSettings.digParticleInterval;
+      (this.$refs["digButton"] as typeof DigButton).changeInterval(
+        newDigParticlesInterval
+      );
+
+      // Resoruce list particles
+      const newResListParticlesInterval = newSettings.resListParticleInterval;
+      (this.$refs["resList"] as typeof ResourceList).changeInterval(
+        newResListParticlesInterval
+      );
+
       this.setSettings(newSettings);
     },
   },
@@ -283,8 +312,6 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
     startGame();
   },
   mounted() {
-    setInterval(this.gameLoop, 50);
-
     const localSettings = localStorage.getItem("settings");
     if (localSettings != null) {
       this.applySettings(JSON.parse(localSettings));

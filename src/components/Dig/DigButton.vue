@@ -37,12 +37,29 @@ import { game } from "@/model/game";
 export default defineComponent({
   name: "DigButton",
   props: ["dig", "area"],
+  data() {
+    return {
+      particleIntervalID: -1,
+    };
+  },
   components: {
     ParticleProducer,
   },
   emits: ["setDigging"],
   methods: {
     ...mapMutations(["hoverDescDig", "resetDesc"]),
+    changeInterval(newInterval: number) {
+      if (this.particleIntervalID != -1) {
+        clearInterval(this.particleIntervalID);
+      }
+      this.particleIntervalID = setInterval(this.updateParticles, newInterval);
+    },
+    stopParticles() {
+      if (this.particleIntervalID != -1) {
+        clearInterval(this.particleIntervalID);
+        this.particleIntervalID = -1;
+      }
+    },
     updateParticles() {
       if (this.dig.digging) {
         const curDiggingRates: { [resId: number]: number } = {};
@@ -60,9 +77,6 @@ export default defineComponent({
         }
       }
     },
-  },
-  mounted() {
-    setInterval(this.updateParticles, 50);
   },
 });
 </script>

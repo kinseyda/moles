@@ -65,6 +65,7 @@ export default defineComponent({
       uiDescriptions: uiDescriptions,
       eventList: [] as TextLogEvent[],
       resetNextUp: false,
+      adjustTimeID: -1,
     };
   },
   components: {
@@ -92,6 +93,12 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations(["hoverDescIdentifiable", "hoverDescString", "resetDesc"]),
+    changeInterval(newInterval: number) {
+      if (this.adjustTimeID != -1) {
+        clearInterval(this.adjustTimeID);
+      }
+      this.adjustTimeID = setInterval(this.adjustTime, newInterval);
+    },
     timeSince(timeAchieved: number): number {
       return Math.max(this.currentTime - timeAchieved, 0);
     },
@@ -127,7 +134,6 @@ export default defineComponent({
   },
   mounted() {
     this.adjustTime();
-    setInterval(this.adjustTime, 1000);
     this.updateList();
   },
 });
