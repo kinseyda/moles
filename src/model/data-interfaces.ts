@@ -21,12 +21,13 @@ export interface UpgradeDetails {
   [UpgradeTypes.digRate]?: { [resId: number]: number };
   [UpgradeTypes.none]?: undefined;
 }
+export interface UpgradeEffect {
+  func: UpgradeTypes;
+  params: UpgradeDetails;
+}
 export interface UpgradeData extends PurchasableData {
-  effects: {
-    func: UpgradeTypes;
-    params: UpgradeDetails;
-  }[];
-  startingParams: {
+  effects: UpgradeEffect[];
+  startingParams?: {
     bought: boolean;
     discount: { [resId: number]: number };
   };

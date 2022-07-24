@@ -542,48 +542,6 @@ export class Game extends SerializableClass {
       game.handleEvent(RequirementType.loadGame);
     }
   }
-  static getUpgradeUnlockTreeString(
-    curId?: number,
-    depth?: number,
-    curStr?: string
-  ): string {
-    if (curId === undefined) {
-      curId = UpgradeIDs.ExamineDirt;
-    }
-    if (depth === undefined) {
-      depth = 0;
-    }
-    if (curStr === undefined) {
-      curStr = "";
-    }
-    if (depth == 0) {
-      curStr = `${upgradeDataDict[curId].name}\n`;
-    } else if (depth == 1) {
-      curStr = `${curStr}|${"────".repeat(depth)} ${
-        upgradeDataDict[curId].name
-      }\n`;
-    } else {
-      curStr = `${curStr}|${"    ".repeat(depth - 1)} |──── ${
-        upgradeDataDict[curId].name
-      }\n`;
-    }
-    const unlockEffect = upgradeDataDict[curId].effects.find(
-      (a) => a.func == UpgradeTypes.unlock
-    );
-    if (unlockEffect !== undefined) {
-      unlockDataDict[
-        unlockEffect.params[UpgradeTypes.unlock]!
-      ].upgrades.forEach(
-        (curr) =>
-          (curStr = `${curStr}${Game.getUpgradeUnlockTreeString(
-            curr,
-            (depth || 0) + 1,
-            ""
-          )}`)
-      );
-    }
-    return curStr;
-  }
 }
 
 export function setGame(newGame: Game) {

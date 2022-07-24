@@ -96,7 +96,7 @@ export const eventDataDict: { [id: number]: EventData } = {
       {
         requirementType: RequirementType.resourceAmount,
         requirementDetails: {
-          [RequirementType.resourceAmount]: { [ResourceIDs.Dirt]: 5 },
+          [RequirementType.resourceAmount]: { [ResourceIDs.dirt]: 5 },
         },
       },
     ],
@@ -112,8 +112,8 @@ export const eventDataDict: { [id: number]: EventData } = {
         requirementType: RequirementType.resourceAmount,
         requirementDetails: {
           [RequirementType.resourceAmount]: {
-            [ResourceIDs.Dirt]: 10,
-            [ResourceIDs.Wood]: 10,
+            [ResourceIDs.dirt]: 10,
+            [ResourceIDs.wood]: 10,
           },
         },
       },

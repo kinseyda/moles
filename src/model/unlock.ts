@@ -4,6 +4,7 @@ import { structureDataDict } from "@/content/structure-data";
 import {
   unlockDataDict,
   PermanentUnlocks,
+  defaultUpgradeStartingParams,
 } from "@/content/upgrade-unlock-data";
 import { upgradeDataDict } from "@/content/upgrade-unlock-data";
 import Expansion from "./expansion";
@@ -30,8 +31,15 @@ export function applyUnlock(unlockId: number) {
     );
   }
   for (const upId of unlockData.upgrades) {
-    const sp = upgradeDataDict[upId].startingParams;
-    game.upgradeDict[upId] = new Upgrade(Number(upId), sp.bought, sp.discount);
+    const sp =
+      upgradeDataDict[upId].startingParams != undefined
+        ? upgradeDataDict[upId].startingParams
+        : defaultUpgradeStartingParams;
+    game.upgradeDict[upId] = new Upgrade(
+      Number(upId),
+      sp!.bought,
+      sp!.discount
+    );
   }
   for (const stId of unlockData.structures) {
     const sp = structureDataDict[stId].startingParams;

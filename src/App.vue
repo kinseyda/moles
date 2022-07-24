@@ -37,8 +37,17 @@
       >
         Debug
       </button>
+      <button
+        v-if="mode == 'development'"
+        @click="togglePopupOpen(PopupTypes.DevUnlockTree)"
+      >
+        Unlocks
+      </button>
+      <button v-if="mode == 'development'" @click="togglePopupOpen(PopupTypes.DevEditor)">
+        Editor
+      </button>
       <b v-if="debugMode" class="bad-text">DEBUG MODE IS ON</b>
-      <b id="dev-text" v-if="mode == 'development'" class="bad-text">Dev Mode</b>
+      <b id="dev-text" class="bad-text">Dev Mode</b>
       <p id="version-text">Moles v{{ appVersion }}</p>
     </div>
     <div id="game-space">
@@ -89,7 +98,6 @@
             <expansion-list :expansionDict="gameData.expansionDict"> </expansion-list>
             <div id="debug-buttons" v-if="debugMode">
               <button @click="gameLoop">Tick</button>
-              <button @click="logUnlockTree">Log unlock tree</button>
               <button @click="debugFillAll">Fill all resources</button>
               <button @click="setDigging(true)">Toggle digging on</button>
               <button @click="debugMultiplier *= 2">Time x2</button> Current:
@@ -135,6 +143,12 @@
         :gameSaveVersion="gameData.creationVersion"
       >
       </info-display>
+      <unlock-tree
+        v-if="popUpOpen == PopupTypes.DevUnlockTree"
+        :upgradeDataDict="upgradeDataDict"
+        :unlockDataDict="unlockDataDict"
+      ></unlock-tree>
+      <editor-display v-if="popUpOpen == PopupTypes.DevEditor"></editor-display>
     </div>
   </div>
 </template>
@@ -154,8 +168,11 @@ import UpgradeList from "./components/Upgrade/UpgradeList.vue";
 import StructureList from "./components/Structure/StructureList.vue";
 import ExpansionList from "./components/Expansion/ExpansionList.vue";
 import EventLog from "./components/EventLog.vue";
+import UnlockTree from "./components/Dev/UnlockTree/UnlockTreeDisplay.vue";
+import EditorDisplay from "./components/Dev/Editor/EditorDisplay.vue";
 import DescriptionContainer from "./components/Descriptions/DescriptionContainer.vue";
 import { Game, game, startGame, currentVersion } from "./model/game";
+import { unlockDataDict, upgradeDataDict } from "./content/upgrade-unlock-data";
 import { formatNumber } from "./components/format";
 import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
@@ -178,6 +195,8 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
     InfoDisplay,
     EmpireDisplay,
     PrestigeMenu,
+    UnlockTree,
+    EditorDisplay,
   },
   computed: {
     ...mapState([
@@ -199,6 +218,8 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
       PopupTypes: PopupTypes,
       appVersion: currentVersion,
       debugMultiplier: 1,
+      upgradeDataDict: upgradeDataDict,
+      unlockDataDict: unlockDataDict,
       gameLoopID: -1,
       mode: process.env.NODE_ENV,
     };
@@ -235,9 +256,6 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
     },
     setDigging(isDigging: boolean) {
       this.gameData.dig.digging = isDigging;
-    },
-    logUnlockTree() {
-      console.log(Game.getUpgradeUnlockTreeString());
     },
     debugToggle() {
       this.toggleDebug();

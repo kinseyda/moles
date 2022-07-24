@@ -1,11 +1,3 @@
-import { resourceDataDict, ResourceIDs } from "./resource-data";
-import Resource from "../model/resource";
-import Upgrade from "../model/upgrade";
-import { upgradeDataDict, UpgradeIDs } from "./upgrade-unlock-data";
-import Structure from "../model/structure";
-import { structureDataDict, StructureIDs } from "./structure-data";
-import Expansion from "../model/expansion";
-import { expansionDataDict, ExpansionIDs } from "./expansion-data";
 import Dig from "../model/dig";
 import Area from "../model/area";
 

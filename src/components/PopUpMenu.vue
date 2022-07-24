@@ -55,7 +55,8 @@ export default defineComponent({
 #content-outer {
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 1.75em - 10px);
+  height: calc(100% - 1.75em - 10px);
+  overflow: scroll;
 }
 #exit-button {
   font-size: x-large;

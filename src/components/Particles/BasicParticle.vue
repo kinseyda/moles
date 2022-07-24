@@ -17,7 +17,7 @@ export class Particle {
     if (color) {
       this.color = color;
     } else {
-      this.color = resourceDataDict[ResourceIDs.Dirt].color;
+      this.color = resourceDataDict[ResourceIDs.dirt].color;
     }
   }
 }
