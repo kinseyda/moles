@@ -118,7 +118,7 @@
 
       <settings-display
         v-if="popUpOpen == PopupTypes.Settings"
-        @settingsChange="(newSettings: Settings) => applySettings(newSettings)"
+        @settingsChange="(newSettings) => applySettings(newSettings)"
       ></settings-display>
       <empire-display
         v-if="popUpOpen == PopupTypes.Empire"
@@ -154,7 +154,6 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
 import { mapMutations, mapState } from "vuex";
 import AreaDisplay from "./components/AreaDisplay.vue";
 import PopulationDisplay from "./components/PopulationDisplay.vue";
@@ -178,8 +177,9 @@ import { uiDescriptions } from "./components/ui-descriptions";
 import { setTooltips } from "./components/SettingsDisplay.vue";
 import { PermanentUnlocks } from "./content/upgrade-unlock-data";
 import { PopupTypes, Settings, defaultSettings } from "./store";
+import { defineComponent } from "vue";
 
-@Options({
+export default defineComponent({
   name: "App",
   components: {
     AreaDisplay,
@@ -248,7 +248,7 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
         Game.loadGame(sto);
       }
       this.gameData = game;
-      this.$refs["eventLog"].resetNextUp = true;
+      (this.$refs["eventLog"] as typeof EventLog).resetNextUp = true;
     },
     prestigeGame(resourcesSelected: number[]) {
       game.prestige(resourcesSelected);
@@ -337,8 +337,7 @@ import { PopupTypes, Settings, defaultSettings } from "./store";
       this.applySettings(defaultSettings);
     }
   },
-})
-export default class App extends Vue {}
+});
 </script>
 
 <style scoped>
