@@ -2,35 +2,45 @@
   <pop-up-menu>
     <template #title>Info</template>
     <template #content>
-      <div id="info-outer">
-        <div id="info-top">
-          <p>
-            <b><i>Moles</i></b> is an open-source, text-based incremental game, built
-            using Vue 3.
-          </p>
+      <div id="info-top">
+        <p>
+          <b><i>Moles</i></b> is an open-source, text-based incremental game, built using
+          Vue 3.
+        </p>
+      </div>
+      <div id="mole-image-vert-cont">
+        <div></div>
+        <div id="mole-image-horiz-cont">
+          <img id="mole-image" src="../../public/mole-icon.svg" />
         </div>
-        <div id="info-bottom">
-          <div
+        <div></div>
+      </div>
+      <div id="info-bottom">
+        <div>
+          <span
             @mouseover="hoverDescString(uiDescriptions['versions'])"
             @mouseleave="resetDesc()"
           >
-            <p>
-              Save creation version:
-              <span
-                :class="{
-                  'bad-text': gameSaveVersion != appVersion,
-                  'bad-version': gameSaveVersion != appVersion,
-                }"
-                >{{ gameSaveVersion }}</span
-              >
-            </p>
-            <p>Application's version: {{ appVersion }}</p>
-          </div>
-          <p>
-            Created by Daniel Kinsey. View the source code on
-            <a href="https://github.com/kinseyda/moles">Github</a>
-          </p>
+            Save creation version:
+            <span
+              :class="{
+                'bad-text': gameSaveVersion != appVersion,
+                'bad-version': gameSaveVersion != appVersion,
+              }"
+              >{{ gameSaveVersion }}</span
+            >
+          </span>
+          <br />
+          <span
+            @mouseover="hoverDescString(uiDescriptions['versions'])"
+            @mouseleave="resetDesc()"
+            >Application's version: {{ appVersion }}</span
+          >
         </div>
+        <p>
+          Created by Daniel Kinsey. View the source code on
+          <a href="https://github.com/kinseyda/moles">Github</a>
+        </p>
       </div>
     </template>
   </pop-up-menu>
@@ -71,15 +81,32 @@ export default defineComponent({
 
 <style scoped>
 #info-outer {
-  flex: 1 1 0;
+  flex: 0 1 100%;
   display: flex;
   flex-direction: column;
 }
-#info-bottom {
+#info-top {
   flex: 0 0 0;
 }
-#info-top {
+#mole-image-vert-cont {
   flex: 1 0 0;
+  display: flex;
+  flex-direction: row;
+}
+#mole-image-vert-cont > div {
+  flex: 1 0 0;
+}
+#mole-image-horiz-cont {
+  position: relative;
+}
+#mole-image {
+  position: absolute;
+  margin: 2.5em;
+  max-height: calc(100% - 5em);
+  max-width: calc(100% - 5em);
+}
+#info-bottom {
+  flex: 0 0 0;
 }
 .bad-version {
   font-weight: bolder;
