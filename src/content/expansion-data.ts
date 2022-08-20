@@ -1,11 +1,12 @@
 import { ExpansionData } from "../model/data-interfaces";
+import { getID } from "./id-generator";
 import { ResourceIDs } from "./resource-data";
 
-export enum ExpansionIDs {
-  WoodenStrut,
-  RockColumn,
-  IronBeam,
-}
+export const ExpansionIDs = {
+  WoodenStrut: getID(),
+  RockColumn: getID(),
+  IronBeam: getID(),
+};
 
 export const expansionDataDict: { [id: number]: ExpansionData } = {
   [ExpansionIDs.WoodenStrut]: {

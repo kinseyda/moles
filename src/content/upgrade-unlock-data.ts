@@ -150,9 +150,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 10,
-    },
+    cost: { [ResourceIDs.dirt]: 10 },
   },
   [UpgradeIDs.MakeshiftShovel]: {
     name: "Makeshift shovel",
@@ -167,9 +165,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.unlock]: UnlockIDs.MakeshiftShovel },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 10,
-    },
+    cost: { [ResourceIDs.dirt]: 10 },
   },
   [UpgradeIDs.Pickaxe]: {
     name: "Pickaxe",
@@ -181,10 +177,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.unlock]: UnlockIDs.Pickaxe },
       },
     ],
-    cost: {
-      [ResourceIDs.wood]: 10,
-      [ResourceIDs.rock]: 10,
-    },
+    cost: { [ResourceIDs.wood]: 10, [ResourceIDs.rock]: 10 },
   },
   [UpgradeIDs.TermiteKnowledge]: {
     name: "Termite knowledge",
@@ -200,9 +193,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.unlock]: UnlockIDs.TermiteKnowledge },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 100,
-    },
+    cost: { [ResourceIDs.dirt]: 100 },
   },
   [UpgradeIDs.TermiteDomestication]: {
     name: "Termite Domestication",
@@ -214,9 +205,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.unlock]: UnlockIDs.TermiteDomestication },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 120,
-    },
+    cost: { [ResourceIDs.dirt]: 120 },
   },
   [UpgradeIDs.FindSecondMole]: {
     name: "Find a second mole",
@@ -232,9 +221,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.unlock]: UnlockIDs.FindSecondMole },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 250,
-    },
+    cost: { [ResourceIDs.dirt]: 250 },
   },
   [UpgradeIDs.Ledger]: {
     name: "Ledger",
@@ -243,7 +230,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
     effects: [
       {
         func: UpgradeTypes.empireMultiplier,
-        params: { [UpgradeTypes.empireMultiplier]: 5 / 100 },
+        params: { [UpgradeTypes.empireMultiplier]: 0.05 },
       },
       {
         func: UpgradeTypes.unlock,
@@ -254,10 +241,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Empire },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 150,
-      [ResourceIDs.wood]: 100,
-    },
+    cost: { [ResourceIDs.dirt]: 150, [ResourceIDs.wood]: 100 },
   },
   [UpgradeIDs.TunnelToSurface]: {
     name: "Tunnel to the surface",
@@ -273,9 +257,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.multiplier]: { [ResourceIDs.wood]: 1 } },
       },
     ],
-    cost: {
-      [ResourceIDs.dirt]: 300,
-    },
+    cost: { [ResourceIDs.dirt]: 300 },
   },
   [UpgradeIDs.Catapult]: {
     name: "Catapult",
@@ -287,9 +269,7 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
         params: { [UpgradeTypes.permanentUnlock]: PermanentUnlocks.Prestige },
       },
     ],
-    cost: {
-      [ResourceIDs.wood]: 300,
-    },
+    cost: { [ResourceIDs.wood]: 300 },
   },
   [UpgradeIDs.Carpentry]: {
     name: "Carpentry",
@@ -330,42 +310,20 @@ export const upgradeDataDict: { [id: number]: UpgradeData } = {
 };
 
 export const unlockDataDict: { [id: number]: UnlockData } = {
-  [UnlockIDs.StartingUnlock]: {
-    resources: [],
-    upgrades: [UpgradeIDs.LookAround],
-    structures: [],
-    expansions: [],
-  },
-  [UnlockIDs.UnlockExamineDirt]: {
-    resources: [],
-    upgrades: [UpgradeIDs.ExamineDirt],
-    structures: [],
-    expansions: [],
-  },
+  [UnlockIDs.StartingUnlock]: { upgrades: [UpgradeIDs.LookAround] },
+  [UnlockIDs.UnlockExamineDirt]: { upgrades: [UpgradeIDs.ExamineDirt] },
   [UnlockIDs.ExamineDirt]: {
     resources: [ResourceIDs.dirt],
     upgrades: [UpgradeIDs.SurveyTower, UpgradeIDs.DirtCompacting],
-    structures: [],
-    expansions: [],
   },
   [UnlockIDs.DirtCompacting]: {
-    resources: [],
     upgrades: [UpgradeIDs.SimpleTools],
     structures: [StructureIDs.BallOfDirt],
-    expansions: [],
   },
   [UnlockIDs.SimpleTools]: {
-    resources: [],
     upgrades: [UpgradeIDs.MakeshiftShovel, UpgradeIDs.Dirtomata],
-    structures: [],
-    expansions: [],
   },
-  [UnlockIDs.Dirtomata]: {
-    resources: [],
-    upgrades: [],
-    structures: [StructureIDs.TunnelBore],
-    expansions: [],
-  },
+  [UnlockIDs.Dirtomata]: { structures: [StructureIDs.TunnelBore] },
   [UnlockIDs.SurveyTower]: {
     resources: [ResourceIDs.wood, ResourceIDs.rock],
     upgrades: [
@@ -373,67 +331,27 @@ export const unlockDataDict: { [id: number]: UnlockData } = {
       UpgradeIDs.FindSecondMole,
       UpgradeIDs.Carpentry,
     ],
-    structures: [],
-    expansions: [],
   },
-  [UnlockIDs.MakeshiftShovel]: {
-    resources: [],
-    upgrades: [UpgradeIDs.Pickaxe],
-    structures: [],
-    expansions: [],
-  },
+  [UnlockIDs.MakeshiftShovel]: { upgrades: [UpgradeIDs.Pickaxe] },
   [UnlockIDs.Pickaxe]: {
     resources: [ResourceIDs.iron],
-    upgrades: [],
     structures: [StructureIDs.IronForge],
-    expansions: [],
   },
-  [UnlockIDs.TermiteKnowledge]: {
-    resources: [],
-    upgrades: [UpgradeIDs.TermiteDomestication],
-    structures: [],
-    expansions: [],
-  },
+  [UnlockIDs.TermiteKnowledge]: { upgrades: [UpgradeIDs.TermiteDomestication] },
   [UnlockIDs.TermiteDomestication]: {
     resources: [ResourceIDs.termites],
-    upgrades: [],
     structures: [StructureIDs.TermitePen, StructureIDs.TermiteWoodPatrol],
-    expansions: [],
   },
-  [UnlockIDs.FindSecondMole]: {
-    resources: [],
-    upgrades: [UpgradeIDs.Ledger],
-    structures: [],
-    expansions: [],
-  },
-  [UnlockIDs.Ledger]: {
-    resources: [],
-    upgrades: [UpgradeIDs.TunnelToSurface],
-    structures: [],
-    expansions: [],
-  },
-  [UnlockIDs.TunnelToSurface]: {
-    resources: [],
-    upgrades: [UpgradeIDs.Catapult],
-    structures: [],
-    expansions: [],
-  },
+  [UnlockIDs.FindSecondMole]: { upgrades: [UpgradeIDs.Ledger] },
+  [UnlockIDs.Ledger]: { upgrades: [UpgradeIDs.TunnelToSurface] },
+  [UnlockIDs.TunnelToSurface]: { upgrades: [UpgradeIDs.Catapult] },
   [UnlockIDs.Carpentry]: {
-    resources: [],
     upgrades: [UpgradeIDs.Cairnery],
-    structures: [],
     expansions: [ExpansionIDs.WoodenStrut],
   },
   [UnlockIDs.Cairnery]: {
-    resources: [],
     upgrades: [UpgradeIDs.MetalWorking],
-    structures: [],
     expansions: [ExpansionIDs.RockColumn],
   },
-  [UnlockIDs.MetalWorking]: {
-    resources: [],
-    upgrades: [],
-    structures: [],
-    expansions: [ExpansionIDs.IronBeam],
-  },
+  [UnlockIDs.MetalWorking]: { expansions: [ExpansionIDs.IronBeam] },
 };

@@ -1,123 +1,114 @@
-defaultUpgradeStartingParams
 <template>
-  <div id="top">
-    <div id="ids">
-      <div id="id-edit">
-        <input id="id-input" v-model="enteredID" placeholder="Enter an ID name" />
-        <button @click="addID">Add ID</button>
-      </div>
-      <div>
-        <select id="upgrade-selector" v-model="upgradeSelected">
-          <option
-            v-for="idName in idList"
-            :key="idName"
-            :value="{ id: UpgradeIDs[idName], idName: idName }"
-          >
-            {{ UpgradeIDs[idName] }}: {{ idName }}
-          </option>
-        </select>
-        <button @click="deleteID">Delete ID</button>
-      </div>
-    </div>
-    <div id="output">
-      New value (paste over game's <i><b>upgradeDataDict</b></i> variable to have changes
-      be persistent)
-      <button @click="setOutputText">Get new dict</button>
-      <textarea readonly v-model="outputText"></textarea>
-    </div>
-  </div>
-  <div v-if="upgradeSelected.id != -1">
-    <table id="upgrade-table">
-      <tr>
-        <td>Name:</td>
-        <td>
-          <textarea v-model="upgradeDataDict[upgradeSelected.id].name" />
-        </td>
-      </tr>
-      <tr>
-        <td>Description:</td>
-        <td>
-          <textarea v-model="upgradeDataDict[upgradeSelected.id].description" />
-        </td>
-      </tr>
-      <tr>
-        <td>Effects:</td>
-        <td>
-          <table>
-            <upgrade-effect-editor
-              v-for="(item, index) in upgradeDataDict[upgradeSelected.id].effects"
-              :key="item.func"
-              :upgradeID="upgradeSelected.id"
-              :effectIndex="index"
-            ></upgrade-effect-editor>
-          </table>
-          <button
-            @click="
-              upgradeDataDict[upgradeSelected.id].effects.push({
-                func: UpgradeTypes.none,
-                params: {},
-              })
-            "
-          >
-            Add effect
-          </button>
-          <p>Current effects: {{ upgradeDataDict[upgradeSelected.id].effects }}</p>
-        </td>
-      </tr>
-      <tr>
-        <td>Cost:</td>
-        <td>
-          <resource-to-num-selector
-            v-model="upgradeDataDict[upgradeSelected.id].cost"
-          ></resource-to-num-selector>
-          <p>Current cost: {{ upgradeDataDict[upgradeSelected.id].cost }}</p>
-        </td>
-      </tr>
-      <tr>
-        <td>Starting Parameters:</td>
-        <td>
-          <div id="starting-params">
-            <div>
+  <data-editor
+    :dataIdDict="UpgradeIDs"
+    :dataIdList="idList"
+    :deleteFunc="deleteID"
+    :addFunc="addID"
+    :stringifyData="upgradeDataDictToString"
+    v-model:selectedDatum="upgradeSelected"
+  >
+    <template #dataDictName>upgradeDataDict</template>
+    <template #idDictName>UpgradeIDs</template>
+    <template #editArea
+      ><div v-if="upgradeSelected.id != -1">
+        <table id="upgrade-table">
+          <tr>
+            <td>Name:</td>
+            <td>
+              <textarea v-model="upgradeDataDict[upgradeSelected.id].name" />
+            </td>
+          </tr>
+          <tr>
+            <td>Description:</td>
+            <td>
+              <textarea v-model="upgradeDataDict[upgradeSelected.id].description" />
+            </td>
+          </tr>
+          <tr>
+            <td>Effects:</td>
+            <td>
+              <table>
+                <upgrade-effect-editor
+                  v-for="(item, index) in upgradeDataDict[upgradeSelected.id].effects"
+                  :key="item.func"
+                  :upgradeID="upgradeSelected.id"
+                  :effectIndex="index"
+                ></upgrade-effect-editor>
+              </table>
               <button
                 @click="
-                  upgradeDataDict[upgradeSelected.id].startingParams = {
-                    ...defaultStartingParams,
-                  }
+                  upgradeDataDict[upgradeSelected.id].effects.push({
+                    func: UpgradeTypes.none,
+                    params: {},
+                  })
                 "
               >
-                Set custom starting params
+                Add effect
               </button>
-              <button
-                @click="upgradeDataDict[upgradeSelected.id].startingParams = undefined"
-              >
-                Set default starting params
-              </button>
-            </div>
-            <div v-if="upgradeDataDict[upgradeSelected.id].startingParams">
-              <div>
-                Bought:
-                <input
-                  type="checkbox"
-                  v-model="upgradeDataDict[upgradeSelected.id].startingParams!.bought"
-                />
+              <p>
+                Current effects:
+                {{ upgradeDataDict[upgradeSelected.id].effects }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>Cost:</td>
+            <td>
+              <resource-to-num-selector
+                v-model="upgradeDataDict[upgradeSelected.id].cost"
+              ></resource-to-num-selector>
+              <p>Current cost: {{ upgradeDataDict[upgradeSelected.id].cost }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>Starting Parameters:</td>
+            <td>
+              <div id="starting-params">
+                <div>
+                  <button
+                    @click="
+                      upgradeDataDict[upgradeSelected.id].startingParams = {
+                        ...defaultStartingParams,
+                      }
+                    "
+                  >
+                    Set custom starting params
+                  </button>
+                  <button
+                    @click="
+                      upgradeDataDict[upgradeSelected.id].startingParams = undefined
+                    "
+                  >
+                    Set default starting params
+                  </button>
+                </div>
+                <div v-if="upgradeDataDict[upgradeSelected.id].startingParams">
+                  <div>
+                    Bought:
+                    <input
+                      type="checkbox"
+                      v-model="upgradeDataDict[upgradeSelected.id].startingParams!.bought"
+                    />
+                  </div>
+                  <div>
+                    Discount:
+                    <resource-to-num-selector
+                      v-model="upgradeDataDict[upgradeSelected.id].startingParams!.discount"
+                    >
+                    </resource-to-num-selector>
+                  </div>
+                </div>
               </div>
-              <div>
-                Discount:
-                <resource-to-num-selector
-                  v-model="upgradeDataDict[upgradeSelected.id].startingParams!.discount"
-                >
-                </resource-to-num-selector>
-              </div>
-            </div>
-          </div>
-          <p>
-            Current starting params:
-            {{ upgradeDataDict[upgradeSelected.id].startingParams }}
-          </p>
-        </td>
-      </tr>
-    </table>
-  </div>
+              <p>
+                Current starting params:
+                {{ upgradeDataDict[upgradeSelected.id].startingParams }}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div></template
+    >
+  </data-editor>
 </template>
 
 <script lang="ts">
@@ -130,52 +121,49 @@ import {
   PermanentUnlocks,
   UnlockIDs,
 } from "@/content/upgrade-unlock-data";
-import { getID } from "@/content/id-generator";
 import UpgradeEffectEditor from "./UpgradeEffectEditor.vue";
 import ResourceToNumSelector from "../ResourceToNumSelector.vue";
 import { UpgradeData, UpgradeEffect, UpgradeTypes } from "@/model/data-interfaces";
 import { ResourceIDs } from "@/content/resource-data";
+import { EnumPair } from "../EnumIdSelector.vue";
+import { getID } from "@/content/id-generator";
+import DataEditor from "../DataEditor.vue";
 
 export default defineComponent({
   name: "UpgradeEditor",
   data() {
     return {
-      enteredID: "",
       upgradeDataDict: upgradeDataDict,
       unlockDataDict: unlockDataDict,
       UpgradeIDs: UpgradeIDs,
-      ResourceIDs: ResourceIDs,
-      upgradeSelected: { id: -1, idName: "" },
       idList: Object.keys(UpgradeIDs),
       UpgradeTypes: UpgradeTypes,
+      upgradeSelected: { id: -1, idName: "" },
       defaultStartingParams: defaultUpgradeStartingParams,
-      outputText: "",
     };
   },
-  components: { UpgradeEffectEditor, ResourceToNumSelector },
+  components: {
+    UpgradeEffectEditor,
+    ResourceToNumSelector,
+    DataEditor,
+  },
   methods: {
-    setOutputText() {
-      this.outputText = this.upgradeDataDictToString();
+    deleteID(enumPair: EnumPair) {
+      delete upgradeDataDict[enumPair.id];
+      delete UpgradeIDs[enumPair.idName];
+      this.upgradeSelected = { id: -1, idName: "" };
+      this.idList = Object.keys(UpgradeIDs);
     },
-    addID() {
+    addID(enumID: string) {
       const newID = getID();
-      UpgradeIDs[this.enteredID] = newID;
+      UpgradeIDs[enumID] = newID;
       upgradeDataDict[newID] = {
-        name: `${this.enteredID}NAME`,
-        description: `${this.enteredID}DESC`,
+        name: `${enumID}NAME`,
+        description: `${enumID}DESC`,
         effects: [],
         cost: {},
         startingParams: { ...defaultUpgradeStartingParams },
       };
-      this.idList = Object.keys(UpgradeIDs);
-    },
-    deleteID() {
-      if (this.upgradeSelected.id == -1) {
-        return;
-      }
-      delete upgradeDataDict[this.upgradeSelected.id];
-      delete UpgradeIDs[this.upgradeSelected.idName];
-      this.upgradeSelected = { id: -1, idName: "" };
       this.idList = Object.keys(UpgradeIDs);
     },
     upgradeDataDictToString() {
@@ -260,30 +248,12 @@ export default defineComponent({
 </script>
 
 <style scoped>
-* {
-  font-size: small;
-}
 textarea {
-  width: calc(100% - 2ch);
+  border: 1px solid var(--text-color);
   height: 7.5ex;
   resize: none;
+  width: calc(100% - 2ch);
   margin: 0.5ch;
-  border: 1px solid var(--text-color);
-}
-#id-input {
-  width: 25ch;
-  height: 3ex;
-  margin: 1ch;
-  border: 1px solid var(--text-color);
-}
-#id-edit button {
-  margin: 0;
-  padding: 0.5ch;
-}
-#upgrade-selector {
-  margin: 1ch;
-  width: 25ch;
-  border: 1px solid var(--text-color);
 }
 tr {
   border-top: 1px solid var(--text-color);
@@ -296,19 +266,5 @@ tr {
 }
 #starting-params > * {
   flex: 1 1 0;
-}
-#output-textbox {
-  width: 100ch;
-  border: 3px solid var(--text-color);
-  border-style: double;
-  height: 7.5ex;
-  overflow: scroll;
-}
-#top {
-  display: flex;
-  flex-direction: row;
-}
-#output {
-  margin-left: 10ch;
 }
 </style>

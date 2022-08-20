@@ -1,4 +1,5 @@
 import { StructureData } from "../model/data-interfaces";
+import { getID } from "./id-generator";
 import { ResourceIDs } from "./resource-data";
 
 const defaultStartingValues = {
@@ -8,14 +9,13 @@ const defaultStartingValues = {
 
 const defaultSellDesc = "Flatten the structure back into usable materials";
 
-export enum StructureIDs {
-  BallOfDirt,
-  TunnelBore,
-  TermitePen,
-  TermiteWoodPatrol,
-  IronForge,
-}
-
+export const StructureIDs = {
+  BallOfDirt: getID(),
+  TunnelBore: getID(),
+  TermitePen: getID(),
+  TermiteWoodPatrol: getID(),
+  IronForge: getID(),
+};
 export const structureDataDict: { [id: number]: StructureData } = {
   [StructureIDs.BallOfDirt]: {
     name: "Ball of dirt",

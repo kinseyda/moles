@@ -4,6 +4,9 @@
     <template #Upgrades>
       <upgrade-editor></upgrade-editor>
     </template>
+    <template #Unlocks>
+      <unlock-editor></unlock-editor>
+    </template>
   </pop-up-menu>
 </template>
 
@@ -11,6 +14,7 @@
 import { defineComponent } from "vue";
 import PopUpMenu from "@/components/PopUpMenu.vue";
 import UpgradeEditor from "./Upgrades/UpgradeEditor.vue";
+import UnlockEditor from "./Unlocks/UnlockEditor.vue";
 
 export default defineComponent({
   name: "EditorDisplay",
@@ -20,6 +24,7 @@ export default defineComponent({
   components: {
     PopUpMenu,
     UpgradeEditor,
+    UnlockEditor,
   },
   methods: {},
 });

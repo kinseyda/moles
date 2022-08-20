@@ -74,10 +74,10 @@ export interface ResourceRate {
 }
 
 export interface UnlockData {
-  resources: number[];
-  upgrades: number[];
-  structures: number[];
-  expansions: number[];
+  resources?: number[];
+  upgrades?: number[];
+  structures?: number[];
+  expansions?: number[];
 }
 
 export enum RequirementType {

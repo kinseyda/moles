@@ -50,9 +50,9 @@ export default defineComponent({
         (a) => a.func == UpgradeTypes.unlock
       );
       if (unlockEffect !== undefined) {
-        unlockDataDict[
-          unlockEffect.params[UpgradeTypes.unlock]!
-        ].upgrades.forEach((curr) => ret.children.push(this.getUpgradeUnlockTree(curr)));
+        (
+          unlockDataDict[unlockEffect.params[UpgradeTypes.unlock]!].upgrades || []
+        ).forEach((curr) => ret.children.push(this.getUpgradeUnlockTree(curr)));
       }
       return ret;
     },
