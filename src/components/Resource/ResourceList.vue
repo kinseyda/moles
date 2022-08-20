@@ -117,15 +117,7 @@ export default defineComponent({
       }
     },
     setSlider(sliderIndex: number, setTo: number) {
-      // Change value behind the scenes
       this.sliderVals[sliderIndex] = setTo;
-      // Change actual slider position
-      const slider = document.getElementById(`slider${sliderIndex}`) as HTMLInputElement;
-      if (slider !== null) {
-        slider.value = String(setTo);
-      } else {
-        console.error(`No slider called 'slider${sliderIndex}'`);
-      }
     },
   },
   watch: {

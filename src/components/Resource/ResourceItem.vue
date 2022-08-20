@@ -75,7 +75,7 @@
         :startingValue="resource.capPriority"
         :min="0"
         :max="10"
-        @slider-val="(n) => $emit('update:slider-val', n)"
+        @slider-val="(n: string) => $emit('update:slider-val', n)"
       ></slider-input>
     </td>
     <td class="res-slider-set">
